@@ -1,0 +1,152 @@
+*
+{
+    margin: 0;
+    padding: 0;
+}
+
+body
+{
+    background-color: black;
+    font-family: monospace;
+}
+
+header
+{
+    /*background-image: url("static.gif");*/
+    height: 100vh;
+    background-size: cover;
+    background-position: center;
+}
+
+.main-nav
+{
+    float: left;
+    list-style: none;
+    
+}
+
+.main-nav li
+{
+    display: inline-block;
+}
+
+.main-nav li a
+{
+    color: white;
+    text-decoration: none;
+    padding: 5px 20px;
+    margin-right: 10px;
+    font-family:'Courier New', Courier, monospace;
+    font-size: 24px;
+    white-space: nowrap;
+    z-index: 1;
+    border: 1px solid rgba(1,1,1,0);
+    text-align: center;
+}
+
+.main-nav li.active .nav
+{
+    border: 1px solid white;
+}
+
+.main-nav li a:hover
+{
+    /*border: 1px solid white;*/
+    background-color: white;
+    color: black;
+    transition: 0.2s ease-in;
+}
+
+.logo img
+{
+    width: 150px;
+    height: auto;
+    float: left;
+    margin-left: 30px;
+    margin-top: 10px;
+}
+
+.row
+{
+    max-width: 1400;
+    margin: auto;
+}
+
+.dropdown
+{
+    position: relative;
+}
+
+.dropdown-content
+{
+    display: none;
+    position: absolute;
+    z-index: 1;
+    margin-top: 5px;
+}
+
+.dropdown-content li
+{
+    margin-top: 6px;
+    margin-bottom: 6px;
+}
+
+.dropdown:hover .dropdown-content 
+{
+    display: block;
+}
+
+.message
+{
+    display: none;
+    margin: auto;
+    text-align: center;
+}
+
+.message a
+{
+    color: white;
+}
+
+#particles
+{
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+}
+
+.shoppingcart-icon img
+{
+    display: none;
+    width: 50px;
+    height: auto;
+    float: right;
+    margin-right: 30px;
+    margin-top: 16px;
+    cursor: pointer;
+}
+
+.sidebar
+{
+    height: 100vh;
+    width: 0;
+    position: fixed;
+    z-index: 2;
+    top: 0;
+    right: 0;
+    background-color: #121212;
+    overflow-x: hidden;
+    padding-top: 60px;
+    transition: 0.5s;
+}
+
+#main
+{
+    transition: margin-right 0.5s;
+}
+
+.buy
+{
+    position: fixed;
+    margin-top: 200px;
+}
