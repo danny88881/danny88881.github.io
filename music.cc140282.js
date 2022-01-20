@@ -687,7 +687,6 @@ var current_index = -1;
 var volume = 0.4;
 var max_volume = 100;
 function loadSong(song) {
-    visualizationInit();
     var current_song1 = song;
     current_index = songQueue.indexOf(current_song1);
     audio.src = "./songs/audio/" + songs[current_song1][SEC] + "/" + songs[current_song1][SRC] + ".ogg";
@@ -818,7 +817,6 @@ var months = [
     "December"
 ];
 function loadSongs(mine, illegal, date) {
-    if (playing) visualizationInit();
     var keys = Object.keys(songs);
     keys = keys.sort(dateComparison);
     songQueue = keys;

@@ -578,6 +578,7 @@ function musicInit() {
         var date_col = document.getElementById("date_col");
         loadSongs(mine_col, illegal_col, date_col);
         scrollUpdate();
+        visualizationInit();
     }
 }
 window.onload = function() {
