@@ -184,13 +184,7 @@ var songs = {
         100,
         "me"
     ],
-    "boggers": [
-        "boggers",
-        "unknown",
-        "8/28/20",
-        90,
-        "me"
-    ],
+    //"boggers":                                                      ["boggers",                 "unknown",           "8/28/20",  90, "me"],
     "bombpopthing": [
         "bombpopthing",
         "unknown",
@@ -729,6 +723,7 @@ function set_playpause(play) {
     }
 }
 audio.addEventListener('ended', ()=>{
+    console.log("A");
     loadSong(songQueue[(current_index + 1 + songQueue.length) % songQueue.length]);
 });
 playpause.addEventListener('click', ()=>{
@@ -874,13 +869,13 @@ function visualizationInit() {
     canvas.style.bottom = "0px";
     canvas.style.width = "100%";
     canvas.style.zIndex = "-3";
-    console.log(canvas.width);
+    //console.log(canvas.width);
     var ctx = canvas.getContext("2d");
     src.connect(analyser);
     analyser.connect(context.destination);
     analyser.fftSize = 256;
     var bufferLength = analyser.frequencyBinCount;
-    console.log(bufferLength);
+    //console.log(bufferLength);
     var dataArray = new Uint8Array(bufferLength);
     var WIDTH = canvas.width;
     var HEIGHT = canvas.height;
@@ -894,12 +889,15 @@ function visualizationInit() {
         ctx.clearRect(0, 0, WIDTH, HEIGHT);
         ctx.fillStyle = "#0000";
         ctx.fillRect(0, 0, WIDTH, HEIGHT);
+        ctx.globalCompositeOperation = "multiply";
         for(var i = 0; i < bufferLength; i++){
             barHeight = dataArray[i];
             var r = barHeight + 25 * (i / bufferLength);
             var g = 250 * (i / bufferLength);
             var b = 50;
-            var col = getComputedStyle(document.documentElement).getPropertyValue('--theme-2-primary');
+            var col = window.getComputedStyle(document.body, null).getPropertyValue('background-color'); //"#94949494"
+            //window.getComputedStyle( document.body ,null).getPropertyValue('--theme-2-primary');
+            //window.getComputedStyle( document.body ,null).getPropertyValue('background-color');
             ctx.fillStyle = col;
             ctx.globalAlpha = 0.9 * (r / 255);
             ctx.fillRect(x, HEIGHT - barHeight, barWidth, barHeight);
