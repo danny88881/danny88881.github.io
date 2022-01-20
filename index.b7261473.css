@@ -763,5 +763,6 @@ body.me.light {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
+  pointer-events: none;
 }
 /*# sourceMappingURL=index.b7261473.css.map */
