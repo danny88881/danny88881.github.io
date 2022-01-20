@@ -66,28 +66,28 @@ var songs = {
         "games"
     ],
     "A Knight of Music - Song 1": [
-        "AKnightofMusic/ld-41-song-1",
+        "AKnightOfMusic/ld-41-song-1",
         "aknightofmusic",
         "4/22/18",
         100,
         "games"
     ],
     "A Knight of Music - Song 2": [
-        "AKnightofMusic/ld-41-song-2",
+        "AKnightOfMusic/ld-41-song-2",
         "aknightofmusic",
         "4/22/18",
         100,
         "games"
     ],
     "A Knight of Music - Song 3": [
-        "AKnightofMusic/ld-41-song-3",
+        "AKnightOfMusic/ld-41-song-3",
         "aknightofmusic",
         "4/22/18",
         100,
         "games"
     ],
     "A Knight of Music - Song 4": [
-        "AKnightofMusic/ld-41-song-4",
+        "AKnightOfMusic/ld-41-song-4",
         "aknightofmusic",
         "4/22/18",
         100,
