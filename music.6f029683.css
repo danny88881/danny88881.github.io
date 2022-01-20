@@ -346,7 +346,7 @@
   background: var(--theme-2-primary);
   width: 0%;
   height: 100%;
-  transition: background 0.2s ease-in, width 0.1s linear;
+  transition: background 0.2s ease-in, width 33ms linear;
   border-radius: 5px;
 }
 

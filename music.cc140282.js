@@ -687,6 +687,7 @@ var current_index = -1;
 var volume = 0.4;
 var max_volume = 100;
 function loadSong(song) {
+    context.resume();
     var current_song1 = song;
     current_index = songQueue.indexOf(current_song1);
     audio.src = "./songs/audio/" + songs[current_song1][SEC] + "/" + songs[current_song1][SRC] + ".ogg";
@@ -699,9 +700,24 @@ function loadSong(song) {
     playing = true;
     set_playpause(playing);
 }
+var percentDone = 0;
+audio.addEventListener('timeupdate', (e)=>{
+    const { duration , currentTime  } = e.target;
+    const perc = currentTime / duration * 100;
+    progress.style.width = `${perc}%`;
+});
+setProgress = function() {
+//percentDone += 0.01;
+//if( percentDone<=100 ) {
+//    progress.style.width = percentDone + "%";
+//};
+};
+//progress.addEventListener('transitionend', setProgress);
+//setProgress();
 var playing = false;
 function set_playpause(play) {
     if (audio.src != "") {
+        setProgress();
         playing = play;
         control.classList.add("touched");
         record.classList.add("touched");
@@ -733,11 +749,6 @@ prev.addEventListener('click', ()=>{
 });
 next.addEventListener('click', ()=>{
     if (audio.src != "") loadSong(songQueue[(current_index + 1 + songQueue.length) % songQueue.length]);
-});
-audio.addEventListener('timeupdate', (e)=>{
-    const { duration , currentTime  } = e.target;
-    const perc = currentTime / duration * 100;
-    progress.style.width = `${perc}%`;
 });
 progresscontainer.addEventListener('click', (e)=>{
     const width = progresscontainer.clientWidth;
