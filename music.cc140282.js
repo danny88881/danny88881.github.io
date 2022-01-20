@@ -835,6 +835,7 @@ function loadSongs(mine, illegal, date) {
     var last_year = "-1";
     for (key of keys){
         var val = songs[key];
+        if (val[SEC] == "games") continue;
         var valdate = songs[key][DATE].split('/');
         var year = valdate[2];
         var month = valdate[0];
@@ -842,7 +843,7 @@ function loadSongs(mine, illegal, date) {
             last_year = year;
             last_month = month;
             var inhtml = date.innerHTML;
-            inhtml += `<div class="colspacer fade">${months[month - 1]} 20${year}</div>`;
+            inhtml += `<div class="colspacer fade">${months[month - 1]}<br>20${year}<br>|</div>`;
             date.innerHTML = inhtml;
         } else {
             var inhtml = date.innerHTML;

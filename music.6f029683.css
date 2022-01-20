@@ -387,7 +387,6 @@
   display: flex;
   width: 100%;
   height: auto;
-  gap: 40px;
   right: 5%;
   justify-content: right;
 }
@@ -408,7 +407,7 @@
 
 #sound_tracks div.item {
   cursor: pointer;
-  height: auto;
+  height: 100px;
   width: 80%;
   inline-size: 80%;
   pointer-events: all;
@@ -539,8 +538,8 @@
 }
 
 .colspacer {
-  height: 184px;
-  width: 30px;
+  height: 188px;
+  width: 140px;
   color: var(--theme-2-primary);
   text-shadow: #694869 0px 2px;
   font-family: Arial, Helvetica, sans-serif;
@@ -548,7 +547,6 @@
   font-weight: bold;
   opacity: 60%;
   text-align: end;
-  width: 100px;
 }
 
 #audiocanvas {
