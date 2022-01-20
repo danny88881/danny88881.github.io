@@ -691,7 +691,7 @@ function loadSong(song) {
     var current_song1 = song;
     current_index = songQueue.indexOf(current_song1);
     audio.src = "./songs/audio/" + songs[current_song1][SEC] + "/" + songs[current_song1][SRC] + ".ogg";
-    record_image.src = "./songs/images/" + songs[current_song1][IMG] + ".jpg";
+    record_image.src = "./songs/images/" + songs[current_song1][IMG] + ".webp";
     max_volume = songs[current_song1][VOL];
     audio.volume = max_volume * volume / 100;
     songname.innerText = song;
@@ -865,7 +865,7 @@ function loadSongs(mine, illegal, date) {
         if (elem != null) {
             var inhtml = elem.innerHTML;
             inhtml += `<div onclick='loadSong("${key}")' class='song item fade' style='animation: wiggle-float-${Boolean(Math.floor(Math.random() * 2)) ? "l" : "r"} ${Math.random() * 0.4 - 0.2 + 3.2}s ease-in-out ${Math.random() * 1}s infinite; 
-            background-image: url("./songs/images/${val[IMG]}.jpg");'><div>${key}</div></div>`;
+            background-image: url("./songs/images/${val[IMG]}.webp");'><div>${key}</div></div>`;
             elem.innerHTML = inhtml;
         }
     }
