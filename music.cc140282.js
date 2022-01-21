@@ -877,6 +877,8 @@ function loadSongs(mine, illegal, date) {
             elem.innerHTML = inhtml;
         }
     }
+    var soundtracks = document.querySelector("#sound_tracks").children;
+    for(var i = 0; i < soundtracks.length; ++i)soundtracks[i].style.animation = `wiggle-float-${Boolean(Math.floor(Math.random() * 2)) ? "l" : "r"} ${Math.random() * 0.4 - 0.2 + 3.2}s ease-in-out ${Math.random() * 1}s infinite`;
 }
 // I love nick https://codepen.io/nfj525/pen/rVBaab
 function visualizationInit() {
