@@ -55,5 +55,27 @@ function quote_cycle() {
     } else quote_box.style.transform = "translateX(" + (rect.left - 1) + "px)";
 }
 quote_cycle();
+function shadowUpdate(e) {
+    var shadowitems = document.body.getElementsByClassName("mouseshadow");
+    for(var i = 0; i < shadowitems.length; ++i){
+        var rect = shadowitems[i].getBoundingClientRect();
+        var x_offset = (rect.right + rect.left) / 2 - e.pageX;
+        var y_offset = (rect.bottom + rect.top) / 2 - e.pageY;
+        var len = Math.pow(x_offset * x_offset + y_offset * y_offset, 0.1);
+        var mov = 1 / len;
+        var col1 = window.getComputedStyle(document.body, null).getPropertyValue('--theme-1-primary');
+        var col2 = window.getComputedStyle(document.body, null).getPropertyValue('--theme-2-primary');
+        var col3 = window.getComputedStyle(document.body, null).getPropertyValue('--theme-3-primary');
+        var col4 = window.getComputedStyle(document.body, null).getPropertyValue('--theme-4-primary');
+        shadowitems[i].style.textShadow = `
+    ${x_offset * mov * 0.02}px ${y_offset * mov * 0.02}px ${col1},
+    ${-x_offset * mov * 0.02}px ${-y_offset * mov * 0.02}px ${col2},
+    ${x_offset * mov * 0.02}px ${-y_offset * mov * 0.02}px ${col3},
+    ${x_offset * mov * 0.2}px ${y_offset * mov * 0.2}px ${col4}`;
+    }
+}
+window.onmousemove = function(e) {
+    shadowUpdate(e);
+};
 
 //# sourceMappingURL=index.f1c72d30.js.map

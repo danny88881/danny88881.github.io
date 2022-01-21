@@ -482,8 +482,24 @@
   border-width: 8px;
 }
 
-#main-spacer {
-  margin-top: 80%;
+.main-spacer {
+  margin-top: 30%;
+}
+
+.downarrow {
+  position: relative;
+  height: 0px;
+  width: 0px;
+  margin-top: -10px;
+  left: 500px;
+  border-width: 282.84px 200px 0px 200px;
+  border-style: solid;
+  border-color: #9e469e transparent transparent transparent;
+  transition: 0.2s ease-in-out;
+}
+
+.light .downarrow {
+  border-color: #377d37 transparent transparent transparent;
 }
 
 #sound_tracks-title {
@@ -492,7 +508,7 @@
   font-family: Arial, Helvetica, sans-serif;
   font-size: 72px;
   font-weight: bold;
-  margin-left: 400px;
+  margin-left: 240px;
   margin-right: auto;
   padding-top: 200px;
   color: var(--theme-2-primary);

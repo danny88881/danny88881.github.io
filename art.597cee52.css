@@ -2,5 +2,40 @@
   position: absolute;
   width: 100%;
   height: 100%;
+  font-family: "MajorMono";
+}
+
+#mecont {
+  font-size: 200px;
+  width: 100%;
+  text-align: center;
+  position: relative;
+  top: 0px;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  justify-content: center;
+  margin-top: 250px;
+}
+
+#mecont iframe {
+  width: 80%;
+  pointer-events: all;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#mecont h1 {
+  font-size: 100px;
+  width: 100%;
+  font-weight: normal;
+}
+
+#mecont h2 {
+  font-size: 50px;
+  width: auto;
+  padding-left: 50px;
+  font-weight: normal;
 }
 /*# sourceMappingURL=art.597cee52.css.map */

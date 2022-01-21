@@ -437,6 +437,13 @@ var songs = {
         100,
         "illegal"
     ],
+    "fr fr fr this time": [
+        "frfrfrthistime_v2",
+        "tyler",
+        "1/20/22",
+        50,
+        "illegal"
+    ],
     "hope": [
         "good byes",
         "avatar",
@@ -656,6 +663,7 @@ var notes = {
     "do i dance inside ur head": "really really, gregory and the hawk is good",
     "fly me to the moon": "ohio",
     "for the best": "i like gregory and the hawk",
+    "fr fr fr this time": "i can't help but ruin my favorite songs",
     "hope": "what a good show",
     "goodbye": "this is the other",
     "花": "i do like this one",
