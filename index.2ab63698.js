@@ -522,16 +522,62 @@ function hmrAcceptRun(bundle, id) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 var _highway = require("@dogstudio/highway");
 var _highwayDefault = parcelHelpers.interopDefault(_highway);
-var _transition = require("./transition");
-var _transitionDefault = parcelHelpers.interopDefault(_transition);
-const H = new _highwayDefault.default.Core({
-    transitions: {
-        default: _transitionDefault.default
-    }
-});
+var _gsap = require("gsap");
+var _gsapDefault = parcelHelpers.interopDefault(_gsap);
 const body = document.body;
 const container = document.querySelector("#main-nav");
 const navs = container.querySelectorAll("a.Icon");
+function musicInit() {
+    if (location.href.indexOf("/music") > 0) {
+        var mine_col = document.getElementById("mine_col");
+        var illegal_col = document.getElementById("illegal_col");
+        var date_col = document.getElementById("date_col");
+        loadSongs(mine_col, illegal_col, date_col);
+        scrollUpdate();
+        visualizationInit();
+    }
+}
+class Slide extends _highwayDefault.default.Transition {
+    in({ from , to , done  }) {
+        window.scrollTo({
+            top: 0,
+            left: 0,
+            behavior: 'smooth'
+        });
+        _gsapDefault.default.fromTo(from, {
+            opacity: '100%',
+            left: '0%'
+        }, {
+            opacity: '0%',
+            left: '-100%',
+            duration: 1,
+            onComplete: function() {
+            }
+        });
+        _gsapDefault.default.fromTo(to, {
+            opacity: '0%',
+            left: '-100%'
+        }, {
+            opacity: '100%',
+            left: '0%',
+            duration: 1,
+            onComplete: function() {
+                from.remove();
+                doScrollUpdate = true;
+                musicInit();
+                done();
+            }
+        });
+    }
+    out({ from , done  }) {
+        done();
+    }
+}
+const H = new _highwayDefault.default.Core({
+    transitions: {
+        default: Slide
+    }
+});
 H.on('NAVIGATE_END', ({ location  })=>{
     // Check Anchor
     if (location.anchor) {
@@ -542,6 +588,7 @@ H.on('NAVIGATE_END', ({ location  })=>{
     }
 });
 H.on('NAVIGATE_IN', ({ to , location  })=>{
+    doScrollUpdate = false;
     // Check Active Link
     var in_nav = false;
     var hr = location.href;
@@ -571,24 +618,11 @@ H.on('NAVIGATE_IN', ({ to , location  })=>{
     else if (location.href.indexOf("/art") > 0) body.classList.add('art');
     else if (location.href.indexOf("/me") > 0) body.classList.add('me');
 });
-function musicInit() {
-    if (location.href.indexOf("/music") > 0) {
-        var mine_col = document.getElementById("mine_col");
-        var illegal_col = document.getElementById("illegal_col");
-        var date_col = document.getElementById("date_col");
-        loadSongs(mine_col, illegal_col, date_col);
-        scrollUpdate();
-        visualizationInit();
-    }
-}
 window.onload = function() {
     musicInit();
 };
-H.on('NAVIGATE_IN', ({ to , location  })=>{
-    musicInit();
-});
 
-},{"@dogstudio/highway":"gUu7G","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV","./transition":"fgSol"}],"gUu7G":[function(require,module,exports) {
+},{"@dogstudio/highway":"gUu7G","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV","gsap":"2aTR0"}],"gUu7G":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 function t() {
@@ -900,49 +934,7 @@ exports.export = function(dest, destName, get) {
     });
 };
 
-},{}],"fgSol":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-var _highway = require("@dogstudio/highway");
-var _highwayDefault = parcelHelpers.interopDefault(_highway);
-var _gsap = require("gsap");
-var _gsapDefault = parcelHelpers.interopDefault(_gsap);
-function rm(elem) {
-    elem.remove();
-}
-class Slide extends _highwayDefault.default.Transition {
-    in({ from , to , done  }) {
-        _gsapDefault.default.fromTo(from, {
-            opacity: '100%',
-            left: '0%'
-        }, {
-            opacity: '0%',
-            left: '-100%',
-            duration: 1,
-            onComplete: function() {
-            }
-        });
-        _gsapDefault.default.fromTo(to, {
-            opacity: '0%',
-            left: '-100%'
-        }, {
-            opacity: '100%',
-            left: '0%',
-            duration: 1,
-            onComplete: function() {
-                from.remove();
-                window.scrollTo(0, 0);
-                done();
-            }
-        });
-    }
-    out({ from , done  }) {
-        done();
-    }
-}
-exports.default = Slide;
-
-},{"@dogstudio/highway":"gUu7G","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV","gsap":"2aTR0"}],"2aTR0":[function(require,module,exports) {
+},{}],"2aTR0":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "gsap", ()=>gsapWithCSS

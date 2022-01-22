@@ -5,6 +5,39 @@
   font-family: "MajorMono";
 }
 
+.logo {
+  background-image: url(Logo.10418436.svg);
+  background-size: 400px 400px;
+  opacity: 60%;
+  width: 400px;
+  height: 400px;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: -8;
+  top: 0;
+}
+
+.logo path {
+  transition: stroke 0.2s ease-in-out;
+}
+
+.logo path.logobar1 {
+  stroke: var(--theme-1-primary);
+}
+
+.logo path.logobar2 {
+  stroke: var(--theme-2-primary);
+}
+
+.logo path.logobar3 {
+  stroke: var(--theme-3-primary);
+}
+
+.logo path.logobar4 {
+  stroke: var(--theme-4-primary);
+}
+
 #mecont {
   font-size: 200px;
   width: 100%;

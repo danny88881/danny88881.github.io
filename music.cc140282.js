@@ -363,7 +363,7 @@ var songs = {
     "waiting for the bus": [
         "waiting for the bus",
         "waitingforthe",
-        "8/29/18",
+        "10/29/18",
         100,
         "me"
     ],
@@ -441,7 +441,7 @@ var songs = {
         "frfrfrthistime_v2",
         "tyler",
         "1/20/22",
-        50,
+        100,
         "illegal"
     ],
     "hope": [
@@ -797,7 +797,24 @@ function scrollUpdate() {
         }
     }
 }
-window.addEventListener('scroll', scrollUpdate);
+var scrollTimer, lastScrollFireTime = 0;
+var minScrollTime = 10;
+window.onscroll = function() {
+    if (doScrollUpdate) {
+        var now = new Date().getTime();
+        if (!scrollTimer) {
+            if (now - lastScrollFireTime > 3 * minScrollTime) {
+                scrollUpdate();
+                lastScrollFireTime = now;
+            }
+            scrollTimer = setTimeout(function() {
+                scrollTimer = null;
+                lastScrollFireTime = new Date().getTime();
+                scrollUpdate();
+            }, minScrollTime);
+        }
+    }
+};
 function dateComparison(a, b) {
     var d1 = songs[a][DATE].split('/');
     var d2 = songs[b][DATE].split('/');
