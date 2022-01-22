@@ -75,8 +75,5 @@ function shadowUpdate(e) {
     ${x_offset * mov * 0.2}px ${y_offset * mov * 0.2}px ${col4}`;
     }
 }
-window.onmousemove = function(e) {
-    shadowUpdate(e);
-};
 
 //# sourceMappingURL=index.f1c72d30.js.map

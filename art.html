@@ -86,8 +86,8 @@
                 <li>
                     <div id="me"><div class="rotate"><div class="shadow" onmouseenter="hoverMenu('me');" onmouseleave="stopHoverMenu('me');">
                         <ul class="shadow-bar">
-                        <li><a href="/me.html">About🥴</a></li>
-                        <li><a href="/me.html">I don't🧠think</a></li>
+                        <li><a href="/me.html#about">About🥴</a></li>
+                        <li><a href="/me.html#blog">I don't🧠think</a></li>
                         </ul>
                     </div><div class="hover-bg"><div class="hover-content interact">
                         <a href="/me.html" class="Icon">🥴</a>
@@ -100,7 +100,49 @@
 
         <main data-router-wrapper="">
             <article data-router-view="mainart" class="mainart">
-                <div id="constr">🏗&#xFE0F;</div>
+                <canvas id="arttitlecanvas" style="height:100vh; overflow: hidden; max-width: 100%;"></canvas>
+                <svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+                    <defs>
+                        <filter id="goo">
+                        <fegaussianblur in="SourceGraphic" stddeviation="10" result="blur"></fegaussianblur>
+                        <fecolormatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 19 -9" result="goo"></fecolormatrix>
+                        <fecomposite in="SourceGraphic" in2="goo" operator="atop"></fecomposite>
+                        </filter>
+                    </defs>
+                </svg>
+                <!--div id="arttitle">
+                    ART
+                </div-->
+                <h2 class="subtitle">
+                    Here are where the drawings and stuff go...
+                    <br>
+                    |
+                    <br>
+                    Not my strongest suit... <!-- 1.22.22-->
+                </h2>
+                <div id="gallery">
+                    <!--img src="./graphics/type.gif"-->
+
+                    <span class="iframeholder">
+                        <iframe id="websiteart" src="https://danny88881.github.io/" title="art"></iframe>
+                        <div class="iframetitle">The Greatest and Bestest Art</div>
+                    </span>
+                    <span class="galleryitem">
+                        <img class="image" style="width: 300px;" src="/eye.bc03ab0f.webp">
+                    </span>
+                    <span class="galleryitem">
+                        <img class="image" style="width: 200px;" src="/Shoe.5f6383d3.webp">
+                    </span>
+                    <span class="galleryitem">
+                        <img class="image" style="width: 240px;" src="/pyjamas.770c7a66.webp">
+                    </span>
+                    <span class="galleryitem">
+                        <img class="image" style="width: 180px;" src="/Tissues.87e3907f.webp">
+                    </span>
+                    <span class="galleryitem">
+                        <img class="image" style="width: 150px;" src="/Bowl.ffbc20f1.webp">
+                    </span>
+                </div>
             </article>
         </main>
 
@@ -201,9 +243,10 @@
             <div id="scrollthing"> <div>FunQuotesSection();</div><p id="quote-scroll">return "";</p> </div>
         </footer>
         <script src="/index.f1c72d30.js"></script>
-        <script src="/music.cc140282.js"></script>
+        <script src="/me.cc140282.js"></script>
+        <script src="/me.216def62.js"></script>
+        <script src="/me.3cacedea.js"></script>
         <script src="/index.2ab63698.js" defer=""></script>
         <script src="/index.4b64c42d.js" defer=""></script>
-        <script src="/index.5bfde604.js" defer=""></script>
     </body>
 </html>

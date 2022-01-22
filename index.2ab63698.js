@@ -537,6 +537,9 @@ function musicInit() {
         visualizationInit();
     }
 }
+function artInit() {
+    if (location.href.indexOf("/art") > 0) initArt();
+}
 class Slide extends _highwayDefault.default.Transition {
     in({ from , to , done  }) {
         window.scrollTo({
@@ -565,6 +568,7 @@ class Slide extends _highwayDefault.default.Transition {
                 from.remove();
                 doScrollUpdate = true;
                 musicInit();
+                artInit();
                 done();
             }
         });
@@ -618,8 +622,20 @@ H.on('NAVIGATE_IN', ({ to , location  })=>{
     else if (location.href.indexOf("/art") > 0) body.classList.add('art');
     else if (location.href.indexOf("/me") > 0) body.classList.add('me');
 });
+window.onmouseup = function(e) {
+    artUpdate();
+    artClickMouse();
+};
+window.onmousemove = function(e) {
+    shadowUpdate(e);
+    artMouseMove(e);
+};
 window.onload = function() {
     musicInit();
+    artInit();
+};
+window.onscroll = function() {
+    throttledScrollFade();
 };
 
 },{"@dogstudio/highway":"gUu7G","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV","gsap":"2aTR0"}],"gUu7G":[function(require,module,exports) {

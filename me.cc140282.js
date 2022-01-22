@@ -746,7 +746,6 @@ function set_playpause(play) {
     }
 }
 audio.addEventListener('ended', ()=>{
-    console.log("A");
     loadSong(songQueue[(current_index + 1 + songQueue.length) % songQueue.length]);
 });
 playpause.addEventListener('click', ()=>{
@@ -999,4 +998,4 @@ function extractArtwork() {
 
 });*/ 
 
-//# sourceMappingURL=music.cc140282.js.map
+//# sourceMappingURL=me.cc140282.js.map
