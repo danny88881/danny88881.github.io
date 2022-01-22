@@ -6,6 +6,13 @@ var fontarr = [
     "MajorMono"
 ];
 var prevfontindex = 0;
+var borderarr = [
+    "url(./PictureFrames/frame1.webp) 158",
+    "url(./PictureFrames/frame2.webp) 178",
+    "url(./PictureFrames/frame3.webp) 187",
+    "url(./PictureFrames/frame4.webp) 97",
+    "url(./PictureFrames/frame5.webp) 190", 
+];
 function artUpdate() {
 //var title = document.getElementById("arttitle");
 //title.style.fontFamily = fontarr[Math.floor(Math.random() * fontarr.length)];
@@ -108,6 +115,15 @@ function initArt() {
         requestAnimationFrame(animate);
     }
     animate();
+    var frames = document.querySelectorAll(".galleryitem .image");
+    var iframes = document.getElementById("websiteart");
+    var framespans = document.querySelectorAll("#gallery span.galleryitem");
+    iframes.style.borderImage = borderarr[Math.floor(Math.random() * borderarr.length)];
+    for(var i1 = 0; i1 < frames.length; ++i1)if (Math.random() < 0.6) {
+        frames[i1].style.borderWidth = Math.random() * 80 + 20 + "px";
+        frames[i1].style.borderImage = borderarr[Math.floor(Math.random() * borderarr.length)];
+    }
+    for(var i1 = 0; i1 < framespans.length; ++i1)framespans[i1].style.animation = `wiggle-float-${Boolean(Math.floor(Math.random() * 2)) ? "l" : "r"} ${Math.random() * 0.4 - 0.2 + 3.2}s ease-in-out ${Math.random() * 1}s infinite`;
 }
 function randomizeFont() {
     canvas = document.getElementById("arttitlecanvas");

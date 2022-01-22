@@ -6,6 +6,9 @@
   font-family: "MajorMono";
   src: url(MajorMonoDisplay-Regular.8819f9c3.ttf);
 }
+html {
+  scroll-behavior: smooth;
+}
 :root {
   --positive: white;
   --negative: black;
