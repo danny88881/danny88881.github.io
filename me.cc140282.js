@@ -940,7 +940,7 @@ function visualizationInit() {
             x += barWidth + 1;
         }
     }
-    renderFrame();
+    if (currentPage == "music") requestAnimationFrame(renderFrame);
 } /*
 Don't touch
 soundcloud sucks ass.

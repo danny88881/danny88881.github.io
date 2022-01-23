@@ -45,6 +45,7 @@ var quote_interval = setInterval(quote_cycle, 25);
 var quote_box = document.getElementById("quote-scroll");
 var initial_quote = false;
 var doScrollUpdate = true;
+var currentPage = "";
 function quote_cycle() {
     var rect = quote_box.getBoundingClientRect();
     if (!initial_quote || rect.right < -10) {

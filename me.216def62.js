@@ -109,10 +109,7 @@ function initArt() {
             particleArr[i].draw(ctx);
             particleArr[i].update(ctx);
         }
-        const data = ctx.getImageData(0, 0, canvas.width, canvas.height);
-        //ctx.clearRect(0, 0, canvas.width, canvas.height);
-        //ctx.putImageData(data, 0, 0);
-        requestAnimationFrame(animate);
+        if (currentPage == "art") requestAnimationFrame(animate);
     }
     animate();
     var frames = document.querySelectorAll(".galleryitem .image");

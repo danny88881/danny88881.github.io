@@ -617,10 +617,19 @@ H.on('NAVIGATE_IN', ({ to , location  })=>{
     body.classList.remove('music');
     body.classList.remove('art');
     body.classList.remove('me');
-    if (location.href.indexOf("/games") > 0) body.classList.add('games');
-    else if (location.href.indexOf("/music") > 0) body.classList.add('music');
-    else if (location.href.indexOf("/art") > 0) body.classList.add('art');
-    else if (location.href.indexOf("/me") > 0) body.classList.add('me');
+    if (location.href.indexOf("/games") > 0) {
+        body.classList.add('games');
+        currentPage = "games";
+    } else if (location.href.indexOf("/music") > 0) {
+        body.classList.add('music');
+        currentPage = "music";
+    } else if (location.href.indexOf("/art") > 0) {
+        body.classList.add('art');
+        currentPage = "art";
+    } else if (location.href.indexOf("/me") > 0) {
+        body.classList.add('me');
+        currentPage = "me";
+    }
 });
 window.onmouseup = function(e) {
     artUpdate();
@@ -631,6 +640,19 @@ window.onmousemove = function(e) {
     artMouseMove(e);
 };
 window.onload = function() {
+    if (window.location.href.indexOf("/games") > 0) {
+        body.classList.add('games');
+        currentPage = "games";
+    } else if (window.location.href.indexOf("/music") > 0) {
+        body.classList.add('music');
+        currentPage = "music";
+    } else if (window.location.href.indexOf("/art") > 0) {
+        body.classList.add('art');
+        currentPage = "art";
+    } else if (window.location.href.indexOf("/me") > 0) {
+        body.classList.add('me');
+        currentPage = "me";
+    }
     musicInit();
     artInit();
 };
