@@ -6,6 +6,10 @@
   font-family: "MajorMono";
   src: url(MajorMonoDisplay-Regular.8819f9c3.ttf);
 }
+@font-face {
+  font-family: "cappx";
+  src: url(cappx.a80d4303.ttf);
+}
 html {
   scroll-behavior: smooth;
 }

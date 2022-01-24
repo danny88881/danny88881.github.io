@@ -53,7 +53,7 @@
                             </div>
                             <div class="hover-bg">
                                 <div class="hover-content interact">
-                                    <a href="/GameGallery/GameGallery.html" class="Icon">🕹&#xFE0F;</a>
+                                    <a href="/games.html" class="Icon">🕹&#xFE0F;</a>
                                     <a href="/games.html" class="box-label interact">Games</a>
                                 </div>
                             </div>
@@ -99,8 +99,54 @@
         </header>
 
         <main data-router-wrapper="">
-            <article data-router-view="maingames" class="maingames">
-                <div id="constr">🏗&#xFE0F;</div>
+            <article data-router-view="maingames" class="maingames" style="position: absolute;">
+                <!--canvas id="tetriscanvas"></canvas-->
+                <div id="playpopup"></div>
+                <div style="position: relative; height: 30vh;"></div>
+                <div id="windowThing">
+                    <div id="exe">
+                        <div>
+                            LAUNCH
+                            <br>.EXE
+                        </div>
+                    </div>
+                    <div id="launchScale">
+                        <div id="launchThing">
+                            <div id="launchTitle">LAUNCH?</div>
+                            <div id="launchMinimize"></div>
+                            <div id="launchClose"></div>
+                            <div id="launchLabel"></div>
+                            <div id="okbutton">
+                                <a href="/games/GameGallery.html" style="width: 100%; height: 100%; pointer-events: all; position: absolute;"></a>
+                            </div>
+                            <div id="nobutton"></div>
+                            <div id="okbuttonfloor"></div>
+                            <div id="nobuttonfloor"></div>
+                        </div>
+                    </div>
+                </div>
+                <div style="position: relative; height: 50vh;"></div>
+                <a id="professional"></a>
+                <div class="title">
+                    {Professional}
+                </div>
+                <div class="professionalsection section">
+                    ABC
+                </div>
+                <a id="indie"></a>
+                <div class="title">
+                    {Indie}
+                </div>
+                <div class="indiesection section">
+                    123
+                </div>
+                <a id="graveyard"></a>
+                <div class="title">
+                    {Graveyard}
+                </div>
+                <div class="graveyardsection section">
+                    CLAP YO HANDS
+                </div>
             </article>
         </main>
 
@@ -200,10 +246,6 @@
             </p>
             <div id="scrollthing"> <div>FunQuotesSection();</div><p id="quote-scroll">return "";</p> </div>
         </footer>
-        <script src="/index.f1c72d30.js"></script>
-        <script src="/me.cc140282.js"></script>
-        <script src="/me.216def62.js"></script>
-        <script src="/me.3cacedea.js"></script>
         <script src="/index.2ab63698.js" defer=""></script>
         <script src="/index.4b64c42d.js" defer=""></script>
     </body>

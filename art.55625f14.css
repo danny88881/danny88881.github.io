@@ -73,13 +73,14 @@
   height: 400px;
   width: 400px;
   pointer-events: all;
-  /*.image {
-      transition: all 1s ease;
-      filter: grayscale(1);
-      &:hover {
-          filter: grayscale(0);
-      }
-  }*/
+}
+#gallery span .image {
+  transition: all 180s ease;
+  filter: grayscale(1);
+}
+#gallery span .image:hover {
+  filter: grayscale(0);
+  transition: all 1s ease;
 }
 .gallerytitle {
   top: 0;
@@ -119,11 +120,11 @@
 #gallery .iframeholder {
   height: 400px;
   width: 400px;
-  /*filter: grayscale(1);
+  filter: grayscale(1);
+  transition: all 180s ease;
+}
+#gallery .iframeholder:hover {
+  filter: grayscale(0);
   transition: all 1s ease;
-  &:hover {
-      //transform: rotate(360deg);
-      filter: grayscale(0);//hue-rotate(90deg);
-  }*/
 }
 /*# sourceMappingURL=art.55625f14.css.map */
