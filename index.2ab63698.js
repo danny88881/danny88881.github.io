@@ -5654,8 +5654,8 @@ function loadSong(song) {
     context.resume();
     var current_song = song;
     current_index = songQueue.indexOf(current_song);
-    audio.src = "./songs/audio/" + songs[current_song][SEC] + "/" + songs[current_song][SRC] + ".ogg";
-    record_image.src = "./songs/images/" + songs[current_song][IMG] + ".webp";
+    audio.src = `/songs/audio/` + songs[current_song][SEC] + "/" + songs[current_song][SRC] + ".ogg";
+    record_image.src = `/songs/images/` + songs[current_song][IMG] + ".webp";
     max_volume = songs[current_song][VOL];
     audio.volume = max_volume * volume / 100;
     songname.innerText = song;
@@ -5688,7 +5688,6 @@ function set_playpause(play) {
     }
 }
 function scrollUpdate(fade_items) {
-    console.log("SCROLLUPDATE");
     for(var i = 0; i < fade_items.length; ++i){
         var rect = fade_items[i].getBoundingClientRect();
         var bottom = rect.bottom;
@@ -5775,7 +5774,7 @@ function loadSongs(mine, illegal, date) {
         if (elem != null) {
             var inhtml = elem.innerHTML;
             inhtml += `<div onclick='loadSong("${key}")' class='song item fade' style='animation: wiggle-float-${Boolean(Math.floor(Math.random() * 2)) ? "l" : "r"} ${Math.random() * 0.4 - 0.2 + 3.2}s ease-in-out ${Math.random() * 1}s infinite; 
-            background-image: url("./songs/images/${val[IMG]}.webp");'><div>${key}</div></div>`;
+            background-image: url("/songs/images/${val[IMG]}.webp");'><div>${key}</div></div>`;
             elem.innerHTML = inhtml;
         }
     }
@@ -5997,6 +5996,10 @@ class indexRenderer extends _highwayDefault.default.Renderer {
     onLeave() {
     }
     onEnterCompleted() {
+        document.body.classList.remove("games");
+        document.body.classList.remove("music");
+        document.body.classList.remove("art");
+        document.body.classList.remove("me");
     }
     onLeaveCompleted() {
     }
@@ -6011,10 +6014,18 @@ var _highwayDefault = parcelHelpers.interopDefault(_highway);
 var process = require("process");
 class gameGalleryRenderer extends _highwayDefault.default.Renderer {
     onEnter() {
+        document.querySelector("#main-nav").classList.add('compact');
+        document.body.classList.add("games");
     }
     onLeave() {
+        document.body.classList.remove("games");
     }
     onEnterCompleted() {
+        document.body.classList.remove("games");
+        document.body.classList.remove("music");
+        document.body.classList.remove("art");
+        document.body.classList.remove("me");
+        document.body.classList.add("games");
         initGameGallery();
         const GODOT_CONFIG = {
             "args": [],

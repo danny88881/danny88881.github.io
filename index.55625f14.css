@@ -1,0 +1,130 @@
+@font-face {
+  font-family: "Abril";
+  src: url(AbrilFatface.29ffdd7e.ttf);
+}
+@font-face {
+  font-family: "Lobster";
+  src: url(Lobster.21d2b05f.ttf);
+}
+@font-face {
+  font-family: "Architects";
+  src: url(Architects.e71293d5.ttf);
+}
+.mainart {
+  position: absolute;
+  width: 100%;
+  height: auto;
+  font-family: "Abril", "Courier New", Courier, monospace;
+  color: var(--negative);
+  transition: color 0.2s ease-in;
+}
+.mainart svg {
+  height: 0;
+}
+#arttitle {
+  color: var(--theme-3-primary);
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 700px;
+  text-align: center;
+  font-size: 600px;
+  font-family: "Abril", "Courier New", Courier, monospace;
+  top: 4%;
+  transition: 0.2s ease-in-out;
+  text-shadow: #727223 0px 5px, #727223 0px 10px, #727223 0px 15px, #727223 0px 20px, #727223 0px 25px, #727223 0px 30px;
+}
+.light #arttitle {
+  text-shadow: #252578 0px 5px, #252578 0px 10px, #252578 0px 15px, #252578 0px 20px, #252578 0px 25px, #252578 0px 30px;
+}
+#gallery {
+  position: relative;
+  display: flex;
+  max-width: 100%;
+  height: auto;
+  top: 200px;
+  margin: 80px;
+  margin-bottom: 500px;
+  gap: 120px;
+  flex-wrap: wrap-reverse;
+  align-items: center;
+}
+#gallery .image {
+  vertical-align: bottom;
+  color: var(--theme-3-primary);
+  height: auto;
+  width: auto;
+  border: solid;
+  border-width: 24px;
+  margin: auto;
+  transition: 0.2s ease-in;
+}
+.imagetitle {
+  position: relative;
+  left: 0px;
+  font-size: 36px;
+}
+.imagedate {
+  position: relative;
+  top: -5px;
+  font-size: 24px;
+}
+#gallery span {
+  height: 400px;
+  width: 400px;
+  pointer-events: all;
+}
+#gallery span .image {
+  transition: all 180s ease;
+  filter: grayscale(1);
+}
+#gallery span .image:hover {
+  filter: grayscale(0);
+  transition: all 1s ease;
+}
+.gallerytitle {
+  top: 0;
+}
+#arttitlecanvas {
+  position: relative;
+  top: 0;
+  left: 0;
+  pointer-events: all;
+  filter: url(#goo);
+}
+#websiteart {
+  color: var(--theme-3-primary);
+  position: relative;
+  pointer-events: all;
+  left: -400px;
+  top: -400px;
+  height: 1000px;
+  width: 1000px;
+  transform: scale(0.4);
+  border: solid;
+  border-width: 100px;
+  transition: color 0.2s ease-in;
+  animation: wiggle-float-iframe 3.4s ease-in-out infinite;
+}
+.subtitle {
+  width: 100%;
+  text-align: center;
+  font-size: 64px;
+}
+.iframetitle {
+  top: calc(100% + 34px);
+  left: -36px;
+  font-size: 36px;
+  position: absolute;
+}
+#gallery .iframeholder {
+  height: 400px;
+  width: 400px;
+  filter: grayscale(1);
+  transition: all 180s ease;
+}
+#gallery .iframeholder:hover {
+  filter: grayscale(0);
+  transition: all 1s ease;
+}
+/*# sourceMappingURL=index.55625f14.css.map */

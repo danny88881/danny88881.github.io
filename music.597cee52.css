@@ -1,0 +1,178 @@
+.mainme {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  font-family: "MajorMono";
+}
+
+.logo {
+  background-image: url(Logo.10418436.svg);
+  background-size: 400px 400px;
+  opacity: 60%;
+  width: 400px;
+  height: 400px;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: -8;
+  top: 0;
+}
+
+.logo path {
+  transition: stroke 0.2s ease-in-out;
+}
+
+.logo path.logobar1 {
+  stroke: var(--theme-1-primary);
+}
+
+.logo path.logobar2 {
+  stroke: var(--theme-2-primary);
+}
+
+.logo path.logobar3 {
+  stroke: var(--theme-3-primary);
+}
+
+.logo path.logobar4 {
+  stroke: var(--theme-4-primary);
+}
+
+#mecont {
+  font-size: 200px;
+  width: 100%;
+  text-align: center;
+  position: relative;
+  top: 30%;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  justify-content: center;
+}
+
+#mecont iframe {
+  width: 80%;
+  pointer-events: all;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#mecont h1 {
+  font-size: 100px;
+  width: 100%;
+  font-weight: normal;
+}
+
+#mecont h2 {
+  font-size: 50px;
+  width: 80%;
+  padding-left: 50px;
+  font-weight: normal;
+  line-height: 80px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#mecont a {
+  pointer-events: all;
+  position: relative;
+  display: inline-block;
+  height: 100px;
+  width: 240px;
+  font-family: "Courier New", Courier, monospace;
+  font-weight: bold;
+  transition: 0.2s ease-in-out;
+  text-decoration: none;
+}
+
+#mecont a:hover {
+  font-size: 60px;
+}
+
+.emojibg {
+  position: absolute;
+  z-index: -1;
+  font-size: 100px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+#mecont a.gamelink {
+  color: var(--theme-1-primary);
+  animation: wiggle-float-r 3.2s ease-in-out 0.8s infinite;
+}
+
+#mecont a.gamelink:hover {
+  font-family: "VCR", "Courier New", Courier, monospace;
+}
+
+#mecont a.musiclink {
+  color: var(--theme-2-primary);
+  animation: wiggle-float-l 3.4s ease-in-out 0.4s infinite;
+}
+
+#mecont a.musiclink:hover {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+#mecont a.artlink {
+  color: var(--theme-3-primary);
+  animation: wiggle-float-r 3.1s ease-in-out 0.5s infinite;
+}
+
+#mecont a.resumelink {
+  color: var(--theme-4-primary);
+  animation: wiggle-float-r 3.3s ease-in-out 0.2s infinite;
+}
+
+#mecont a.artlink:hover {
+  font-family: "Abril", "Courier New", Courier, monospace;
+}
+
+#mecont a.bloglink {
+  color: var(--theme-4-primary);
+  animation: wiggle-float-r 3.6s ease-in-out 0.5s infinite;
+}
+
+@keyframes wiggle-float-l {
+  from {
+    transform: translate(0, 0px) rotate(-5deg);
+    text-shadow: rgba(129, 129, 129, 0.5) 0px 0px, rgba(129, 129, 129, 0.2) 0px 0px;
+  }
+  25% {
+    text-shadow: rgba(129, 129, 129, 0.5) 0px -4px, rgba(129, 129, 129, 0.2) 0px -8px;
+  }
+  55% {
+    transform: translate(0, 30px) rotate(5deg);
+  }
+  75% {
+    text-shadow: rgba(129, 129, 129, 0.5) 0px 4px, rgba(129, 129, 129, 0.2) 0px 8px;
+  }
+  to {
+    transform: translate(0, 0px) rotate(-5deg);
+    text-shadow: rgba(129, 129, 129, 0.5) 0px 0px, rgba(129, 129, 129, 0.2) 0px 0px;
+  }
+}
+
+@keyframes wiggle-float-r {
+  from {
+    transform: translate(0, 0px) rotate(5deg);
+    text-shadow: rgba(129, 129, 129, 0.5) 0px 0px, rgba(129, 129, 129, 0.2) 0px 0px;
+  }
+  25% {
+    text-shadow: rgba(129, 129, 129, 0.5) 0px -4px, rgba(129, 129, 129, 0.2) 0px -8px;
+  }
+  55% {
+    transform: translate(0, 30px) rotate(-5deg);
+  }
+  75% {
+    text-shadow: rgba(129, 129, 129, 0.5) 0px 4px, rgba(129, 129, 129, 0.2) 0px 8px;
+  }
+  to {
+    transform: translate(0, 0px) rotate(5deg);
+    text-shadow: rgba(129, 129, 129, 0.5) 0px 0px, rgba(129, 129, 129, 0.2) 0px 0px;
+  }
+}
+/*# sourceMappingURL=music.597cee52.css.map */
