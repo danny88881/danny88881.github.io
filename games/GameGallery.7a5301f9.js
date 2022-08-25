@@ -1,27 +1,25 @@
-var Godot = function() {
+var Godot = (()=>{
     var _scriptDir = typeof document !== 'undefined' && document.currentScript ? document.currentScript.src : undefined;
     return function(Godot1) {
         Godot1 = Godot1 || {
         };
-        var Module = typeof Godot1 !== "undefined" ? Godot1 : {
+        var Module = typeof Godot1 != "undefined" ? Godot1 : {
         };
         var readyPromiseResolve, readyPromiseReject;
         Module["ready"] = new Promise(function(resolve, reject) {
             readyPromiseResolve = resolve;
             readyPromiseReject = reject;
         });
-        var moduleOverrides = {
-        };
-        var key1;
-        for(key1 in Module)if (Module.hasOwnProperty(key1)) moduleOverrides[key1] = Module[key1];
+        var moduleOverrides = Object.assign({
+        }, Module);
         var arguments_ = [];
         var thisProgram = "./this.program";
-        var quit_ = function(status, toThrow) {
+        var quit_ = (status, toThrow)=>{
             throw toThrow;
         };
-        var ENVIRONMENT_IS_WEB = typeof window === "object";
-        var ENVIRONMENT_IS_WORKER = typeof importScripts === "function";
-        var ENVIRONMENT_IS_NODE = typeof process === "object" && typeof process.versions === "object" && typeof process.versions.node === "string";
+        var ENVIRONMENT_IS_WEB = typeof window == "object";
+        var ENVIRONMENT_IS_WORKER = typeof importScripts == "function";
+        var ENVIRONMENT_IS_NODE = typeof process == "object" && typeof process.versions == "object" && typeof process.versions.node == "string";
         var scriptDirectory = "";
         function locateFile(path) {
             if (Module["locateFile"]) return Module["locateFile"](path, scriptDirectory);
@@ -30,28 +28,28 @@ var Godot = function() {
         var read_, readAsync, readBinary, setWindowTitle;
         if (ENVIRONMENT_IS_WEB || ENVIRONMENT_IS_WORKER) {
             if (ENVIRONMENT_IS_WORKER) scriptDirectory = self.location.href;
-            else if (typeof document !== "undefined" && document.currentScript) scriptDirectory = document.currentScript.src;
+            else if (typeof document != "undefined" && document.currentScript) scriptDirectory = document.currentScript.src;
             if (_scriptDir) scriptDirectory = _scriptDir;
-            if (scriptDirectory.indexOf("blob:") !== 0) scriptDirectory = scriptDirectory.substr(0, scriptDirectory.lastIndexOf("/") + 1);
+            if (scriptDirectory.indexOf("blob:") !== 0) scriptDirectory = scriptDirectory.substr(0, scriptDirectory.replace(/[?#].*/, "").lastIndexOf("/") + 1);
             else scriptDirectory = "";
-            read_ = function(url) {
+            read_ = (url)=>{
                 var xhr = new XMLHttpRequest;
                 xhr.open("GET", url, false);
                 xhr.send(null);
                 return xhr.responseText;
             };
-            if (ENVIRONMENT_IS_WORKER) readBinary = function(url) {
+            if (ENVIRONMENT_IS_WORKER) readBinary = (url)=>{
                 var xhr = new XMLHttpRequest;
                 xhr.open("GET", url, false);
                 xhr.responseType = "arraybuffer";
                 xhr.send(null);
                 return new Uint8Array(xhr.response);
             };
-            readAsync = function(url, onload, onerror) {
+            readAsync = (url, onload, onerror)=>{
                 var xhr = new XMLHttpRequest;
                 xhr.open("GET", url, true);
                 xhr.responseType = "arraybuffer";
-                xhr.onload = function() {
+                xhr.onload = ()=>{
                     if (xhr.status == 200 || xhr.status == 0 && xhr.response) {
                         onload(xhr.response);
                         return;
@@ -61,13 +59,12 @@ var Godot = function() {
                 xhr.onerror = onerror;
                 xhr.send(null);
             };
-            setWindowTitle = function(title) {
-                document.title = title;
-            };
+            setWindowTitle = (title)=>document.title = title
+            ;
         }
         var out1 = Module["print"] || console.log.bind(console);
         var err1 = Module["printErr"] || console.warn.bind(console);
-        for(key1 in moduleOverrides)if (moduleOverrides.hasOwnProperty(key1)) Module[key1] = moduleOverrides[key1];
+        Object.assign(Module, moduleOverrides);
         moduleOverrides = null;
         if (Module["arguments"]) arguments_ = Module["arguments"];
         if (Module["thisProgram"]) thisProgram = Module["thisProgram"];
@@ -81,80 +78,23 @@ var Godot = function() {
             }
         }
         var tempRet0 = 0;
-        var setTempRet0 = function(value) {
+        var setTempRet0 = (value)=>{
             tempRet0 = value;
         };
-        var getTempRet0 = function() {
-            return tempRet0;
-        };
+        var getTempRet0 = ()=>tempRet0
+        ;
         var wasmBinary;
         if (Module["wasmBinary"]) wasmBinary = Module["wasmBinary"];
         var noExitRuntime = Module["noExitRuntime"] || false;
-        if (typeof WebAssembly !== "object") abort("no native wasm support detected");
-        function setValue(ptr, value, type, noSafe) {
-            type = type || "i8";
-            if (type.charAt(type.length - 1) === "*") type = "i32";
-            switch(type){
-                case "i1":
-                    HEAP8[ptr >> 0] = value;
-                    break;
-                case "i8":
-                    HEAP8[ptr >> 0] = value;
-                    break;
-                case "i16":
-                    HEAP16[ptr >> 1] = value;
-                    break;
-                case "i32":
-                    HEAP32[ptr >> 2] = value;
-                    break;
-                case "i64":
-                    tempI64 = [
-                        value >>> 0,
-                        (tempDouble = value, +Math.abs(tempDouble) >= 1 ? tempDouble > 0 ? (Math.min(+Math.floor(tempDouble / 4294967296), 4294967295) | 0) >>> 0 : ~~+Math.ceil((tempDouble - +(~~tempDouble >>> 0)) / 4294967296) >>> 0 : 0)
-                    ], HEAP32[ptr >> 2] = tempI64[0], HEAP32[ptr + 4 >> 2] = tempI64[1];
-                    break;
-                case "float":
-                    HEAPF32[ptr >> 2] = value;
-                    break;
-                case "double":
-                    HEAPF64[ptr >> 3] = value;
-                    break;
-                default:
-                    abort("invalid type for setValue: " + type);
-            }
-        }
-        function getValue(ptr, type, noSafe) {
-            type = type || "i8";
-            if (type.charAt(type.length - 1) === "*") type = "i32";
-            switch(type){
-                case "i1":
-                    return HEAP8[ptr >> 0];
-                case "i8":
-                    return HEAP8[ptr >> 0];
-                case "i16":
-                    return HEAP16[ptr >> 1];
-                case "i32":
-                    return HEAP32[ptr >> 2];
-                case "i64":
-                    return HEAP32[ptr >> 2];
-                case "float":
-                    return HEAPF32[ptr >> 2];
-                case "double":
-                    return HEAPF64[ptr >> 3];
-                default:
-                    abort("invalid type for getValue: " + type);
-            }
-            return null;
-        }
+        if (typeof WebAssembly != "object") abort("no native wasm support detected");
         var wasmMemory;
         var ABORT = false;
         var EXITSTATUS;
         function assert(condition, text) {
-            if (!condition) abort("Assertion failed: " + text);
+            if (!condition) abort(text);
         }
         function getCFunc(ident) {
             var func = Module["_" + ident];
-            assert(func, "Cannot call unknown function " + ident + ", make sure it is exported");
             return func;
         }
         function ccall(ident, returnType, argTypes, args, opts) {
@@ -190,8 +130,11 @@ var Godot = function() {
                 } else cArgs[i] = args[i];
             }
             var ret1 = func.apply(null, cArgs);
-            ret1 = convertReturnValue(ret1);
-            if (stack !== 0) stackRestore(stack);
+            function onDone(ret) {
+                if (stack !== 0) stackRestore(stack);
+                return convertReturnValue(ret);
+            }
+            ret1 = onDone(ret1);
             return ret1;
         }
         function cwrap(ident, returnType, argTypes, opts) {
@@ -205,28 +148,28 @@ var Godot = function() {
                 return ccall(ident, returnType, argTypes, arguments, opts);
             };
         }
-        var UTF8Decoder = typeof TextDecoder !== "undefined" ? new TextDecoder("utf8") : undefined;
-        function UTF8ArrayToString(heap, idx, maxBytesToRead) {
+        var UTF8Decoder = typeof TextDecoder != "undefined" ? new TextDecoder("utf8") : undefined;
+        function UTF8ArrayToString(heapOrArray, idx, maxBytesToRead) {
             var endIdx = idx + maxBytesToRead;
             var endPtr = idx;
-            while(heap[endPtr] && !(endPtr >= endIdx))++endPtr;
-            if (endPtr - idx > 16 && heap.subarray && UTF8Decoder) return UTF8Decoder.decode(heap.subarray(idx, endPtr));
+            while(heapOrArray[endPtr] && !(endPtr >= endIdx))++endPtr;
+            if (endPtr - idx > 16 && heapOrArray.buffer && UTF8Decoder) return UTF8Decoder.decode(heapOrArray.subarray(idx, endPtr));
             else {
                 var str = "";
                 while(idx < endPtr){
-                    var u0 = heap[idx++];
+                    var u0 = heapOrArray[idx++];
                     if (!(u0 & 128)) {
                         str += String.fromCharCode(u0);
                         continue;
                     }
-                    var u1 = heap[idx++] & 63;
+                    var u1 = heapOrArray[idx++] & 63;
                     if ((u0 & 224) == 192) {
                         str += String.fromCharCode((u0 & 31) << 6 | u1);
                         continue;
                     }
-                    var u2 = heap[idx++] & 63;
+                    var u2 = heapOrArray[idx++] & 63;
                     if ((u0 & 240) == 224) u0 = (u0 & 15) << 12 | u1 << 6 | u2;
-                    else u0 = (u0 & 7) << 18 | u1 << 12 | u2 << 6 | heap[idx++] & 63;
+                    else u0 = (u0 & 7) << 18 | u1 << 12 | u2 << 6 | heapOrArray[idx++] & 63;
                     if (u0 < 65536) str += String.fromCharCode(u0);
                     else {
                         var ch = u0 - 65536;
@@ -306,10 +249,6 @@ var Godot = function() {
             for(var i = 0; i < str.length; ++i)HEAP8[(buffer++) >> 0] = str.charCodeAt(i);
             if (!dontAddNull) HEAP8[buffer >> 0] = 0;
         }
-        function alignUp(x, multiple) {
-            if (x % multiple > 0) x += multiple - x % multiple;
-            return x;
-        }
         var buffer1, HEAP8, HEAPU8, HEAP16, HEAPU16, HEAP32, HEAPU32, HEAPF32, HEAPF64;
         function updateGlobalBufferAndViews(buf) {
             buffer1 = buf;
@@ -357,9 +296,11 @@ var Godot = function() {
             callRuntimeCallbacks(__ATMAIN__);
         }
         function exitRuntime() {
+            ___funcs_on_exit();
             callRuntimeCallbacks(__ATEXIT__);
             FS.quit();
             TTY.shutdown();
+            IDBFS.quit();
             runtimeExited = true;
         }
         function postRun() {
@@ -405,17 +346,13 @@ var Godot = function() {
                 }
             }
         }
-        Module["preloadedImages"] = {
-        };
-        Module["preloadedAudios"] = {
-        };
         function abort(what) {
             if (Module["onAbort"]) Module["onAbort"](what);
-            what += "";
+            what = "Aborted(" + what + ")";
             err1(what);
             ABORT = true;
             EXITSTATUS = 1;
-            what = "abort(" + what + "). Build with -s ASSERTIONS=1 for more info.";
+            what += ". Build with -sASSERTIONS for more info.";
             var e = new WebAssembly.RuntimeError(what);
             readyPromiseReject(e);
             throw e;
@@ -425,7 +362,7 @@ var Godot = function() {
             return filename.startsWith(dataURIPrefix);
         }
         var wasmBinaryFile;
-        wasmBinaryFile = "godot.javascript.opt.debug.wasm";
+        wasmBinaryFile = "godot.javascript.opt.wasm";
         if (!isDataURI(wasmBinaryFile)) wasmBinaryFile = locateFile(wasmBinaryFile);
         function getBinary(file) {
             try {
@@ -438,7 +375,7 @@ var Godot = function() {
         }
         function getBinaryPromise() {
             if (!wasmBinary && (ENVIRONMENT_IS_WEB || ENVIRONMENT_IS_WORKER)) {
-                if (typeof fetch === "function") return fetch(wasmBinaryFile, {
+                if (typeof fetch == "function") return fetch(wasmBinaryFile, {
                     credentials: "same-origin"
                 }).then(function(response) {
                     if (!response["ok"]) throw "failed to load wasm binary file at '" + wasmBinaryFile + "'";
@@ -460,7 +397,7 @@ var Godot = function() {
                 Module["asm"] = exports;
                 wasmMemory = Module["asm"]["dk"];
                 updateGlobalBufferAndViews(wasmMemory.buffer);
-                wasmTable = Module["asm"]["xk"];
+                wasmTable = Module["asm"]["rk"];
                 addOnInit(Module["asm"]["ek"]);
                 removeRunDependency("wasm-instantiate");
             }
@@ -470,15 +407,16 @@ var Godot = function() {
             }
             function instantiateArrayBuffer(receiver) {
                 return getBinaryPromise().then(function(binary) {
-                    var result = WebAssembly.instantiate(binary, info);
-                    return result;
+                    return WebAssembly.instantiate(binary, info);
+                }).then(function(instance) {
+                    return instance;
                 }).then(receiver, function(reason) {
                     err1("failed to asynchronously prepare wasm: " + reason);
                     abort(reason);
                 });
             }
             function instantiateAsync() {
-                if (!wasmBinary && typeof WebAssembly.instantiateStreaming === "function" && !isDataURI(wasmBinaryFile) && typeof fetch === "function") return fetch(wasmBinaryFile, {
+                if (!wasmBinary && typeof WebAssembly.instantiateStreaming == "function" && !isDataURI(wasmBinaryFile) && typeof fetch == "function") return fetch(wasmBinaryFile, {
                     credentials: "same-origin"
                 }).then(function(response) {
                     var result = WebAssembly.instantiateStreaming(response, info);
@@ -511,34 +449,83 @@ var Godot = function() {
                     continue;
                 }
                 var func = callback.func;
-                if (typeof func === "number") {
-                    if (callback.arg === undefined) wasmTable.get(func)();
-                    else wasmTable.get(func)(callback.arg);
+                if (typeof func == "number") {
+                    if (callback.arg === undefined) getWasmTableEntry(func)();
+                    else getWasmTableEntry(func)(callback.arg);
                 } else func(callback.arg === undefined ? null : callback.arg);
             }
         }
-        function ___assert_fail(condition, filename, line, func) {
-            abort("Assertion failed: " + UTF8ToString(condition) + ", at: " + [
-                filename ? UTF8ToString(filename) : "unknown filename",
-                line,
-                func ? UTF8ToString(func) : "unknown function"
-            ]);
+        function getValue(ptr, type = "i8") {
+            if (type.endsWith("*")) type = "i32";
+            switch(type){
+                case "i1":
+                    return HEAP8[ptr >> 0];
+                case "i8":
+                    return HEAP8[ptr >> 0];
+                case "i16":
+                    return HEAP16[ptr >> 1];
+                case "i32":
+                    return HEAP32[ptr >> 2];
+                case "i64":
+                    return HEAP32[ptr >> 2];
+                case "float":
+                    return HEAPF32[ptr >> 2];
+                case "double":
+                    return Number(HEAPF64[ptr >> 3]);
+                default:
+                    abort("invalid type for getValue: " + type);
+            }
+            return null;
         }
-        function _atexit(func, arg) {
-            __ATEXIT__.unshift({
-                func: func,
-                arg: arg
-            });
+        function getWasmTableEntry(funcPtr) {
+            return wasmTable.get(funcPtr);
         }
-        function ___cxa_atexit(a0, a1) {
-            return _atexit(a0, a1);
+        function handleException(e) {
+            if (e instanceof ExitStatus || e == "unwind") return EXITSTATUS;
+            quit_(1, e);
+        }
+        function setValue(ptr, value, type = "i8") {
+            if (type.endsWith("*")) type = "i32";
+            switch(type){
+                case "i1":
+                    HEAP8[ptr >> 0] = value;
+                    break;
+                case "i8":
+                    HEAP8[ptr >> 0] = value;
+                    break;
+                case "i16":
+                    HEAP16[ptr >> 1] = value;
+                    break;
+                case "i32":
+                    HEAP32[ptr >> 2] = value;
+                    break;
+                case "i64":
+                    tempI64 = [
+                        value >>> 0,
+                        (tempDouble = value, +Math.abs(tempDouble) >= 1 ? tempDouble > 0 ? (Math.min(+Math.floor(tempDouble / 4294967296), 4294967295) | 0) >>> 0 : ~~+Math.ceil((tempDouble - +(~~tempDouble >>> 0)) / 4294967296) >>> 0 : 0)
+                    ], HEAP32[ptr >> 2] = tempI64[0], HEAP32[ptr + 4 >> 2] = tempI64[1];
+                    break;
+                case "float":
+                    HEAPF32[ptr >> 2] = value;
+                    break;
+                case "double":
+                    HEAPF64[ptr >> 3] = value;
+                    break;
+                default:
+                    abort("invalid type for setValue: " + type);
+            }
+        }
+        function ___call_sighandler(fp, sig) {
+            getWasmTableEntry(fp)(sig);
         }
         var PATH = {
-            splitPath: function(filename) {
+            isAbs: (path)=>path.charAt(0) === "/"
+            ,
+            splitPath: (filename)=>{
                 var splitPathRe = /^(\/?|)([\s\S]*?)((?:\.{1,2}|[^\/]+?|)(\.[^.\/]*|))(?:[\/]*)$/;
                 return splitPathRe.exec(filename).slice(1);
             },
-            normalizeArray: function(parts, allowAboveRoot) {
+            normalizeArray: (parts, allowAboveRoot)=>{
                 var up = 0;
                 for(var i = parts.length - 1; i >= 0; i--){
                     var last = parts[i];
@@ -554,22 +541,21 @@ var Godot = function() {
                 if (allowAboveRoot) for(; up; up--)parts.unshift("..");
                 return parts;
             },
-            normalize: function(path) {
-                var isAbsolute = path.charAt(0) === "/", trailingSlash = path.substr(-1) === "/";
-                path = PATH.normalizeArray(path.split("/").filter(function(p) {
-                    return !!p;
-                }), !isAbsolute).join("/");
+            normalize: (path)=>{
+                var isAbsolute = PATH.isAbs(path), trailingSlash = path.substr(-1) === "/";
+                path = PATH.normalizeArray(path.split("/").filter((p)=>!!p
+                ), !isAbsolute).join("/");
                 if (!path && !isAbsolute) path = ".";
                 if (path && trailingSlash) path += "/";
                 return (isAbsolute ? "/" : "") + path;
             },
-            dirname: function(path) {
+            dirname: (path)=>{
                 var result = PATH.splitPath(path), root = result[0], dir = result[1];
                 if (!root && !dir) return ".";
                 if (dir) dir = dir.substr(0, dir.length - 1);
                 return root + dir;
             },
-            basename: function(path) {
+            basename: (path)=>{
                 if (path === "/") return "/";
                 path = PATH.normalize(path);
                 path = path.replace(/\/$/, "");
@@ -577,19 +563,16 @@ var Godot = function() {
                 if (lastSlash === -1) return path;
                 return path.substr(lastSlash + 1);
             },
-            extname: function(path) {
-                return PATH.splitPath(path)[3];
-            },
             join: function() {
                 var paths = Array.prototype.slice.call(arguments, 0);
                 return PATH.normalize(paths.join("/"));
             },
-            join2: function(l, r) {
+            join2: (l, r)=>{
                 return PATH.normalize(l + "/" + r);
             }
         };
         function getRandomDevice() {
-            if (typeof crypto === "object" && typeof crypto["getRandomValues"] === "function") {
+            if (typeof crypto == "object" && typeof crypto["getRandomValues"] == "function") {
                 var randomBuffer = new Uint8Array(1);
                 return function() {
                     crypto.getRandomValues(randomBuffer);
@@ -604,17 +587,16 @@ var Godot = function() {
                 var resolvedPath = "", resolvedAbsolute = false;
                 for(var i = arguments.length - 1; i >= -1 && !resolvedAbsolute; i--){
                     var path = i >= 0 ? arguments[i] : FS.cwd();
-                    if (typeof path !== "string") throw new TypeError("Arguments to path.resolve must be strings");
+                    if (typeof path != "string") throw new TypeError("Arguments to path.resolve must be strings");
                     else if (!path) return "";
                     resolvedPath = path + "/" + resolvedPath;
-                    resolvedAbsolute = path.charAt(0) === "/";
+                    resolvedAbsolute = PATH.isAbs(path);
                 }
-                resolvedPath = PATH.normalizeArray(resolvedPath.split("/").filter(function(p) {
-                    return !!p;
-                }), !resolvedAbsolute).join("/");
+                resolvedPath = PATH.normalizeArray(resolvedPath.split("/").filter((p)=>!!p
+                ), !resolvedAbsolute).join("/");
                 return (resolvedAbsolute ? "/" : "") + resolvedPath || ".";
             },
-            relative: function(from, to) {
+            relative: (from, to)=>{
                 from = PATH_FS.resolve(from).substr(1);
                 to = PATH_FS.resolve(to).substr(1);
                 function trim(arr) {
@@ -985,8 +967,7 @@ var Godot = function() {
                     MEMFS.expandFileStorage(stream.node, offset + length);
                     stream.node.usedBytes = Math.max(stream.node.usedBytes, offset + length);
                 },
-                mmap: function(stream, address, length, position, prot, flags) {
-                    if (address !== 0) throw new FS.ErrnoError(28);
+                mmap: function(stream, length, position, prot, flags) {
                     if (!FS.isFile(stream.node.mode)) throw new FS.ErrnoError(43);
                     var ptr;
                     var allocated;
@@ -1032,10 +1013,10 @@ var Godot = function() {
         var IDBFS = {
             dbs: {
             },
-            indexedDB: function() {
-                if (typeof indexedDB !== "undefined") return indexedDB;
+            indexedDB: ()=>{
+                if (typeof indexedDB != "undefined") return indexedDB;
                 var ret = null;
-                if (typeof window === "object") ret = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
+                if (typeof window == "object") ret = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
                 assert(ret, "IDBFS used, but indexedDB not supported");
                 return ret;
             },
@@ -1044,10 +1025,10 @@ var Godot = function() {
             mount: function(mount) {
                 return MEMFS.mount.apply(null, arguments);
             },
-            syncfs: function(mount, populate, callback) {
-                IDBFS.getLocalSet(mount, function(err2, local) {
+            syncfs: (mount, populate, callback)=>{
+                IDBFS.getLocalSet(mount, (err2, local)=>{
                     if (err2) return callback(err2);
-                    IDBFS.getRemoteSet(mount, function(err, remote) {
+                    IDBFS.getRemoteSet(mount, (err, remote)=>{
                         if (err) return callback(err);
                         var src = populate ? remote : local;
                         var dst = populate ? local : remote;
@@ -1055,7 +1036,13 @@ var Godot = function() {
                     });
                 });
             },
-            getDB: function(name, callback) {
+            quit: ()=>{
+                Object.values(IDBFS.dbs).forEach((value)=>value.close()
+                );
+                IDBFS.dbs = {
+                };
+            },
+            getDB: (name, callback)=>{
                 var db1 = IDBFS.dbs[name];
                 if (db1) return callback(null, db1);
                 var req;
@@ -1065,7 +1052,7 @@ var Godot = function() {
                     return callback(e1);
                 }
                 if (!req) return callback("Unable to connect to IndexedDB");
-                req.onupgradeneeded = function(e) {
+                req.onupgradeneeded = (e)=>{
                     var db = e.target.result;
                     var transaction = e.target.transaction;
                     var fileStore;
@@ -1075,24 +1062,24 @@ var Godot = function() {
                         unique: false
                     });
                 };
-                req.onsuccess = function() {
+                req.onsuccess = ()=>{
                     db1 = req.result;
                     IDBFS.dbs[name] = db1;
                     callback(null, db1);
                 };
-                req.onerror = function(e) {
+                req.onerror = (e)=>{
                     callback(this.error);
                     e.preventDefault();
                 };
             },
-            getLocalSet: function(mount, callback) {
+            getLocalSet: (mount, callback)=>{
                 var entries = {
                 };
                 function isRealDir(p) {
                     return p !== "." && p !== "..";
                 }
                 function toAbsolute(root) {
-                    return function(p) {
+                    return (p)=>{
                         return PATH.join2(root, p);
                     };
                 }
@@ -1115,22 +1102,22 @@ var Godot = function() {
                     entries: entries
                 });
             },
-            getRemoteSet: function(mount, callback) {
+            getRemoteSet: (mount, callback)=>{
                 var entries = {
                 };
-                IDBFS.getDB(mount.mountpoint, function(err, db) {
+                IDBFS.getDB(mount.mountpoint, (err, db)=>{
                     if (err) return callback(err);
                     try {
                         var transaction = db.transaction([
                             IDBFS.DB_STORE_NAME
                         ], "readonly");
-                        transaction.onerror = function(e) {
+                        transaction.onerror = (e)=>{
                             callback(this.error);
                             e.preventDefault();
                         };
                         var store = transaction.objectStore(IDBFS.DB_STORE_NAME);
                         var index = store.index("timestamp");
-                        index.openKeyCursor().onsuccess = function(event) {
+                        index.openKeyCursor().onsuccess = (event)=>{
                             var cursor = event.target.result;
                             if (!cursor) return callback(null, {
                                 type: "remote",
@@ -1147,7 +1134,7 @@ var Godot = function() {
                     }
                 });
             },
-            loadLocalEntry: function(path, callback) {
+            loadLocalEntry: (path, callback)=>{
                 var stat, node;
                 try {
                     var lookup = FS.lookupPath(path);
@@ -1169,7 +1156,7 @@ var Godot = function() {
                     });
                 } else return callback(new Error("node type not supported"));
             },
-            storeLocalEntry: function(path, entry, callback) {
+            storeLocalEntry: (path, entry, callback)=>{
                 try {
                     if (FS.isDir(entry["mode"])) FS.mkdirTree(path, entry["mode"]);
                     else if (FS.isFile(entry["mode"])) FS.writeFile(path, entry["contents"], {
@@ -1183,9 +1170,8 @@ var Godot = function() {
                 }
                 callback(null);
             },
-            removeLocalEntry: function(path, callback) {
+            removeLocalEntry: (path, callback)=>{
                 try {
-                    var lookup = FS.lookupPath(path);
                     var stat = FS.stat(path);
                     if (FS.isDir(stat.mode)) FS.rmdir(path);
                     else if (FS.isFile(stat.mode)) FS.unlink(path);
@@ -1194,42 +1180,42 @@ var Godot = function() {
                 }
                 callback(null);
             },
-            loadRemoteEntry: function(store, path, callback) {
+            loadRemoteEntry: (store, path, callback)=>{
                 var req = store.get(path);
-                req.onsuccess = function(event) {
+                req.onsuccess = (event)=>{
                     callback(null, event.target.result);
                 };
-                req.onerror = function(e) {
+                req.onerror = (e)=>{
                     callback(this.error);
                     e.preventDefault();
                 };
             },
-            storeRemoteEntry: function(store, path, entry, callback) {
+            storeRemoteEntry: (store, path, entry, callback)=>{
                 try {
                     var req = store.put(entry, path);
                 } catch (e2) {
                     callback(e2);
                     return;
                 }
-                req.onsuccess = function() {
+                req.onsuccess = ()=>{
                     callback(null);
                 };
-                req.onerror = function(e) {
+                req.onerror = (e)=>{
                     callback(this.error);
                     e.preventDefault();
                 };
             },
-            removeRemoteEntry: function(store, path, callback) {
+            removeRemoteEntry: (store, path, callback)=>{
                 var req = store.delete(path);
-                req.onsuccess = function() {
+                req.onsuccess = ()=>{
                     callback(null);
                 };
-                req.onerror = function(e) {
+                req.onerror = (e)=>{
                     callback(this.error);
                     e.preventDefault();
                 };
             },
-            reconcile: function(src, dst, callback) {
+            reconcile: (src, dst, callback)=>{
                 var total = 0;
                 var create = [];
                 Object.keys(src.entries).forEach(function(key) {
@@ -1260,24 +1246,24 @@ var Godot = function() {
                         return callback(err);
                     }
                 }
-                transaction.onerror = function(e) {
+                transaction.onerror = (e)=>{
                     done(this.error);
                     e.preventDefault();
                 };
-                transaction.oncomplete = function(e) {
+                transaction.oncomplete = (e)=>{
                     if (!errored) callback(null);
                 };
-                create.sort().forEach(function(path) {
-                    if (dst.type === "local") IDBFS.loadRemoteEntry(store, path, function(err, entry) {
+                create.sort().forEach((path)=>{
+                    if (dst.type === "local") IDBFS.loadRemoteEntry(store, path, (err, entry)=>{
                         if (err) return done(err);
                         IDBFS.storeLocalEntry(path, entry, done);
                     });
-                    else IDBFS.loadLocalEntry(path, function(err, entry) {
+                    else IDBFS.loadLocalEntry(path, (err, entry)=>{
                         if (err) return done(err);
                         IDBFS.storeRemoteEntry(store, path, entry, done);
                     });
                 });
-                remove.sort().reverse().forEach(function(path) {
+                remove.sort().reverse().forEach((path)=>{
                     if (dst.type === "local") IDBFS.removeLocalEntry(path, done);
                     else IDBFS.removeRemoteEntry(store, path, done);
                 });
@@ -1294,23 +1280,14 @@ var Godot = function() {
             currentPath: "/",
             initialized: false,
             ignorePermissions: true,
-            trackingDelegate: {
-            },
-            tracking: {
-                openFlags: {
-                    READ: 1,
-                    WRITE: 2
-                }
-            },
             ErrnoError: null,
             genericErrors: {
             },
             filesystems: null,
             syncFSRequests: 0,
-            lookupPath: function(path, opts) {
+            lookupPath: (path, opts = {
+            })=>{
                 path = PATH_FS.resolve(FS.cwd(), path);
-                opts = opts || {
-                };
                 if (!path) return {
                     path: "",
                     node: null
@@ -1319,11 +1296,10 @@ var Godot = function() {
                     follow_mount: true,
                     recurse_count: 0
                 };
-                for(var key in defaults)if (opts[key] === undefined) opts[key] = defaults[key];
+                opts = Object.assign(defaults, opts);
                 if (opts.recurse_count > 8) throw new FS.ErrnoError(32);
-                var parts = PATH.normalizeArray(path.split("/").filter(function(p) {
-                    return !!p;
-                }), false);
+                var parts = PATH.normalizeArray(path.split("/").filter((p)=>!!p
+                ), false);
                 var current = FS.root;
                 var current_path = "/";
                 for(var i = 0; i < parts.length; i++){
@@ -1340,7 +1316,7 @@ var Godot = function() {
                             var link = FS.readlink(current_path);
                             current_path = PATH_FS.resolve(PATH.dirname(current_path), link);
                             var lookup = FS.lookupPath(current_path, {
-                                recurse_count: opts.recurse_count
+                                recurse_count: opts.recurse_count + 1
                             });
                             current = lookup.node;
                             if (count++ > 40) throw new FS.ErrnoError(32);
@@ -1352,7 +1328,7 @@ var Godot = function() {
                     node: current
                 };
             },
-            getPath: function(node) {
+            getPath: (node)=>{
                 var path;
                 while(true){
                     if (FS.isRoot(node)) {
@@ -1364,17 +1340,17 @@ var Godot = function() {
                     node = node.parent;
                 }
             },
-            hashName: function(parentid, name) {
+            hashName: (parentid, name)=>{
                 var hash = 0;
                 for(var i = 0; i < name.length; i++)hash = (hash << 5) - hash + name.charCodeAt(i) | 0;
                 return (parentid + hash >>> 0) % FS.nameTable.length;
             },
-            hashAddNode: function(node) {
+            hashAddNode: (node)=>{
                 var hash = FS.hashName(node.parent.id, node.name);
                 node.name_next = FS.nameTable[hash];
                 FS.nameTable[hash] = node;
             },
-            hashRemoveNode: function(node) {
+            hashRemoveNode: (node)=>{
                 var hash = FS.hashName(node.parent.id, node.name);
                 if (FS.nameTable[hash] === node) FS.nameTable[hash] = node.name_next;
                 else {
@@ -1388,7 +1364,7 @@ var Godot = function() {
                     }
                 }
             },
-            lookupNode: function(parent, name) {
+            lookupNode: (parent, name)=>{
                 var errCode = FS.mayLookup(parent);
                 if (errCode) throw new FS.ErrnoError(errCode, parent);
                 var hash = FS.hashName(parent.id, name);
@@ -1398,39 +1374,39 @@ var Godot = function() {
                 }
                 return FS.lookup(parent, name);
             },
-            createNode: function(parent, name, mode, rdev) {
+            createNode: (parent, name, mode, rdev)=>{
                 var node = new FS.FSNode(parent, name, mode, rdev);
                 FS.hashAddNode(node);
                 return node;
             },
-            destroyNode: function(node) {
+            destroyNode: (node)=>{
                 FS.hashRemoveNode(node);
             },
-            isRoot: function(node) {
+            isRoot: (node)=>{
                 return node === node.parent;
             },
-            isMountpoint: function(node) {
+            isMountpoint: (node)=>{
                 return !!node.mounted;
             },
-            isFile: function(mode) {
+            isFile: (mode)=>{
                 return (mode & 61440) === 32768;
             },
-            isDir: function(mode) {
+            isDir: (mode)=>{
                 return (mode & 61440) === 16384;
             },
-            isLink: function(mode) {
+            isLink: (mode)=>{
                 return (mode & 61440) === 40960;
             },
-            isChrdev: function(mode) {
+            isChrdev: (mode)=>{
                 return (mode & 61440) === 8192;
             },
-            isBlkdev: function(mode) {
+            isBlkdev: (mode)=>{
                 return (mode & 61440) === 24576;
             },
-            isFIFO: function(mode) {
+            isFIFO: (mode)=>{
                 return (mode & 61440) === 4096;
             },
-            isSocket: function(mode) {
+            isSocket: (mode)=>{
                 return (mode & 49152) === 49152;
             },
             flagModes: {
@@ -1441,12 +1417,12 @@ var Godot = function() {
                 "a": 1089,
                 "a+": 1090
             },
-            modeStringToFlags: function(str) {
+            modeStringToFlags: (str)=>{
                 var flags = FS.flagModes[str];
-                if (typeof flags === "undefined") throw new Error("Unknown file open mode: " + str);
+                if (typeof flags == "undefined") throw new Error("Unknown file open mode: " + str);
                 return flags;
             },
-            flagsToPermissionString: function(flag) {
+            flagsToPermissionString: (flag)=>{
                 var perms = [
                     "r",
                     "w",
@@ -1455,20 +1431,20 @@ var Godot = function() {
                 if (flag & 512) perms += "w";
                 return perms;
             },
-            nodePermissions: function(node, perms) {
+            nodePermissions: (node, perms)=>{
                 if (FS.ignorePermissions) return 0;
                 if (perms.includes("r") && !(node.mode & 292)) return 2;
                 else if (perms.includes("w") && !(node.mode & 146)) return 2;
                 else if (perms.includes("x") && !(node.mode & 73)) return 2;
                 return 0;
             },
-            mayLookup: function(dir) {
+            mayLookup: (dir)=>{
                 var errCode = FS.nodePermissions(dir, "x");
                 if (errCode) return errCode;
                 if (!dir.node_ops.lookup) return 2;
                 return 0;
             },
-            mayCreate: function(dir, name) {
+            mayCreate: (dir, name)=>{
                 try {
                     var node = FS.lookupNode(dir, name);
                     return 20;
@@ -1476,7 +1452,7 @@ var Godot = function() {
                 }
                 return FS.nodePermissions(dir, "wx");
             },
-            mayDelete: function(dir, name, isdir) {
+            mayDelete: (dir, name, isdir)=>{
                 var node;
                 try {
                     node = FS.lookupNode(dir, name);
@@ -1493,7 +1469,7 @@ var Godot = function() {
                 }
                 return 0;
             },
-            mayOpen: function(node, flags) {
+            mayOpen: (node, flags)=>{
                 if (!node) return 44;
                 if (FS.isLink(node.mode)) return 32;
                 else if (FS.isDir(node.mode)) {
@@ -1502,22 +1478,23 @@ var Godot = function() {
                 return FS.nodePermissions(node, FS.flagsToPermissionString(flags));
             },
             MAX_OPEN_FDS: 4096,
-            nextfd: function(fd_start, fd_end) {
-                fd_start = fd_start || 0;
-                fd_end = fd_end || FS.MAX_OPEN_FDS;
+            nextfd: (fd_start = 0, fd_end = FS.MAX_OPEN_FDS)=>{
                 for(var fd = fd_start; fd <= fd_end; fd++){
                     if (!FS.streams[fd]) return fd;
                 }
                 throw new FS.ErrnoError(33);
             },
-            getStream: function(fd) {
-                return FS.streams[fd];
-            },
-            createStream: function(stream, fd_start, fd_end) {
+            getStream: (fd)=>FS.streams[fd]
+            ,
+            createStream: (stream, fd_start, fd_end)=>{
                 if (!FS.FSStream) {
                     FS.FSStream = function() {
+                        this.shared = {
+                        };
                     };
                     FS.FSStream.prototype = {
+                    };
+                    Object.defineProperties(FS.FSStream.prototype, {
                         object: {
                             get: function() {
                                 return this.node;
@@ -1540,48 +1517,58 @@ var Godot = function() {
                             get: function() {
                                 return this.flags & 1024;
                             }
+                        },
+                        flags: {
+                            get: function() {
+                                return this.shared.flags;
+                            },
+                            set: function(val) {
+                                this.shared.flags = val;
+                            }
+                        },
+                        position: {
+                            get: function() {
+                                return this.shared.position;
+                            },
+                            set: function(val) {
+                                this.shared.position = val;
+                            }
                         }
-                    };
+                    });
                 }
-                var newStream = new FS.FSStream;
-                for(var p in stream)newStream[p] = stream[p];
-                stream = newStream;
+                stream = Object.assign(new FS.FSStream, stream);
                 var fd = FS.nextfd(fd_start, fd_end);
                 stream.fd = fd;
                 FS.streams[fd] = stream;
                 return stream;
             },
-            closeStream: function(fd) {
+            closeStream: (fd)=>{
                 FS.streams[fd] = null;
             },
             chrdev_stream_ops: {
-                open: function(stream) {
+                open: (stream)=>{
                     var device = FS.getDevice(stream.node.rdev);
                     stream.stream_ops = device.stream_ops;
                     if (stream.stream_ops.open) stream.stream_ops.open(stream);
                 },
-                llseek: function() {
+                llseek: ()=>{
                     throw new FS.ErrnoError(70);
                 }
             },
-            major: function(dev) {
-                return dev >> 8;
-            },
-            minor: function(dev) {
-                return dev & 255;
-            },
-            makedev: function(ma, mi) {
-                return ma << 8 | mi;
-            },
-            registerDevice: function(dev, ops) {
+            major: (dev)=>dev >> 8
+            ,
+            minor: (dev)=>dev & 255
+            ,
+            makedev: (ma, mi)=>ma << 8 | mi
+            ,
+            registerDevice: (dev, ops)=>{
                 FS.devices[dev] = {
                     stream_ops: ops
                 };
             },
-            getDevice: function(dev) {
-                return FS.devices[dev];
-            },
-            getMounts: function(mount) {
+            getDevice: (dev)=>FS.devices[dev]
+            ,
+            getMounts: (mount)=>{
                 var mounts = [];
                 var check = [
                     mount
@@ -1593,8 +1580,8 @@ var Godot = function() {
                 }
                 return mounts;
             },
-            syncfs: function(populate, callback) {
-                if (typeof populate === "function") {
+            syncfs: (populate, callback)=>{
+                if (typeof populate == "function") {
                     callback = populate;
                     populate = false;
                 }
@@ -1616,12 +1603,12 @@ var Godot = function() {
                     }
                     if (++completed >= mounts.length) doCallback(null);
                 }
-                mounts.forEach(function(mount) {
+                mounts.forEach((mount)=>{
                     if (!mount.type.syncfs) return done(null);
                     mount.type.syncfs(mount, populate, done);
                 });
             },
-            mount: function(type, opts, mountpoint) {
+            mount: (type, opts, mountpoint)=>{
                 var root = mountpoint === "/";
                 var pseudo = !mountpoint;
                 var node;
@@ -1651,7 +1638,7 @@ var Godot = function() {
                 }
                 return mountRoot;
             },
-            unmount: function(mountpoint) {
+            unmount: (mountpoint)=>{
                 var lookup = FS.lookupPath(mountpoint, {
                     follow_mount: false
                 });
@@ -1659,7 +1646,7 @@ var Godot = function() {
                 var node = lookup.node;
                 var mount = node.mounted;
                 var mounts = FS.getMounts(mount);
-                Object.keys(FS.nameTable).forEach(function(hash) {
+                Object.keys(FS.nameTable).forEach((hash)=>{
                     var current = FS.nameTable[hash];
                     while(current){
                         var next = current.name_next;
@@ -1671,10 +1658,10 @@ var Godot = function() {
                 var idx = node.mount.mounts.indexOf(mount);
                 node.mount.mounts.splice(idx, 1);
             },
-            lookup: function(parent, name) {
+            lookup: (parent, name)=>{
                 return parent.node_ops.lookup(parent, name);
             },
-            mknod: function(path, mode, dev) {
+            mknod: (path, mode, dev)=>{
                 var lookup = FS.lookupPath(path, {
                     parent: true
                 });
@@ -1686,19 +1673,19 @@ var Godot = function() {
                 if (!parent.node_ops.mknod) throw new FS.ErrnoError(63);
                 return parent.node_ops.mknod(parent, name, mode, dev);
             },
-            create: function(path, mode) {
+            create: (path, mode)=>{
                 mode = mode !== undefined ? mode : 438;
                 mode &= 4095;
                 mode |= 32768;
                 return FS.mknod(path, mode, 0);
             },
-            mkdir: function(path, mode) {
+            mkdir: (path, mode)=>{
                 mode = mode !== undefined ? mode : 511;
                 mode &= 1023;
                 mode |= 16384;
                 return FS.mknod(path, mode, 0);
             },
-            mkdirTree: function(path, mode) {
+            mkdirTree: (path, mode)=>{
                 var dirs = path.split("/");
                 var d = "";
                 for(var i = 0; i < dirs.length; ++i){
@@ -1711,15 +1698,15 @@ var Godot = function() {
                     }
                 }
             },
-            mkdev: function(path, mode, dev) {
-                if (typeof dev === "undefined") {
+            mkdev: (path, mode, dev)=>{
+                if (typeof dev == "undefined") {
                     dev = mode;
                     mode = 438;
                 }
                 mode |= 8192;
                 return FS.mknod(path, mode, dev);
             },
-            symlink: function(oldpath, newpath) {
+            symlink: (oldpath, newpath)=>{
                 if (!PATH_FS.resolve(oldpath)) throw new FS.ErrnoError(44);
                 var lookup = FS.lookupPath(newpath, {
                     parent: true
@@ -1732,7 +1719,7 @@ var Godot = function() {
                 if (!parent.node_ops.symlink) throw new FS.ErrnoError(63);
                 return parent.node_ops.symlink(parent, newname, oldpath);
             },
-            rename: function(old_path, new_path) {
+            rename: (old_path, new_path)=>{
                 var old_dirname = PATH.dirname(old_path);
                 var new_dirname = PATH.dirname(new_path);
                 var old_name = PATH.basename(old_path);
@@ -1770,26 +1757,16 @@ var Godot = function() {
                     errCode = FS.nodePermissions(old_dir, "w");
                     if (errCode) throw new FS.ErrnoError(errCode);
                 }
-                try {
-                    if (FS.trackingDelegate["willMovePath"]) FS.trackingDelegate["willMovePath"](old_path, new_path);
-                } catch (e3) {
-                    err1("FS.trackingDelegate['willMovePath']('" + old_path + "', '" + new_path + "') threw an exception: " + e3.message);
-                }
                 FS.hashRemoveNode(old_node);
                 try {
                     old_dir.node_ops.rename(old_node, new_dir, new_name);
-                } catch (e4) {
-                    throw e4;
+                } catch (e3) {
+                    throw e3;
                 } finally{
                     FS.hashAddNode(old_node);
                 }
-                try {
-                    if (FS.trackingDelegate["onMovePath"]) FS.trackingDelegate["onMovePath"](old_path, new_path);
-                } catch (e5) {
-                    err1("FS.trackingDelegate['onMovePath']('" + old_path + "', '" + new_path + "') threw an exception: " + e5.message);
-                }
             },
-            rmdir: function(path) {
+            rmdir: (path)=>{
                 var lookup = FS.lookupPath(path, {
                     parent: true
                 });
@@ -1800,20 +1777,10 @@ var Godot = function() {
                 if (errCode) throw new FS.ErrnoError(errCode);
                 if (!parent.node_ops.rmdir) throw new FS.ErrnoError(63);
                 if (FS.isMountpoint(node)) throw new FS.ErrnoError(10);
-                try {
-                    if (FS.trackingDelegate["willDeletePath"]) FS.trackingDelegate["willDeletePath"](path);
-                } catch (e) {
-                    err1("FS.trackingDelegate['willDeletePath']('" + path + "') threw an exception: " + e.message);
-                }
                 parent.node_ops.rmdir(parent, name);
                 FS.destroyNode(node);
-                try {
-                    if (FS.trackingDelegate["onDeletePath"]) FS.trackingDelegate["onDeletePath"](path);
-                } catch (e6) {
-                    err1("FS.trackingDelegate['onDeletePath']('" + path + "') threw an exception: " + e6.message);
-                }
             },
-            readdir: function(path) {
+            readdir: (path)=>{
                 var lookup = FS.lookupPath(path, {
                     follow: true
                 });
@@ -1821,38 +1788,29 @@ var Godot = function() {
                 if (!node.node_ops.readdir) throw new FS.ErrnoError(54);
                 return node.node_ops.readdir(node);
             },
-            unlink: function(path) {
+            unlink: (path)=>{
                 var lookup = FS.lookupPath(path, {
                     parent: true
                 });
                 var parent = lookup.node;
+                if (!parent) throw new FS.ErrnoError(44);
                 var name = PATH.basename(path);
                 var node = FS.lookupNode(parent, name);
                 var errCode = FS.mayDelete(parent, name, false);
                 if (errCode) throw new FS.ErrnoError(errCode);
                 if (!parent.node_ops.unlink) throw new FS.ErrnoError(63);
                 if (FS.isMountpoint(node)) throw new FS.ErrnoError(10);
-                try {
-                    if (FS.trackingDelegate["willDeletePath"]) FS.trackingDelegate["willDeletePath"](path);
-                } catch (e) {
-                    err1("FS.trackingDelegate['willDeletePath']('" + path + "') threw an exception: " + e.message);
-                }
                 parent.node_ops.unlink(parent, name);
                 FS.destroyNode(node);
-                try {
-                    if (FS.trackingDelegate["onDeletePath"]) FS.trackingDelegate["onDeletePath"](path);
-                } catch (e7) {
-                    err1("FS.trackingDelegate['onDeletePath']('" + path + "') threw an exception: " + e7.message);
-                }
             },
-            readlink: function(path) {
+            readlink: (path)=>{
                 var lookup = FS.lookupPath(path);
                 var link = lookup.node;
                 if (!link) throw new FS.ErrnoError(44);
                 if (!link.node_ops.readlink) throw new FS.ErrnoError(28);
                 return PATH_FS.resolve(FS.getPath(link.parent), link.node_ops.readlink(link));
             },
-            stat: function(path, dontFollow) {
+            stat: (path, dontFollow)=>{
                 var lookup = FS.lookupPath(path, {
                     follow: !dontFollow
                 });
@@ -1861,12 +1819,12 @@ var Godot = function() {
                 if (!node.node_ops.getattr) throw new FS.ErrnoError(63);
                 return node.node_ops.getattr(node);
             },
-            lstat: function(path) {
+            lstat: (path)=>{
                 return FS.stat(path, true);
             },
-            chmod: function(path, mode, dontFollow) {
+            chmod: (path, mode, dontFollow)=>{
                 var node;
-                if (typeof path === "string") {
+                if (typeof path == "string") {
                     var lookup = FS.lookupPath(path, {
                         follow: !dontFollow
                     });
@@ -1878,17 +1836,17 @@ var Godot = function() {
                     timestamp: Date.now()
                 });
             },
-            lchmod: function(path, mode) {
+            lchmod: (path, mode)=>{
                 FS.chmod(path, mode, true);
             },
-            fchmod: function(fd, mode) {
+            fchmod: (fd, mode)=>{
                 var stream = FS.getStream(fd);
                 if (!stream) throw new FS.ErrnoError(8);
                 FS.chmod(stream.node, mode);
             },
-            chown: function(path, uid, gid, dontFollow) {
+            chown: (path, uid, gid, dontFollow)=>{
                 var node;
-                if (typeof path === "string") {
+                if (typeof path == "string") {
                     var lookup = FS.lookupPath(path, {
                         follow: !dontFollow
                     });
@@ -1899,18 +1857,18 @@ var Godot = function() {
                     timestamp: Date.now()
                 });
             },
-            lchown: function(path, uid, gid) {
+            lchown: (path, uid, gid)=>{
                 FS.chown(path, uid, gid, true);
             },
-            fchown: function(fd, uid, gid) {
+            fchown: (fd, uid, gid)=>{
                 var stream = FS.getStream(fd);
                 if (!stream) throw new FS.ErrnoError(8);
                 FS.chown(stream.node, uid, gid);
             },
-            truncate: function(path, len) {
+            truncate: (path, len)=>{
                 if (len < 0) throw new FS.ErrnoError(28);
                 var node;
-                if (typeof path === "string") {
+                if (typeof path == "string") {
                     var lookup = FS.lookupPath(path, {
                         follow: true
                     });
@@ -1926,13 +1884,13 @@ var Godot = function() {
                     timestamp: Date.now()
                 });
             },
-            ftruncate: function(fd, len) {
+            ftruncate: (fd, len)=>{
                 var stream = FS.getStream(fd);
                 if (!stream) throw new FS.ErrnoError(8);
                 if ((stream.flags & 2097155) === 0) throw new FS.ErrnoError(28);
                 FS.truncate(stream.node, len);
             },
-            utime: function(path, atime, mtime) {
+            utime: (path, atime, mtime)=>{
                 var lookup = FS.lookupPath(path, {
                     follow: true
                 });
@@ -1941,14 +1899,14 @@ var Godot = function() {
                     timestamp: Math.max(atime, mtime)
                 });
             },
-            open: function(path, flags, mode, fd_start, fd_end) {
+            open: (path, flags, mode)=>{
                 if (path === "") throw new FS.ErrnoError(44);
-                flags = typeof flags === "string" ? FS.modeStringToFlags(flags) : flags;
-                mode = typeof mode === "undefined" ? 438 : mode;
+                flags = typeof flags == "string" ? FS.modeStringToFlags(flags) : flags;
+                mode = typeof mode == "undefined" ? 438 : mode;
                 if (flags & 64) mode = mode & 4095 | 32768;
                 else mode = 0;
                 var node;
-                if (typeof path === "object") node = path;
+                if (typeof path == "object") node = path;
                 else {
                     path = PATH.normalize(path);
                     try {
@@ -1975,7 +1933,7 @@ var Godot = function() {
                     var errCode = FS.mayOpen(node, flags);
                     if (errCode) throw new FS.ErrnoError(errCode);
                 }
-                if (flags & 512) FS.truncate(node, 0);
+                if (flags & 512 && !created) FS.truncate(node, 0);
                 flags &= -131713;
                 var stream = FS.createStream({
                     node: node,
@@ -1986,29 +1944,16 @@ var Godot = function() {
                     stream_ops: node.stream_ops,
                     ungotten: [],
                     error: false
-                }, fd_start, fd_end);
+                });
                 if (stream.stream_ops.open) stream.stream_ops.open(stream);
                 if (Module["logReadFiles"] && !(flags & 1)) {
                     if (!FS.readFiles) FS.readFiles = {
                     };
-                    if (!(path in FS.readFiles)) {
-                        FS.readFiles[path] = 1;
-                        err1("FS.trackingDelegate error on read file: " + path);
-                    }
-                }
-                try {
-                    if (FS.trackingDelegate["onOpenFile"]) {
-                        var trackingFlags = 0;
-                        if ((flags & 2097155) !== 1) trackingFlags |= FS.tracking.openFlags.READ;
-                        if ((flags & 2097155) !== 0) trackingFlags |= FS.tracking.openFlags.WRITE;
-                        FS.trackingDelegate["onOpenFile"](path, trackingFlags);
-                    }
-                } catch (e) {
-                    err1("FS.trackingDelegate['onOpenFile']('" + path + "', flags) threw an exception: " + e.message);
+                    if (!(path in FS.readFiles)) FS.readFiles[path] = 1;
                 }
                 return stream;
             },
-            close: function(stream) {
+            close: (stream)=>{
                 if (FS.isClosed(stream)) throw new FS.ErrnoError(8);
                 if (stream.getdents) stream.getdents = null;
                 try {
@@ -2020,10 +1965,10 @@ var Godot = function() {
                 }
                 stream.fd = null;
             },
-            isClosed: function(stream) {
+            isClosed: (stream)=>{
                 return stream.fd === null;
             },
-            llseek: function(stream, offset, whence) {
+            llseek: (stream, offset, whence)=>{
                 if (FS.isClosed(stream)) throw new FS.ErrnoError(8);
                 if (!stream.seekable || !stream.stream_ops.llseek) throw new FS.ErrnoError(70);
                 if (whence != 0 && whence != 1 && whence != 2) throw new FS.ErrnoError(28);
@@ -2031,39 +1976,34 @@ var Godot = function() {
                 stream.ungotten = [];
                 return stream.position;
             },
-            read: function(stream, buffer, offset, length, position) {
+            read: (stream, buffer, offset, length, position)=>{
                 if (length < 0 || position < 0) throw new FS.ErrnoError(28);
                 if (FS.isClosed(stream)) throw new FS.ErrnoError(8);
                 if ((stream.flags & 2097155) === 1) throw new FS.ErrnoError(8);
                 if (FS.isDir(stream.node.mode)) throw new FS.ErrnoError(31);
                 if (!stream.stream_ops.read) throw new FS.ErrnoError(28);
-                var seeking = typeof position !== "undefined";
+                var seeking = typeof position != "undefined";
                 if (!seeking) position = stream.position;
                 else if (!stream.seekable) throw new FS.ErrnoError(70);
                 var bytesRead = stream.stream_ops.read(stream, buffer, offset, length, position);
                 if (!seeking) stream.position += bytesRead;
                 return bytesRead;
             },
-            write: function(stream, buffer, offset, length, position, canOwn) {
+            write: (stream, buffer, offset, length, position, canOwn)=>{
                 if (length < 0 || position < 0) throw new FS.ErrnoError(28);
                 if (FS.isClosed(stream)) throw new FS.ErrnoError(8);
                 if ((stream.flags & 2097155) === 0) throw new FS.ErrnoError(8);
                 if (FS.isDir(stream.node.mode)) throw new FS.ErrnoError(31);
                 if (!stream.stream_ops.write) throw new FS.ErrnoError(28);
                 if (stream.seekable && stream.flags & 1024) FS.llseek(stream, 0, 2);
-                var seeking = typeof position !== "undefined";
+                var seeking = typeof position != "undefined";
                 if (!seeking) position = stream.position;
                 else if (!stream.seekable) throw new FS.ErrnoError(70);
                 var bytesWritten = stream.stream_ops.write(stream, buffer, offset, length, position, canOwn);
                 if (!seeking) stream.position += bytesWritten;
-                try {
-                    if (stream.path && FS.trackingDelegate["onWriteToFile"]) FS.trackingDelegate["onWriteToFile"](stream.path);
-                } catch (e) {
-                    err1("FS.trackingDelegate['onWriteToFile']('" + stream.path + "') threw an exception: " + e.message);
-                }
                 return bytesWritten;
             },
-            allocate: function(stream, offset, length) {
+            allocate: (stream, offset, length)=>{
                 if (FS.isClosed(stream)) throw new FS.ErrnoError(8);
                 if (offset < 0 || length <= 0) throw new FS.ErrnoError(28);
                 if ((stream.flags & 2097155) === 0) throw new FS.ErrnoError(8);
@@ -2071,26 +2011,24 @@ var Godot = function() {
                 if (!stream.stream_ops.allocate) throw new FS.ErrnoError(138);
                 stream.stream_ops.allocate(stream, offset, length);
             },
-            mmap: function(stream, address, length, position, prot, flags) {
+            mmap: (stream, length, position, prot, flags)=>{
                 if ((prot & 2) !== 0 && (flags & 2) === 0 && (stream.flags & 2097155) !== 2) throw new FS.ErrnoError(2);
                 if ((stream.flags & 2097155) === 1) throw new FS.ErrnoError(2);
                 if (!stream.stream_ops.mmap) throw new FS.ErrnoError(43);
-                return stream.stream_ops.mmap(stream, address, length, position, prot, flags);
+                return stream.stream_ops.mmap(stream, length, position, prot, flags);
             },
-            msync: function(stream, buffer, offset, length, mmapFlags) {
+            msync: (stream, buffer, offset, length, mmapFlags)=>{
                 if (!stream || !stream.stream_ops.msync) return 0;
                 return stream.stream_ops.msync(stream, buffer, offset, length, mmapFlags);
             },
-            munmap: function(stream) {
-                return 0;
-            },
-            ioctl: function(stream, cmd, arg) {
+            munmap: (stream)=>0
+            ,
+            ioctl: (stream, cmd, arg)=>{
                 if (!stream.stream_ops.ioctl) throw new FS.ErrnoError(59);
                 return stream.stream_ops.ioctl(stream, cmd, arg);
             },
-            readFile: function(path, opts) {
-                opts = opts || {
-                };
+            readFile: (path, opts = {
+            })=>{
                 opts.flags = opts.flags || 0;
                 opts.encoding = opts.encoding || "binary";
                 if (opts.encoding !== "utf8" && opts.encoding !== "binary") throw new Error('Invalid encoding type "' + opts.encoding + '"');
@@ -2105,12 +2043,11 @@ var Godot = function() {
                 FS.close(stream);
                 return ret;
             },
-            writeFile: function(path, data, opts) {
-                opts = opts || {
-                };
+            writeFile: (path, data, opts = {
+            })=>{
                 opts.flags = opts.flags || 577;
                 var stream = FS.open(path, opts.flags, opts.mode);
-                if (typeof data === "string") {
+                if (typeof data == "string") {
                     var buf = new Uint8Array(lengthBytesUTF8(data) + 1);
                     var actualNumBytes = stringToUTF8Array(data, buf, 0, buf.length);
                     FS.write(stream, buf, 0, actualNumBytes, undefined, opts.canOwn);
@@ -2118,10 +2055,9 @@ var Godot = function() {
                 else throw new Error("Unsupported data type");
                 FS.close(stream);
             },
-            cwd: function() {
-                return FS.currentPath;
-            },
-            chdir: function(path) {
+            cwd: ()=>FS.currentPath
+            ,
+            chdir: (path)=>{
                 var lookup = FS.lookupPath(path, {
                     follow: true
                 });
@@ -2131,20 +2067,17 @@ var Godot = function() {
                 if (errCode) throw new FS.ErrnoError(errCode);
                 FS.currentPath = lookup.path;
             },
-            createDefaultDirectories: function() {
+            createDefaultDirectories: ()=>{
                 FS.mkdir("/tmp");
                 FS.mkdir("/home");
                 FS.mkdir("/home/web_user");
             },
-            createDefaultDevices: function() {
+            createDefaultDevices: ()=>{
                 FS.mkdir("/dev");
                 FS.registerDevice(FS.makedev(1, 3), {
-                    read: function() {
-                        return 0;
-                    },
-                    write: function(stream, buffer, offset, length, pos) {
-                        return length;
-                    }
+                    read: ()=>0
+                    ,
+                    write: (stream, buffer, offset, length, pos)=>length
                 });
                 FS.mkdev("/dev/null", FS.makedev(1, 3));
                 TTY.register(FS.makedev(5, 0), TTY.default_tty_ops);
@@ -2157,15 +2090,15 @@ var Godot = function() {
                 FS.mkdir("/dev/shm");
                 FS.mkdir("/dev/shm/tmp");
             },
-            createSpecialDirectories: function() {
+            createSpecialDirectories: ()=>{
                 FS.mkdir("/proc");
                 var proc_self = FS.mkdir("/proc/self");
                 FS.mkdir("/proc/self/fd");
                 FS.mount({
-                    mount: function() {
+                    mount: ()=>{
                         var node = FS.createNode(proc_self, "fd", 16895, 73);
                         node.node_ops = {
-                            lookup: function(parent, name) {
+                            lookup: (parent, name)=>{
                                 var fd = +name;
                                 var stream = FS.getStream(fd);
                                 if (!stream) throw new FS.ErrnoError(8);
@@ -2175,9 +2108,7 @@ var Godot = function() {
                                         mountpoint: "fake"
                                     },
                                     node_ops: {
-                                        readlink: function() {
-                                            return stream.path;
-                                        }
+                                        readlink: ()=>stream.path
                                     }
                                 };
                                 ret.parent = ret;
@@ -2189,7 +2120,7 @@ var Godot = function() {
                 }, {
                 }, "/proc/self/fd");
             },
-            createStandardStreams: function() {
+            createStandardStreams: ()=>{
                 if (Module["stdin"]) FS.createDevice("/dev", "stdin", Module["stdin"]);
                 else FS.symlink("/dev/tty", "/dev/stdin");
                 if (Module["stdout"]) FS.createDevice("/dev", "stdout", null, Module["stdout"]);
@@ -2200,7 +2131,7 @@ var Godot = function() {
                 var stdout = FS.open("/dev/stdout", 1);
                 var stderr = FS.open("/dev/stderr", 1);
             },
-            ensureErrnoError: function() {
+            ensureErrnoError: ()=>{
                 if (FS.ErrnoError) return;
                 FS.ErrnoError = function ErrnoError(errno1, node) {
                     this.node = node;
@@ -2214,12 +2145,12 @@ var Godot = function() {
                 FS.ErrnoError.prototype.constructor = FS.ErrnoError;
                 [
                     44
-                ].forEach(function(code) {
+                ].forEach((code)=>{
                     FS.genericErrors[code] = new FS.ErrnoError(code);
                     FS.genericErrors[code].stack = "<generic error, no stack>";
                 });
             },
-            staticInit: function() {
+            staticInit: ()=>{
                 FS.ensureErrnoError();
                 FS.nameTable = new Array(4096);
                 FS.mount(MEMFS, {
@@ -2232,7 +2163,7 @@ var Godot = function() {
                     "IDBFS": IDBFS
                 };
             },
-            init: function(input, output, error) {
+            init: (input, output, error)=>{
                 FS.init.initialized = true;
                 FS.ensureErrnoError();
                 Module["stdin"] = input || Module["stdin"];
@@ -2240,28 +2171,27 @@ var Godot = function() {
                 Module["stderr"] = error || Module["stderr"];
                 FS.createStandardStreams();
             },
-            quit: function() {
+            quit: ()=>{
                 FS.init.initialized = false;
-                var fflush = Module["_fflush"];
-                if (fflush) fflush(0);
+                _fflush(0);
                 for(var i = 0; i < FS.streams.length; i++){
                     var stream = FS.streams[i];
                     if (!stream) continue;
                     FS.close(stream);
                 }
             },
-            getMode: function(canRead, canWrite) {
+            getMode: (canRead, canWrite)=>{
                 var mode = 0;
                 if (canRead) mode |= 365;
                 if (canWrite) mode |= 146;
                 return mode;
             },
-            findObject: function(path, dontResolveLastLink) {
+            findObject: (path, dontResolveLastLink)=>{
                 var ret = FS.analyzePath(path, dontResolveLastLink);
                 if (ret.exists) return ret.object;
                 else return null;
             },
-            analyzePath: function(path, dontResolveLastLink) {
+            analyzePath: (path, dontResolveLastLink)=>{
                 try {
                     var lookup = FS.lookupPath(path, {
                         follow: !dontResolveLastLink
@@ -2296,13 +2226,13 @@ var Godot = function() {
                     ret.object = lookup.node;
                     ret.name = lookup.node.name;
                     ret.isRoot = lookup.path === "/";
-                } catch (e8) {
-                    ret.error = e8.errno;
+                } catch (e4) {
+                    ret.error = e4.errno;
                 }
                 return ret;
             },
-            createPath: function(parent, path, canRead, canWrite) {
-                parent = typeof parent === "string" ? parent : FS.getPath(parent);
+            createPath: (parent, path, canRead, canWrite)=>{
+                parent = typeof parent == "string" ? parent : FS.getPath(parent);
                 var parts = path.split("/").reverse();
                 while(parts.length){
                     var part = parts.pop();
@@ -2316,17 +2246,21 @@ var Godot = function() {
                 }
                 return current;
             },
-            createFile: function(parent, name, properties, canRead, canWrite) {
-                var path = PATH.join2(typeof parent === "string" ? parent : FS.getPath(parent), name);
+            createFile: (parent, name, properties, canRead, canWrite)=>{
+                var path = PATH.join2(typeof parent == "string" ? parent : FS.getPath(parent), name);
                 var mode = FS.getMode(canRead, canWrite);
                 return FS.create(path, mode);
             },
-            createDataFile: function(parent, name, data, canRead, canWrite, canOwn) {
-                var path = name ? PATH.join2(typeof parent === "string" ? parent : FS.getPath(parent), name) : parent;
+            createDataFile: (parent, name, data, canRead, canWrite, canOwn)=>{
+                var path = name;
+                if (parent) {
+                    parent = typeof parent == "string" ? parent : FS.getPath(parent);
+                    path = name ? PATH.join2(parent, name) : parent;
+                }
                 var mode = FS.getMode(canRead, canWrite);
                 var node = FS.create(path, mode);
                 if (data) {
-                    if (typeof data === "string") {
+                    if (typeof data == "string") {
                         var arr = new Array(data.length);
                         for(var i = 0, len = data.length; i < len; ++i)arr[i] = data.charCodeAt(i);
                         data = arr;
@@ -2339,19 +2273,19 @@ var Godot = function() {
                 }
                 return node;
             },
-            createDevice: function(parent, name, input, output) {
-                var path = PATH.join2(typeof parent === "string" ? parent : FS.getPath(parent), name);
+            createDevice: (parent, name, input, output)=>{
+                var path = PATH.join2(typeof parent == "string" ? parent : FS.getPath(parent), name);
                 var mode = FS.getMode(!!input, !!output);
                 if (!FS.createDevice.major) FS.createDevice.major = 64;
                 var dev = FS.makedev(FS.createDevice.major++, 0);
                 FS.registerDevice(dev, {
-                    open: function(stream) {
+                    open: (stream)=>{
                         stream.seekable = false;
                     },
-                    close: function(stream) {
+                    close: (stream)=>{
                         if (output && output.buffer && output.buffer.length) output(10);
                     },
-                    read: function(stream, buffer, offset, length, pos) {
+                    read: (stream, buffer, offset, length, pos)=>{
                         var bytesRead = 0;
                         for(var i = 0; i < length; i++){
                             var result;
@@ -2368,7 +2302,7 @@ var Godot = function() {
                         if (bytesRead) stream.node.timestamp = Date.now();
                         return bytesRead;
                     },
-                    write: function(stream, buffer, offset, length, pos) {
+                    write: (stream, buffer, offset, length, pos)=>{
                         for(var i = 0; i < length; i++)try {
                             output(buffer[offset + i]);
                         } catch (e) {
@@ -2380,9 +2314,9 @@ var Godot = function() {
                 });
                 return FS.mkdev(path, mode, dev);
             },
-            forceLoadFile: function(obj) {
+            forceLoadFile: (obj)=>{
                 if (obj.isDevice || obj.isFolder || obj.link || obj.contents) return true;
-                if (typeof XMLHttpRequest !== "undefined") throw new Error("Lazy loading should have been performed (contents set) in createLazyFile, but it was not. Lazy loading only works in web workers. Use --embed-file or --preload-file in emcc on the main thread.");
+                if (typeof XMLHttpRequest != "undefined") throw new Error("Lazy loading should have been performed (contents set) in createLazyFile, but it was not. Lazy loading only works in web workers. Use --embed-file or --preload-file in emcc on the main thread.");
                 else if (read_) try {
                     obj.contents = intArrayFromString(read_(obj.url), true);
                     obj.usedBytes = obj.contents.length;
@@ -2391,7 +2325,7 @@ var Godot = function() {
                 }
                 else throw new Error("Cannot load without read() or XMLHttpRequest.");
             },
-            createLazyFile: function(parent, name, url, canRead, canWrite) {
+            createLazyFile: (parent, name, url, canRead, canWrite)=>{
                 function LazyUint8Array() {
                     this.lengthKnown = false;
                     this.chunks = [];
@@ -2416,13 +2350,13 @@ var Godot = function() {
                     var usesGzip = (header = xhr1.getResponseHeader("Content-Encoding")) && header === "gzip";
                     var chunkSize = 1048576;
                     if (!hasByteServing) chunkSize = datalength;
-                    var doXHR = function(from, to) {
+                    var doXHR = (from, to)=>{
                         if (from > to) throw new Error("invalid range (" + from + ", " + to + ") or no bytes requested!");
                         if (to > datalength - 1) throw new Error("only " + datalength + " bytes available! programmer error!");
                         var xhr = new XMLHttpRequest;
                         xhr.open("GET", url, false);
                         if (datalength !== chunkSize) xhr.setRequestHeader("Range", "bytes=" + from + "-" + to);
-                        if (typeof Uint8Array != "undefined") xhr.responseType = "arraybuffer";
+                        xhr.responseType = "arraybuffer";
                         if (xhr.overrideMimeType) xhr.overrideMimeType("text/plain; charset=x-user-defined");
                         xhr.send(null);
                         if (!(xhr.status >= 200 && xhr.status < 300 || xhr.status === 304)) throw new Error("Couldn't load " + url + ". Status: " + xhr.status);
@@ -2430,12 +2364,12 @@ var Godot = function() {
                         else return intArrayFromString(xhr.responseText || "", true);
                     };
                     var lazyArray = this;
-                    lazyArray.setDataGetter(function(chunkNum) {
+                    lazyArray.setDataGetter((chunkNum)=>{
                         var start = chunkNum * chunkSize;
                         var end = (chunkNum + 1) * chunkSize - 1;
                         end = Math.min(end, datalength - 1);
-                        if (typeof lazyArray.chunks[chunkNum] === "undefined") lazyArray.chunks[chunkNum] = doXHR(start, end);
-                        if (typeof lazyArray.chunks[chunkNum] === "undefined") throw new Error("doXHR failed!");
+                        if (typeof lazyArray.chunks[chunkNum] == "undefined") lazyArray.chunks[chunkNum] = doXHR(start, end);
+                        if (typeof lazyArray.chunks[chunkNum] == "undefined") throw new Error("doXHR failed!");
                         return lazyArray.chunks[chunkNum];
                     });
                     if (usesGzip || !datalength) {
@@ -2448,7 +2382,7 @@ var Godot = function() {
                     this._chunkSize = chunkSize;
                     this.lengthKnown = true;
                 };
-                if (typeof XMLHttpRequest !== "undefined") {
+                if (typeof XMLHttpRequest != "undefined") {
                     if (!ENVIRONMENT_IS_WORKER) throw "Cannot do synchronous binary XHRs outside webworkers in modern browsers. Use --embed-file or --preload-file in emcc";
                     var lazyArray1 = new LazyUint8Array;
                     Object.defineProperties(lazyArray1, {
@@ -2489,27 +2423,39 @@ var Godot = function() {
                 var stream_ops = {
                 };
                 var keys = Object.keys(node.stream_ops);
-                keys.forEach(function(key) {
+                keys.forEach((key)=>{
                     var fn = node.stream_ops[key];
                     stream_ops[key] = function forceLoadLazyFile() {
                         FS.forceLoadFile(node);
                         return fn.apply(null, arguments);
                     };
                 });
-                stream_ops.read = function stream_ops_read(stream, buffer, offset, length, position) {
-                    FS.forceLoadFile(node);
+                function writeChunks(stream, buffer, offset, length, position) {
                     var contents = stream.node.contents;
                     if (position >= contents.length) return 0;
                     var size = Math.min(contents.length - position, length);
                     if (contents.slice) for(var i = 0; i < size; i++)buffer[offset + i] = contents[position + i];
                     else for(var i = 0; i < size; i++)buffer[offset + i] = contents.get(position + i);
                     return size;
+                }
+                stream_ops.read = (stream, buffer, offset, length, position)=>{
+                    FS.forceLoadFile(node);
+                    return writeChunks(stream, buffer, offset, length, position);
+                };
+                stream_ops.mmap = (stream, length, position, prot, flags)=>{
+                    FS.forceLoadFile(node);
+                    var ptr = mmapAlloc(length);
+                    if (!ptr) throw new FS.ErrnoError(48);
+                    writeChunks(stream, HEAP8, ptr, length, position);
+                    return {
+                        ptr: ptr,
+                        allocated: true
+                    };
                 };
                 node.stream_ops = stream_ops;
                 return node;
             },
-            createPreloadedFile: function(parent, name, url, canRead, canWrite, onload, onerror, dontCreateFile, canOwn, preFinish) {
-                Browser.init();
+            createPreloadedFile: (parent, name, url, canRead, canWrite, onload, onerror, dontCreateFile, canOwn, preFinish)=>{
                 var fullname = name ? PATH_FS.resolve(PATH.join2(parent, name)) : parent;
                 var dep = getUniqueRunDependency("cp " + fullname);
                 function processData(byteArray1) {
@@ -2519,50 +2465,42 @@ var Godot = function() {
                         if (onload) onload();
                         removeRunDependency(dep);
                     }
-                    var handled = false;
-                    Module["preloadPlugins"].forEach(function(plugin) {
-                        if (handled) return;
-                        if (plugin["canHandle"](fullname)) {
-                            plugin["handle"](byteArray1, fullname, finish, function() {
-                                if (onerror) onerror();
-                                removeRunDependency(dep);
-                            });
-                            handled = true;
-                        }
-                    });
-                    if (!handled) finish(byteArray1);
+                    if (Browser.handledByPreloadPlugin(byteArray1, fullname, finish, ()=>{
+                        if (onerror) onerror();
+                        removeRunDependency(dep);
+                    })) return;
+                    finish(byteArray1);
                 }
                 addRunDependency(dep);
-                if (typeof url == "string") asyncLoad(url, function(byteArray) {
-                    processData(byteArray);
-                }, onerror);
+                if (typeof url == "string") asyncLoad(url, (byteArray)=>processData(byteArray)
+                , onerror);
                 else processData(url);
             },
-            indexedDB: function() {
+            indexedDB: ()=>{
                 return window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
             },
-            DB_NAME: function() {
+            DB_NAME: ()=>{
                 return "EM_FS_" + window.location.pathname;
             },
             DB_VERSION: 20,
             DB_STORE_NAME: "FILE_DATA",
-            saveFilesToDB: function(paths, onload, onerror) {
-                onload = onload || function() {
-                };
-                onerror = onerror || function() {
-                };
+            saveFilesToDB: (paths, onload, onerror)=>{
+                onload = onload || (()=>{
+                });
+                onerror = onerror || (()=>{
+                });
                 var indexedDB = FS.indexedDB();
                 try {
                     var openRequest = indexedDB.open(FS.DB_NAME(), FS.DB_VERSION);
                 } catch (e) {
                     return onerror(e);
                 }
-                openRequest.onupgradeneeded = function openRequest_onupgradeneeded() {
+                openRequest.onupgradeneeded = ()=>{
                     out1("creating db");
                     var db = openRequest.result;
                     db.createObjectStore(FS.DB_STORE_NAME);
                 };
-                openRequest.onsuccess = function openRequest_onsuccess() {
+                openRequest.onsuccess = ()=>{
                     var db = openRequest.result;
                     var transaction = db.transaction([
                         FS.DB_STORE_NAME
@@ -2573,13 +2511,13 @@ var Godot = function() {
                         if (fail == 0) onload();
                         else onerror();
                     }
-                    paths.forEach(function(path) {
+                    paths.forEach((path)=>{
                         var putRequest = files.put(FS.analyzePath(path).object.contents, path);
-                        putRequest.onsuccess = function putRequest_onsuccess() {
+                        putRequest.onsuccess = ()=>{
                             ok++;
                             if (ok + fail == total) finish();
                         };
-                        putRequest.onerror = function putRequest_onerror() {
+                        putRequest.onerror = ()=>{
                             fail++;
                             if (ok + fail == total) finish();
                         };
@@ -2588,19 +2526,19 @@ var Godot = function() {
                 };
                 openRequest.onerror = onerror;
             },
-            loadFilesFromDB: function(paths, onload, onerror) {
-                onload = onload || function() {
-                };
-                onerror = onerror || function() {
-                };
+            loadFilesFromDB: (paths, onload, onerror)=>{
+                onload = onload || (()=>{
+                });
+                onerror = onerror || (()=>{
+                });
                 var indexedDB = FS.indexedDB();
                 try {
                     var openRequest = indexedDB.open(FS.DB_NAME(), FS.DB_VERSION);
-                } catch (e9) {
-                    return onerror(e9);
+                } catch (e5) {
+                    return onerror(e5);
                 }
                 openRequest.onupgradeneeded = onerror;
-                openRequest.onsuccess = function openRequest_onsuccess() {
+                openRequest.onsuccess = ()=>{
                     var db = openRequest.result;
                     try {
                         var transaction = db.transaction([
@@ -2616,15 +2554,15 @@ var Godot = function() {
                         if (fail == 0) onload();
                         else onerror();
                     }
-                    paths.forEach(function(path) {
+                    paths.forEach((path)=>{
                         var getRequest = files.get(path);
-                        getRequest.onsuccess = function getRequest_onsuccess() {
+                        getRequest.onsuccess = ()=>{
                             if (FS.analyzePath(path).exists) FS.unlink(path);
                             FS.createDataFile(PATH.dirname(path), PATH.basename(path), getRequest.result, true, true, true);
                             ok++;
                             if (ok + fail == total) finish();
                         };
-                        getRequest.onerror = function getRequest_onerror() {
+                        getRequest.onerror = ()=>{
                             fail++;
                             if (ok + fail == total) finish();
                         };
@@ -2635,12 +2573,9 @@ var Godot = function() {
             }
         };
         var SYSCALLS = {
-            mappings: {
-            },
             DEFAULT_POLLMASK: 5,
-            umask: 511,
             calculateAt: function(dirfd, path, allowEmpty) {
-                if (path[0] === "/") return path;
+                if (PATH.isAbs(path)) return path;
                 var dir;
                 if (dirfd === -100) dir = FS.cwd();
                 else {
@@ -2692,78 +2627,6 @@ var Godot = function() {
                 var buffer = HEAPU8.slice(addr, addr + len);
                 FS.msync(stream, buffer, offset, len, flags);
             },
-            doMkdir: function(path, mode) {
-                path = PATH.normalize(path);
-                if (path[path.length - 1] === "/") path = path.substr(0, path.length - 1);
-                FS.mkdir(path, mode, 0);
-                return 0;
-            },
-            doMknod: function(path, mode, dev) {
-                switch(mode & 61440){
-                    case 32768:
-                    case 8192:
-                    case 24576:
-                    case 4096:
-                    case 49152:
-                        break;
-                    default:
-                        return -28;
-                }
-                FS.mknod(path, mode, dev);
-                return 0;
-            },
-            doReadlink: function(path, buf, bufsize) {
-                if (bufsize <= 0) return -28;
-                var ret = FS.readlink(path);
-                var len = Math.min(bufsize, lengthBytesUTF8(ret));
-                var endChar = HEAP8[buf + len];
-                stringToUTF8(ret, buf, bufsize + 1);
-                HEAP8[buf + len] = endChar;
-                return len;
-            },
-            doAccess: function(path, amode) {
-                if (amode & -8) return -28;
-                var node;
-                var lookup = FS.lookupPath(path, {
-                    follow: true
-                });
-                node = lookup.node;
-                if (!node) return -44;
-                var perms = "";
-                if (amode & 4) perms += "r";
-                if (amode & 2) perms += "w";
-                if (amode & 1) perms += "x";
-                if (perms && FS.nodePermissions(node, perms)) return -2;
-                return 0;
-            },
-            doDup: function(path, flags, suggestFD) {
-                var suggest = FS.getStream(suggestFD);
-                if (suggest) FS.close(suggest);
-                return FS.open(path, flags, 0, suggestFD, suggestFD).fd;
-            },
-            doReadv: function(stream, iov, iovcnt, offset) {
-                var ret = 0;
-                for(var i = 0; i < iovcnt; i++){
-                    var ptr = HEAP32[iov + i * 8 >> 2];
-                    var len = HEAP32[iov + (i * 8 + 4) >> 2];
-                    var curr = FS.read(stream, HEAP8, ptr, len, offset);
-                    if (curr < 0) return -1;
-                    ret += curr;
-                    if (curr < len) break;
-                }
-                return ret;
-            },
-            doWritev: function(stream, iov, iovcnt, offset) {
-                var ret = 0;
-                for(var i = 0; i < iovcnt; i++){
-                    var ptr = HEAP32[iov + i * 8 >> 2];
-                    var len = HEAP32[iov + (i * 8 + 4) >> 2];
-                    var curr = FS.write(stream, HEAP8, ptr, len, offset);
-                    if (curr < 0) return -1;
-                    ret += curr;
-                }
-                return ret;
-            },
             varargs: undefined,
             get: function() {
                 SYSCALLS.varargs += 4;
@@ -2778,12 +2641,9 @@ var Godot = function() {
                 var stream = FS.getStream(fd);
                 if (!stream) throw new FS.ErrnoError(8);
                 return stream;
-            },
-            get64: function(low, high) {
-                return low;
             }
         };
-        function ___sys__newselect(nfds, readfds, writefds, exceptfds, timeout) {
+        function ___syscall__newselect(nfds, readfds, writefds, exceptfds, timeout) {
             try {
                 var total = 0;
                 var srcReadLow = readfds ? HEAP32[readfds >> 2] : 0, srcReadHigh = readfds ? HEAP32[readfds + 4 >> 2] : 0;
@@ -2831,133 +2691,10 @@ var Godot = function() {
                 }
                 return total;
             } catch (e) {
-                if (typeof FS === "undefined" || !(e instanceof FS.ErrnoError)) abort(e);
+                if (typeof FS == "undefined" || !(e instanceof FS.ErrnoError)) throw e;
                 return -e.errno;
             }
         }
-        var ERRNO_CODES = {
-            EPERM: 63,
-            ENOENT: 44,
-            ESRCH: 71,
-            EINTR: 27,
-            EIO: 29,
-            ENXIO: 60,
-            E2BIG: 1,
-            ENOEXEC: 45,
-            EBADF: 8,
-            ECHILD: 12,
-            EAGAIN: 6,
-            EWOULDBLOCK: 6,
-            ENOMEM: 48,
-            EACCES: 2,
-            EFAULT: 21,
-            ENOTBLK: 105,
-            EBUSY: 10,
-            EEXIST: 20,
-            EXDEV: 75,
-            ENODEV: 43,
-            ENOTDIR: 54,
-            EISDIR: 31,
-            EINVAL: 28,
-            ENFILE: 41,
-            EMFILE: 33,
-            ENOTTY: 59,
-            ETXTBSY: 74,
-            EFBIG: 22,
-            ENOSPC: 51,
-            ESPIPE: 70,
-            EROFS: 69,
-            EMLINK: 34,
-            EPIPE: 64,
-            EDOM: 18,
-            ERANGE: 68,
-            ENOMSG: 49,
-            EIDRM: 24,
-            ECHRNG: 106,
-            EL2NSYNC: 156,
-            EL3HLT: 107,
-            EL3RST: 108,
-            ELNRNG: 109,
-            EUNATCH: 110,
-            ENOCSI: 111,
-            EL2HLT: 112,
-            EDEADLK: 16,
-            ENOLCK: 46,
-            EBADE: 113,
-            EBADR: 114,
-            EXFULL: 115,
-            ENOANO: 104,
-            EBADRQC: 103,
-            EBADSLT: 102,
-            EDEADLOCK: 16,
-            EBFONT: 101,
-            ENOSTR: 100,
-            ENODATA: 116,
-            ETIME: 117,
-            ENOSR: 118,
-            ENONET: 119,
-            ENOPKG: 120,
-            EREMOTE: 121,
-            ENOLINK: 47,
-            EADV: 122,
-            ESRMNT: 123,
-            ECOMM: 124,
-            EPROTO: 65,
-            EMULTIHOP: 36,
-            EDOTDOT: 125,
-            EBADMSG: 9,
-            ENOTUNIQ: 126,
-            EBADFD: 127,
-            EREMCHG: 128,
-            ELIBACC: 129,
-            ELIBBAD: 130,
-            ELIBSCN: 131,
-            ELIBMAX: 132,
-            ELIBEXEC: 133,
-            ENOSYS: 52,
-            ENOTEMPTY: 55,
-            ENAMETOOLONG: 37,
-            ELOOP: 32,
-            EOPNOTSUPP: 138,
-            EPFNOSUPPORT: 139,
-            ECONNRESET: 15,
-            ENOBUFS: 42,
-            EAFNOSUPPORT: 5,
-            EPROTOTYPE: 67,
-            ENOTSOCK: 57,
-            ENOPROTOOPT: 50,
-            ESHUTDOWN: 140,
-            ECONNREFUSED: 14,
-            EADDRINUSE: 3,
-            ECONNABORTED: 13,
-            ENETUNREACH: 40,
-            ENETDOWN: 38,
-            ETIMEDOUT: 73,
-            EHOSTDOWN: 142,
-            EHOSTUNREACH: 23,
-            EINPROGRESS: 26,
-            EALREADY: 7,
-            EDESTADDRREQ: 17,
-            EMSGSIZE: 35,
-            EPROTONOSUPPORT: 66,
-            ESOCKTNOSUPPORT: 137,
-            EADDRNOTAVAIL: 4,
-            ENETRESET: 39,
-            EISCONN: 30,
-            ENOTCONN: 53,
-            ETOOMANYREFS: 141,
-            EUSERS: 136,
-            EDQUOT: 19,
-            ESTALE: 72,
-            ENOTSUP: 138,
-            ENOMEDIUM: 148,
-            EILSEQ: 25,
-            EOVERFLOW: 61,
-            ECANCELED: 11,
-            ENOTRECOVERABLE: 56,
-            EOWNERDEAD: 62,
-            ESTRPIPE: 135
-        };
         var SOCKFS = {
             mount: function(mount) {
                 Module["websocket"] = Module["websocket"] && "object" === typeof Module["websocket"] ? Module["websocket"] : {
@@ -2976,7 +2713,7 @@ var Godot = function() {
             createSocket: function(family, type, protocol) {
                 type &= -526337;
                 var streaming = type == 1;
-                if (protocol) assert(streaming == (protocol == 6));
+                if (streaming && protocol && protocol != 6) throw new FS.ErrnoError(66);
                 var sock = {
                     family: family,
                     type: type,
@@ -3039,7 +2776,7 @@ var Godot = function() {
             websocket_sock_ops: {
                 createPeer: function(sock, addr, port) {
                     var ws;
-                    if (typeof addr === "object") {
+                    if (typeof addr == "object") {
                         ws = addr;
                         addr = null;
                         port = null;
@@ -3071,9 +2808,7 @@ var Godot = function() {
                         var opts = undefined;
                         if (subProtocols !== "null") {
                             subProtocols = subProtocols.replace(/^ +| +$/g, "").split(/ *, */);
-                            opts = ENVIRONMENT_IS_NODE ? {
-                                "protocol": subProtocols.toString()
-                            } : subProtocols;
+                            opts = subProtocols;
                         }
                         if (runtimeConfig && null === Module["websocket"]["subprotocol"]) {
                             subProtocols = "null";
@@ -3084,7 +2819,7 @@ var Godot = function() {
                         ws = new WebSocketConstructor(url, opts);
                         ws.binaryType = "arraybuffer";
                     } catch (e) {
-                        throw new FS.ErrnoError(ERRNO_CODES.EHOSTUNREACH);
+                        throw new FS.ErrnoError(23);
                     }
                     var peer = {
                         addr: addr,
@@ -3094,7 +2829,7 @@ var Godot = function() {
                     };
                     SOCKFS.websocket_sock_ops.addPeer(sock, peer);
                     SOCKFS.websocket_sock_ops.handlePeerEvents(sock, peer);
-                    if (sock.type === 2 && typeof sock.sport !== "undefined") peer.dgram_send_queue.push(new Uint8Array([
+                    if (sock.type === 2 && typeof sock.sport != "undefined") peer.dgram_send_queue.push(new Uint8Array([
                         255,
                         255,
                         255,
@@ -3132,7 +2867,7 @@ var Godot = function() {
                         }
                     };
                     function handleMessage(data) {
-                        if (typeof data === "string") {
+                        if (typeof data == "string") {
                             var encoder = new TextEncoder;
                             data = encoder.encode(data);
                         } else {
@@ -3158,15 +2893,15 @@ var Godot = function() {
                     }
                     if (ENVIRONMENT_IS_NODE) {
                         peer.socket.on("open", handleOpen);
-                        peer.socket.on("message", function(data, flags) {
-                            if (!flags.binary) return;
+                        peer.socket.on("message", function(data, isBinary) {
+                            if (!isBinary) return;
                             handleMessage(new Uint8Array(data).buffer);
                         });
                         peer.socket.on("close", function() {
                             Module["websocket"].emit("close", sock.stream.fd);
                         });
                         peer.socket.on("error", function(error) {
-                            sock.error = ERRNO_CODES.ECONNREFUSED;
+                            sock.error = 14;
                             Module["websocket"].emit("error", [
                                 sock.stream.fd,
                                 sock.error,
@@ -3182,7 +2917,7 @@ var Godot = function() {
                             handleMessage(event.data);
                         };
                         peer.socket.onerror = function(error) {
-                            sock.error = ERRNO_CODES.ECONNREFUSED;
+                            sock.error = 14;
                             Module["websocket"].emit("error", [
                                 sock.stream.fd,
                                 sock.error,
@@ -3208,7 +2943,7 @@ var Godot = function() {
                             HEAP32[arg >> 2] = bytes;
                             return 0;
                         default:
-                            return ERRNO_CODES.EINVAL;
+                            return 28;
                     }
                 },
                 close: function(sock) {
@@ -3231,7 +2966,7 @@ var Godot = function() {
                     return 0;
                 },
                 bind: function(sock, addr, port) {
-                    if (typeof sock.saddr !== "undefined" || typeof sock.sport !== "undefined") throw new FS.ErrnoError(ERRNO_CODES.EINVAL);
+                    if (typeof sock.saddr != "undefined" || typeof sock.sport != "undefined") throw new FS.ErrnoError(28);
                     sock.saddr = addr;
                     sock.sport = port;
                     if (sock.type === 2) {
@@ -3243,29 +2978,29 @@ var Godot = function() {
                             sock.sock_ops.listen(sock, 0);
                         } catch (e) {
                             if (!(e instanceof FS.ErrnoError)) throw e;
-                            if (e.errno !== ERRNO_CODES.EOPNOTSUPP) throw e;
+                            if (e.errno !== 138) throw e;
                         }
                     }
                 },
                 connect: function(sock, addr, port) {
-                    if (sock.server) throw new FS.ErrnoError(ERRNO_CODES.EOPNOTSUPP);
-                    if (typeof sock.daddr !== "undefined" && typeof sock.dport !== "undefined") {
+                    if (sock.server) throw new FS.ErrnoError(138);
+                    if (typeof sock.daddr != "undefined" && typeof sock.dport != "undefined") {
                         var dest = SOCKFS.websocket_sock_ops.getPeer(sock, sock.daddr, sock.dport);
                         if (dest) {
-                            if (dest.socket.readyState === dest.socket.CONNECTING) throw new FS.ErrnoError(ERRNO_CODES.EALREADY);
-                            else throw new FS.ErrnoError(ERRNO_CODES.EISCONN);
+                            if (dest.socket.readyState === dest.socket.CONNECTING) throw new FS.ErrnoError(7);
+                            else throw new FS.ErrnoError(30);
                         }
                     }
                     var peer = SOCKFS.websocket_sock_ops.createPeer(sock, addr, port);
                     sock.daddr = peer.addr;
                     sock.dport = peer.port;
-                    throw new FS.ErrnoError(ERRNO_CODES.EINPROGRESS);
+                    throw new FS.ErrnoError(26);
                 },
                 listen: function(sock, backlog) {
-                    if (!ENVIRONMENT_IS_NODE) throw new FS.ErrnoError(ERRNO_CODES.EOPNOTSUPP);
+                    if (!ENVIRONMENT_IS_NODE) throw new FS.ErrnoError(138);
                 },
                 accept: function(listensock) {
-                    if (!listensock.server) throw new FS.ErrnoError(ERRNO_CODES.EINVAL);
+                    if (!listensock.server || !listensock.pending.length) throw new FS.ErrnoError(28);
                     var newsock = listensock.pending.shift();
                     newsock.stream.flags = listensock.stream.flags;
                     return newsock;
@@ -3273,7 +3008,7 @@ var Godot = function() {
                 getname: function(sock, peer) {
                     var addr, port;
                     if (peer) {
-                        if (sock.daddr === undefined || sock.dport === undefined) throw new FS.ErrnoError(ERRNO_CODES.ENOTCONN);
+                        if (sock.daddr === undefined || sock.dport === undefined) throw new FS.ErrnoError(53);
                         addr = sock.daddr;
                         port = sock.dport;
                     } else {
@@ -3291,15 +3026,15 @@ var Godot = function() {
                             addr = sock.daddr;
                             port = sock.dport;
                         }
-                        if (addr === undefined || port === undefined) throw new FS.ErrnoError(ERRNO_CODES.EDESTADDRREQ);
+                        if (addr === undefined || port === undefined) throw new FS.ErrnoError(17);
                     } else {
                         addr = sock.daddr;
                         port = sock.dport;
                     }
                     var dest = SOCKFS.websocket_sock_ops.getPeer(sock, addr, port);
                     if (sock.type === 1) {
-                        if (!dest || dest.socket.readyState === dest.socket.CLOSING || dest.socket.readyState === dest.socket.CLOSED) throw new FS.ErrnoError(ERRNO_CODES.ENOTCONN);
-                        else if (dest.socket.readyState === dest.socket.CONNECTING) throw new FS.ErrnoError(ERRNO_CODES.EAGAIN);
+                        if (!dest || dest.socket.readyState === dest.socket.CLOSING || dest.socket.readyState === dest.socket.CLOSED) throw new FS.ErrnoError(53);
+                        else if (dest.socket.readyState === dest.socket.CONNECTING) throw new FS.ErrnoError(6);
                     }
                     if (ArrayBuffer.isView(buffer)) {
                         offset += buffer.byteOffset;
@@ -3318,19 +3053,19 @@ var Godot = function() {
                         dest.socket.send(data);
                         return length;
                     } catch (e) {
-                        throw new FS.ErrnoError(ERRNO_CODES.EINVAL);
+                        throw new FS.ErrnoError(28);
                     }
                 },
                 recvmsg: function(sock, length) {
-                    if (sock.type === 1 && sock.server) throw new FS.ErrnoError(ERRNO_CODES.ENOTCONN);
+                    if (sock.type === 1 && sock.server) throw new FS.ErrnoError(53);
                     var queued = sock.recv_queue.shift();
                     if (!queued) {
                         if (sock.type === 1) {
                             var dest = SOCKFS.websocket_sock_ops.getPeer(sock, sock.daddr, sock.dport);
-                            if (!dest) throw new FS.ErrnoError(ERRNO_CODES.ENOTCONN);
+                            if (!dest) throw new FS.ErrnoError(53);
                             else if (dest.socket.readyState === dest.socket.CLOSING || dest.socket.readyState === dest.socket.CLOSED) return null;
-                            else throw new FS.ErrnoError(ERRNO_CODES.EAGAIN);
-                        } else throw new FS.ErrnoError(ERRNO_CODES.EAGAIN);
+                            else throw new FS.ErrnoError(6);
+                        } else throw new FS.ErrnoError(6);
                     }
                     var queuedLength = queued.data.byteLength || queued.data.length;
                     var queuedOffset = queued.data.byteOffset || 0;
@@ -3398,7 +3133,7 @@ var Godot = function() {
             } else words = str.split(":");
             offset = 0;
             z = 0;
-            for(w = 0; w < words.length; w++)if (typeof words[w] === "string") {
+            for(w = 0; w < words.length; w++)if (typeof words[w] == "string") {
                 if (words[w] === "Z") {
                     for(z = 0; z < 8 - words.length + 1; z++)parts[w + z] = 0;
                     offset = z - 1;
@@ -3466,23 +3201,14 @@ var Godot = function() {
                 return null;
             }
         };
-        function ___sys_accept4(fd, addr, addrlen, flags) {
+        function ___syscall_accept4(fd, addr, addrlen, flags) {
             try {
                 var sock = getSocketFromFD(fd);
                 var newsock = sock.sock_ops.accept(sock);
                 if (addr) var errno = writeSockaddr(addr, newsock.family, DNS.lookup_name(newsock.daddr), newsock.dport, addrlen);
                 return newsock.stream.fd;
             } catch (e) {
-                if (typeof FS === "undefined" || !(e instanceof FS.ErrnoError)) abort(e);
-                return -e.errno;
-            }
-        }
-        function ___sys_access(path, amode) {
-            try {
-                path = SYSCALLS.getStr(path);
-                return SYSCALLS.doAccess(path, amode);
-            } catch (e) {
-                if (typeof FS === "undefined" || !(e instanceof FS.ErrnoError)) abort(e);
+                if (typeof FS == "undefined" || !(e instanceof FS.ErrnoError)) throw e;
                 return -e.errno;
             }
         }
@@ -3596,49 +3322,70 @@ var Godot = function() {
             info.addr = DNS.lookup_addr(info.addr) || info.addr;
             return info;
         }
-        function ___sys_bind(fd, addr, addrlen) {
+        function ___syscall_bind(fd, addr, addrlen) {
             try {
                 var sock = getSocketFromFD(fd);
                 var info = getSocketAddress(addr, addrlen);
                 sock.sock_ops.bind(sock, info.addr, info.port);
                 return 0;
             } catch (e) {
-                if (typeof FS === "undefined" || !(e instanceof FS.ErrnoError)) abort(e);
+                if (typeof FS == "undefined" || !(e instanceof FS.ErrnoError)) throw e;
                 return -e.errno;
             }
         }
-        function ___sys_chdir(path) {
+        function ___syscall_chdir(path) {
             try {
                 path = SYSCALLS.getStr(path);
                 FS.chdir(path);
                 return 0;
             } catch (e) {
-                if (typeof FS === "undefined" || !(e instanceof FS.ErrnoError)) abort(e);
+                if (typeof FS == "undefined" || !(e instanceof FS.ErrnoError)) throw e;
                 return -e.errno;
             }
         }
-        function ___sys_chmod(path, mode) {
+        function ___syscall_chmod(path, mode) {
             try {
                 path = SYSCALLS.getStr(path);
                 FS.chmod(path, mode);
                 return 0;
             } catch (e) {
-                if (typeof FS === "undefined" || !(e instanceof FS.ErrnoError)) abort(e);
+                if (typeof FS == "undefined" || !(e instanceof FS.ErrnoError)) throw e;
                 return -e.errno;
             }
         }
-        function ___sys_connect(fd, addr, addrlen) {
+        function ___syscall_connect(fd, addr, addrlen) {
             try {
                 var sock = getSocketFromFD(fd);
                 var info = getSocketAddress(addr, addrlen);
                 sock.sock_ops.connect(sock, info.addr, info.port);
                 return 0;
             } catch (e) {
-                if (typeof FS === "undefined" || !(e instanceof FS.ErrnoError)) abort(e);
+                if (typeof FS == "undefined" || !(e instanceof FS.ErrnoError)) throw e;
                 return -e.errno;
             }
         }
-        function ___sys_fcntl64(fd, cmd, varargs) {
+        function ___syscall_faccessat(dirfd, path, amode, flags) {
+            try {
+                path = SYSCALLS.getStr(path);
+                path = SYSCALLS.calculateAt(dirfd, path);
+                if (amode & -8) return -28;
+                var lookup = FS.lookupPath(path, {
+                    follow: true
+                });
+                var node = lookup.node;
+                if (!node) return -44;
+                var perms = "";
+                if (amode & 4) perms += "r";
+                if (amode & 2) perms += "w";
+                if (amode & 1) perms += "x";
+                if (perms && FS.nodePermissions(node, perms)) return -2;
+                return 0;
+            } catch (e) {
+                if (typeof FS == "undefined" || !(e instanceof FS.ErrnoError)) throw e;
+                return -e.errno;
+            }
+        }
+        function ___syscall_fcntl64(fd, cmd, varargs) {
             SYSCALLS.varargs = varargs;
             try {
                 var stream = SYSCALLS.getStreamFromFD(fd);
@@ -3647,7 +3394,7 @@ var Godot = function() {
                         var arg = SYSCALLS.get();
                         if (arg < 0) return -28;
                         var newStream;
-                        newStream = FS.open(stream.path, stream.flags, 0, arg);
+                        newStream = FS.createStream(stream, arg);
                         return newStream.fd;
                     case 1:
                     case 2:
@@ -3658,13 +3405,13 @@ var Godot = function() {
                         var arg = SYSCALLS.get();
                         stream.flags |= arg;
                         return 0;
-                    case 12:
+                    case 5:
                         var arg = SYSCALLS.get();
                         var offset = 0;
                         HEAP16[arg + offset >> 1] = 2;
                         return 0;
-                    case 13:
-                    case 14:
+                    case 6:
+                    case 7:
                         return 0;
                     case 16:
                     case 8:
@@ -3676,24 +3423,24 @@ var Godot = function() {
                         return -28;
                 }
             } catch (e) {
-                if (typeof FS === "undefined" || !(e instanceof FS.ErrnoError)) abort(e);
+                if (typeof FS == "undefined" || !(e instanceof FS.ErrnoError)) throw e;
                 return -e.errno;
             }
         }
-        function ___sys_getcwd(buf, size) {
+        function ___syscall_getcwd(buf, size) {
             try {
                 if (size === 0) return -28;
                 var cwd = FS.cwd();
-                var cwdLengthInBytes = lengthBytesUTF8(cwd);
-                if (size < cwdLengthInBytes + 1) return -68;
+                var cwdLengthInBytes = lengthBytesUTF8(cwd) + 1;
+                if (size < cwdLengthInBytes) return -68;
                 stringToUTF8(cwd, buf, size);
-                return buf;
+                return cwdLengthInBytes;
             } catch (e) {
-                if (typeof FS === "undefined" || !(e instanceof FS.ErrnoError)) abort(e);
+                if (typeof FS == "undefined" || !(e instanceof FS.ErrnoError)) throw e;
                 return -e.errno;
             }
         }
-        function ___sys_getdents64(fd, dirp, count) {
+        function ___syscall_getdents64(fd, dirp, count) {
             try {
                 var stream = SYSCALLS.getStreamFromFD(fd);
                 if (!stream.getdents) stream.getdents = FS.readdir(stream.path);
@@ -3705,8 +3452,14 @@ var Godot = function() {
                     var id;
                     var type;
                     var name = stream.getdents[idx];
-                    if (name[0] === ".") {
-                        id = 1;
+                    if (name === ".") {
+                        id = stream.node.id;
+                        type = 4;
+                    } else if (name === "..") {
+                        var lookup = FS.lookupPath(stream.path, {
+                            parent: true
+                        });
+                        id = lookup.node.id;
                         type = 4;
                     } else {
                         var child = FS.lookupNode(stream.node, name);
@@ -3730,25 +3483,22 @@ var Godot = function() {
                 FS.llseek(stream, idx * struct_size, 0);
                 return pos;
             } catch (e) {
-                if (typeof FS === "undefined" || !(e instanceof FS.ErrnoError)) abort(e);
+                if (typeof FS == "undefined" || !(e instanceof FS.ErrnoError)) throw e;
                 return -e.errno;
             }
         }
-        function ___sys_getpid() {
-            return 42;
-        }
-        function ___sys_getsockname(fd, addr, addrlen) {
+        function ___syscall_getsockname(fd, addr, addrlen) {
             try {
-                err1("__sys_getsockname " + fd);
+                err1("__syscall_getsockname " + fd);
                 var sock = getSocketFromFD(fd);
                 var errno = writeSockaddr(addr, sock.family, DNS.lookup_name(sock.saddr || "0.0.0.0"), sock.sport, addrlen);
                 return 0;
             } catch (e) {
-                if (typeof FS === "undefined" || !(e instanceof FS.ErrnoError)) abort(e);
+                if (typeof FS == "undefined" || !(e instanceof FS.ErrnoError)) throw e;
                 return -e.errno;
             }
         }
-        function ___sys_getsockopt(fd, level, optname, optval, optlen) {
+        function ___syscall_getsockopt(fd, level, optname, optval, optlen) {
             try {
                 var sock = getSocketFromFD(fd);
                 if (level === 1) {
@@ -3761,11 +3511,11 @@ var Godot = function() {
                 }
                 return -50;
             } catch (e) {
-                if (typeof FS === "undefined" || !(e instanceof FS.ErrnoError)) abort(e);
+                if (typeof FS == "undefined" || !(e instanceof FS.ErrnoError)) throw e;
                 return -e.errno;
             }
         }
-        function ___sys_ioctl(fd, op, varargs) {
+        function ___syscall_ioctl(fd, op, varargs) {
             SYSCALLS.varargs = varargs;
             try {
                 var stream = SYSCALLS.getStreamFromFD(fd);
@@ -3803,51 +3553,68 @@ var Godot = function() {
                         abort("bad ioctl syscall " + op);
                 }
             } catch (e) {
-                if (typeof FS === "undefined" || !(e instanceof FS.ErrnoError)) abort(e);
+                if (typeof FS == "undefined" || !(e instanceof FS.ErrnoError)) throw e;
                 return -e.errno;
             }
         }
-        function ___sys_listen(fd, backlog) {
+        function ___syscall_listen(fd, backlog) {
             try {
                 var sock = getSocketFromFD(fd);
                 sock.sock_ops.listen(sock, backlog);
                 return 0;
             } catch (e) {
-                if (typeof FS === "undefined" || !(e instanceof FS.ErrnoError)) abort(e);
+                if (typeof FS == "undefined" || !(e instanceof FS.ErrnoError)) throw e;
                 return -e.errno;
             }
         }
-        function ___sys_lstat64(path, buf) {
+        function ___syscall_lstat64(path, buf) {
             try {
                 path = SYSCALLS.getStr(path);
                 return SYSCALLS.doStat(FS.lstat, path, buf);
             } catch (e) {
-                if (typeof FS === "undefined" || !(e instanceof FS.ErrnoError)) abort(e);
+                if (typeof FS == "undefined" || !(e instanceof FS.ErrnoError)) throw e;
                 return -e.errno;
             }
         }
-        function ___sys_mkdir(path, mode) {
+        function ___syscall_mkdirat(dirfd, path, mode) {
             try {
                 path = SYSCALLS.getStr(path);
-                return SYSCALLS.doMkdir(path, mode);
+                path = SYSCALLS.calculateAt(dirfd, path);
+                path = PATH.normalize(path);
+                if (path[path.length - 1] === "/") path = path.substr(0, path.length - 1);
+                FS.mkdir(path, mode, 0);
+                return 0;
             } catch (e) {
-                if (typeof FS === "undefined" || !(e instanceof FS.ErrnoError)) abort(e);
+                if (typeof FS == "undefined" || !(e instanceof FS.ErrnoError)) throw e;
                 return -e.errno;
             }
         }
-        function ___sys_open(path, flags, varargs) {
+        function ___syscall_newfstatat(dirfd, path, buf, flags) {
+            try {
+                path = SYSCALLS.getStr(path);
+                var nofollow = flags & 256;
+                var allowEmpty = flags & 4096;
+                flags = flags & -4353;
+                path = SYSCALLS.calculateAt(dirfd, path, allowEmpty);
+                return SYSCALLS.doStat(nofollow ? FS.lstat : FS.stat, path, buf);
+            } catch (e) {
+                if (typeof FS == "undefined" || !(e instanceof FS.ErrnoError)) throw e;
+                return -e.errno;
+            }
+        }
+        function ___syscall_openat(dirfd, path, flags, varargs) {
             SYSCALLS.varargs = varargs;
             try {
-                var pathname = SYSCALLS.getStr(path);
+                path = SYSCALLS.getStr(path);
+                path = SYSCALLS.calculateAt(dirfd, path);
                 var mode = varargs ? SYSCALLS.get() : 0;
-                var stream = FS.open(pathname, flags, mode);
-                return stream.fd;
+                return FS.open(path, flags, mode).fd;
             } catch (e) {
-                if (typeof FS === "undefined" || !(e instanceof FS.ErrnoError)) abort(e);
+                if (typeof FS == "undefined" || !(e instanceof FS.ErrnoError)) throw e;
                 return -e.errno;
             }
         }
-        function ___sys_poll(fds, nfds, timeout) {
+        function ___syscall_poll(fds, nfds, timeout) {
             try {
                 var nonzero = 0;
                 for(var i = 0; i < nfds; i++){
@@ -3866,20 +3633,27 @@ var Godot = function() {
                 }
                 return nonzero;
             } catch (e) {
-                if (typeof FS === "undefined" || !(e instanceof FS.ErrnoError)) abort(e);
+                if (typeof FS == "undefined" || !(e instanceof FS.ErrnoError)) throw e;
                 return -e.errno;
             }
         }
-        function ___sys_readlink(path, buf, bufsize) {
+        function ___syscall_readlinkat(dirfd, path, buf, bufsize) {
             try {
                 path = SYSCALLS.getStr(path);
-                return SYSCALLS.doReadlink(path, buf, bufsize);
+                path = SYSCALLS.calculateAt(dirfd, path);
+                if (bufsize <= 0) return -28;
+                var ret = FS.readlink(path);
+                var len = Math.min(bufsize, lengthBytesUTF8(ret));
+                var endChar = HEAP8[buf + len];
+                stringToUTF8(ret, buf, bufsize + 1);
+                HEAP8[buf + len] = endChar;
+                return len;
             } catch (e) {
-                if (typeof FS === "undefined" || !(e instanceof FS.ErrnoError)) abort(e);
+                if (typeof FS == "undefined" || !(e instanceof FS.ErrnoError)) throw e;
                 return -e.errno;
             }
         }
-        function ___sys_recvfrom(fd, buf, len, flags, addr, addrlen) {
+        function ___syscall_recvfrom(fd, buf, len, flags, addr, addrlen) {
             try {
                 var sock = getSocketFromFD(fd);
                 var msg = sock.sock_ops.recvmsg(sock, len);
@@ -3888,70 +3662,63 @@ var Godot = function() {
                 HEAPU8.set(msg.buffer, buf);
                 return msg.buffer.byteLength;
             } catch (e) {
-                if (typeof FS === "undefined" || !(e instanceof FS.ErrnoError)) abort(e);
+                if (typeof FS == "undefined" || !(e instanceof FS.ErrnoError)) throw e;
                 return -e.errno;
             }
         }
-        function ___sys_rename(old_path, new_path) {
+        function ___syscall_renameat(olddirfd, oldpath, newdirfd, newpath) {
             try {
-                old_path = SYSCALLS.getStr(old_path);
-                new_path = SYSCALLS.getStr(new_path);
-                FS.rename(old_path, new_path);
+                oldpath = SYSCALLS.getStr(oldpath);
+                newpath = SYSCALLS.getStr(newpath);
+                oldpath = SYSCALLS.calculateAt(olddirfd, oldpath);
+                newpath = SYSCALLS.calculateAt(newdirfd, newpath);
+                FS.rename(oldpath, newpath);
                 return 0;
             } catch (e) {
-                if (typeof FS === "undefined" || !(e instanceof FS.ErrnoError)) abort(e);
+                if (typeof FS == "undefined" || !(e instanceof FS.ErrnoError)) throw e;
                 return -e.errno;
             }
         }
-        function ___sys_rmdir(path) {
+        function ___syscall_rmdir(path) {
             try {
                 path = SYSCALLS.getStr(path);
                 FS.rmdir(path);
                 return 0;
             } catch (e) {
-                if (typeof FS === "undefined" || !(e instanceof FS.ErrnoError)) abort(e);
+                if (typeof FS == "undefined" || !(e instanceof FS.ErrnoError)) throw e;
                 return -e.errno;
             }
         }
-        function ___sys_sendto(fd, message, length, flags, addr, addr_len) {
+        function ___syscall_sendto(fd, message, length, flags, addr, addr_len) {
             try {
                 var sock = getSocketFromFD(fd);
                 var dest = getSocketAddress(addr, addr_len, true);
                 if (!dest) return FS.write(sock.stream, HEAP8, message, length);
                 else return sock.sock_ops.sendmsg(sock, HEAP8, message, length, dest.addr, dest.port);
             } catch (e) {
-                if (typeof FS === "undefined" || !(e instanceof FS.ErrnoError)) abort(e);
+                if (typeof FS == "undefined" || !(e instanceof FS.ErrnoError)) throw e;
                 return -e.errno;
             }
         }
-        var ___sys_setsockopt = function(fd) {
-            err1("warning: unsupported syscall: __sys_setsockopt");
-            try {
-                return -50;
-            } catch (e) {
-                if (typeof FS === "undefined" || !(e instanceof FS.ErrnoError)) abort(e);
-                return -e.errno;
-            }
-        };
-        function ___sys_socket(domain, type, protocol) {
+        function ___syscall_socket(domain, type, protocol) {
             try {
                 var sock = SOCKFS.createSocket(domain, type, protocol);
                 return sock.stream.fd;
             } catch (e) {
-                if (typeof FS === "undefined" || !(e instanceof FS.ErrnoError)) abort(e);
+                if (typeof FS == "undefined" || !(e instanceof FS.ErrnoError)) throw e;
                 return -e.errno;
             }
         }
-        function ___sys_stat64(path, buf) {
+        function ___syscall_stat64(path, buf) {
             try {
                 path = SYSCALLS.getStr(path);
                 return SYSCALLS.doStat(FS.stat, path, buf);
             } catch (e) {
-                if (typeof FS === "undefined" || !(e instanceof FS.ErrnoError)) abort(e);
+                if (typeof FS == "undefined" || !(e instanceof FS.ErrnoError)) throw e;
                 return -e.errno;
             }
         }
-        function ___sys_statfs64(path, size, buf) {
+        function ___syscall_statfs64(path, size, buf) {
             try {
                 path = SYSCALLS.getStr(path);
                 HEAP32[buf + 4 >> 2] = 4096;
@@ -3966,69 +3733,116 @@ var Godot = function() {
                 HEAP32[buf + 36 >> 2] = 255;
                 return 0;
             } catch (e) {
-                if (typeof FS === "undefined" || !(e instanceof FS.ErrnoError)) abort(e);
+                if (typeof FS == "undefined" || !(e instanceof FS.ErrnoError)) throw e;
                 return -e.errno;
             }
         }
-        function ___sys_symlink(target, linkpath) {
+        function ___syscall_symlink(target, linkpath) {
             try {
                 target = SYSCALLS.getStr(target);
                 linkpath = SYSCALLS.getStr(linkpath);
                 FS.symlink(target, linkpath);
                 return 0;
             } catch (e) {
-                if (typeof FS === "undefined" || !(e instanceof FS.ErrnoError)) abort(e);
+                if (typeof FS == "undefined" || !(e instanceof FS.ErrnoError)) throw e;
                 return -e.errno;
             }
         }
-        function ___sys_unlink(path) {
+        function ___syscall_unlinkat(dirfd, path, flags) {
             try {
                 path = SYSCALLS.getStr(path);
-                FS.unlink(path);
+                path = SYSCALLS.calculateAt(dirfd, path);
+                if (flags === 0) FS.unlink(path);
+                else if (flags === 512) FS.rmdir(path);
+                else abort("Invalid flags passed to unlinkat");
                 return 0;
             } catch (e) {
-                if (typeof FS === "undefined" || !(e instanceof FS.ErrnoError)) abort(e);
+                if (typeof FS == "undefined" || !(e instanceof FS.ErrnoError)) throw e;
                 return -e.errno;
             }
         }
-        var ___sys_wait4 = function() {
-            err1("warning: unsupported syscall: __sys_wait4");
-            return -52;
-        };
+        function __dlinit(main_dso_handle) {
+        }
+        var dlopenMissingError = "To use dlopen, you need enable dynamic linking, see https://github.com/emscripten-core/emscripten/wiki/Linking";
+        function __dlopen_js(filename, flag) {
+            abort(dlopenMissingError);
+        }
+        function __dlsym_js(handle, symbol) {
+            abort(dlopenMissingError);
+        }
+        function __emscripten_date_now() {
+            return Date.now();
+        }
+        var nowIsMonotonic = true;
+        function __emscripten_get_now_is_monotonic() {
+            return nowIsMonotonic;
+        }
         function __emscripten_throw_longjmp() {
-            throw "longjmp";
+            throw Infinity;
+        }
+        function __gmtime_js(time, tmPtr) {
+            var date = new Date(HEAP32[time >> 2] * 1000);
+            HEAP32[tmPtr >> 2] = date.getUTCSeconds();
+            HEAP32[tmPtr + 4 >> 2] = date.getUTCMinutes();
+            HEAP32[tmPtr + 8 >> 2] = date.getUTCHours();
+            HEAP32[tmPtr + 12 >> 2] = date.getUTCDate();
+            HEAP32[tmPtr + 16 >> 2] = date.getUTCMonth();
+            HEAP32[tmPtr + 20 >> 2] = date.getUTCFullYear() - 1900;
+            HEAP32[tmPtr + 24 >> 2] = date.getUTCDay();
+            var start = Date.UTC(date.getUTCFullYear(), 0, 1, 0, 0, 0, 0);
+            var yday = (date.getTime() - start) / 86400000 | 0;
+            HEAP32[tmPtr + 28 >> 2] = yday;
+        }
+        function __localtime_js(time, tmPtr) {
+            var date = new Date(HEAP32[time >> 2] * 1000);
+            HEAP32[tmPtr >> 2] = date.getSeconds();
+            HEAP32[tmPtr + 4 >> 2] = date.getMinutes();
+            HEAP32[tmPtr + 8 >> 2] = date.getHours();
+            HEAP32[tmPtr + 12 >> 2] = date.getDate();
+            HEAP32[tmPtr + 16 >> 2] = date.getMonth();
+            HEAP32[tmPtr + 20 >> 2] = date.getFullYear() - 1900;
+            HEAP32[tmPtr + 24 >> 2] = date.getDay();
+            var start = new Date(date.getFullYear(), 0, 1);
+            var yday = (date.getTime() - start.getTime()) / 86400000 | 0;
+            HEAP32[tmPtr + 28 >> 2] = yday;
+            HEAP32[tmPtr + 36 >> 2] = -(date.getTimezoneOffset() * 60);
+            var summerOffset = new Date(date.getFullYear(), 6, 1).getTimezoneOffset();
+            var winterOffset = start.getTimezoneOffset();
+            var dst = (summerOffset != winterOffset && date.getTimezoneOffset() == Math.min(winterOffset, summerOffset)) | 0;
+            HEAP32[tmPtr + 32 >> 2] = dst;
+        }
+        function _tzset_impl(timezone, daylight, tzname) {
+            var currentYear = (new Date).getFullYear();
+            var winter = new Date(currentYear, 0, 1);
+            var summer = new Date(currentYear, 6, 1);
+            var winterOffset = winter.getTimezoneOffset();
+            var summerOffset = summer.getTimezoneOffset();
+            var stdTimezoneOffset = Math.max(winterOffset, summerOffset);
+            HEAP32[timezone >> 2] = stdTimezoneOffset * 60;
+            HEAP32[daylight >> 2] = Number(winterOffset != summerOffset);
+            function extractZone(date) {
+                var match = date.toTimeString().match(/\(([A-Za-z ]+)\)$/);
+                return match ? match[1] : "GMT";
+            }
+            var winterName = extractZone(winter);
+            var summerName = extractZone(summer);
+            var winterNamePtr = allocateUTF8(winterName);
+            var summerNamePtr = allocateUTF8(summerName);
+            if (summerOffset < winterOffset) {
+                HEAPU32[tzname >> 2] = winterNamePtr;
+                HEAPU32[tzname + 4 >> 2] = summerNamePtr;
+            } else {
+                HEAPU32[tzname >> 2] = summerNamePtr;
+                HEAPU32[tzname + 4 >> 2] = winterNamePtr;
+            }
+        }
+        function __tzset_js(timezone, daylight, tzname) {
+            if (__tzset_js.called) return;
+            __tzset_js.called = true;
+            _tzset_impl(timezone, daylight, tzname);
         }
         function _abort() {
-            abort();
-        }
-        var _emscripten_get_now;
-        _emscripten_get_now = function() {
-            return performance.now();
-        };
-        var _emscripten_get_now_is_monotonic = true;
-        function _clock_gettime(clk_id, tp) {
-            var now;
-            if (clk_id === 0) now = Date.now();
-            else if ((clk_id === 1 || clk_id === 4) && _emscripten_get_now_is_monotonic) now = _emscripten_get_now();
-            else {
-                setErrNo(28);
-                return -1;
-            }
-            HEAP32[tp >> 2] = now / 1000 | 0;
-            HEAP32[tp + 4 >> 2] = now % 1000 * 1000000 | 0;
-            return 0;
-        }
-        function _dlclose(handle) {
-            abort("To use dlopen, you need to use Emscripten's linking support, see https://github.com/emscripten-core/emscripten/wiki/Linking");
-        }
-        function _dlerror() {
-            abort("To use dlopen, you need to use Emscripten's linking support, see https://github.com/emscripten-core/emscripten/wiki/Linking");
-        }
-        function _dlopen(filename, flag) {
-            abort("To use dlopen, you need to use Emscripten's linking support, see https://github.com/emscripten-core/emscripten/wiki/Linking");
-        }
-        function _dlsym(handle, symbol) {
-            abort("To use dlopen, you need to use Emscripten's linking support, see https://github.com/emscripten-core/emscripten/wiki/Linking");
+            abort("");
         }
         function _emscripten_set_main_loop_timing(mode, value) {
             Browser.mainLoop.timingMode = mode;
@@ -4050,7 +3864,7 @@ var Godot = function() {
                 };
                 Browser.mainLoop.method = "rAF";
             } else if (mode == 2) {
-                if (typeof setImmediate === "undefined") {
+                if (typeof setImmediate == "undefined") {
                     var setImmediates = [];
                     var emscriptenMainLoopMessageId = "setimmediate";
                     var Browser_setImmediate_messageHandler = function(event) {
@@ -4078,6 +3892,9 @@ var Godot = function() {
             }
             return 0;
         }
+        var _emscripten_get_now;
+        _emscripten_get_now = ()=>performance.now()
+        ;
         function _emscripten_webgl_do_commit_frame() {
             if (!GL.currentContext || !GL.currentContext.GLctx) return -3;
             if (GL.currentContext.defaultFbo) {
@@ -4100,8 +3917,7 @@ var Godot = function() {
             if (!keepRuntimeAlive()) try {
                 _exit(EXITSTATUS);
             } catch (e) {
-                if (e instanceof ExitStatus) return;
-                throw e;
+                handleException(e);
             }
         }
         function setMainLoop(browserIterationFunc, fps, simulateInfiniteLoop, arg, noSetTiming) {
@@ -4133,7 +3949,7 @@ var Godot = function() {
                             Browser.mainLoop.remainingBlockers = (8 * remaining + next) / 9;
                         }
                     }
-                    console.log('main loop blocker "' + blocker.name + '" took ' + (Date.now() - start) + " ms");
+                    out1('main loop blocker "' + blocker.name + '" took ' + (Date.now() - start) + " ms");
                     Browser.mainLoop.updateStatus();
                     if (!checkIsRunning()) return;
                     setTimeout(Browser.mainLoop.runner, 0);
@@ -4147,7 +3963,7 @@ var Godot = function() {
                 } else if (Browser.mainLoop.timingMode == 0) Browser.mainLoop.tickStartTime = _emscripten_get_now();
                 Browser.mainLoop.runIter(browserIterationFunc);
                 if (!checkIsRunning()) return;
-                if (typeof SDL === "object" && SDL.audio && SDL.audio.queueNewAudioData) SDL.audio.queueNewAudioData();
+                if (typeof SDL == "object" && SDL.audio && SDL.audio.queueNewAudioData) SDL.audio.queueNewAudioData();
                 Browser.mainLoop.scheduler();
             };
             if (!noSetTiming) {
@@ -4158,24 +3974,20 @@ var Godot = function() {
             if (simulateInfiniteLoop) throw "unwind";
         }
         function callUserCallback(func, synchronous) {
-            if (ABORT) return;
+            if (runtimeExited || ABORT) return;
             if (synchronous) {
                 func();
                 return;
             }
             try {
                 func();
+                maybeExit();
             } catch (e) {
-                if (e instanceof ExitStatus) return;
-                else if (e !== "unwind") {
-                    if (e && typeof e === "object" && e.stack) err1("exception thrown: " + [
-                        e,
-                        e.stack
-                    ]);
-                    throw e;
-                }
+                handleException(e);
             }
-            maybeExit();
+        }
+        function runtimeKeepalivePop() {
+            runtimeKeepaliveCounter -= 1;
         }
         function safeSetTimeout(func, timeout) {
             runtimeKeepalivePush();
@@ -4183,9 +3995,6 @@ var Godot = function() {
                 runtimeKeepalivePop();
                 callUserCallback(func);
             }, timeout);
-        }
-        function runtimeKeepalivePop() {
-            runtimeKeepaliveCounter -= 1;
         }
         var Browser = {
             mainLoop: {
@@ -4245,14 +4054,14 @@ var Godot = function() {
                 try {
                     new Blob;
                     Browser.hasBlobConstructor = true;
-                } catch (e10) {
+                } catch (e6) {
                     Browser.hasBlobConstructor = false;
-                    console.log("warning: no blob constructor, cannot create blobs with mimetypes");
+                    out1("warning: no blob constructor, cannot create blobs with mimetypes");
                 }
-                Browser.BlobBuilder = typeof MozBlobBuilder != "undefined" ? MozBlobBuilder : typeof WebKitBlobBuilder != "undefined" ? WebKitBlobBuilder : !Browser.hasBlobConstructor ? console.log("warning: no BlobBuilder") : null;
+                Browser.BlobBuilder = typeof MozBlobBuilder != "undefined" ? MozBlobBuilder : typeof WebKitBlobBuilder != "undefined" ? WebKitBlobBuilder : !Browser.hasBlobConstructor ? out1("warning: no BlobBuilder") : null;
                 Browser.URLObject = typeof window != "undefined" ? window.URL ? window.URL : window.webkitURL : undefined;
-                if (!Module.noImageDecoding && typeof Browser.URLObject === "undefined") {
-                    console.log("warning: Browser does not support creating object URLs. Built-in browser image decoding will not be available.");
+                if (!Module.noImageDecoding && typeof Browser.URLObject == "undefined") {
+                    out1("warning: Browser does not support creating object URLs. Built-in browser image decoding will not be available.");
                     Module.noImageDecoding = true;
                 }
                 var imagePlugin = {
@@ -4283,19 +4092,19 @@ var Godot = function() {
                     }
                     var url = Browser.URLObject.createObjectURL(b);
                     var img = new Image;
-                    img.onload = function img_onload() {
+                    img.onload = ()=>{
                         assert(img.complete, "Image " + name + " could not be decoded");
                         var canvas = document.createElement("canvas");
                         canvas.width = img.width;
                         canvas.height = img.height;
                         var ctx = canvas.getContext("2d");
                         ctx.drawImage(img, 0, 0);
-                        Module["preloadedImages"][name] = canvas;
+                        preloadedImages[name] = canvas;
                         Browser.URLObject.revokeObjectURL(url);
                         if (onload) onload(byteArray);
                     };
-                    img.onerror = function img_onerror(event) {
-                        console.log("Image " + url + " could not be decoded");
+                    img.onerror = (event)=>{
+                        out1("Image " + url + " could not be decoded");
                         if (onerror) onerror();
                     };
                     img.src = url;
@@ -4315,13 +4124,13 @@ var Godot = function() {
                     function finish(audio) {
                         if (done) return;
                         done = true;
-                        Module["preloadedAudios"][name] = audio;
+                        preloadedAudios[name] = audio;
                         if (onload) onload(byteArray);
                     }
                     function fail() {
                         if (done) return;
                         done = true;
-                        Module["preloadedAudios"][name] = new Audio;
+                        preloadedAudios[name] = new Audio;
                         if (onerror) onerror();
                     }
                     if (Browser.hasBlobConstructor) {
@@ -4341,7 +4150,7 @@ var Godot = function() {
                         }, false);
                         audio1.onerror = function audio_onerror(event) {
                             if (done) return;
-                            console.log("warning: browser could not fully decode audio " + name + ", trying slower base64 approach");
+                            out1("warning: browser could not fully decode audio " + name + ", trying slower base64 approach");
                             function encode64(data) {
                                 var BASE = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
                                 var PAD = "=";
@@ -4398,6 +4207,18 @@ var Godot = function() {
                     }, false);
                 }
             },
+            handledByPreloadPlugin: function(byteArray, fullname, finish, onerror) {
+                Browser.init();
+                var handled = false;
+                Module["preloadPlugins"].forEach(function(plugin) {
+                    if (handled) return;
+                    if (plugin["canHandle"](fullname)) {
+                        plugin["handle"](byteArray, fullname, finish, onerror);
+                        handled = true;
+                    }
+                });
+                return handled;
+            },
             createContext: function(canvas, useWebGL, setInModule, webGLContextAttributes) {
                 if (useWebGL && Module.ctx && canvas == Module.canvas) return Module.ctx;
                 var ctx;
@@ -4406,17 +4227,17 @@ var Godot = function() {
                     var contextAttributes = {
                         antialias: false,
                         alpha: false,
-                        majorVersion: typeof WebGL2RenderingContext !== "undefined" ? 2 : 1
+                        majorVersion: typeof WebGL2RenderingContext != "undefined" ? 2 : 1
                     };
                     if (webGLContextAttributes) for(var attribute in webGLContextAttributes)contextAttributes[attribute] = webGLContextAttributes[attribute];
-                    if (typeof GL !== "undefined") {
+                    if (typeof GL != "undefined") {
                         contextHandle = GL.createContext(canvas, contextAttributes);
                         if (contextHandle) ctx = GL.getContext(contextHandle).GLctx;
                     }
                 } else ctx = canvas.getContext("2d");
                 if (!ctx) return null;
                 if (setInModule) {
-                    if (!useWebGL) assert(typeof GLctx1 === "undefined", "cannot set in module if GLctx is used, but we are a non-GL context that would replace it");
+                    if (!useWebGL) assert(typeof GLctx1 == "undefined", "cannot set in module if GLctx is used, but we are a non-GL context that would replace it");
                     Module.ctx = ctx;
                     if (useWebGL) GL.makeContextCurrent(contextHandle);
                     Module.useWebGL = useWebGL;
@@ -4435,8 +4256,8 @@ var Godot = function() {
             requestFullscreen: function(lockPointer, resizeCanvas) {
                 Browser.lockPointer = lockPointer;
                 Browser.resizeCanvas = resizeCanvas;
-                if (typeof Browser.lockPointer === "undefined") Browser.lockPointer = true;
-                if (typeof Browser.resizeCanvas === "undefined") Browser.resizeCanvas = false;
+                if (typeof Browser.lockPointer == "undefined") Browser.lockPointer = true;
+                if (typeof Browser.resizeCanvas == "undefined") Browser.resizeCanvas = false;
                 var canvas = Module["canvas"];
                 function fullscreenChange() {
                     Browser.isFullscreen = false;
@@ -4489,7 +4310,7 @@ var Godot = function() {
                 setTimeout(func, delay);
             },
             requestAnimationFrame: function(func) {
-                if (typeof requestAnimationFrame === "function") {
+                if (typeof requestAnimationFrame == "function") {
                     requestAnimationFrame(func);
                     return;
                 }
@@ -4583,8 +4404,8 @@ var Godot = function() {
                     var rect = Module["canvas"].getBoundingClientRect();
                     var cw = Module["canvas"].width;
                     var ch = Module["canvas"].height;
-                    var scrollX = typeof window.scrollX !== "undefined" ? window.scrollX : window.pageXOffset;
-                    var scrollY = typeof window.scrollY !== "undefined" ? window.scrollY : window.pageYOffset;
+                    var scrollX = typeof window.scrollX != "undefined" ? window.scrollX : window.pageXOffset;
+                    var scrollY = typeof window.scrollY != "undefined" ? window.scrollY : window.pageYOffset;
                     if (event.type === "touchstart" || event.type === "touchend" || event.type === "touchmove") {
                         var touch = event.touch;
                         if (touch === undefined) return;
@@ -4791,10 +4612,11 @@ var Godot = function() {
                 if (webGLContextAttributes.renderViaOffscreenBackBuffer) webGLContextAttributes["preserveDrawingBuffer"] = true;
                 if (!canvas.getContextSafariWebGL2Fixed) {
                     canvas.getContextSafariWebGL2Fixed = canvas.getContext;
-                    canvas.getContext = function(ver, attrs) {
+                    function fixedGetContext(ver, attrs) {
                         var gl = canvas.getContextSafariWebGL2Fixed(ver, attrs);
                         return ver == "webgl" == gl instanceof WebGLRenderingContext ? gl : null;
-                    };
+                    }
+                    canvas.getContext = fixedGetContext;
                 }
                 var ctx = webGLContextAttributes.majorVersion > 1 ? canvas.getContext("webgl2", webGLContextAttributes) : canvas.getContext("webgl", webGLContextAttributes);
                 if (!ctx) return 0;
@@ -4976,7 +4798,7 @@ var Godot = function() {
                 };
                 if (ctx.canvas) ctx.canvas.GLctxObject = context;
                 GL.contexts[handle] = context;
-                if (typeof webGLContextAttributes.enableExtensionsByDefault === "undefined" || webGLContextAttributes.enableExtensionsByDefault) GL.initExtensions(context);
+                if (typeof webGLContextAttributes.enableExtensionsByDefault == "undefined" || webGLContextAttributes.enableExtensionsByDefault) GL.initExtensions(context);
                 if (webGLContextAttributes.renderViaOffscreenBackBuffer) GL.createOffscreenFramebuffer(context);
                 return handle;
             },
@@ -4990,7 +4812,7 @@ var Godot = function() {
             },
             deleteContext: function(contextHandle) {
                 if (GL.currentContext === GL.contexts[contextHandle]) GL.currentContext = null;
-                if (typeof JSEvents === "object") JSEvents.removeAllHandlersOnTarget(GL.contexts[contextHandle].GLctx.canvas);
+                if (typeof JSEvents == "object") JSEvents.removeAllHandlersOnTarget(GL.contexts[contextHandle].GLctx.canvas);
                 if (GL.contexts[contextHandle] && GL.contexts[contextHandle].GLctx.canvas) GL.contexts[contextHandle].GLctx.canvas.GLctxObject = undefined;
                 GL.contexts[contextHandle] = null;
             },
@@ -5083,13 +4905,13 @@ var Godot = function() {
         }
         function _emscripten_glBufferData(target, size, data, usage) {
             if (GL.currentContext.version >= 2) {
-                if (data) GLctx1.bufferData(target, HEAPU8, usage, data, size);
+                if (data && size) GLctx1.bufferData(target, HEAPU8, usage, data, size);
                 else GLctx1.bufferData(target, size, usage);
             } else GLctx1.bufferData(target, data ? HEAPU8.subarray(data, data + size) : size, usage);
         }
         function _emscripten_glBufferSubData(target, offset, size, data) {
             if (GL.currentContext.version >= 2) {
-                GLctx1.bufferSubData(target, offset, HEAPU8, data, size);
+                size && GLctx1.bufferSubData(target, offset, HEAPU8, data, size);
                 return;
             }
             GLctx1.bufferSubData(target, offset, HEAPU8.subarray(data, data + size));
@@ -5135,7 +4957,7 @@ var Godot = function() {
         }
         function _emscripten_glCompressedTexImage2D(target, level, internalFormat, width, height, border, imageSize, data) {
             if (GL.currentContext.version >= 2) {
-                if (GLctx1.currentPixelUnpackBufferBinding) GLctx1["compressedTexImage2D"](target, level, internalFormat, width, height, border, imageSize, data);
+                if (GLctx1.currentPixelUnpackBufferBinding || !imageSize) GLctx1["compressedTexImage2D"](target, level, internalFormat, width, height, border, imageSize, data);
                 else GLctx1["compressedTexImage2D"](target, level, internalFormat, width, height, border, HEAPU8, data, imageSize);
                 return;
             }
@@ -5147,7 +4969,7 @@ var Godot = function() {
         }
         function _emscripten_glCompressedTexSubImage2D(target, level, xoffset, yoffset, width, height, format, imageSize, data) {
             if (GL.currentContext.version >= 2) {
-                if (GLctx1.currentPixelUnpackBufferBinding) GLctx1["compressedTexSubImage2D"](target, level, xoffset, yoffset, width, height, format, imageSize, data);
+                if (GLctx1.currentPixelUnpackBufferBinding || !imageSize) GLctx1["compressedTexSubImage2D"](target, level, xoffset, yoffset, width, height, format, imageSize, data);
                 else GLctx1["compressedTexSubImage2D"](target, level, xoffset, yoffset, width, height, format, HEAPU8, data, imageSize);
                 return;
             }
@@ -5786,7 +5608,7 @@ var Godot = function() {
             }
             var ret = GLctx1["getInternalformatParameter"](target, internalformat, pname);
             if (ret === null) return;
-            for(var i = 0; i < ret.length && i < bufSize; ++i)HEAP32[params + i >> 2] = ret[i];
+            for(var i = 0; i < ret.length && i < bufSize; ++i)HEAP32[params + i * 4 >> 2] = ret[i];
         }
         function _emscripten_glGetProgramBinary(program, bufSize, length, binaryFormat, binary) {
             GL.recordError(1282);
@@ -6149,7 +5971,7 @@ var Godot = function() {
             var p = GLctx1.currentProgram;
             if (p) {
                 var webglLoc = p.uniformLocsById[location];
-                if (typeof webglLoc === "number") p.uniformLocsById[location] = webglLoc = GLctx1.getUniformLocation(p, p.uniformArrayNamesById[location] + (webglLoc > 0 ? "[" + webglLoc + "]" : ""));
+                if (typeof webglLoc == "number") p.uniformLocsById[location] = webglLoc = GLctx1.getUniformLocation(p, p.uniformArrayNamesById[location] + (webglLoc > 0 ? "[" + webglLoc + "]" : ""));
                 return webglLoc;
             } else GL.recordError(1282);
         }
@@ -6530,7 +6352,7 @@ var Godot = function() {
         var miniTempWebGLFloatBuffers = [];
         function _emscripten_glUniform1fv(location, count, value) {
             if (GL.currentContext.version >= 2) {
-                GLctx1.uniform1fv(webglGetUniformLocation(location), HEAPF32, value >> 2, count);
+                count && GLctx1.uniform1fv(webglGetUniformLocation(location), HEAPF32, value >> 2, count);
                 return;
             }
             if (count <= 288) {
@@ -6545,7 +6367,7 @@ var Godot = function() {
         var __miniTempWebGLIntBuffers = [];
         function _emscripten_glUniform1iv(location, count, value) {
             if (GL.currentContext.version >= 2) {
-                GLctx1.uniform1iv(webglGetUniformLocation(location), HEAP32, value >> 2, count);
+                count && GLctx1.uniform1iv(webglGetUniformLocation(location), HEAP32, value >> 2, count);
                 return;
             }
             if (count <= 288) {
@@ -6558,14 +6380,14 @@ var Godot = function() {
             GLctx1.uniform1ui(webglGetUniformLocation(location), v0);
         }
         function _emscripten_glUniform1uiv(location, count, value) {
-            GLctx1.uniform1uiv(webglGetUniformLocation(location), HEAPU32, value >> 2, count);
+            count && GLctx1.uniform1uiv(webglGetUniformLocation(location), HEAPU32, value >> 2, count);
         }
         function _emscripten_glUniform2f(location, v0, v1) {
             GLctx1.uniform2f(webglGetUniformLocation(location), v0, v1);
         }
         function _emscripten_glUniform2fv(location, count, value) {
             if (GL.currentContext.version >= 2) {
-                GLctx1.uniform2fv(webglGetUniformLocation(location), HEAPF32, value >> 2, count * 2);
+                count && GLctx1.uniform2fv(webglGetUniformLocation(location), HEAPF32, value >> 2, count * 2);
                 return;
             }
             if (count <= 144) {
@@ -6582,7 +6404,7 @@ var Godot = function() {
         }
         function _emscripten_glUniform2iv(location, count, value) {
             if (GL.currentContext.version >= 2) {
-                GLctx1.uniform2iv(webglGetUniformLocation(location), HEAP32, value >> 2, count * 2);
+                count && GLctx1.uniform2iv(webglGetUniformLocation(location), HEAP32, value >> 2, count * 2);
                 return;
             }
             if (count <= 144) {
@@ -6598,14 +6420,14 @@ var Godot = function() {
             GLctx1.uniform2ui(webglGetUniformLocation(location), v0, v1);
         }
         function _emscripten_glUniform2uiv(location, count, value) {
-            GLctx1.uniform2uiv(webglGetUniformLocation(location), HEAPU32, value >> 2, count * 2);
+            count && GLctx1.uniform2uiv(webglGetUniformLocation(location), HEAPU32, value >> 2, count * 2);
         }
         function _emscripten_glUniform3f(location, v0, v1, v2) {
             GLctx1.uniform3f(webglGetUniformLocation(location), v0, v1, v2);
         }
         function _emscripten_glUniform3fv(location, count, value) {
             if (GL.currentContext.version >= 2) {
-                GLctx1.uniform3fv(webglGetUniformLocation(location), HEAPF32, value >> 2, count * 3);
+                count && GLctx1.uniform3fv(webglGetUniformLocation(location), HEAPF32, value >> 2, count * 3);
                 return;
             }
             if (count <= 96) {
@@ -6623,7 +6445,7 @@ var Godot = function() {
         }
         function _emscripten_glUniform3iv(location, count, value) {
             if (GL.currentContext.version >= 2) {
-                GLctx1.uniform3iv(webglGetUniformLocation(location), HEAP32, value >> 2, count * 3);
+                count && GLctx1.uniform3iv(webglGetUniformLocation(location), HEAP32, value >> 2, count * 3);
                 return;
             }
             if (count <= 96) {
@@ -6640,14 +6462,14 @@ var Godot = function() {
             GLctx1.uniform3ui(webglGetUniformLocation(location), v0, v1, v2);
         }
         function _emscripten_glUniform3uiv(location, count, value) {
-            GLctx1.uniform3uiv(webglGetUniformLocation(location), HEAPU32, value >> 2, count * 3);
+            count && GLctx1.uniform3uiv(webglGetUniformLocation(location), HEAPU32, value >> 2, count * 3);
         }
         function _emscripten_glUniform4f(location, v0, v1, v2, v3) {
             GLctx1.uniform4f(webglGetUniformLocation(location), v0, v1, v2, v3);
         }
         function _emscripten_glUniform4fv(location, count, value) {
             if (GL.currentContext.version >= 2) {
-                GLctx1.uniform4fv(webglGetUniformLocation(location), HEAPF32, value >> 2, count * 4);
+                count && GLctx1.uniform4fv(webglGetUniformLocation(location), HEAPF32, value >> 2, count * 4);
                 return;
             }
             if (count <= 72) {
@@ -6669,7 +6491,7 @@ var Godot = function() {
         }
         function _emscripten_glUniform4iv(location, count, value) {
             if (GL.currentContext.version >= 2) {
-                GLctx1.uniform4iv(webglGetUniformLocation(location), HEAP32, value >> 2, count * 4);
+                count && GLctx1.uniform4iv(webglGetUniformLocation(location), HEAP32, value >> 2, count * 4);
                 return;
             }
             if (count <= 72) {
@@ -6687,7 +6509,7 @@ var Godot = function() {
             GLctx1.uniform4ui(webglGetUniformLocation(location), v0, v1, v2, v3);
         }
         function _emscripten_glUniform4uiv(location, count, value) {
-            GLctx1.uniform4uiv(webglGetUniformLocation(location), HEAPU32, value >> 2, count * 4);
+            count && GLctx1.uniform4uiv(webglGetUniformLocation(location), HEAPU32, value >> 2, count * 4);
         }
         function _emscripten_glUniformBlockBinding(program, uniformBlockIndex, uniformBlockBinding) {
             program = GL.programs[program];
@@ -6695,7 +6517,7 @@ var Godot = function() {
         }
         function _emscripten_glUniformMatrix2fv(location, count, transpose, value) {
             if (GL.currentContext.version >= 2) {
-                GLctx1.uniformMatrix2fv(webglGetUniformLocation(location), !!transpose, HEAPF32, value >> 2, count * 4);
+                count && GLctx1.uniformMatrix2fv(webglGetUniformLocation(location), !!transpose, HEAPF32, value >> 2, count * 4);
                 return;
             }
             if (count <= 72) {
@@ -6710,14 +6532,14 @@ var Godot = function() {
             GLctx1.uniformMatrix2fv(webglGetUniformLocation(location), !!transpose, view);
         }
         function _emscripten_glUniformMatrix2x3fv(location, count, transpose, value) {
-            GLctx1.uniformMatrix2x3fv(webglGetUniformLocation(location), !!transpose, HEAPF32, value >> 2, count * 6);
+            count && GLctx1.uniformMatrix2x3fv(webglGetUniformLocation(location), !!transpose, HEAPF32, value >> 2, count * 6);
         }
         function _emscripten_glUniformMatrix2x4fv(location, count, transpose, value) {
-            GLctx1.uniformMatrix2x4fv(webglGetUniformLocation(location), !!transpose, HEAPF32, value >> 2, count * 8);
+            count && GLctx1.uniformMatrix2x4fv(webglGetUniformLocation(location), !!transpose, HEAPF32, value >> 2, count * 8);
         }
         function _emscripten_glUniformMatrix3fv(location, count, transpose, value) {
             if (GL.currentContext.version >= 2) {
-                GLctx1.uniformMatrix3fv(webglGetUniformLocation(location), !!transpose, HEAPF32, value >> 2, count * 9);
+                count && GLctx1.uniformMatrix3fv(webglGetUniformLocation(location), !!transpose, HEAPF32, value >> 2, count * 9);
                 return;
             }
             if (count <= 32) {
@@ -6737,14 +6559,14 @@ var Godot = function() {
             GLctx1.uniformMatrix3fv(webglGetUniformLocation(location), !!transpose, view);
         }
         function _emscripten_glUniformMatrix3x2fv(location, count, transpose, value) {
-            GLctx1.uniformMatrix3x2fv(webglGetUniformLocation(location), !!transpose, HEAPF32, value >> 2, count * 6);
+            count && GLctx1.uniformMatrix3x2fv(webglGetUniformLocation(location), !!transpose, HEAPF32, value >> 2, count * 6);
         }
         function _emscripten_glUniformMatrix3x4fv(location, count, transpose, value) {
-            GLctx1.uniformMatrix3x4fv(webglGetUniformLocation(location), !!transpose, HEAPF32, value >> 2, count * 12);
+            count && GLctx1.uniformMatrix3x4fv(webglGetUniformLocation(location), !!transpose, HEAPF32, value >> 2, count * 12);
         }
         function _emscripten_glUniformMatrix4fv(location, count, transpose, value) {
             if (GL.currentContext.version >= 2) {
-                GLctx1.uniformMatrix4fv(webglGetUniformLocation(location), !!transpose, HEAPF32, value >> 2, count * 16);
+                count && GLctx1.uniformMatrix4fv(webglGetUniformLocation(location), !!transpose, HEAPF32, value >> 2, count * 16);
                 return;
             }
             if (count <= 18) {
@@ -6774,10 +6596,10 @@ var Godot = function() {
             GLctx1.uniformMatrix4fv(webglGetUniformLocation(location), !!transpose, view);
         }
         function _emscripten_glUniformMatrix4x2fv(location, count, transpose, value) {
-            GLctx1.uniformMatrix4x2fv(webglGetUniformLocation(location), !!transpose, HEAPF32, value >> 2, count * 8);
+            count && GLctx1.uniformMatrix4x2fv(webglGetUniformLocation(location), !!transpose, HEAPF32, value >> 2, count * 8);
         }
         function _emscripten_glUniformMatrix4x3fv(location, count, transpose, value) {
-            GLctx1.uniformMatrix4x3fv(webglGetUniformLocation(location), !!transpose, HEAPF32, value >> 2, count * 12);
+            count && GLctx1.uniformMatrix4x3fv(webglGetUniformLocation(location), !!transpose, HEAPF32, value >> 2, count * 12);
         }
         function _emscripten_glUseProgram(program) {
             program = GL.programs[program];
@@ -6853,6 +6675,9 @@ var Godot = function() {
         function _emscripten_memcpy_big(dest, src, num) {
             HEAPU8.copyWithin(dest, src, src + num);
         }
+        function getHeapMax() {
+            return 2147483648;
+        }
         function emscripten_realloc_buffer(size) {
             try {
                 wasmMemory.grow(size - buffer1.byteLength + 65535 >>> 16);
@@ -6864,8 +6689,10 @@ var Godot = function() {
         function _emscripten_resize_heap(requestedSize) {
             var oldSize = HEAPU8.length;
             requestedSize = requestedSize >>> 0;
-            var maxHeapSize = 2147483648;
+            var maxHeapSize = getHeapMax();
             if (requestedSize > maxHeapSize) return false;
+            let alignUp = (x, multiple)=>x + (multiple - x % multiple) % multiple
+            ;
             for(var cutDown = 1; cutDown <= 4; cutDown *= 2){
                 var overGrownHeapSize = oldSize * (1 + 0.2 / cutDown);
                 overGrownHeapSize = Math.min(overGrownHeapSize, requestedSize + 100663296);
@@ -6876,12 +6703,8 @@ var Godot = function() {
             return false;
         }
         function _emscripten_set_main_loop(func, fps, simulateInfiniteLoop) {
-            var browserIterationFunc = wasmTable.get(func);
+            var browserIterationFunc = getWasmTableEntry(func);
             setMainLoop(browserIterationFunc, fps, simulateInfiniteLoop);
-        }
-        function _emscripten_thread_sleep(msecs) {
-            var start = _emscripten_get_now();
-            while(_emscripten_get_now() - start < msecs);
         }
         var JSEvents = {
             inEventHandler: 0,
@@ -6983,12 +6806,12 @@ var Godot = function() {
         }
         var specialHTMLTargets = [
             0,
-            typeof document !== "undefined" ? document : 0,
-            typeof window !== "undefined" ? window : 0
+            typeof document != "undefined" ? document : 0,
+            typeof window != "undefined" ? window : 0
         ];
         function findEventTarget(target) {
             target = maybeCStringToJsString(target);
-            var domElement = specialHTMLTargets[target] || (typeof document !== "undefined" ? document.querySelector(target) : undefined);
+            var domElement = specialHTMLTargets[target] || (typeof document != "undefined" ? document.querySelector(target) : undefined);
             return domElement;
         }
         function findCanvasEventTarget(target) {
@@ -7022,18 +6845,6 @@ var Godot = function() {
         function _emscripten_webgl_create_context(a0, a1) {
             return _emscripten_webgl_do_create_context(a0, a1);
         }
-        function _emscripten_webgl_do_get_current_context() {
-            return GL.currentContext ? GL.currentContext.handle : 0;
-        }
-        function _emscripten_webgl_get_current_context() {
-            return _emscripten_webgl_do_get_current_context();
-        }
-        Module["_emscripten_webgl_get_current_context"] = _emscripten_webgl_get_current_context;
-        function _emscripten_webgl_make_context_current(contextHandle) {
-            var success = GL.makeContextCurrent(contextHandle);
-            return success ? 0 : -5;
-        }
-        Module["_emscripten_webgl_make_context_current"] = _emscripten_webgl_make_context_current;
         function _emscripten_webgl_destroy_context(contextHandle) {
             if (GL.currentContext == contextHandle) GL.currentContext = 0;
             GL.deleteContext(contextHandle);
@@ -7043,6 +6854,10 @@ var Godot = function() {
             for(var i = 0; i < 14; ++i)HEAP32[a + i] = 0;
             HEAP32[a + 0] = HEAP32[a + 1] = HEAP32[a + 3] = HEAP32[a + 4] = HEAP32[a + 8] = HEAP32[a + 10] = 1;
         }
+        function _emscripten_webgl_make_context_current(contextHandle) {
+            var success = GL.makeContextCurrent(contextHandle);
+            return success ? 0 : -5;
+        }
         var ENV = {
         };
         function getExecutableName() {
@@ -7050,7 +6865,7 @@ var Godot = function() {
         }
         function getEnvStrings() {
             if (!getEnvStrings.strings) {
-                var lang = (typeof navigator === "object" && navigator.languages && navigator.languages[0] || "C").replace("-", "_") + ".UTF-8";
+                var lang = (typeof navigator == "object" && navigator.languages && navigator.languages[0] || "C").replace("-", "_") + ".UTF-8";
                 var env = {
                     "USER": "web_user",
                     "LOGNAME": "web_user",
@@ -7069,34 +6884,24 @@ var Godot = function() {
             return getEnvStrings.strings;
         }
         function _environ_get(__environ, environ_buf) {
-            try {
-                var bufSize = 0;
-                getEnvStrings().forEach(function(string, i) {
-                    var ptr = environ_buf + bufSize;
-                    HEAP32[__environ + i * 4 >> 2] = ptr;
-                    writeAsciiToMemory(string, ptr);
-                    bufSize += string.length + 1;
-                });
-                return 0;
-            } catch (e) {
-                if (typeof FS === "undefined" || !(e instanceof FS.ErrnoError)) abort(e);
-                return e.errno;
-            }
+            var bufSize = 0;
+            getEnvStrings().forEach(function(string, i) {
+                var ptr = environ_buf + bufSize;
+                HEAPU32[__environ + i * 4 >> 2] = ptr;
+                writeAsciiToMemory(string, ptr);
+                bufSize += string.length + 1;
+            });
+            return 0;
         }
         function _environ_sizes_get(penviron_count, penviron_buf_size) {
-            try {
-                var strings = getEnvStrings();
-                HEAP32[penviron_count >> 2] = strings.length;
-                var bufSize = 0;
-                strings.forEach(function(string) {
-                    bufSize += string.length + 1;
-                });
-                HEAP32[penviron_buf_size >> 2] = bufSize;
-                return 0;
-            } catch (e) {
-                if (typeof FS === "undefined" || !(e instanceof FS.ErrnoError)) abort(e);
-                return e.errno;
-            }
+            var strings = getEnvStrings();
+            HEAPU32[penviron_count >> 2] = strings.length;
+            var bufSize = 0;
+            strings.forEach(function(string) {
+                bufSize += string.length + 1;
+            });
+            HEAPU32[penviron_buf_size >> 2] = bufSize;
+            return 0;
         }
         function _fd_close(fd) {
             try {
@@ -7104,7 +6909,7 @@ var Godot = function() {
                 FS.close(stream);
                 return 0;
             } catch (e) {
-                if (typeof FS === "undefined" || !(e instanceof FS.ErrnoError)) abort(e);
+                if (typeof FS == "undefined" || !(e instanceof FS.ErrnoError)) throw e;
                 return e.errno;
             }
         }
@@ -7115,28 +6920,42 @@ var Godot = function() {
                 HEAP8[pbuf >> 0] = type;
                 return 0;
             } catch (e) {
-                if (typeof FS === "undefined" || !(e instanceof FS.ErrnoError)) abort(e);
+                if (typeof FS == "undefined" || !(e instanceof FS.ErrnoError)) throw e;
                 return e.errno;
             }
+        }
+        function doReadv(stream, iov, iovcnt, offset) {
+            var ret = 0;
+            for(var i = 0; i < iovcnt; i++){
+                var ptr = HEAPU32[iov >> 2];
+                var len = HEAPU32[iov + 4 >> 2];
+                iov += 8;
+                var curr = FS.read(stream, HEAP8, ptr, len, offset);
+                if (curr < 0) return -1;
+                ret += curr;
+                if (curr < len) break;
+            }
+            return ret;
         }
         function _fd_read(fd, iov, iovcnt, pnum) {
             try {
                 var stream = SYSCALLS.getStreamFromFD(fd);
-                var num = SYSCALLS.doReadv(stream, iov, iovcnt);
+                var num = doReadv(stream, iov, iovcnt);
                 HEAP32[pnum >> 2] = num;
                 return 0;
             } catch (e) {
-                if (typeof FS === "undefined" || !(e instanceof FS.ErrnoError)) abort(e);
+                if (typeof FS == "undefined" || !(e instanceof FS.ErrnoError)) throw e;
                 return e.errno;
             }
         }
+        function convertI32PairToI53Checked(lo, hi) {
+            return hi + 2097152 >>> 0 < 4194305 - !!lo ? (lo >>> 0) + hi * 4294967296 : NaN;
+        }
         function _fd_seek(fd, offset_low, offset_high, whence, newOffset) {
             try {
+                var offset = convertI32PairToI53Checked(offset_low, offset_high);
+                if (isNaN(offset)) return 61;
                 var stream = SYSCALLS.getStreamFromFD(fd);
-                var HIGH_OFFSET = 4294967296;
-                var offset = offset_high * HIGH_OFFSET + (offset_low >>> 0);
-                var DOUBLE_LIMIT = 9007199254740992;
-                if (offset <= -DOUBLE_LIMIT || offset >= DOUBLE_LIMIT) return -61;
                 FS.llseek(stream, offset, whence);
                 tempI64 = [
                     stream.position >>> 0,
@@ -7145,46 +6964,32 @@ var Godot = function() {
                 if (stream.getdents && offset === 0 && whence === 0) stream.getdents = null;
                 return 0;
             } catch (e) {
-                if (typeof FS === "undefined" || !(e instanceof FS.ErrnoError)) abort(e);
+                if (typeof FS == "undefined" || !(e instanceof FS.ErrnoError)) throw e;
                 return e.errno;
             }
+        }
+        function doWritev(stream, iov, iovcnt, offset) {
+            var ret = 0;
+            for(var i = 0; i < iovcnt; i++){
+                var ptr = HEAPU32[iov >> 2];
+                var len = HEAPU32[iov + 4 >> 2];
+                iov += 8;
+                var curr = FS.write(stream, HEAP8, ptr, len, offset);
+                if (curr < 0) return -1;
+                ret += curr;
+            }
+            return ret;
         }
         function _fd_write(fd, iov, iovcnt, pnum) {
             try {
                 var stream = SYSCALLS.getStreamFromFD(fd);
-                var num = SYSCALLS.doWritev(stream, iov, iovcnt);
-                HEAP32[pnum >> 2] = num;
+                var num = doWritev(stream, iov, iovcnt);
+                HEAPU32[pnum >> 2] = num;
                 return 0;
             } catch (e) {
-                if (typeof FS === "undefined" || !(e instanceof FS.ErrnoError)) abort(e);
+                if (typeof FS == "undefined" || !(e instanceof FS.ErrnoError)) throw e;
                 return e.errno;
             }
-        }
-        var GAI_ERRNO_MESSAGES = {
-        };
-        function _gai_strerror(val) {
-            var buflen = 256;
-            if (!_gai_strerror.buffer) {
-                _gai_strerror.buffer = _malloc(buflen);
-                GAI_ERRNO_MESSAGES["0"] = "Success";
-                GAI_ERRNO_MESSAGES["-1"] = "Invalid value for 'ai_flags' field";
-                GAI_ERRNO_MESSAGES["-2"] = "NAME or SERVICE is unknown";
-                GAI_ERRNO_MESSAGES["-3"] = "Temporary failure in name resolution";
-                GAI_ERRNO_MESSAGES["-4"] = "Non-recoverable failure in name res";
-                GAI_ERRNO_MESSAGES["-6"] = "'ai_family' not supported";
-                GAI_ERRNO_MESSAGES["-7"] = "'ai_socktype' not supported";
-                GAI_ERRNO_MESSAGES["-8"] = "SERVICE not supported for 'ai_socktype'";
-                GAI_ERRNO_MESSAGES["-10"] = "Memory allocation failure";
-                GAI_ERRNO_MESSAGES["-11"] = "System error returned in 'errno'";
-                GAI_ERRNO_MESSAGES["-12"] = "Argument buffer overflow";
-            }
-            var msg = "Unknown error";
-            if (val in GAI_ERRNO_MESSAGES) {
-                if (GAI_ERRNO_MESSAGES[val].length > buflen - 1) msg = "Message too long";
-                else msg = GAI_ERRNO_MESSAGES[val];
-            }
-            writeAsciiToMemory(msg, _gai_strerror.buffer);
-            return _gai_strerror.buffer;
         }
         function _getTempRet0() {
             return getTempRet0();
@@ -7210,7 +7015,7 @@ var Godot = function() {
                 HEAP32[ai + 8 >> 2] = type;
                 HEAP32[ai + 12 >> 2] = proto;
                 HEAP32[ai + 24 >> 2] = canon;
-                HEAP32[ai + 20 >> 2] = sa;
+                HEAPU32[ai + 20 >> 2] = sa;
                 if (family === 10) HEAP32[ai + 16 >> 2] = 28;
                 else HEAP32[ai + 16 >> 2] = 16;
                 HEAP32[ai + 28 >> 2] = 0;
@@ -7252,7 +7057,7 @@ var Godot = function() {
                     ];
                 }
                 ai1 = allocaddrinfo(family1, type1, proto1, null, addr1, port1);
-                HEAP32[out >> 2] = ai1;
+                HEAPU32[out >> 2] = ai1;
                 return 0;
             }
             node = UTF8ToString(node);
@@ -7277,7 +7082,7 @@ var Godot = function() {
             }
             if (addr1 != null) {
                 ai1 = allocaddrinfo(family1, type1, proto1, node, addr1, port1);
-                HEAP32[out >> 2] = ai1;
+                HEAPU32[out >> 2] = ai1;
                 return 0;
             }
             if (flags & 4) return -2;
@@ -7291,7 +7096,7 @@ var Godot = function() {
                 addr1
             ];
             ai1 = allocaddrinfo(family1, type1, proto1, null, addr1, port1);
-            HEAP32[out >> 2] = ai1;
+            HEAPU32[out >> 2] = ai1;
             return 0;
         }
         function _getnameinfo(sa, salen, node, nodelen, serv, servlen, flags) {
@@ -7314,12 +7119,6 @@ var Godot = function() {
                 if (numBytesWrittenExclNull + 1 >= servlen) overflowed = true;
             }
             if (overflowed) return -12;
-            return 0;
-        }
-        function _gettimeofday(ptr) {
-            var now = Date.now();
-            HEAP32[ptr >> 2] = now / 1000 | 0;
-            HEAP32[ptr + 4 >> 2] = now % 1000 * 1000 | 0;
             return 0;
         }
         function _glActiveTexture(x0) {
@@ -7368,13 +7167,13 @@ var Godot = function() {
         }
         function _glBufferData(target, size, data, usage) {
             if (GL.currentContext.version >= 2) {
-                if (data) GLctx1.bufferData(target, HEAPU8, usage, data, size);
+                if (data && size) GLctx1.bufferData(target, HEAPU8, usage, data, size);
                 else GLctx1.bufferData(target, size, usage);
             } else GLctx1.bufferData(target, data ? HEAPU8.subarray(data, data + size) : size, usage);
         }
         function _glBufferSubData(target, offset, size, data) {
             if (GL.currentContext.version >= 2) {
-                GLctx1.bufferSubData(target, offset, HEAPU8, data, size);
+                size && GLctx1.bufferSubData(target, offset, HEAPU8, data, size);
                 return;
             }
             GLctx1.bufferSubData(target, offset, HEAPU8.subarray(data, data + size));
@@ -7402,7 +7201,7 @@ var Godot = function() {
         }
         function _glCompressedTexImage2D(target, level, internalFormat, width, height, border, imageSize, data) {
             if (GL.currentContext.version >= 2) {
-                if (GLctx1.currentPixelUnpackBufferBinding) GLctx1["compressedTexImage2D"](target, level, internalFormat, width, height, border, imageSize, data);
+                if (GLctx1.currentPixelUnpackBufferBinding || !imageSize) GLctx1["compressedTexImage2D"](target, level, internalFormat, width, height, border, imageSize, data);
                 else GLctx1["compressedTexImage2D"](target, level, internalFormat, width, height, border, HEAPU8, data, imageSize);
                 return;
             }
@@ -7410,7 +7209,7 @@ var Godot = function() {
         }
         function _glCompressedTexSubImage2D(target, level, xoffset, yoffset, width, height, format, imageSize, data) {
             if (GL.currentContext.version >= 2) {
-                if (GLctx1.currentPixelUnpackBufferBinding) GLctx1["compressedTexSubImage2D"](target, level, xoffset, yoffset, width, height, format, imageSize, data);
+                if (GLctx1.currentPixelUnpackBufferBinding || !imageSize) GLctx1["compressedTexSubImage2D"](target, level, xoffset, yoffset, width, height, format, imageSize, data);
                 else GLctx1["compressedTexSubImage2D"](target, level, xoffset, yoffset, width, height, format, HEAPU8, data, imageSize);
                 return;
             }
@@ -7592,6 +7391,9 @@ var Godot = function() {
         function _glGetIntegerv(name_, p) {
             emscriptenWebGLGet(name_, p, 0);
         }
+        function _glGetProgramBinary(program, bufSize, length, binaryFormat, binary) {
+            GL.recordError(1282);
+        }
         function _glGetProgramInfoLog(program, maxLength, length, infoLog) {
             var log = GLctx1.getProgramInfoLog(GL.programs[program]);
             if (log === null) log = "(unknown error)";
@@ -7627,6 +7429,12 @@ var Godot = function() {
             var log = GLctx1.getShaderInfoLog(GL.shaders[shader]);
             if (log === null) log = "(unknown error)";
             var numBytesWrittenExclNull = maxLength > 0 && infoLog ? stringToUTF8(log, infoLog, maxLength) : 0;
+            if (length) HEAP32[length >> 2] = numBytesWrittenExclNull;
+        }
+        function _glGetShaderSource(shader, bufSize, length, source) {
+            var result = GLctx1.getShaderSource(GL.shaders[shader]);
+            if (!result) return;
+            var numBytesWrittenExclNull = bufSize > 0 && source ? stringToUTF8(result, source, bufSize) : 0;
             if (length) HEAP32[length >> 2] = numBytesWrittenExclNull;
         }
         function _glGetShaderiv(shader, pname, p) {
@@ -7759,6 +7567,12 @@ var Godot = function() {
             if (pname == 3317) GL.unpackAlignment = param;
             GLctx1.pixelStorei(pname, param);
         }
+        function _glProgramBinary(program, binaryFormat, binary, length) {
+            GL.recordError(1280);
+        }
+        function _glProgramParameteri(program, pname, value) {
+            GL.recordError(1280);
+        }
         function _glReadBuffer(x0) {
             GLctx1["readBuffer"](x0);
         }
@@ -7852,7 +7666,7 @@ var Godot = function() {
         }
         function _glUniform1iv(location, count, value) {
             if (GL.currentContext.version >= 2) {
-                GLctx1.uniform1iv(webglGetUniformLocation(location), HEAP32, value >> 2, count);
+                count && GLctx1.uniform1iv(webglGetUniformLocation(location), HEAP32, value >> 2, count);
                 return;
             }
             if (count <= 288) {
@@ -7869,7 +7683,7 @@ var Godot = function() {
         }
         function _glUniform2fv(location, count, value) {
             if (GL.currentContext.version >= 2) {
-                GLctx1.uniform2fv(webglGetUniformLocation(location), HEAPF32, value >> 2, count * 2);
+                count && GLctx1.uniform2fv(webglGetUniformLocation(location), HEAPF32, value >> 2, count * 2);
                 return;
             }
             if (count <= 144) {
@@ -7886,7 +7700,7 @@ var Godot = function() {
         }
         function _glUniform2iv(location, count, value) {
             if (GL.currentContext.version >= 2) {
-                GLctx1.uniform2iv(webglGetUniformLocation(location), HEAP32, value >> 2, count * 2);
+                count && GLctx1.uniform2iv(webglGetUniformLocation(location), HEAP32, value >> 2, count * 2);
                 return;
             }
             if (count <= 144) {
@@ -7903,7 +7717,7 @@ var Godot = function() {
         }
         function _glUniform3fv(location, count, value) {
             if (GL.currentContext.version >= 2) {
-                GLctx1.uniform3fv(webglGetUniformLocation(location), HEAPF32, value >> 2, count * 3);
+                count && GLctx1.uniform3fv(webglGetUniformLocation(location), HEAPF32, value >> 2, count * 3);
                 return;
             }
             if (count <= 96) {
@@ -7924,7 +7738,7 @@ var Godot = function() {
         }
         function _glUniform4fv(location, count, value) {
             if (GL.currentContext.version >= 2) {
-                GLctx1.uniform4fv(webglGetUniformLocation(location), HEAPF32, value >> 2, count * 4);
+                count && GLctx1.uniform4fv(webglGetUniformLocation(location), HEAPF32, value >> 2, count * 4);
                 return;
             }
             if (count <= 72) {
@@ -7950,7 +7764,7 @@ var Godot = function() {
         }
         function _glUniformMatrix2fv(location, count, transpose, value) {
             if (GL.currentContext.version >= 2) {
-                GLctx1.uniformMatrix2fv(webglGetUniformLocation(location), !!transpose, HEAPF32, value >> 2, count * 4);
+                count && GLctx1.uniformMatrix2fv(webglGetUniformLocation(location), !!transpose, HEAPF32, value >> 2, count * 4);
                 return;
             }
             if (count <= 72) {
@@ -7966,7 +7780,7 @@ var Godot = function() {
         }
         function _glUniformMatrix3fv(location, count, transpose, value) {
             if (GL.currentContext.version >= 2) {
-                GLctx1.uniformMatrix3fv(webglGetUniformLocation(location), !!transpose, HEAPF32, value >> 2, count * 9);
+                count && GLctx1.uniformMatrix3fv(webglGetUniformLocation(location), !!transpose, HEAPF32, value >> 2, count * 9);
                 return;
             }
             if (count <= 32) {
@@ -7987,7 +7801,7 @@ var Godot = function() {
         }
         function _glUniformMatrix4fv(location, count, transpose, value) {
             if (GL.currentContext.version >= 2) {
-                GLctx1.uniformMatrix4fv(webglGetUniformLocation(location), !!transpose, HEAPF32, value >> 2, count * 16);
+                count && GLctx1.uniformMatrix4fv(webglGetUniformLocation(location), !!transpose, HEAPF32, value >> 2, count * 16);
                 return;
             }
             if (count <= 18) {
@@ -8041,24 +7855,6 @@ var Godot = function() {
         }
         function _glViewport(x0, x1, x2, x3) {
             GLctx1["viewport"](x0, x1, x2, x3);
-        }
-        function _gmtime_r(time, tmPtr) {
-            var date = new Date(HEAP32[time >> 2] * 1000);
-            HEAP32[tmPtr >> 2] = date.getUTCSeconds();
-            HEAP32[tmPtr + 4 >> 2] = date.getUTCMinutes();
-            HEAP32[tmPtr + 8 >> 2] = date.getUTCHours();
-            HEAP32[tmPtr + 12 >> 2] = date.getUTCDate();
-            HEAP32[tmPtr + 16 >> 2] = date.getUTCMonth();
-            HEAP32[tmPtr + 20 >> 2] = date.getUTCFullYear() - 1900;
-            HEAP32[tmPtr + 24 >> 2] = date.getUTCDay();
-            HEAP32[tmPtr + 36 >> 2] = 0;
-            HEAP32[tmPtr + 32 >> 2] = 0;
-            var start = Date.UTC(date.getUTCFullYear(), 0, 1, 0, 0, 0, 0);
-            var yday = (date.getTime() - start) / 86400000 | 0;
-            HEAP32[tmPtr + 28 >> 2] = yday;
-            if (!_gmtime_r.GMTString) _gmtime_r.GMTString = allocateUTF8("GMT");
-            HEAP32[tmPtr + 40 >> 2] = _gmtime_r.GMTString;
-            return tmPtr;
         }
         var GodotRuntime = {
             get_func: function(ptr) {
@@ -8158,6 +7954,8 @@ var Godot = function() {
                 GodotConfig.on_execute = null;
                 GodotConfig.on_exit = null;
             }
+        };
+        var ERRNO_CODES = {
         };
         var GodotFS = {
             _idbfs: false,
@@ -8661,6 +8459,12 @@ var Godot = function() {
                 GodotEventListeners.handlers.length = 0;
             }
         };
+        function _emscripten_webgl_do_get_current_context() {
+            return GL.currentContext ? GL.currentContext.handle : 0;
+        }
+        function _emscripten_webgl_get_current_context() {
+            return _emscripten_webgl_do_get_current_context();
+        }
         var GodotDisplayScreen = {
             desired_size: [
                 0,
@@ -9322,7 +9126,7 @@ var Godot = function() {
                 GodotInputGamepads.samples = samples;
             },
             init: function(onchange) {
-                GodotEventListeners.samples = [];
+                GodotInputGamepads.samples = [];
                 function add(pad) {
                     const guid = GodotInputGamepads.get_guid(pad);
                     const c_id = GodotRuntime.allocString(pad.id);
@@ -9625,6 +9429,10 @@ var Godot = function() {
             GodotEventListeners.add(canvas, "touchcancel", touch_cb.bind(null, 1), false);
             GodotEventListeners.add(canvas, "touchmove", touch_cb.bind(null, 2), false);
         }
+        function _godot_js_input_vibrate_handheld(p_duration_ms) {
+            if (typeof navigator.vibrate !== "function") GodotRuntime.print("This browser does not support vibration.");
+            else navigator.vibrate(p_duration_ms);
+        }
         function _godot_js_os_download_buffer(p_ptr, p_size, p_name, p_mime) {
             const buf = GodotRuntime.heapSlice(HEAP8, p_ptr, p_size);
             const name = GodotRuntime.parseString(p_name);
@@ -9675,6 +9483,42 @@ var Godot = function() {
         }
         function _godot_js_os_shell_open(p_uri) {
             window.open(GodotRuntime.parseString(p_uri), "_blank");
+        }
+        var GodotPWA = {
+            hasUpdate: false,
+            updateState: function(cb, reg) {
+                if (!reg) return;
+                if (!reg.active) return;
+                if (reg.waiting) {
+                    GodotPWA.hasUpdate = true;
+                    cb();
+                }
+                GodotEventListeners.add(reg, "updatefound", function() {
+                    const installing = reg.installing;
+                    GodotEventListeners.add(installing, "statechange", function() {
+                        if (installing.state === "installed") {
+                            GodotPWA.hasUpdate = true;
+                            cb();
+                        }
+                    });
+                });
+            }
+        };
+        function _godot_js_pwa_cb(p_update_cb) {
+            if ("serviceWorker" in navigator) {
+                const cb = GodotRuntime.get_func(p_update_cb);
+                navigator.serviceWorker.getRegistration().then(GodotPWA.updateState.bind(null, cb));
+            }
+        }
+        function _godot_js_pwa_update() {
+            if ("serviceWorker" in navigator && GodotPWA.hasUpdate) {
+                navigator.serviceWorker.getRegistration().then(function(reg) {
+                    if (!reg || !reg.waiting) return;
+                    reg.waiting.postMessage("update");
+                });
+                return 0;
+            }
+            return 1;
         }
         var GodotRTCDataChannel = {
             connect: function(p_id, p_on_open, p_on_message, p_on_error, p_on_close) {
@@ -10034,7 +9878,7 @@ var Godot = function() {
             destroy: function(p_id) {
                 const ref = IDHandler.get(p_id);
                 if (!ref) return;
-                GodotWebSocket.close(p_id, 1001, "");
+                GodotWebSocket.close(p_id, 3001, "destroyed");
                 IDHandler.remove(p_id);
                 ref.onopen = null;
                 ref.onmessage = null;
@@ -10267,14 +10111,6 @@ var Godot = function() {
         }
         var GodotWebXR = {
             gl: null,
-            texture_ids: [
-                null,
-                null
-            ],
-            textures: [
-                null,
-                null
-            ],
             session: null,
             space: null,
             frame: null,
@@ -10377,7 +10213,7 @@ var Godot = function() {
             },
             controllers: [],
             sampleControllers: ()=>{
-                if (!GodotWebXR.session || !GodotWebXR.frame) return;
+                if (!GodotWebXR.session) return;
                 let other_index = 2;
                 const controllers = [];
                 GodotWebXR.session.inputSources.forEach((input_source)=>{
@@ -10390,7 +10226,7 @@ var Godot = function() {
             },
             getControllerId: (input_source)=>GodotWebXR.controllers.indexOf(input_source)
         };
-        function _godot_webxr_commit_for_eye(p_eye) {
+        function _godot_webxr_commit_for_eye(p_eye, p_texture_id) {
             if (!GodotWebXR.session || !GodotWebXR.pose) return;
             const view_index = p_eye === 2 ? 1 : 0;
             const glLayer = GodotWebXR.session.renderState.baseLayer;
@@ -10401,7 +10237,7 @@ var Godot = function() {
             const orig_viewport = gl.getParameter(gl.VIEWPORT);
             gl.bindFramebuffer(gl.FRAMEBUFFER, glLayer.framebuffer);
             gl.viewport(viewport.x, viewport.y, viewport.width, viewport.height);
-            GodotWebXR.blitTexture(gl, GodotWebXR.textures[view_index]);
+            GodotWebXR.blitTexture(gl, GL.textures[p_texture_id]);
             gl.bindFramebuffer(gl.FRAMEBUFFER, orig_framebuffer);
             gl.viewport(orig_viewport[0], orig_viewport[1], orig_viewport[2], orig_viewport[3]);
         }
@@ -10419,33 +10255,82 @@ var Godot = function() {
             }
             return buf;
         }
-        function _godot_webxr_get_controller_axes(p_controller) {
+        function _godot_webxr_get_controller_axes(p_controller, p_xr_standard_mapping) {
             if (GodotWebXR.controllers.length === 0) return 0;
             const controller = GodotWebXR.controllers[p_controller];
             if (!controller || !controller.gamepad) return 0;
-            const axes_count = controller.gamepad.axes.length;
-            const buf = GodotRuntime.malloc((axes_count + 1) * 4);
-            GodotRuntime.setHeapValue(buf, axes_count, "i32");
-            for(let i = 0; i < axes_count; i++){
-                let value = controller.gamepad.axes[i];
-                if (i === 1 || i === 3) value *= -1;
-                GodotRuntime.setHeapValue(buf + 4 + i * 4, value, "float");
+            let axes = controller.gamepad.axes;
+            if (controller.gamepad.mapping === "xr-standard") {
+                if (p_xr_standard_mapping) {
+                    const trigger_axis = controller.gamepad.buttons[0].value;
+                    const grip_axis = controller.gamepad.buttons[1].value;
+                    axes = [
+                        axes[2],
+                        axes[3] * -1,
+                        trigger_axis,
+                        grip_axis,
+                        grip_axis,
+                        0,
+                        axes[0],
+                        axes[1] * -1
+                    ];
+                } else {
+                    axes[1] *= -1;
+                    axes[3] *= -1;
+                }
             }
+            const buf = GodotRuntime.malloc((axes.length + 1) * 4);
+            GodotRuntime.setHeapValue(buf, axes.length, "i32");
+            for(let i = 0; i < axes.length; i++)GodotRuntime.setHeapValue(buf + 4 + i * 4, axes[i], "float");
             return buf;
         }
-        function _godot_webxr_get_controller_buttons(p_controller) {
+        function _godot_webxr_get_controller_buttons(p_controller, p_xr_standard_mapping) {
             if (GodotWebXR.controllers.length === 0) return 0;
             const controller = GodotWebXR.controllers[p_controller];
             if (!controller || !controller.gamepad) return 0;
-            const button_count = controller.gamepad.buttons.length;
-            const buf = GodotRuntime.malloc((button_count + 1) * 4);
-            GodotRuntime.setHeapValue(buf, button_count, "i32");
-            for(let i = 0; i < button_count; i++)GodotRuntime.setHeapValue(buf + 4 + i * 4, controller.gamepad.buttons[i].value, "float");
+            let buttons = controller.gamepad.buttons;
+            if (controller.gamepad.mapping === "xr-standard" && p_xr_standard_mapping) buttons = [
+                0,
+                buttons[5],
+                buttons[1],
+                buttons[3],
+                buttons[6],
+                buttons[7],
+                buttons[8],
+                buttons[4],
+                buttons[9],
+                buttons[10],
+                buttons[11],
+                buttons[12],
+                buttons[13],
+                buttons[14],
+                buttons[2],
+                buttons[0]
+            ];
+            const buf = GodotRuntime.malloc((buttons.length + 1) * 4);
+            GodotRuntime.setHeapValue(buf, buttons.length, "i32");
+            for(let i = 0; i < buttons.length; i++)GodotRuntime.setHeapValue(buf + 4 + i * 4, buttons[i] ? buttons[i].value : 0, "float");
             return buf;
         }
         function _godot_webxr_get_controller_count() {
             if (!GodotWebXR.session || !GodotWebXR.frame) return 0;
             return GodotWebXR.controllers.length;
+        }
+        function _godot_webxr_get_controller_target_ray_mode(p_controller) {
+            if (p_controller < 0 || p_controller >= GodotWebXR.controllers.length) return 0;
+            const controller = GodotWebXR.controllers[p_controller];
+            if (!controller) return 0;
+            switch(controller.targetRayMode){
+                case "gaze":
+                    return 1;
+                case "tracked-pointer":
+                    return 2;
+                case "screen":
+                    return 3;
+                default:
+                    break;
+            }
+            return 0;
         }
         function _godot_webxr_get_controller_transform(p_controller) {
             if (!GodotWebXR.session || !GodotWebXR.frame) return 0;
@@ -10459,29 +10344,6 @@ var Godot = function() {
             const buf = GodotRuntime.malloc(64);
             for(let i = 0; i < 16; i++)GodotRuntime.setHeapValue(buf + i * 4, matrix[i], "float");
             return buf;
-        }
-        function _godot_webxr_get_external_texture_for_eye(p_eye) {
-            if (!GodotWebXR.session) return 0;
-            const view_index = p_eye === 2 ? 1 : 0;
-            if (GodotWebXR.texture_ids[view_index]) return GodotWebXR.texture_ids[view_index];
-            if (!GodotWebXR.pose) return 0;
-            const glLayer = GodotWebXR.session.renderState.baseLayer;
-            const view = GodotWebXR.pose.views[view_index];
-            const viewport = glLayer.getViewport(view);
-            const gl = GodotWebXR.gl;
-            const texture = gl.createTexture();
-            gl.bindTexture(gl.TEXTURE_2D, texture);
-            gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, viewport.width, viewport.height, 0, gl.RGBA, gl.UNSIGNED_BYTE, null);
-            gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
-            gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
-            gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
-            gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
-            gl.bindTexture(gl.TEXTURE_2D, null);
-            const texture_id = GL.getNewId(GL.textures);
-            GL.textures[texture_id] = texture;
-            GodotWebXR.textures[view_index] = texture;
-            GodotWebXR.texture_ids[view_index] = texture_id;
-            return texture_id;
         }
         function _godot_webxr_get_projection_for_eye(p_eye) {
             if (!GodotWebXR.session || !GodotWebXR.pose) return 0;
@@ -10559,16 +10421,15 @@ var Godot = function() {
                 });
                 [
                     "selectstart",
-                    "select",
                     "selectend",
+                    "select",
                     "squeezestart",
-                    "squeeze",
-                    "squeezeend"
-                ].forEach((input_event)=>{
+                    "squeezeend",
+                    "squeeze"
+                ].forEach((input_event, index)=>{
                     session.addEventListener(input_event, function(evt) {
-                        const c_str = GodotRuntime.allocString(input_event);
-                        oninputevent(c_str, GodotWebXR.getControllerId(evt.inputSource));
-                        GodotRuntime.free(c_str);
+                        GodotWebXR.sampleControllers();
+                        oninputevent(index, GodotWebXR.getControllerId(evt.inputSource));
                     });
                 });
                 session.addEventListener("visibilitychange", function(evt) {
@@ -10648,15 +10509,6 @@ var Godot = function() {
         function _godot_webxr_uninitialize() {
             if (GodotWebXR.session) GodotWebXR.session.end().catch((e)=>{
             });
-            const gl = GodotWebXR.gl;
-            for(let i = 0; i < GodotWebXR.textures.length; i++){
-                const texture = GodotWebXR.textures[i];
-                if (texture !== null) gl.deleteTexture(texture);
-                GodotWebXR.textures[i] = null;
-                const texture_id = GodotWebXR.texture_ids[i];
-                if (texture_id !== null) GL.textures[texture_id] = null;
-                GodotWebXR.texture_ids[i] = null;
-            }
             GodotWebXR.session = null;
             GodotWebXR.space = null;
             GodotWebXR.frame = null;
@@ -10664,72 +10516,8 @@ var Godot = function() {
             GodotWebXR.monkeyPatchRequestAnimationFrame(false);
             GodotWebXR.pauseResumeMainLoop();
         }
-        function _kill(pid, sig) {
-            setErrNo(ERRNO_CODES.EPERM);
-            return -1;
-        }
-        function _tzset() {
-            if (_tzset.called) return;
-            _tzset.called = true;
-            var currentYear = (new Date).getFullYear();
-            var winter = new Date(currentYear, 0, 1);
-            var summer = new Date(currentYear, 6, 1);
-            var winterOffset = winter.getTimezoneOffset();
-            var summerOffset = summer.getTimezoneOffset();
-            var stdTimezoneOffset = Math.max(winterOffset, summerOffset);
-            HEAP32[__get_timezone() >> 2] = stdTimezoneOffset * 60;
-            HEAP32[__get_daylight() >> 2] = Number(winterOffset != summerOffset);
-            function extractZone(date) {
-                var match = date.toTimeString().match(/\(([A-Za-z ]+)\)$/);
-                return match ? match[1] : "GMT";
-            }
-            var winterName = extractZone(winter);
-            var summerName = extractZone(summer);
-            var winterNamePtr = allocateUTF8(winterName);
-            var summerNamePtr = allocateUTF8(summerName);
-            if (summerOffset < winterOffset) {
-                HEAP32[__get_tzname() >> 2] = winterNamePtr;
-                HEAP32[__get_tzname() + 4 >> 2] = summerNamePtr;
-            } else {
-                HEAP32[__get_tzname() >> 2] = summerNamePtr;
-                HEAP32[__get_tzname() + 4 >> 2] = winterNamePtr;
-            }
-        }
-        function _localtime_r(time, tmPtr) {
-            _tzset();
-            var date = new Date(HEAP32[time >> 2] * 1000);
-            HEAP32[tmPtr >> 2] = date.getSeconds();
-            HEAP32[tmPtr + 4 >> 2] = date.getMinutes();
-            HEAP32[tmPtr + 8 >> 2] = date.getHours();
-            HEAP32[tmPtr + 12 >> 2] = date.getDate();
-            HEAP32[tmPtr + 16 >> 2] = date.getMonth();
-            HEAP32[tmPtr + 20 >> 2] = date.getFullYear() - 1900;
-            HEAP32[tmPtr + 24 >> 2] = date.getDay();
-            var start = new Date(date.getFullYear(), 0, 1);
-            var yday = (date.getTime() - start.getTime()) / 86400000 | 0;
-            HEAP32[tmPtr + 28 >> 2] = yday;
-            HEAP32[tmPtr + 36 >> 2] = -(date.getTimezoneOffset() * 60);
-            var summerOffset = new Date(date.getFullYear(), 6, 1).getTimezoneOffset();
-            var winterOffset = start.getTimezoneOffset();
-            var dst = (summerOffset != winterOffset && date.getTimezoneOffset() == Math.min(winterOffset, summerOffset)) | 0;
-            HEAP32[tmPtr + 32 >> 2] = dst;
-            var zonePtr = HEAP32[__get_tzname() + (dst ? 4 : 0) >> 2];
-            HEAP32[tmPtr + 40 >> 2] = zonePtr;
-            return tmPtr;
-        }
         function _setTempRet0(val) {
             setTempRet0(val);
-        }
-        var __sigalrm_handler = 0;
-        function ___sigaction(sig, act, oldact) {
-            if (sig == 14) {
-                __sigalrm_handler = HEAP32[act >> 2];
-                return 0;
-            }
-            return 0;
-        }
-        function _sigaction(a0, a1, a2) {
-            return ___sigaction(a0, a1, a2);
         }
         function __isLeapYear(year) {
             return year % 4 === 0 && (year % 100 !== 0 || year % 400 === 0);
@@ -10859,7 +10647,7 @@ var Godot = function() {
                 "December"
             ];
             function leadingSomething(value, digits, character) {
-                var str = typeof value === "number" ? value.toString() : value || "";
+                var str = typeof value == "number" ? value.toString() : value || "";
                 while(str.length < digits)str = character[0] + str;
                 return str;
             }
@@ -10969,44 +10757,28 @@ var Godot = function() {
                     return date.tm_wday || 7;
                 },
                 "%U": function(date) {
-                    var janFirst = new Date(date.tm_year + 1900, 0, 1);
-                    var firstSunday = janFirst.getDay() === 0 ? janFirst : __addDays(janFirst, 7 - janFirst.getDay());
-                    var endDate = new Date(date.tm_year + 1900, date.tm_mon, date.tm_mday);
-                    if (compareByDay(firstSunday, endDate) < 0) {
-                        var februaryFirstUntilEndMonth = __arraySum(__isLeapYear(endDate.getFullYear()) ? __MONTH_DAYS_LEAP : __MONTH_DAYS_REGULAR, endDate.getMonth() - 1) - 31;
-                        var firstSundayUntilEndJanuary = 31 - firstSunday.getDate();
-                        var days = firstSundayUntilEndJanuary + februaryFirstUntilEndMonth + endDate.getDate();
-                        return leadingNulls(Math.ceil(days / 7), 2);
-                    }
-                    return compareByDay(firstSunday, janFirst) === 0 ? "01" : "00";
+                    var days = date.tm_yday + 7 - date.tm_wday;
+                    return leadingNulls(Math.floor(days / 7), 2);
                 },
                 "%V": function(date) {
-                    var janFourthThisYear = new Date(date.tm_year + 1900, 0, 4);
-                    var janFourthNextYear = new Date(date.tm_year + 1901, 0, 4);
-                    var firstWeekStartThisYear = getFirstWeekStartDate(janFourthThisYear);
-                    var firstWeekStartNextYear = getFirstWeekStartDate(janFourthNextYear);
-                    var endDate = __addDays(new Date(date.tm_year + 1900, 0, 1), date.tm_yday);
-                    if (compareByDay(endDate, firstWeekStartThisYear) < 0) return "53";
-                    if (compareByDay(firstWeekStartNextYear, endDate) <= 0) return "01";
-                    var daysDifference;
-                    if (firstWeekStartThisYear.getFullYear() < date.tm_year + 1900) daysDifference = date.tm_yday + 32 - firstWeekStartThisYear.getDate();
-                    else daysDifference = date.tm_yday + 1 - firstWeekStartThisYear.getDate();
-                    return leadingNulls(Math.ceil(daysDifference / 7), 2);
+                    var val = Math.floor((date.tm_yday + 7 - (date.tm_wday + 6) % 7) / 7);
+                    if ((date.tm_wday + 371 - date.tm_yday - 2) % 7 <= 2) val++;
+                    if (!val) {
+                        val = 52;
+                        var dec31 = (date.tm_wday + 7 - date.tm_yday - 1) % 7;
+                        if (dec31 == 4 || dec31 == 5 && __isLeapYear(date.tm_year % 400 - 1)) val++;
+                    } else if (val == 53) {
+                        var jan1 = (date.tm_wday + 371 - date.tm_yday) % 7;
+                        if (jan1 != 4 && (jan1 != 3 || !__isLeapYear(date.tm_year))) val = 1;
+                    }
+                    return leadingNulls(val, 2);
                 },
                 "%w": function(date) {
                     return date.tm_wday;
                 },
                 "%W": function(date) {
-                    var janFirst = new Date(date.tm_year, 0, 1);
-                    var firstMonday = janFirst.getDay() === 1 ? janFirst : __addDays(janFirst, janFirst.getDay() === 0 ? 1 : 7 - janFirst.getDay() + 1);
-                    var endDate = new Date(date.tm_year + 1900, date.tm_mon, date.tm_mday);
-                    if (compareByDay(firstMonday, endDate) < 0) {
-                        var februaryFirstUntilEndMonth = __arraySum(__isLeapYear(endDate.getFullYear()) ? __MONTH_DAYS_LEAP : __MONTH_DAYS_REGULAR, endDate.getMonth() - 1) - 31;
-                        var firstMondayUntilEndJanuary = 31 - firstMonday.getDate();
-                        var days = firstMondayUntilEndJanuary + februaryFirstUntilEndMonth + endDate.getDate();
-                        return leadingNulls(Math.ceil(days / 7), 2);
-                    }
-                    return compareByDay(firstMonday, janFirst) === 0 ? "01" : "00";
+                    var days = date.tm_yday + 7 - (date.tm_wday + 6) % 7;
+                    return leadingNulls(Math.floor(days / 7), 2);
                 },
                 "%y": function(date) {
                     return (date.tm_year + 1900).toString().substring(2);
@@ -11028,7 +10800,9 @@ var Godot = function() {
                     return "%";
                 }
             };
+            pattern = pattern.replace(/%%/g, "\0\0");
             for(var rule in EXPANSION_RULES_2)if (pattern.includes(rule)) pattern = pattern.replace(new RegExp(rule, "g"), EXPANSION_RULES_2[rule](date1));
+            pattern = pattern.replace(/\0\0/g, "%");
             var bytes = intArrayFromString(pattern, false);
             if (bytes.length > maxsize) return 0;
             writeArrayToMemory(bytes, s);
@@ -11036,11 +10810,6 @@ var Godot = function() {
         }
         function _strftime_l(s, maxsize, format, tm) {
             return _strftime(s, maxsize, format, tm);
-        }
-        function _time(ptr) {
-            var ret = Date.now() / 1000 | 0;
-            if (ptr) HEAP32[ptr >> 2] = ret;
-            return ret;
         }
         var FSNode = function(parent, name, mode, rdev) {
             if (!parent) parent = this;
@@ -11109,6 +10878,10 @@ var Godot = function() {
         Module["createContext"] = function Module_createContext(canvas, useWebGL, setInModule, webGLContextAttributes) {
             return Browser.createContext(canvas, useWebGL, setInModule, webGLContextAttributes);
         };
+        var preloadedImages = {
+        };
+        var preloadedAudios = {
+        };
         var GLctx1;
         for(var i1 = 0; i1 < 32; ++i1)tempFixedLengthArray.push(new Array(i1));
         var miniTempWebGLFloatBuffersStorage = new Float32Array(288);
@@ -11123,6 +10896,129 @@ var Godot = function() {
         Module["initConfig"] = GodotConfig.init_config;
         Module["initFS"] = GodotFS.init;
         Module["copyToFS"] = GodotFS.copy_to_fs;
+        ERRNO_CODES = {
+            "EPERM": 63,
+            "ENOENT": 44,
+            "ESRCH": 71,
+            "EINTR": 27,
+            "EIO": 29,
+            "ENXIO": 60,
+            "E2BIG": 1,
+            "ENOEXEC": 45,
+            "EBADF": 8,
+            "ECHILD": 12,
+            "EAGAIN": 6,
+            "EWOULDBLOCK": 6,
+            "ENOMEM": 48,
+            "EACCES": 2,
+            "EFAULT": 21,
+            "ENOTBLK": 105,
+            "EBUSY": 10,
+            "EEXIST": 20,
+            "EXDEV": 75,
+            "ENODEV": 43,
+            "ENOTDIR": 54,
+            "EISDIR": 31,
+            "EINVAL": 28,
+            "ENFILE": 41,
+            "EMFILE": 33,
+            "ENOTTY": 59,
+            "ETXTBSY": 74,
+            "EFBIG": 22,
+            "ENOSPC": 51,
+            "ESPIPE": 70,
+            "EROFS": 69,
+            "EMLINK": 34,
+            "EPIPE": 64,
+            "EDOM": 18,
+            "ERANGE": 68,
+            "ENOMSG": 49,
+            "EIDRM": 24,
+            "ECHRNG": 106,
+            "EL2NSYNC": 156,
+            "EL3HLT": 107,
+            "EL3RST": 108,
+            "ELNRNG": 109,
+            "EUNATCH": 110,
+            "ENOCSI": 111,
+            "EL2HLT": 112,
+            "EDEADLK": 16,
+            "ENOLCK": 46,
+            "EBADE": 113,
+            "EBADR": 114,
+            "EXFULL": 115,
+            "ENOANO": 104,
+            "EBADRQC": 103,
+            "EBADSLT": 102,
+            "EDEADLOCK": 16,
+            "EBFONT": 101,
+            "ENOSTR": 100,
+            "ENODATA": 116,
+            "ETIME": 117,
+            "ENOSR": 118,
+            "ENONET": 119,
+            "ENOPKG": 120,
+            "EREMOTE": 121,
+            "ENOLINK": 47,
+            "EADV": 122,
+            "ESRMNT": 123,
+            "ECOMM": 124,
+            "EPROTO": 65,
+            "EMULTIHOP": 36,
+            "EDOTDOT": 125,
+            "EBADMSG": 9,
+            "ENOTUNIQ": 126,
+            "EBADFD": 127,
+            "EREMCHG": 128,
+            "ELIBACC": 129,
+            "ELIBBAD": 130,
+            "ELIBSCN": 131,
+            "ELIBMAX": 132,
+            "ELIBEXEC": 133,
+            "ENOSYS": 52,
+            "ENOTEMPTY": 55,
+            "ENAMETOOLONG": 37,
+            "ELOOP": 32,
+            "EOPNOTSUPP": 138,
+            "EPFNOSUPPORT": 139,
+            "ECONNRESET": 15,
+            "ENOBUFS": 42,
+            "EAFNOSUPPORT": 5,
+            "EPROTOTYPE": 67,
+            "ENOTSOCK": 57,
+            "ENOPROTOOPT": 50,
+            "ESHUTDOWN": 140,
+            "ECONNREFUSED": 14,
+            "EADDRINUSE": 3,
+            "ECONNABORTED": 13,
+            "ENETUNREACH": 40,
+            "ENETDOWN": 38,
+            "ETIMEDOUT": 73,
+            "EHOSTDOWN": 142,
+            "EHOSTUNREACH": 23,
+            "EINPROGRESS": 26,
+            "EALREADY": 7,
+            "EDESTADDRREQ": 17,
+            "EMSGSIZE": 35,
+            "EPROTONOSUPPORT": 66,
+            "ESOCKTNOSUPPORT": 137,
+            "EADDRNOTAVAIL": 4,
+            "ENETRESET": 39,
+            "EISCONN": 30,
+            "ENOTCONN": 53,
+            "ETOOMANYREFS": 141,
+            "EUSERS": 136,
+            "EDQUOT": 19,
+            "ESTALE": 72,
+            "ENOTSUP": 138,
+            "ENOMEDIUM": 148,
+            "EILSEQ": 25,
+            "EOVERFLOW": 61,
+            "ECANCELED": 11,
+            "ENOTRECOVERABLE": 56,
+            "EOWNERDEAD": 62,
+            "ESTRPIPE": 135
+        };
         GodotOS.atexit(function(resolve, reject) {
             GodotDisplayCursor.clear();
             resolve();
@@ -11144,602 +11040,602 @@ var Godot = function() {
             return u8array;
         }
         var asmLibraryArg = {
-            "a": ___assert_fail,
-            "m": ___cxa_atexit,
-            "$j": ___sys__newselect,
-            "Oj": ___sys_accept4,
-            "Sj": ___sys_access,
-            "Rj": ___sys_bind,
-            "ak": ___sys_chdir,
-            "_j": ___sys_chmod,
-            "Qj": ___sys_connect,
-            "Ka": ___sys_fcntl64,
-            "Yj": ___sys_getcwd,
-            "Uj": ___sys_getdents64,
-            "Vj": ___sys_getpid,
-            "Lj": ___sys_getsockname,
-            "Nj": ___sys_getsockopt,
-            "Nb": ___sys_ioctl,
-            "Pj": ___sys_listen,
-            "Wj": ___sys_lstat64,
-            "Hj": ___sys_mkdir,
-            "Ob": ___sys_open,
-            "Zj": ___sys_poll,
-            "Ej": ___sys_readlink,
-            "Jj": ___sys_recvfrom,
-            "Ij": ___sys_rename,
-            "Gj": ___sys_rmdir,
-            "Kj": ___sys_sendto,
-            "Mj": ___sys_setsockopt,
-            "Pb": ___sys_socket,
-            "Xj": ___sys_stat64,
-            "Tj": ___sys_statfs64,
-            "Fj": ___sys_symlink,
-            "ck": ___sys_unlink,
-            "bk": ___sys_wait4,
-            "Aj": __emscripten_throw_longjmp,
-            "oa": _abort,
-            "Ja": _clock_gettime,
-            "zj": _dlclose,
-            "Va": _dlerror,
-            "Kb": _dlopen,
-            "yj": _dlsym,
-            "Jb": _emscripten_cancel_main_loop,
-            "xj": _emscripten_force_exit,
-            "wj": _emscripten_glActiveTexture,
-            "vj": _emscripten_glAttachShader,
-            "uj": _emscripten_glBeginQuery,
-            "tj": _emscripten_glBeginQueryEXT,
-            "sj": _emscripten_glBeginTransformFeedback,
-            "rj": _emscripten_glBindAttribLocation,
-            "qj": _emscripten_glBindBuffer,
-            "pj": _emscripten_glBindBufferBase,
-            "oj": _emscripten_glBindBufferRange,
-            "nj": _emscripten_glBindFramebuffer,
-            "mj": _emscripten_glBindRenderbuffer,
-            "lj": _emscripten_glBindSampler,
-            "kj": _emscripten_glBindTexture,
-            "jj": _emscripten_glBindTransformFeedback,
-            "ij": _emscripten_glBindVertexArray,
-            "hj": _emscripten_glBindVertexArrayOES,
-            "gj": _emscripten_glBlendColor,
-            "fj": _emscripten_glBlendEquation,
-            "ej": _emscripten_glBlendEquationSeparate,
-            "dj": _emscripten_glBlendFunc,
-            "cj": _emscripten_glBlendFuncSeparate,
-            "bj": _emscripten_glBlitFramebuffer,
-            "aj": _emscripten_glBufferData,
-            "$i": _emscripten_glBufferSubData,
-            "_i": _emscripten_glCheckFramebufferStatus,
-            "Zi": _emscripten_glClear,
-            "Yi": _emscripten_glClearBufferfi,
-            "Xi": _emscripten_glClearBufferfv,
-            "Wi": _emscripten_glClearBufferiv,
-            "Vi": _emscripten_glClearBufferuiv,
-            "Ui": _emscripten_glClearColor,
-            "Ti": _emscripten_glClearDepthf,
-            "Si": _emscripten_glClearStencil,
-            "Ri": _emscripten_glClientWaitSync,
-            "Qi": _emscripten_glColorMask,
-            "Pi": _emscripten_glCompileShader,
-            "Oi": _emscripten_glCompressedTexImage2D,
-            "Ni": _emscripten_glCompressedTexImage3D,
-            "Mi": _emscripten_glCompressedTexSubImage2D,
-            "Li": _emscripten_glCompressedTexSubImage3D,
-            "Ki": _emscripten_glCopyBufferSubData,
-            "Ji": _emscripten_glCopyTexImage2D,
-            "Ii": _emscripten_glCopyTexSubImage2D,
-            "Hi": _emscripten_glCopyTexSubImage3D,
-            "Gi": _emscripten_glCreateProgram,
-            "Fi": _emscripten_glCreateShader,
-            "Ei": _emscripten_glCullFace,
-            "Di": _emscripten_glDeleteBuffers,
-            "Ci": _emscripten_glDeleteFramebuffers,
-            "Bi": _emscripten_glDeleteProgram,
-            "Ai": _emscripten_glDeleteQueries,
-            "zi": _emscripten_glDeleteQueriesEXT,
-            "yi": _emscripten_glDeleteRenderbuffers,
-            "xi": _emscripten_glDeleteSamplers,
-            "wi": _emscripten_glDeleteShader,
-            "vi": _emscripten_glDeleteSync,
-            "ui": _emscripten_glDeleteTextures,
-            "ti": _emscripten_glDeleteTransformFeedbacks,
-            "si": _emscripten_glDeleteVertexArrays,
-            "ri": _emscripten_glDeleteVertexArraysOES,
-            "qi": _emscripten_glDepthFunc,
-            "pi": _emscripten_glDepthMask,
-            "oi": _emscripten_glDepthRangef,
-            "ni": _emscripten_glDetachShader,
-            "mi": _emscripten_glDisable,
-            "li": _emscripten_glDisableVertexAttribArray,
-            "ki": _emscripten_glDrawArrays,
-            "ji": _emscripten_glDrawArraysInstanced,
-            "ii": _emscripten_glDrawArraysInstancedANGLE,
-            "hi": _emscripten_glDrawArraysInstancedARB,
-            "gi": _emscripten_glDrawArraysInstancedEXT,
-            "fi": _emscripten_glDrawArraysInstancedNV,
-            "ei": _emscripten_glDrawBuffers,
-            "di": _emscripten_glDrawBuffersEXT,
-            "ci": _emscripten_glDrawBuffersWEBGL,
-            "bi": _emscripten_glDrawElements,
-            "ai": _emscripten_glDrawElementsInstanced,
-            "$h": _emscripten_glDrawElementsInstancedANGLE,
-            "_h": _emscripten_glDrawElementsInstancedARB,
-            "Zh": _emscripten_glDrawElementsInstancedEXT,
-            "Yh": _emscripten_glDrawElementsInstancedNV,
-            "Xh": _emscripten_glDrawRangeElements,
-            "Wh": _emscripten_glEnable,
-            "Vh": _emscripten_glEnableVertexAttribArray,
-            "Uh": _emscripten_glEndQuery,
-            "Th": _emscripten_glEndQueryEXT,
-            "Sh": _emscripten_glEndTransformFeedback,
-            "Rh": _emscripten_glFenceSync,
-            "Qh": _emscripten_glFinish,
-            "Ph": _emscripten_glFlush,
-            "Oh": _emscripten_glFramebufferRenderbuffer,
-            "Nh": _emscripten_glFramebufferTexture2D,
-            "Mh": _emscripten_glFramebufferTextureLayer,
-            "Lh": _emscripten_glFrontFace,
-            "Kh": _emscripten_glGenBuffers,
-            "Jh": _emscripten_glGenFramebuffers,
-            "Ih": _emscripten_glGenQueries,
-            "Hh": _emscripten_glGenQueriesEXT,
-            "Gh": _emscripten_glGenRenderbuffers,
-            "Fh": _emscripten_glGenSamplers,
-            "Eh": _emscripten_glGenTextures,
-            "Dh": _emscripten_glGenTransformFeedbacks,
-            "Ch": _emscripten_glGenVertexArrays,
-            "Bh": _emscripten_glGenVertexArraysOES,
-            "Ah": _emscripten_glGenerateMipmap,
-            "zh": _emscripten_glGetActiveAttrib,
-            "yh": _emscripten_glGetActiveUniform,
-            "xh": _emscripten_glGetActiveUniformBlockName,
-            "wh": _emscripten_glGetActiveUniformBlockiv,
-            "vh": _emscripten_glGetActiveUniformsiv,
-            "uh": _emscripten_glGetAttachedShaders,
-            "th": _emscripten_glGetAttribLocation,
-            "sh": _emscripten_glGetBooleanv,
-            "rh": _emscripten_glGetBufferParameteri64v,
-            "qh": _emscripten_glGetBufferParameteriv,
-            "ph": _emscripten_glGetError,
-            "oh": _emscripten_glGetFloatv,
-            "nh": _emscripten_glGetFragDataLocation,
-            "mh": _emscripten_glGetFramebufferAttachmentParameteriv,
-            "lh": _emscripten_glGetInteger64i_v,
-            "kh": _emscripten_glGetInteger64v,
-            "jh": _emscripten_glGetIntegeri_v,
-            "ih": _emscripten_glGetIntegerv,
-            "hh": _emscripten_glGetInternalformativ,
-            "gh": _emscripten_glGetProgramBinary,
-            "fh": _emscripten_glGetProgramInfoLog,
-            "eh": _emscripten_glGetProgramiv,
-            "dh": _emscripten_glGetQueryObjecti64vEXT,
-            "ch": _emscripten_glGetQueryObjectivEXT,
-            "bh": _emscripten_glGetQueryObjectui64vEXT,
-            "ah": _emscripten_glGetQueryObjectuiv,
-            "$g": _emscripten_glGetQueryObjectuivEXT,
-            "_g": _emscripten_glGetQueryiv,
-            "Zg": _emscripten_glGetQueryivEXT,
-            "Yg": _emscripten_glGetRenderbufferParameteriv,
-            "Xg": _emscripten_glGetSamplerParameterfv,
-            "Wg": _emscripten_glGetSamplerParameteriv,
-            "Vg": _emscripten_glGetShaderInfoLog,
-            "Ug": _emscripten_glGetShaderPrecisionFormat,
-            "Tg": _emscripten_glGetShaderSource,
-            "Sg": _emscripten_glGetShaderiv,
-            "Rg": _emscripten_glGetString,
-            "Qg": _emscripten_glGetStringi,
-            "Pg": _emscripten_glGetSynciv,
-            "Og": _emscripten_glGetTexParameterfv,
-            "Ng": _emscripten_glGetTexParameteriv,
-            "Mg": _emscripten_glGetTransformFeedbackVarying,
-            "Lg": _emscripten_glGetUniformBlockIndex,
-            "Kg": _emscripten_glGetUniformIndices,
-            "Jg": _emscripten_glGetUniformLocation,
-            "Ig": _emscripten_glGetUniformfv,
-            "Hg": _emscripten_glGetUniformiv,
-            "Gg": _emscripten_glGetUniformuiv,
-            "Fg": _emscripten_glGetVertexAttribIiv,
-            "Eg": _emscripten_glGetVertexAttribIuiv,
-            "Dg": _emscripten_glGetVertexAttribPointerv,
-            "Cg": _emscripten_glGetVertexAttribfv,
-            "Bg": _emscripten_glGetVertexAttribiv,
-            "Ag": _emscripten_glHint,
-            "zg": _emscripten_glInvalidateFramebuffer,
-            "yg": _emscripten_glInvalidateSubFramebuffer,
-            "xg": _emscripten_glIsBuffer,
-            "wg": _emscripten_glIsEnabled,
-            "vg": _emscripten_glIsFramebuffer,
-            "ug": _emscripten_glIsProgram,
-            "tg": _emscripten_glIsQuery,
-            "sg": _emscripten_glIsQueryEXT,
-            "rg": _emscripten_glIsRenderbuffer,
-            "qg": _emscripten_glIsSampler,
-            "pg": _emscripten_glIsShader,
-            "og": _emscripten_glIsSync,
-            "ng": _emscripten_glIsTexture,
-            "mg": _emscripten_glIsTransformFeedback,
-            "lg": _emscripten_glIsVertexArray,
-            "kg": _emscripten_glIsVertexArrayOES,
-            "jg": _emscripten_glLineWidth,
-            "ig": _emscripten_glLinkProgram,
-            "hg": _emscripten_glPauseTransformFeedback,
-            "gg": _emscripten_glPixelStorei,
-            "fg": _emscripten_glPolygonOffset,
-            "eg": _emscripten_glProgramBinary,
-            "dg": _emscripten_glProgramParameteri,
-            "cg": _emscripten_glQueryCounterEXT,
-            "bg": _emscripten_glReadBuffer,
-            "ag": _emscripten_glReadPixels,
-            "$f": _emscripten_glReleaseShaderCompiler,
-            "_f": _emscripten_glRenderbufferStorage,
-            "Zf": _emscripten_glRenderbufferStorageMultisample,
-            "Yf": _emscripten_glResumeTransformFeedback,
-            "Xf": _emscripten_glSampleCoverage,
-            "Wf": _emscripten_glSamplerParameterf,
-            "Vf": _emscripten_glSamplerParameterfv,
-            "Uf": _emscripten_glSamplerParameteri,
-            "Tf": _emscripten_glSamplerParameteriv,
-            "Sf": _emscripten_glScissor,
-            "Rf": _emscripten_glShaderBinary,
-            "Qf": _emscripten_glShaderSource,
-            "Pf": _emscripten_glStencilFunc,
-            "Of": _emscripten_glStencilFuncSeparate,
-            "Nf": _emscripten_glStencilMask,
-            "Mf": _emscripten_glStencilMaskSeparate,
-            "Lf": _emscripten_glStencilOp,
-            "Kf": _emscripten_glStencilOpSeparate,
-            "Jf": _emscripten_glTexImage2D,
-            "If": _emscripten_glTexImage3D,
-            "Hf": _emscripten_glTexParameterf,
-            "Gf": _emscripten_glTexParameterfv,
-            "Ff": _emscripten_glTexParameteri,
-            "Ef": _emscripten_glTexParameteriv,
-            "Df": _emscripten_glTexStorage2D,
-            "Cf": _emscripten_glTexStorage3D,
-            "Bf": _emscripten_glTexSubImage2D,
-            "Af": _emscripten_glTexSubImage3D,
-            "zf": _emscripten_glTransformFeedbackVaryings,
-            "yf": _emscripten_glUniform1f,
-            "xf": _emscripten_glUniform1fv,
-            "wf": _emscripten_glUniform1i,
-            "vf": _emscripten_glUniform1iv,
-            "uf": _emscripten_glUniform1ui,
-            "tf": _emscripten_glUniform1uiv,
-            "sf": _emscripten_glUniform2f,
-            "rf": _emscripten_glUniform2fv,
-            "qf": _emscripten_glUniform2i,
-            "pf": _emscripten_glUniform2iv,
-            "of": _emscripten_glUniform2ui,
-            "nf": _emscripten_glUniform2uiv,
-            "mf": _emscripten_glUniform3f,
-            "lf": _emscripten_glUniform3fv,
-            "kf": _emscripten_glUniform3i,
-            "jf": _emscripten_glUniform3iv,
-            "hf": _emscripten_glUniform3ui,
-            "gf": _emscripten_glUniform3uiv,
-            "ff": _emscripten_glUniform4f,
-            "ef": _emscripten_glUniform4fv,
-            "df": _emscripten_glUniform4i,
-            "cf": _emscripten_glUniform4iv,
-            "bf": _emscripten_glUniform4ui,
-            "af": _emscripten_glUniform4uiv,
-            "$e": _emscripten_glUniformBlockBinding,
-            "_e": _emscripten_glUniformMatrix2fv,
-            "Ze": _emscripten_glUniformMatrix2x3fv,
-            "Ye": _emscripten_glUniformMatrix2x4fv,
-            "Xe": _emscripten_glUniformMatrix3fv,
-            "We": _emscripten_glUniformMatrix3x2fv,
-            "Ve": _emscripten_glUniformMatrix3x4fv,
-            "Ue": _emscripten_glUniformMatrix4fv,
-            "Te": _emscripten_glUniformMatrix4x2fv,
-            "Se": _emscripten_glUniformMatrix4x3fv,
-            "Re": _emscripten_glUseProgram,
-            "Qe": _emscripten_glValidateProgram,
-            "Pe": _emscripten_glVertexAttrib1f,
-            "Oe": _emscripten_glVertexAttrib1fv,
-            "Ne": _emscripten_glVertexAttrib2f,
-            "Me": _emscripten_glVertexAttrib2fv,
-            "Le": _emscripten_glVertexAttrib3f,
-            "Ke": _emscripten_glVertexAttrib3fv,
-            "Je": _emscripten_glVertexAttrib4f,
-            "Ie": _emscripten_glVertexAttrib4fv,
-            "He": _emscripten_glVertexAttribDivisor,
-            "Ge": _emscripten_glVertexAttribDivisorANGLE,
-            "Fe": _emscripten_glVertexAttribDivisorARB,
-            "Ee": _emscripten_glVertexAttribDivisorEXT,
-            "De": _emscripten_glVertexAttribDivisorNV,
-            "Ce": _emscripten_glVertexAttribI4i,
-            "Be": _emscripten_glVertexAttribI4iv,
-            "Ae": _emscripten_glVertexAttribI4ui,
-            "ze": _emscripten_glVertexAttribI4uiv,
-            "ye": _emscripten_glVertexAttribIPointer,
-            "xe": _emscripten_glVertexAttribPointer,
-            "we": _emscripten_glViewport,
-            "ve": _emscripten_glWaitSync,
-            "ue": _emscripten_memcpy_big,
-            "hb": _emscripten_resize_heap,
-            "Ib": _emscripten_set_main_loop,
-            "te": _emscripten_thread_sleep,
-            "Hb": _emscripten_webgl_commit_frame,
-            "se": _emscripten_webgl_create_context,
-            "re": _emscripten_webgl_destroy_context,
-            "qe": _emscripten_webgl_init_context_attributes,
-            "pe": _emscripten_webgl_make_context_current,
-            "Dj": _environ_get,
-            "Cj": _environ_sizes_get,
-            "Aa": _fd_close,
-            "Bj": _fd_fdstat_get,
-            "Mb": _fd_read,
-            "Tb": _fd_seek,
-            "Lb": _fd_write,
-            "gb": _gai_strerror,
-            "l": _getTempRet0,
-            "fb": _getaddrinfo,
-            "oe": _getnameinfo,
-            "Gb": _gettimeofday,
-            "d": _glActiveTexture,
-            "Ua": _glAttachShader,
-            "eb": _glBeginTransformFeedback,
-            "Fb": _glBindAttribLocation,
-            "c": _glBindBuffer,
-            "R": _glBindBufferBase,
-            "f": _glBindFramebuffer,
-            "ea": _glBindRenderbuffer,
-            "b": _glBindTexture,
-            "o": _glBindVertexArray,
-            "F": _glBlendEquation,
-            "T": _glBlendFunc,
-            "z": _glBlendFuncSeparate,
-            "ka": _glBlitFramebuffer,
-            "s": _glBufferData,
-            "N": _glBufferSubData,
+            "Xc": ___call_sighandler,
+            "Rc": ___syscall__newselect,
+            "Mc": ___syscall_accept4,
+            "Lc": ___syscall_bind,
+            "rd": ___syscall_chdir,
+            "qd": ___syscall_chmod,
+            "Kc": ___syscall_connect,
+            "sd": ___syscall_faccessat,
+            "Fa": ___syscall_fcntl64,
+            "fd": ___syscall_getcwd,
+            "Wc": ___syscall_getdents64,
+            "Jc": ___syscall_getsockname,
+            "Ic": ___syscall_getsockopt,
+            "mb": ___syscall_ioctl,
+            "Hc": ___syscall_listen,
+            "ad": ___syscall_lstat64,
+            "_c": ___syscall_mkdirat,
+            "$c": ___syscall_newfstatat,
+            "nb": ___syscall_openat,
+            "Zc": ___syscall_poll,
+            "Vc": ___syscall_readlinkat,
+            "Gc": ___syscall_recvfrom,
+            "Sc": ___syscall_renameat,
+            "Tc": ___syscall_rmdir,
+            "Fc": ___syscall_sendto,
+            "jb": ___syscall_socket,
+            "bd": ___syscall_stat64,
+            "Qc": ___syscall_statfs64,
+            "Pc": ___syscall_symlink,
+            "Uc": ___syscall_unlinkat,
+            "nd": __dlinit,
+            "pd": __dlopen_js,
+            "od": __dlsym_js,
+            "Va": __emscripten_date_now,
+            "id": __emscripten_get_now_is_monotonic,
+            "Ec": __emscripten_throw_longjmp,
+            "jd": __gmtime_js,
+            "kd": __localtime_js,
+            "md": __tzset_js,
+            "ja": _abort,
+            "qb": _emscripten_cancel_main_loop,
+            "Jh": _emscripten_force_exit,
+            "Ua": _emscripten_get_now,
+            "yi": _emscripten_glActiveTexture,
+            "xi": _emscripten_glAttachShader,
+            "mf": _emscripten_glBeginQuery,
+            "Qi": _emscripten_glBeginQueryEXT,
+            "Ue": _emscripten_glBeginTransformFeedback,
+            "wi": _emscripten_glBindAttribLocation,
+            "vi": _emscripten_glBindBuffer,
+            "Qe": _emscripten_glBindBufferBase,
+            "Re": _emscripten_glBindBufferRange,
+            "ui": _emscripten_glBindFramebuffer,
+            "ti": _emscripten_glBindRenderbuffer,
+            "Td": _emscripten_glBindSampler,
+            "si": _emscripten_glBindTexture,
+            "Kd": _emscripten_glBindTransformFeedback,
+            "Ze": _emscripten_glBindVertexArray,
+            "Hi": _emscripten_glBindVertexArrayOES,
+            "ri": _emscripten_glBlendColor,
+            "qi": _emscripten_glBlendEquation,
+            "pi": _emscripten_glBlendEquationSeparate,
+            "ni": _emscripten_glBlendFunc,
+            "mi": _emscripten_glBlendFuncSeparate,
+            "af": _emscripten_glBlitFramebuffer,
+            "li": _emscripten_glBufferData,
+            "ki": _emscripten_glBufferSubData,
+            "ji": _emscripten_glCheckFramebufferStatus,
+            "ii": _emscripten_glClear,
+            "re": _emscripten_glClearBufferfi,
+            "se": _emscripten_glClearBufferfv,
+            "ue": _emscripten_glClearBufferiv,
+            "te": _emscripten_glClearBufferuiv,
+            "hi": _emscripten_glClearColor,
+            "gi": _emscripten_glClearDepthf,
+            "fi": _emscripten_glClearStencil,
+            "ce": _emscripten_glClientWaitSync,
+            "ei": _emscripten_glColorMask,
+            "bi": _emscripten_glCompileShader,
+            "ai": _emscripten_glCompressedTexImage2D,
+            "rf": _emscripten_glCompressedTexImage3D,
+            "$h": _emscripten_glCompressedTexSubImage2D,
+            "qf": _emscripten_glCompressedTexSubImage3D,
+            "pe": _emscripten_glCopyBufferSubData,
+            "_h": _emscripten_glCopyTexImage2D,
+            "Zh": _emscripten_glCopyTexSubImage2D,
+            "sf": _emscripten_glCopyTexSubImage3D,
+            "Yh": _emscripten_glCreateProgram,
+            "Xh": _emscripten_glCreateShader,
+            "Wh": _emscripten_glCullFace,
+            "Vh": _emscripten_glDeleteBuffers,
+            "Uh": _emscripten_glDeleteFramebuffers,
+            "Th": _emscripten_glDeleteProgram,
+            "of": _emscripten_glDeleteQueries,
+            "Si": _emscripten_glDeleteQueriesEXT,
+            "Sh": _emscripten_glDeleteRenderbuffers,
+            "Vd": _emscripten_glDeleteSamplers,
+            "Rh": _emscripten_glDeleteShader,
+            "de": _emscripten_glDeleteSync,
+            "Qh": _emscripten_glDeleteTextures,
+            "Jd": _emscripten_glDeleteTransformFeedbacks,
+            "Ye": _emscripten_glDeleteVertexArrays,
+            "Gi": _emscripten_glDeleteVertexArraysOES,
+            "Ph": _emscripten_glDepthFunc,
+            "Oh": _emscripten_glDepthMask,
+            "Nh": _emscripten_glDepthRangef,
+            "Mh": _emscripten_glDetachShader,
+            "Lh": _emscripten_glDisable,
+            "Kh": _emscripten_glDisableVertexAttribArray,
+            "Ih": _emscripten_glDrawArrays,
+            "he": _emscripten_glDrawArraysInstanced,
+            "Ci": _emscripten_glDrawArraysInstancedANGLE,
+            "Bf": _emscripten_glDrawArraysInstancedARB,
+            "Cf": _emscripten_glDrawArraysInstancedEXT,
+            "td": _emscripten_glDrawArraysInstancedNV,
+            "hf": _emscripten_glDrawBuffers,
+            "xf": _emscripten_glDrawBuffersEXT,
+            "Di": _emscripten_glDrawBuffersWEBGL,
+            "Hh": _emscripten_glDrawElements,
+            "ge": _emscripten_glDrawElementsInstanced,
+            "Bi": _emscripten_glDrawElementsInstancedANGLE,
+            "yf": _emscripten_glDrawElementsInstancedARB,
+            "zf": _emscripten_glDrawElementsInstancedEXT,
+            "Af": _emscripten_glDrawElementsInstancedNV,
+            "vf": _emscripten_glDrawRangeElements,
+            "Gh": _emscripten_glEnable,
+            "Fh": _emscripten_glEnableVertexAttribArray,
+            "lf": _emscripten_glEndQuery,
+            "Pi": _emscripten_glEndQueryEXT,
+            "Se": _emscripten_glEndTransformFeedback,
+            "fe": _emscripten_glFenceSync,
+            "Eh": _emscripten_glFinish,
+            "Dh": _emscripten_glFlush,
+            "Ch": _emscripten_glFramebufferRenderbuffer,
+            "Bh": _emscripten_glFramebufferTexture2D,
+            "_e": _emscripten_glFramebufferTextureLayer,
+            "Ah": _emscripten_glFrontFace,
+            "zh": _emscripten_glGenBuffers,
+            "xh": _emscripten_glGenFramebuffers,
+            "pf": _emscripten_glGenQueries,
+            "Ti": _emscripten_glGenQueriesEXT,
+            "wh": _emscripten_glGenRenderbuffers,
+            "Wd": _emscripten_glGenSamplers,
+            "vh": _emscripten_glGenTextures,
+            "Id": _emscripten_glGenTransformFeedbacks,
+            "Xe": _emscripten_glGenVertexArrays,
+            "Fi": _emscripten_glGenVertexArraysOES,
+            "yh": _emscripten_glGenerateMipmap,
+            "uh": _emscripten_glGetActiveAttrib,
+            "th": _emscripten_glGetActiveUniform,
+            "je": _emscripten_glGetActiveUniformBlockName,
+            "ke": _emscripten_glGetActiveUniformBlockiv,
+            "ne": _emscripten_glGetActiveUniformsiv,
+            "sh": _emscripten_glGetAttachedShaders,
+            "rh": _emscripten_glGetAttribLocation,
+            "qh": _emscripten_glGetBooleanv,
+            "Xd": _emscripten_glGetBufferParameteri64v,
+            "ph": _emscripten_glGetBufferParameteriv,
+            "nh": _emscripten_glGetError,
+            "mh": _emscripten_glGetFloatv,
+            "Ee": _emscripten_glGetFragDataLocation,
+            "lh": _emscripten_glGetFramebufferAttachmentParameteriv,
+            "Yd": _emscripten_glGetInteger64i_v,
+            "_d": _emscripten_glGetInteger64v,
+            "Ve": _emscripten_glGetIntegeri_v,
+            "kh": _emscripten_glGetIntegerv,
+            "wd": _emscripten_glGetInternalformativ,
+            "Dd": _emscripten_glGetProgramBinary,
+            "ih": _emscripten_glGetProgramInfoLog,
+            "jh": _emscripten_glGetProgramiv,
+            "Ji": _emscripten_glGetQueryObjecti64vEXT,
+            "Mi": _emscripten_glGetQueryObjectivEXT,
+            "Ii": _emscripten_glGetQueryObjectui64vEXT,
+            "jf": _emscripten_glGetQueryObjectuiv,
+            "Li": _emscripten_glGetQueryObjectuivEXT,
+            "kf": _emscripten_glGetQueryiv,
+            "Ni": _emscripten_glGetQueryivEXT,
+            "hh": _emscripten_glGetRenderbufferParameteriv,
+            "Md": _emscripten_glGetSamplerParameterfv,
+            "Nd": _emscripten_glGetSamplerParameteriv,
+            "fh": _emscripten_glGetShaderInfoLog,
+            "eh": _emscripten_glGetShaderPrecisionFormat,
+            "ch": _emscripten_glGetShaderSource,
+            "gh": _emscripten_glGetShaderiv,
+            "bh": _emscripten_glGetString,
+            "qe": _emscripten_glGetStringi,
+            "Zd": _emscripten_glGetSynciv,
+            "ah": _emscripten_glGetTexParameterfv,
+            "$g": _emscripten_glGetTexParameteriv,
+            "Oe": _emscripten_glGetTransformFeedbackVarying,
+            "le": _emscripten_glGetUniformBlockIndex,
+            "oe": _emscripten_glGetUniformIndices,
+            "Yg": _emscripten_glGetUniformLocation,
+            "_g": _emscripten_glGetUniformfv,
+            "Zg": _emscripten_glGetUniformiv,
+            "Fe": _emscripten_glGetUniformuiv,
+            "Me": _emscripten_glGetVertexAttribIiv,
+            "Le": _emscripten_glGetVertexAttribIuiv,
+            "Vg": _emscripten_glGetVertexAttribPointerv,
+            "Xg": _emscripten_glGetVertexAttribfv,
+            "Wg": _emscripten_glGetVertexAttribiv,
+            "Tg": _emscripten_glHint,
+            "Ad": _emscripten_glInvalidateFramebuffer,
+            "zd": _emscripten_glInvalidateSubFramebuffer,
+            "Sg": _emscripten_glIsBuffer,
+            "Rg": _emscripten_glIsEnabled,
+            "Qg": _emscripten_glIsFramebuffer,
+            "Pg": _emscripten_glIsProgram,
+            "nf": _emscripten_glIsQuery,
+            "Ri": _emscripten_glIsQueryEXT,
+            "Og": _emscripten_glIsRenderbuffer,
+            "Ud": _emscripten_glIsSampler,
+            "Ng": _emscripten_glIsShader,
+            "ee": _emscripten_glIsSync,
+            "Mg": _emscripten_glIsTexture,
+            "Hd": _emscripten_glIsTransformFeedback,
+            "We": _emscripten_glIsVertexArray,
+            "Ei": _emscripten_glIsVertexArrayOES,
+            "Lg": _emscripten_glLineWidth,
+            "Kg": _emscripten_glLinkProgram,
+            "Fd": _emscripten_glPauseTransformFeedback,
+            "Ig": _emscripten_glPixelStorei,
+            "Hg": _emscripten_glPolygonOffset,
+            "Cd": _emscripten_glProgramBinary,
+            "Bd": _emscripten_glProgramParameteri,
+            "Oi": _emscripten_glQueryCounterEXT,
+            "wf": _emscripten_glReadBuffer,
+            "Gg": _emscripten_glReadPixels,
+            "Fg": _emscripten_glReleaseShaderCompiler,
+            "Eg": _emscripten_glRenderbufferStorage,
+            "$e": _emscripten_glRenderbufferStorageMultisample,
+            "Ed": _emscripten_glResumeTransformFeedback,
+            "Dg": _emscripten_glSampleCoverage,
+            "Pd": _emscripten_glSamplerParameterf,
+            "Od": _emscripten_glSamplerParameterfv,
+            "Sd": _emscripten_glSamplerParameteri,
+            "Qd": _emscripten_glSamplerParameteriv,
+            "Cg": _emscripten_glScissor,
+            "Bg": _emscripten_glShaderBinary,
+            "Ag": _emscripten_glShaderSource,
+            "zg": _emscripten_glStencilFunc,
+            "xg": _emscripten_glStencilFuncSeparate,
+            "wg": _emscripten_glStencilMask,
+            "vg": _emscripten_glStencilMaskSeparate,
+            "ug": _emscripten_glStencilOp,
+            "tg": _emscripten_glStencilOpSeparate,
+            "sg": _emscripten_glTexImage2D,
+            "uf": _emscripten_glTexImage3D,
+            "rg": _emscripten_glTexParameterf,
+            "qg": _emscripten_glTexParameterfv,
+            "pg": _emscripten_glTexParameteri,
+            "og": _emscripten_glTexParameteriv,
+            "yd": _emscripten_glTexStorage2D,
+            "xd": _emscripten_glTexStorage3D,
+            "mg": _emscripten_glTexSubImage2D,
+            "tf": _emscripten_glTexSubImage3D,
+            "Pe": _emscripten_glTransformFeedbackVaryings,
+            "lg": _emscripten_glUniform1f,
+            "kg": _emscripten_glUniform1fv,
+            "jg": _emscripten_glUniform1i,
+            "ig": _emscripten_glUniform1iv,
+            "De": _emscripten_glUniform1ui,
+            "ze": _emscripten_glUniform1uiv,
+            "hg": _emscripten_glUniform2f,
+            "gg": _emscripten_glUniform2fv,
+            "fg": _emscripten_glUniform2i,
+            "eg": _emscripten_glUniform2iv,
+            "Ce": _emscripten_glUniform2ui,
+            "ye": _emscripten_glUniform2uiv,
+            "dg": _emscripten_glUniform3f,
+            "ag": _emscripten_glUniform3fv,
+            "$f": _emscripten_glUniform3i,
+            "_f": _emscripten_glUniform3iv,
+            "Be": _emscripten_glUniform3ui,
+            "we": _emscripten_glUniform3uiv,
+            "Zf": _emscripten_glUniform4f,
+            "Yf": _emscripten_glUniform4fv,
+            "Xf": _emscripten_glUniform4i,
+            "Wf": _emscripten_glUniform4iv,
+            "Ae": _emscripten_glUniform4ui,
+            "ve": _emscripten_glUniform4uiv,
+            "ie": _emscripten_glUniformBlockBinding,
+            "Vf": _emscripten_glUniformMatrix2fv,
+            "gf": _emscripten_glUniformMatrix2x3fv,
+            "ef": _emscripten_glUniformMatrix2x4fv,
+            "Uf": _emscripten_glUniformMatrix3fv,
+            "ff": _emscripten_glUniformMatrix3x2fv,
+            "cf": _emscripten_glUniformMatrix3x4fv,
+            "Tf": _emscripten_glUniformMatrix4fv,
+            "df": _emscripten_glUniformMatrix4x2fv,
+            "bf": _emscripten_glUniformMatrix4x3fv,
+            "Rf": _emscripten_glUseProgram,
+            "Qf": _emscripten_glValidateProgram,
+            "Pf": _emscripten_glVertexAttrib1f,
+            "Of": _emscripten_glVertexAttrib1fv,
+            "Nf": _emscripten_glVertexAttrib2f,
+            "Mf": _emscripten_glVertexAttrib2fv,
+            "Lf": _emscripten_glVertexAttrib3f,
+            "Kf": _emscripten_glVertexAttrib3fv,
+            "Jf": _emscripten_glVertexAttrib4f,
+            "If": _emscripten_glVertexAttrib4fv,
+            "Ld": _emscripten_glVertexAttribDivisor,
+            "Ai": _emscripten_glVertexAttribDivisorANGLE,
+            "Df": _emscripten_glVertexAttribDivisorARB,
+            "Ef": _emscripten_glVertexAttribDivisorEXT,
+            "ud": _emscripten_glVertexAttribDivisorNV,
+            "Ke": _emscripten_glVertexAttribI4i,
+            "He": _emscripten_glVertexAttribI4iv,
+            "Je": _emscripten_glVertexAttribI4ui,
+            "Ge": _emscripten_glVertexAttribI4uiv,
+            "Ne": _emscripten_glVertexAttribIPointer,
+            "Gf": _emscripten_glVertexAttribPointer,
+            "Ff": _emscripten_glViewport,
+            "$d": _emscripten_glWaitSync,
+            "hd": _emscripten_memcpy_big,
+            "Ta": _emscripten_resize_heap,
+            "pb": _emscripten_set_main_loop,
+            "fb": _emscripten_webgl_commit_frame,
+            "Cc": _emscripten_webgl_create_context,
+            "bc": _emscripten_webgl_destroy_context,
+            "Oc": _emscripten_webgl_init_context_attributes,
+            "xc": _emscripten_webgl_make_context_current,
+            "dd": _environ_get,
+            "ed": _environ_sizes_get,
+            "ua": _fd_close,
+            "cd": _fd_fdstat_get,
+            "lb": _fd_read,
+            "Ac": _fd_seek,
+            "kb": _fd_write,
+            "k": _getTempRet0,
+            "Sa": _getaddrinfo,
+            "Pb": _getnameinfo,
+            "c": _glActiveTexture,
+            "Na": _glAttachShader,
+            "bb": _glBeginTransformFeedback,
+            "vb": _glBindAttribLocation,
+            "b": _glBindBuffer,
+            "P": _glBindBufferBase,
+            "e": _glBindFramebuffer,
+            "_": _glBindRenderbuffer,
+            "a": _glBindTexture,
+            "m": _glBindVertexArray,
+            "D": _glBlendEquation,
+            "X": _glBlendFunc,
+            "w": _glBlendFuncSeparate,
+            "ha": _glBlitFramebuffer,
+            "q": _glBufferData,
+            "K": _glBufferSubData,
             "M": _glCheckFramebufferStatus,
-            "L": _glClear,
-            "ra": _glClearBufferfv,
-            "Q": _glClearColor,
-            "da": _glClearDepthf,
-            "P": _glColorMask,
-            "Ta": _glCompileShader,
-            "Eb": _glCompressedTexImage2D,
-            "ne": _glCompressedTexSubImage2D,
-            "Db": _glCompressedTexSubImage3D,
-            "me": _glCopyBufferSubData,
-            "db": _glCopyTexSubImage2D,
-            "Cb": _glCreateProgram,
-            "Sa": _glCreateShader,
-            "va": _glCullFace,
-            "O": _glDeleteBuffers,
-            "I": _glDeleteFramebuffers,
-            "S": _glDeleteProgram,
-            "X": _glDeleteRenderbuffers,
-            "K": _glDeleteShader,
-            "E": _glDeleteTextures,
-            "ga": _glDeleteVertexArrays,
-            "aa": _glDepthFunc,
-            "J": _glDepthMask,
-            "j": _glDisable,
-            "r": _glDisableVertexAttribArray,
-            "D": _glDrawArrays,
-            "za": _glDrawArraysInstanced,
-            "Ia": _glDrawBuffers,
-            "$": _glDrawElements,
-            "qa": _glDrawElementsInstanced,
-            "w": _glEnable,
-            "k": _glEnableVertexAttribArray,
-            "cb": _glEndTransformFeedback,
-            "le": _glFinish,
-            "ca": _glFramebufferRenderbuffer,
-            "y": _glFramebufferTexture2D,
-            "ke": _glFramebufferTextureLayer,
+            "J": _glClear,
+            "qa": _glClearBufferfv,
+            "O": _glClearColor,
+            "aa": _glClearDepthf,
+            "N": _glColorMask,
+            "ka": _glCompileShader,
+            "Ab": _glCompressedTexImage2D,
+            "gj": _glCompressedTexSubImage2D,
+            "zb": _glCompressedTexSubImage3D,
+            "ej": _glCopyBufferSubData,
+            "_a": _glCopyTexSubImage2D,
+            "$a": _glCreateProgram,
+            "Da": _glCreateShader,
+            "ra": _glCullFace,
+            "L": _glDeleteBuffers,
+            "F": _glDeleteFramebuffers,
+            "Q": _glDeleteProgram,
+            "U": _glDeleteRenderbuffers,
+            "I": _glDeleteShader,
+            "B": _glDeleteTextures,
+            "ea": _glDeleteVertexArrays,
+            "Y": _glDepthFunc,
+            "H": _glDepthMask,
+            "i": _glDisable,
+            "p": _glDisableVertexAttribArray,
+            "A": _glDrawArrays,
+            "ya": _glDrawArraysInstanced,
+            "Ja": _glDrawBuffers,
+            "ba": _glDrawElements,
+            "Ka": _glDrawElementsInstanced,
+            "s": _glEnable,
+            "j": _glEnableVertexAttribArray,
+            "ab": _glEndTransformFeedback,
+            "Db": _glFinish,
+            "Z": _glFramebufferRenderbuffer,
+            "x": _glFramebufferTexture2D,
+            "fj": _glFramebufferTextureLayer,
             "Bb": _glFrontFace,
             "C": _glGenBuffers,
-            "G": _glGenFramebuffers,
-            "ja": _glGenRenderbuffers,
-            "x": _glGenTextures,
-            "Y": _glGenVertexArrays,
-            "W": _glGenerateMipmap,
-            "Ab": _glGetError,
-            "zb": _glGetFloatv,
-            "ba": _glGetIntegerv,
-            "yb": _glGetProgramInfoLog,
-            "Ra": _glGetProgramiv,
-            "Qa": _glGetShaderInfoLog,
-            "ua": _glGetShaderiv,
-            "Pa": _glGetString,
-            "je": _glGetStringi,
-            "ie": _glGetUniformBlockIndex,
-            "ya": _glGetUniformLocation,
-            "he": _glInvalidateFramebuffer,
-            "xb": _glLinkProgram,
-            "na": _glPixelStorei,
+            "E": _glGenFramebuffers,
+            "ga": _glGenRenderbuffers,
+            "v": _glGenTextures,
+            "W": _glGenVertexArrays,
+            "R": _glGenerateMipmap,
+            "Cb": _glGetError,
+            "wb": _glGetFloatv,
+            "$": _glGetIntegerv,
+            "Zi": _glGetProgramBinary,
+            "tb": _glGetProgramInfoLog,
+            "Ea": _glGetProgramiv,
+            "Oa": _glGetShaderInfoLog,
+            "Vi": _glGetShaderSource,
+            "da": _glGetShaderiv,
+            "wa": _glGetString,
+            "dj": _glGetStringi,
+            "Xi": _glGetUniformBlockIndex,
+            "va": _glGetUniformLocation,
+            "lj": _glInvalidateFramebuffer,
+            "ub": _glLinkProgram,
+            "la": _glPixelStorei,
+            "bj": _glProgramBinary,
+            "_i": _glProgramParameteri,
             "ia": _glReadBuffer,
-            "bb": _glReadPixels,
-            "ha": _glRenderbufferStorage,
-            "Ha": _glRenderbufferStorageMultisample,
-            "V": _glScissor,
-            "Oa": _glShaderSource,
-            "u": _glTexImage2D,
-            "Ga": _glTexImage3D,
-            "h": _glTexParameterf,
-            "e": _glTexParameteri,
-            "ge": _glTexStorage2D,
-            "Fa": _glTexSubImage2D,
-            "Na": _glTexSubImage3D,
-            "fe": _glTransformFeedbackVaryings,
-            "g": _glUniform1f,
-            "v": _glUniform1i,
-            "ab": _glUniform1iv,
-            "wb": _glUniform1ui,
-            "$a": _glUniform2f,
-            "p": _glUniform2fv,
-            "Ea": _glUniform2i,
+            "cb": _glReadPixels,
+            "fa": _glRenderbufferStorage,
+            "Ga": _glRenderbufferStorageMultisample,
+            "T": _glScissor,
+            "Pa": _glShaderSource,
+            "r": _glTexImage2D,
+            "Ia": _glTexImage3D,
+            "g": _glTexParameterf,
+            "d": _glTexParameteri,
+            "ij": _glTexStorage2D,
+            "Ha": _glTexSubImage2D,
+            "Qa": _glTexSubImage3D,
+            "$i": _glTransformFeedbackVaryings,
+            "f": _glUniform1f,
+            "u": _glUniform1i,
+            "db": _glUniform1iv,
+            "xb": _glUniform1ui,
+            "Za": _glUniform2f,
+            "n": _glUniform2fv,
+            "Ca": _glUniform2i,
             "ma": _glUniform2iv,
-            "_a": _glUniform3f,
-            "_": _glUniform3fv,
-            "Da": _glUniform3i,
+            "Ya": _glUniform3f,
+            "V": _glUniform3fv,
+            "Ba": _glUniform3i,
             "xa": _glUniform4f,
-            "A": _glUniform4fv,
-            "Ca": _glUniform4i,
-            "ee": _glUniformBlockBinding,
-            "vb": _glUniformMatrix2fv,
-            "ub": _glUniformMatrix3fv,
-            "q": _glUniformMatrix4fv,
-            "fa": _glUseProgram,
-            "B": _glVertexAttrib4f,
-            "U": _glVertexAttrib4fv,
-            "H": _glVertexAttribDivisor,
-            "de": _glVertexAttribI4ui,
-            "Ba": _glVertexAttribIPointer,
-            "i": _glVertexAttribPointer,
+            "y": _glUniform4fv,
+            "Aa": _glUniform4i,
+            "Wi": _glUniformBlockBinding,
+            "sb": _glUniformMatrix2fv,
+            "rb": _glUniformMatrix3fv,
+            "o": _glUniformMatrix4fv,
+            "pa": _glUseProgram,
+            "z": _glVertexAttrib4f,
+            "S": _glVertexAttrib4fv,
+            "G": _glVertexAttribDivisor,
+            "pj": _glVertexAttribI4ui,
+            "La": _glVertexAttribIPointer,
+            "h": _glVertexAttribPointer,
             "t": _glViewport,
-            "tb": _gmtime_r,
-            "ce": _godot_audio_capture_start,
-            "be": _godot_audio_capture_stop,
-            "ae": _godot_audio_has_script_processor,
-            "$d": _godot_audio_has_worklet,
-            "_d": _godot_audio_init,
-            "Zd": _godot_audio_is_available,
-            "Yd": _godot_audio_resume,
-            "Xd": _godot_audio_script_create,
-            "Wd": _godot_audio_script_start,
-            "Vd": _godot_audio_worklet_create,
-            "Ud": _godot_audio_worklet_start_no_threads,
-            "Td": _godot_js_config_canvas_id_get,
-            "Sd": _godot_js_config_locale_get,
-            "Rd": _godot_js_display_alert,
-            "Qd": _godot_js_display_canvas_focus,
-            "Pd": _godot_js_display_canvas_is_focused,
-            "Od": _godot_js_display_clipboard_get,
-            "Nd": _godot_js_display_clipboard_set,
-            "Md": _godot_js_display_cursor_is_hidden,
-            "Ld": _godot_js_display_cursor_is_locked,
-            "Za": _godot_js_display_cursor_lock_set,
-            "sb": _godot_js_display_cursor_set_custom_shape,
-            "Kd": _godot_js_display_cursor_set_shape,
-            "Ya": _godot_js_display_cursor_set_visible,
-            "Jd": _godot_js_display_desired_size_set,
-            "Id": _godot_js_display_fullscreen_cb,
-            "Hd": _godot_js_display_fullscreen_exit,
-            "Gd": _godot_js_display_fullscreen_request,
-            "Fd": _godot_js_display_glGetBufferSubData,
-            "rb": _godot_js_display_has_webgl,
-            "Ed": _godot_js_display_is_swap_ok_cancel,
-            "Dd": _godot_js_display_notification_cb,
-            "Cd": _godot_js_display_pixel_ratio_get,
-            "Bd": _godot_js_display_screen_dpi_get,
-            "Ad": _godot_js_display_screen_size_get,
-            "zd": _godot_js_display_setup_canvas,
-            "yd": _godot_js_display_size_update,
-            "xd": _godot_js_display_touchscreen_is_available,
-            "wd": _godot_js_display_vk_available,
-            "vd": _godot_js_display_vk_cb,
-            "ud": _godot_js_display_vk_hide,
-            "td": _godot_js_display_vk_show,
-            "sd": _godot_js_display_window_blur_cb,
-            "rd": _godot_js_display_window_icon_set,
-            "qd": _godot_js_display_window_size_get,
-            "pd": _godot_js_display_window_title_set,
-            "od": _godot_js_eval,
-            "nd": _godot_js_fetch_body_length_get,
-            "md": _godot_js_fetch_create,
-            "qb": _godot_js_fetch_free,
-            "ld": _godot_js_fetch_http_status_get,
-            "kd": _godot_js_fetch_is_chunked,
-            "jd": _godot_js_fetch_read_chunk,
-            "id": _godot_js_fetch_read_headers,
-            "Xa": _godot_js_fetch_state_get,
-            "hd": _godot_js_input_drop_files_cb,
-            "gd": _godot_js_input_gamepad_cb,
-            "fd": _godot_js_input_gamepad_sample,
-            "ed": _godot_js_input_gamepad_sample_count,
-            "dd": _godot_js_input_gamepad_sample_get,
-            "cd": _godot_js_input_key_cb,
-            "bd": _godot_js_input_mouse_button_cb,
-            "ad": _godot_js_input_mouse_move_cb,
-            "$c": _godot_js_input_mouse_wheel_cb,
-            "_c": _godot_js_input_paste_cb,
-            "Zc": _godot_js_input_touch_cb,
-            "Yc": _godot_js_os_download_buffer,
-            "Xc": _godot_js_os_execute,
-            "Wc": _godot_js_os_finish_async,
-            "Vc": _godot_js_os_fs_is_persistent,
-            "Uc": _godot_js_os_fs_sync,
-            "Tc": _godot_js_os_hw_concurrency_get,
-            "Sc": _godot_js_os_request_quit_cb,
-            "Rc": _godot_js_os_shell_open,
-            "Qc": _godot_js_rtc_datachannel_close,
-            "Pc": _godot_js_rtc_datachannel_connect,
-            "Oc": _godot_js_rtc_datachannel_destroy,
-            "Nc": _godot_js_rtc_datachannel_get_buffered_amount,
-            "Mc": _godot_js_rtc_datachannel_id_get,
-            "Lc": _godot_js_rtc_datachannel_is_negotiated,
-            "Kc": _godot_js_rtc_datachannel_is_ordered,
-            "Jc": _godot_js_rtc_datachannel_label_get,
-            "Ic": _godot_js_rtc_datachannel_max_packet_lifetime_get,
-            "Hc": _godot_js_rtc_datachannel_max_retransmits_get,
-            "Gc": _godot_js_rtc_datachannel_protocol_get,
-            "Fc": _godot_js_rtc_datachannel_ready_state_get,
-            "Ec": _godot_js_rtc_datachannel_send,
-            "Dc": _godot_js_rtc_pc_close,
-            "Cc": _godot_js_rtc_pc_create,
-            "Bc": _godot_js_rtc_pc_datachannel_create,
-            "pb": _godot_js_rtc_pc_destroy,
-            "Ac": _godot_js_rtc_pc_ice_candidate_add,
-            "zc": _godot_js_rtc_pc_local_description_set,
-            "yc": _godot_js_rtc_pc_offer_create,
-            "xc": _godot_js_rtc_pc_remote_description_set,
-            "ob": _godot_js_websocket_buffered_amount,
-            "wc": _godot_js_websocket_close,
-            "vc": _godot_js_websocket_create,
-            "nb": _godot_js_websocket_destroy,
-            "uc": _godot_js_websocket_send,
-            "tc": _godot_js_wrapper_create_cb,
-            "sc": _godot_js_wrapper_create_object,
-            "rc": _godot_js_wrapper_interface_get,
-            "qc": _godot_js_wrapper_object_call,
-            "pc": _godot_js_wrapper_object_get,
-            "mb": _godot_js_wrapper_object_getvar,
-            "oc": _godot_js_wrapper_object_set,
-            "nc": _godot_js_wrapper_object_setvar,
-            "mc": _godot_js_wrapper_object_unref,
-            "lc": _godot_webxr_commit_for_eye,
-            "kc": _godot_webxr_get_bounds_geometry,
-            "jc": _godot_webxr_get_controller_axes,
-            "ic": _godot_webxr_get_controller_buttons,
-            "hc": _godot_webxr_get_controller_count,
-            "gc": _godot_webxr_get_controller_transform,
-            "fc": _godot_webxr_get_external_texture_for_eye,
-            "ec": _godot_webxr_get_projection_for_eye,
-            "dc": _godot_webxr_get_render_targetsize,
-            "cc": _godot_webxr_get_transform_for_eye,
-            "bc": _godot_webxr_get_view_count,
-            "ac": _godot_webxr_get_visibility_state,
-            "$b": _godot_webxr_initialize,
-            "lb": _godot_webxr_is_controller_connected,
-            "_b": _godot_webxr_is_session_supported,
-            "Zb": _godot_webxr_is_supported,
-            "kb": _godot_webxr_sample_controller_data,
-            "Yb": _godot_webxr_uninitialize,
-            "pa": invoke_ii,
-            "la": invoke_iii,
-            "Xb": invoke_iiii,
-            "jb": invoke_iiiii,
-            "Wb": invoke_iiiiii,
-            "Vb": invoke_iiiiiii,
-            "Sb": invoke_iij,
-            "Z": invoke_vi,
-            "ta": invoke_vii,
-            "wa": invoke_viii,
+            "di": _godot_audio_capture_start,
+            "cg": _godot_audio_capture_stop,
+            "be": _godot_audio_has_script_processor,
+            "dc": _godot_audio_has_worklet,
+            "bk": _godot_audio_init,
+            "ck": _godot_audio_is_available,
+            "kj": _godot_audio_resume,
+            "yc": _godot_audio_script_create,
+            "nc": _godot_audio_script_start,
+            "Ub": _godot_audio_worklet_create,
+            "ak": _godot_audio_worklet_start_no_threads,
+            "Sb": _godot_js_config_canvas_id_get,
+            "dh": _godot_js_config_locale_get,
+            "_b": _godot_js_display_alert,
+            "me": _godot_js_display_canvas_focus,
+            "xe": _godot_js_display_canvas_is_focused,
+            "ld": _godot_js_display_clipboard_get,
+            "vd": _godot_js_display_clipboard_set,
+            "Te": _godot_js_display_cursor_is_hidden,
+            "Ie": _godot_js_display_cursor_is_locked,
+            "Wa": _godot_js_display_cursor_lock_set,
+            "ob": _godot_js_display_cursor_set_custom_shape,
+            "Hf": _godot_js_display_cursor_set_shape,
+            "Xa": _godot_js_display_cursor_set_visible,
+            "yg": _godot_js_display_desired_size_set,
+            "oc": _godot_js_display_fullscreen_cb,
+            "Sf": _godot_js_display_fullscreen_exit,
+            "bg": _godot_js_display_fullscreen_request,
+            "Rj": _godot_js_display_glGetBufferSubData,
+            "ib": _godot_js_display_has_webgl,
+            "Yc": _godot_js_display_is_swap_ok_cancel,
+            "lc": _godot_js_display_notification_cb,
+            "cc": _godot_js_display_pixel_ratio_get,
+            "ec": _godot_js_display_screen_dpi_get,
+            "Jg": _godot_js_display_screen_size_get,
+            "gd": _godot_js_display_setup_canvas,
+            "Ug": _godot_js_display_size_update,
+            "ae": _godot_js_display_touchscreen_is_available,
+            "jc": _godot_js_display_vk_available,
+            "kc": _godot_js_display_vk_cb,
+            "hc": _godot_js_display_vk_hide,
+            "ic": _godot_js_display_vk_show,
+            "mc": _godot_js_display_window_blur_cb,
+            "Yb": _godot_js_display_window_icon_set,
+            "ng": _godot_js_display_window_size_get,
+            "Zb": _godot_js_display_window_title_set,
+            "zi": _godot_js_eval,
+            "qj": _godot_js_fetch_body_length_get,
+            "Aj": _godot_js_fetch_create,
+            "Jb": _godot_js_fetch_free,
+            "nj": _godot_js_fetch_http_status_get,
+            "rj": _godot_js_fetch_is_chunked,
+            "oj": _godot_js_fetch_read_chunk,
+            "mj": _godot_js_fetch_read_headers,
+            "eb": _godot_js_fetch_state_get,
+            "pc": _godot_js_input_drop_files_cb,
+            "rc": _godot_js_input_gamepad_cb,
+            "fc": _godot_js_input_gamepad_sample,
+            "Rd": _godot_js_input_gamepad_sample_count,
+            "Gd": _godot_js_input_gamepad_sample_get,
+            "sc": _godot_js_input_key_cb,
+            "wc": _godot_js_input_mouse_button_cb,
+            "vc": _godot_js_input_mouse_move_cb,
+            "uc": _godot_js_input_mouse_wheel_cb,
+            "qc": _godot_js_input_paste_cb,
+            "tc": _godot_js_input_touch_cb,
+            "Wb": _godot_js_input_vibrate_handheld,
+            "oi": _godot_js_os_download_buffer,
+            "ac": _godot_js_os_execute,
+            "oh": _godot_js_os_finish_async,
+            "Rb": _godot_js_os_fs_is_persistent,
+            "gc": _godot_js_os_fs_sync,
+            "$b": _godot_js_os_hw_concurrency_get,
+            "Tb": _godot_js_os_request_quit_cb,
+            "Xb": _godot_js_os_shell_open,
+            "Qb": _godot_js_pwa_cb,
+            "Vb": _godot_js_pwa_update,
+            "Ob": _godot_js_rtc_datachannel_close,
+            "Vj": _godot_js_rtc_datachannel_connect,
+            "Sj": _godot_js_rtc_datachannel_destroy,
+            "Wj": _godot_js_rtc_datachannel_get_buffered_amount,
+            "_j": _godot_js_rtc_datachannel_id_get,
+            "Xj": _godot_js_rtc_datachannel_is_negotiated,
+            "$j": _godot_js_rtc_datachannel_is_ordered,
+            "Uj": _godot_js_rtc_datachannel_label_get,
+            "Zj": _godot_js_rtc_datachannel_max_packet_lifetime_get,
+            "Yj": _godot_js_rtc_datachannel_max_retransmits_get,
+            "Tj": _godot_js_rtc_datachannel_protocol_get,
+            "Nb": _godot_js_rtc_datachannel_ready_state_get,
+            "Mb": _godot_js_rtc_datachannel_send,
+            "Qj": _godot_js_rtc_pc_close,
+            "Lj": _godot_js_rtc_pc_create,
+            "Kj": _godot_js_rtc_pc_datachannel_create,
+            "Lb": _godot_js_rtc_pc_destroy,
+            "Mj": _godot_js_rtc_pc_ice_candidate_add,
+            "Oj": _godot_js_rtc_pc_local_description_set,
+            "Pj": _godot_js_rtc_pc_offer_create,
+            "Nj": _godot_js_rtc_pc_remote_description_set,
+            "Kb": _godot_js_websocket_buffered_amount,
+            "Ij": _godot_js_websocket_close,
+            "Hj": _godot_js_websocket_create,
+            "Ib": _godot_js_websocket_destroy,
+            "Jj": _godot_js_websocket_send,
+            "Yi": _godot_js_wrapper_create_cb,
+            "Ki": _godot_js_wrapper_create_object,
+            "Ui": _godot_js_wrapper_interface_get,
+            "aj": _godot_js_wrapper_object_call,
+            "hj": _godot_js_wrapper_object_get,
+            "yb": _godot_js_wrapper_object_getvar,
+            "jj": _godot_js_wrapper_object_set,
+            "cj": _godot_js_wrapper_object_setvar,
+            "ci": _godot_js_wrapper_object_unref,
+            "vj": _godot_webxr_commit_for_eye,
+            "Ej": _godot_webxr_get_bounds_geometry,
+            "Fb": _godot_webxr_get_controller_axes,
+            "sj": _godot_webxr_get_controller_buttons,
+            "uj": _godot_webxr_get_controller_count,
+            "Ra": _godot_webxr_get_controller_target_ray_mode,
+            "tj": _godot_webxr_get_controller_transform,
+            "wj": _godot_webxr_get_projection_for_eye,
+            "yj": _godot_webxr_get_render_targetsize,
+            "xj": _godot_webxr_get_transform_for_eye,
+            "Dj": _godot_webxr_get_view_count,
+            "Fj": _godot_webxr_get_visibility_state,
+            "Bj": _godot_webxr_initialize,
+            "Gb": _godot_webxr_is_controller_connected,
+            "Gj": _godot_webxr_is_session_supported,
+            "Cj": _godot_webxr_is_supported,
+            "Hb": _godot_webxr_sample_controller_data,
+            "zj": _godot_webxr_uninitialize,
+            "za": invoke_ii,
+            "na": invoke_iii,
+            "gb": invoke_iiii,
+            "hb": invoke_iiiii,
+            "Dc": invoke_iiiiii,
+            "Bc": invoke_iiiiiii,
+            "zc": invoke_iij,
+            "ca": invoke_vi,
+            "oa": invoke_vii,
+            "ta": invoke_viii,
             "sa": invoke_viiii,
             "Ma": invoke_viiiiiii,
-            "Ub": _kill,
-            "Wa": _localtime_r,
-            "n": _setTempRet0,
-            "Rb": _sigaction,
-            "ib": _strftime,
-            "Qb": _strftime_l,
-            "La": _time
+            "l": _setTempRet0,
+            "Eb": _strftime,
+            "Nc": _strftime_l
         };
         var asm = createWasm();
         var ___wasm_call_ctors = Module["___wasm_call_ctors"] = function() {
@@ -11766,26 +11662,23 @@ var Godot = function() {
         var _ntohs = Module["_ntohs"] = function() {
             return (_ntohs = Module["_ntohs"] = Module["asm"]["lk"]).apply(null, arguments);
         };
+        var _fflush = Module["_fflush"] = function() {
+            return (_fflush = Module["_fflush"] = Module["asm"]["mk"]).apply(null, arguments);
+        };
         var ___errno_location = Module["___errno_location"] = function() {
-            return (___errno_location = Module["___errno_location"] = Module["asm"]["mk"]).apply(null, arguments);
+            return (___errno_location = Module["___errno_location"] = Module["asm"]["nk"]).apply(null, arguments);
         };
         var __emwebxr_on_input_event = Module["__emwebxr_on_input_event"] = function() {
-            return (__emwebxr_on_input_event = Module["__emwebxr_on_input_event"] = Module["asm"]["nk"]).apply(null, arguments);
+            return (__emwebxr_on_input_event = Module["__emwebxr_on_input_event"] = Module["asm"]["ok"]).apply(null, arguments);
         };
         var __emwebxr_on_simple_event = Module["__emwebxr_on_simple_event"] = function() {
-            return (__emwebxr_on_simple_event = Module["__emwebxr_on_simple_event"] = Module["asm"]["ok"]).apply(null, arguments);
+            return (__emwebxr_on_simple_event = Module["__emwebxr_on_simple_event"] = Module["asm"]["pk"]).apply(null, arguments);
         };
-        var _fflush = Module["_fflush"] = function() {
-            return (_fflush = Module["_fflush"] = Module["asm"]["pk"]).apply(null, arguments);
+        var ___funcs_on_exit = Module["___funcs_on_exit"] = function() {
+            return (___funcs_on_exit = Module["___funcs_on_exit"] = Module["asm"]["qk"]).apply(null, arguments);
         };
-        var __get_tzname = Module["__get_tzname"] = function() {
-            return (__get_tzname = Module["__get_tzname"] = Module["asm"]["qk"]).apply(null, arguments);
-        };
-        var __get_daylight = Module["__get_daylight"] = function() {
-            return (__get_daylight = Module["__get_daylight"] = Module["asm"]["rk"]).apply(null, arguments);
-        };
-        var __get_timezone = Module["__get_timezone"] = function() {
-            return (__get_timezone = Module["__get_timezone"] = Module["asm"]["sk"]).apply(null, arguments);
+        var _setThrew = Module["_setThrew"] = function() {
+            return (_setThrew = Module["_setThrew"] = Module["asm"]["sk"]).apply(null, arguments);
         };
         var stackSave = Module["stackSave"] = function() {
             return (stackSave = Module["stackSave"] = Module["asm"]["tk"]).apply(null, arguments);
@@ -11796,119 +11689,116 @@ var Godot = function() {
         var stackAlloc = Module["stackAlloc"] = function() {
             return (stackAlloc = Module["stackAlloc"] = Module["asm"]["vk"]).apply(null, arguments);
         };
-        var _setThrew = Module["_setThrew"] = function() {
-            return (_setThrew = Module["_setThrew"] = Module["asm"]["wk"]).apply(null, arguments);
-        };
         var dynCall_iij = Module["dynCall_iij"] = function() {
-            return (dynCall_iij = Module["dynCall_iij"] = Module["asm"]["yk"]).apply(null, arguments);
+            return (dynCall_iij = Module["dynCall_iij"] = Module["asm"]["wk"]).apply(null, arguments);
         };
         function invoke_vii(index, a1, a2) {
             var sp = stackSave();
             try {
-                wasmTable.get(index)(a1, a2);
+                getWasmTableEntry(index)(a1, a2);
             } catch (e) {
                 stackRestore(sp);
-                if (e !== e + 0 && e !== "longjmp") throw e;
+                if (e !== e + 0) throw e;
                 _setThrew(1, 0);
             }
         }
         function invoke_vi(index, a1) {
             var sp = stackSave();
             try {
-                wasmTable.get(index)(a1);
+                getWasmTableEntry(index)(a1);
             } catch (e) {
                 stackRestore(sp);
-                if (e !== e + 0 && e !== "longjmp") throw e;
+                if (e !== e + 0) throw e;
                 _setThrew(1, 0);
             }
         }
         function invoke_viii(index, a1, a2, a3) {
             var sp = stackSave();
             try {
-                wasmTable.get(index)(a1, a2, a3);
+                getWasmTableEntry(index)(a1, a2, a3);
             } catch (e) {
                 stackRestore(sp);
-                if (e !== e + 0 && e !== "longjmp") throw e;
+                if (e !== e + 0) throw e;
                 _setThrew(1, 0);
             }
         }
         function invoke_ii(index, a1) {
             var sp = stackSave();
             try {
-                return wasmTable.get(index)(a1);
+                return getWasmTableEntry(index)(a1);
             } catch (e) {
                 stackRestore(sp);
-                if (e !== e + 0 && e !== "longjmp") throw e;
+                if (e !== e + 0) throw e;
                 _setThrew(1, 0);
             }
         }
         function invoke_iii(index, a1, a2) {
             var sp = stackSave();
             try {
-                return wasmTable.get(index)(a1, a2);
+                return getWasmTableEntry(index)(a1, a2);
             } catch (e) {
                 stackRestore(sp);
-                if (e !== e + 0 && e !== "longjmp") throw e;
+                if (e !== e + 0) throw e;
                 _setThrew(1, 0);
             }
         }
         function invoke_iiiii(index, a1, a2, a3, a4) {
             var sp = stackSave();
             try {
-                return wasmTable.get(index)(a1, a2, a3, a4);
+                return getWasmTableEntry(index)(a1, a2, a3, a4);
             } catch (e) {
                 stackRestore(sp);
-                if (e !== e + 0 && e !== "longjmp") throw e;
+                if (e !== e + 0) throw e;
                 _setThrew(1, 0);
             }
         }
         function invoke_iiiiii(index, a1, a2, a3, a4, a5) {
             var sp = stackSave();
             try {
-                return wasmTable.get(index)(a1, a2, a3, a4, a5);
+                return getWasmTableEntry(index)(a1, a2, a3, a4, a5);
             } catch (e) {
                 stackRestore(sp);
-                if (e !== e + 0 && e !== "longjmp") throw e;
+                if (e !== e + 0) throw e;
                 _setThrew(1, 0);
             }
         }
         function invoke_viiii(index, a1, a2, a3, a4) {
             var sp = stackSave();
             try {
-                wasmTable.get(index)(a1, a2, a3, a4);
+                getWasmTableEntry(index)(a1, a2, a3, a4);
             } catch (e) {
                 stackRestore(sp);
-                if (e !== e + 0 && e !== "longjmp") throw e;
+                if (e !== e + 0) throw e;
                 _setThrew(1, 0);
             }
         }
         function invoke_iiii(index, a1, a2, a3) {
             var sp = stackSave();
             try {
-                return wasmTable.get(index)(a1, a2, a3);
+                return getWasmTableEntry(index)(a1, a2, a3);
             } catch (e) {
                 stackRestore(sp);
-                if (e !== e + 0 && e !== "longjmp") throw e;
+                if (e !== e + 0) throw e;
                 _setThrew(1, 0);
             }
         }
         function invoke_viiiiiii(index, a1, a2, a3, a4, a5, a6, a7) {
             var sp = stackSave();
             try {
-                wasmTable.get(index)(a1, a2, a3, a4, a5, a6, a7);
+                getWasmTableEntry(index)(a1, a2, a3, a4, a5, a6, a7);
             } catch (e) {
                 stackRestore(sp);
-                if (e !== e + 0 && e !== "longjmp") throw e;
+                if (e !== e + 0) throw e;
                 _setThrew(1, 0);
             }
         }
         function invoke_iiiiiii(index, a1, a2, a3, a4, a5, a6) {
             var sp = stackSave();
             try {
-                return wasmTable.get(index)(a1, a2, a3, a4, a5, a6);
+                return getWasmTableEntry(index)(a1, a2, a3, a4, a5, a6);
             } catch (e) {
                 stackRestore(sp);
-                if (e !== e + 0 && e !== "longjmp") throw e;
+                if (e !== e + 0) throw e;
                 _setThrew(1, 0);
             }
         }
@@ -11918,7 +11808,7 @@ var Godot = function() {
                 return dynCall_iij(index, a1, a2, a3);
             } catch (e) {
                 stackRestore(sp);
-                if (e !== e + 0 && e !== "longjmp") throw e;
+                if (e !== e + 0) throw e;
                 _setThrew(1, 0);
             }
         }
@@ -11938,23 +11828,20 @@ var Godot = function() {
         function callMain(args) {
             var entryFunction = Module["_main"];
             args = args || [];
-            var argc = args.length + 1;
+            args.unshift(thisProgram);
+            var argc = args.length;
             var argv = stackAlloc((argc + 1) * 4);
-            HEAP32[argv >> 2] = allocateUTF8OnStack(thisProgram);
-            for(var i = 1; i < argc; i++)HEAP32[(argv >> 2) + i] = allocateUTF8OnStack(args[i - 1]);
-            HEAP32[(argv >> 2) + argc] = 0;
+            var argv_ptr = argv >> 2;
+            args.forEach((arg)=>{
+                HEAP32[argv_ptr++] = allocateUTF8OnStack(arg);
+            });
+            HEAP32[argv_ptr] = 0;
             try {
                 var ret = entryFunction(argc, argv);
                 exit(ret, true);
+                return ret;
             } catch (e) {
-                if (e instanceof ExitStatus || e == "unwind") return;
-                var toLog = e;
-                if (e && typeof e === "object" && e.stack) toLog = [
-                    e,
-                    e.stack
-                ];
-                err1("exception thrown: " + toLog);
-                quit_(1, e);
+                return handleException(e);
             } finally{
                 calledMain = true;
             }
@@ -11989,13 +11876,16 @@ var Godot = function() {
         Module["run"] = run;
         function exit(status, implicit) {
             EXITSTATUS = status;
-            if (keepRuntimeAlive()) ;
-            else {
-                exitRuntime();
-                if (Module["onExit"]) Module["onExit"](status);
+            if (!keepRuntimeAlive()) exitRuntime();
+            procExit(status);
+        }
+        function procExit(code) {
+            EXITSTATUS = code;
+            if (!keepRuntimeAlive()) {
+                if (Module["onExit"]) Module["onExit"](code);
                 ABORT = true;
             }
-            quit_(status, new ExitStatus(status));
+            quit_(code, new ExitStatus(code));
         }
         if (Module["preInit"]) {
             if (typeof Module["preInit"] == "function") Module["preInit"] = [
@@ -12008,7 +11898,7 @@ var Godot = function() {
         run();
         return Godot1.ready;
     };
-}();
+})();
 if (typeof exports === 'object' && typeof module === 'object') module.exports = Godot;
 else if (typeof define === 'function' && define['amd']) define([], function() {
     return Godot;
@@ -12221,6 +12111,12 @@ const Preloader = /** @constructor */ function() {
 		 * @default
 		 */ experimentalVK: false,
         /**
+		 * The progressive web app service worker to install.
+		 * @memberof EngineConfig
+		 * @default
+		 * @type {string}
+		 */ serviceWorker: '',
+        /**
 		 * @ignore
 		 * @type {Array.<string>}
 		 */ persistentPaths: [
@@ -12323,6 +12219,8 @@ const Preloader = /** @constructor */ function() {
 	 */ Config.prototype.update = function(opts) {
         const config = opts || {
         };
+        // NOTE: We must explicitly pass the default, accessing it via
+        // the key will fail due to closure compiler renames.
         function parse(key, def) {
             if (typeof config[key] === 'undefined') return def;
             return config[key];
@@ -12342,6 +12240,7 @@ const Preloader = /** @constructor */ function() {
         this.persistentDrops = parse('persistentDrops', this.persistentDrops);
         this.experimentalVK = parse('experimentalVK', this.experimentalVK);
         this.focusCanvas = parse('focusCanvas', this.focusCanvas);
+        this.serviceWorker = parse('serviceWorker', this.serviceWorker);
         this.gdnativeLibs = parse('gdnativeLibs', this.gdnativeLibs);
         this.fileSizes = parse('fileSizes', this.fileSizes);
         this.args = parse('args', this.args);
@@ -12402,6 +12301,7 @@ const Preloader = /** @constructor */ function() {
             locale = navigator.languages ? navigator.languages[0] : navigator.language;
             locale = locale.split('.')[0];
         }
+        locale = locale.replace('-', '_');
         const onExit = this.onExit;
         // Godot configuration.
         return {
@@ -12600,6 +12500,7 @@ const Preloader = /** @constructor */ function() {
                             preloader.preloadedFiles.length = 0; // Clear memory
                             me.rtenv['callMain'](me.config.args);
                             initPromise = null;
+                            if (me.config.serviceWorker && 'serviceWorker' in navigator) navigator.serviceWorker.register(me.config.serviceWorker);
                             resolve();
                         });
                     });

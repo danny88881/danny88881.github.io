@@ -213,19 +213,19 @@
   position: relative;
   left: 50%;
   top: 50%;
-  width: 10px;
-  height: 10px;
   border-style: solid;
-  border-width: 8px 8px 8px 8px;
-  border-color: #9e469e;
-  transform: translateX(-50%) translateY(-50%);
-  transition: border-color 0.2s ease-in, border-width 0.2s ease-in, width 0.2s ease-in, height 0.2s ease-in;
-}
-#playpause-control .playpause.play {
   width: 0px;
   height: 0px;
   border-width: 12px 0px 12px 24px;
   border-color: transparent #9e469e transparent #9e469e;
+  transition: border-color 0.2s ease-in, border-width 0.2s ease-in, width 0.2s ease-in, height 0.2s ease-in;
+  transform: translateX(-50%) translateY(-50%);
+}
+#playpause-control .playpause.play {
+  width: 10px;
+  height: 10px;
+  border-width: 8px 8px 8px 8px;
+  border-color: #9e469e;
   transition: border-color 0.2s ease-in, border-width 0.2s ease-in, width 0.2s ease-in, height 0.2s ease-in;
 }
 
