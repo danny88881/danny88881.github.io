@@ -1,0 +1,207 @@
+.maingames {
+  width: 100%;
+  height: auto;
+  flex-direction: column;
+  display: flex;
+  position: absolute;
+}
+
+.maingames .title {
+  color: var(--theme-1-primary);
+  text-align: end;
+  margin-top: 200px;
+  font-family: VCR;
+  font-size: 100px;
+  transition: all .2s ease-in-out;
+}
+
+.maingames .section {
+  color: var(--theme-1-primary);
+  height: 900px;
+  text-align: center;
+  font-family: VCR;
+  font-size: 50px;
+  transition: all .2s ease-in-out;
+}
+
+#launchScale {
+  transition: all .5s ease-out;
+  transform: scale(1);
+}
+
+#launchScale.closed {
+  transition: all .5s ease-in;
+  transform: scale(0);
+}
+
+#launchThing {
+  width: 600px;
+  height: 400px;
+  pointer-events: all;
+  background-color: #9badb7;
+  border: 36px solid;
+  border-image: url("window.9c66f8b4.png") 36;
+  margin-left: auto;
+  margin-right: auto;
+  animation: wiggle-float-window 5s ease-in-out infinite;
+  position: relative;
+}
+
+#launchTitle {
+  color: #fff;
+  font-family: cappx;
+  font-size: 64px;
+  position: absolute;
+  top: -54px;
+  left: -24px;
+}
+
+#launchMinimize {
+  cursor: pointer;
+  height: 32px;
+  width: 32px;
+  background-image: url("minimize.29d3932c.png");
+  position: absolute;
+  top: -32px;
+  right: 20px;
+}
+
+#launchMinimize:hover {
+  background-image: url("minimize_hover.d85fe9f4.png");
+}
+
+#launchClose {
+  cursor: pointer;
+  height: 32px;
+  width: 32px;
+  background-image: url("close.e64c4666.png");
+  position: absolute;
+  top: -32px;
+  right: -20px;
+}
+
+#launchClose:hover {
+  background-image: url("close_hover.a7395045.png");
+}
+
+#okbutton {
+  cursor: pointer;
+  image-rendering: pixelated;
+  height: 100px;
+  width: 200px;
+  background-image: url("ok.430b3033.png");
+  background-size: 200px 100px;
+  transition: all .3s ease-in-out;
+  position: absolute;
+  top: 60%;
+  left: 25%;
+  transform: translateX(-50%)translateY(0);
+}
+
+#okbuttonfloor {
+  image-rendering: pixelated;
+  height: 100px;
+  width: 200px;
+  z-index: -1;
+  background-image: url("ok_floor.3ff50263.png");
+  background-size: 200px 100px;
+  position: absolute;
+  top: calc(60% + 16px);
+  left: 25%;
+  transform: translateX(-50%)translateY(0);
+}
+
+#okbutton:hover {
+  transform: translateX(-50%)translateY(16px);
+}
+
+#nobutton {
+  cursor: pointer;
+  image-rendering: pixelated;
+  height: 100px;
+  width: 200px;
+  background-image: url("no.7fad5bfc.png");
+  background-size: 200px 100px;
+  transition: all .3s ease-in-out;
+  position: absolute;
+  top: 60%;
+  left: 75%;
+  transform: translateX(-50%)translateY(0);
+}
+
+#nobuttonfloor {
+  image-rendering: pixelated;
+  height: 100px;
+  width: 200px;
+  z-index: -1;
+  background-image: url("no_floor.e599d8d6.png");
+  background-size: 200px 100px;
+  position: absolute;
+  top: calc(60% + 16px);
+  left: 75%;
+  transform: translateX(-50%)translateY(0);
+}
+
+#nobutton:hover {
+  transform: translateX(-50%)translateY(16px);
+}
+
+#launchLabel {
+  width: 600px;
+  height: 150px;
+  image-rendering: pixelated;
+  background-image: url("launch.6f035bfc.png");
+  background-size: 600px 150px;
+  position: absolute;
+  top: 20%;
+}
+
+#windowThing {
+  height: 100%;
+  width: 100%;
+  position: relative;
+}
+
+#exe {
+  cursor: pointer;
+  pointer-events: all;
+  image-rendering: pixelated;
+  height: 64px;
+  width: 64px;
+  background-image: url("exe.16cd6bf7.png");
+  background-size: 64px 64px;
+  margin-top: auto;
+  transition: all .3s ease-in-out;
+  animation: wiggle-float-window 5s ease-in-out infinite;
+  position: absolute;
+  top: calc(50% - 32px);
+  left: calc(50% - 32px);
+}
+
+#exe div {
+  color: var(--positive);
+  text-align: center;
+  image-rendering: pixelated;
+  font-family: cappx;
+  font-size: 48px;
+  line-height: 20px;
+  position: absolute;
+  top: 95%;
+  transform: translateX(-12px);
+}
+
+@keyframes wiggle-float-window {
+  from {
+    transform: translate(0)rotate(-3deg);
+  }
+
+  55% {
+    transform: translate(0, 8px)rotate(3deg);
+  }
+
+  to {
+    transform: translate(0)rotate(-3deg);
+  }
+}
+
+/*# sourceMappingURL=index.eaa65cd7.css.map */
