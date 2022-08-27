@@ -1,111 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
-    <head>
-        <style>.shadow {
-  transform: rotateY(-90deg);
-}
-
-.shadow-bar {
-  transform: rotate(90deg);
-}
-
-#music-control {
-  opacity: 0;
-}
-
-</style>
-	<link rel="icon" href="/favicon.824cf0c5.ico">
-	<link rel="stylesheet" type="text/css" href="/index.08963856.css">
-	<link rel="stylesheet" type="text/css" href="/index.03f14091.css">
-	<link rel="stylesheet" type="text/css" href="/index.eaa65cd7.css">
-	<link rel="stylesheet" type="text/css" href="/index.f66543a4.css">
-	<link rel="stylesheet" type="text/css" href="/index.b14575df.css">
-        <!--Icons made by "https://www.flaticon.com/authors/good-ware" from "https://www.flaticon.com/"-->
-        <title>danny huang!</title>
-        <!--link rel="icon" href="icon.png"-->
-    </head>
-    <body class="dark">
-        <header>
-            <canvas id="audiocanvas"></canvas>
-            <audio id="music-player"></audio>
-            <div id="background"></div>
-            <div id="particles-dark"></div>
-            <div id="particles-light"></div>
-            <div class="layer"></div>
-
-            <a id="title" class="interact" href="/index.html">
-                <div class="d">d</div>
-                <div class="a">a</div>
-                <div class="n">n</div>
-                <div class="n">n</div>
-                <div class="y">y</div>
-            </a>
-            
-            <ul id="main-nav" class="float compact games">
-                <li>
-                    <div id="games">
-                        <div class="rotate">
-                            <div class="shadow" onmouseenter="hoverMenu('games');" onmouseleave="stopHoverMenu('games');">
-                                <ul class="shadow-bar">
-                                    <li><a href="/games.html#professional">Professional👷‍♂️</a></li>
-                                    <li><a href="/games.html#indie">🍇Indie🐒</a></li>
-                                    <li><a href="/games.html#graveyard">Dead⚰️</a></li>
-                                </ul>
-                            </div>
-                            <div class="hover-bg">
-                                <div class="hover-content interact">
-                                    <a href="/games.html" class="Icon">🕹&#xFE0F;</a>
-                                    <a href="/games.html" class="box-label interact">Games</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-                <li>
-                    <div id="music"><div class="rotate"><div class="shadow" onmouseenter="hoverMenu('music');" onmouseleave="stopHoverMenu('music');">
-                        <ul class="shadow-bar">
-                        <li><a href="/music.html#soundtracks">Sound Tracks🕹&#xFE0F;</a></li>
-                        <li><a href="/music.html#others">🙉Other?</a></li>
-                    </ul>
-                    </div><div class="hover-bg"><div class="hover-content interact">
-                        <a href="/music.html" class="Icon">🎹</a>
-                        <a href="/music.html" class="box-label interact">Music</a>
-                    </div></div></div>
-                </div>
-                </li> 
-                <li>
-                    <div id="art"><div class="rotate"><div class="shadow" onmouseenter="hoverMenu('art');" onmouseleave="stopHoverMenu('art');">
-                        <ul class="shadow-bar">
-                        <li><a href="/art.html">There is no🙈art here</a></li>
-                    </ul>
-                    </div><div class="hover-bg"><div class="hover-content interact">
-                        <a href="/art.html" class="Icon">🎨</a>
-                        <a href="/art.html" class="box-label interact">Art</a>
-                    </div></div></div></div>
-                
-                </li>
-                <li>
-                    <div id="me"><div class="rotate"><div class="shadow" onmouseenter="hoverMenu('me');" onmouseleave="stopHoverMenu('me');">
-                        <ul class="shadow-bar">
-                        <li><a href="/me.html">About🥴</a></li>
-                        <li><a href="/me.html">I don't🧠think</a></li>
-                        </ul>
-                    </div><div class="hover-bg"><div class="hover-content interact">
-                        <a href="/me.html" class="Icon">🥴</a>
-                        <a href="/me.html" class="box-label interact">Me</a>
-                    </div></div></div>
-                </div>
-                </li>
-            </ul>
-        </header>
-
-        <main data-router-wrapper="">
-            <article data-router-view="maingamegallery" class="maingamegallery" style="position: absolute">
-
-				<style>body {
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no">
+	<title>GameGallery</title>
+	<style>body {
   touch-action: none;
   text-align: center;
-  background-color: #0000;
+  background-color: #000;
   border: 0;
   margin: 0;
   padding: 0;
@@ -113,9 +15,6 @@
 
 #canvas {
   color: #fff;
-  width: 100%;
-  height: 100%;
-  pointer-events: all;
   margin: 0;
   display: block;
 }
@@ -134,38 +33,46 @@
 }
 
 #status {
-  height: 100%;
-  width: 100%;
   visibility: hidden;
   justify-content: center;
   align-items: center;
-  display: block;
-  position: fixed;
-  top: 0;
-  left: 0;
+  display: flex;
+  position: absolute;
+  inset: 0;
 }
 
 #status-progress {
-  width: 100%;
-  height: 100%;
-  max-width: 100%;
+  width: 366px;
+  height: 7px;
   visibility: visible;
-  overflow-x: hidden;
+  background-color: #38363a;
+  border: 1px solid #444246;
+  border-radius: 2px;
+  padding: 1px;
+  box-shadow: 0 0 2px 1px #1b1c22;
+}
+
+@media only screen and (orientation: portrait) {
+  #status-progress {
+    width: 61.8%;
+  }
 }
 
 #status-progress-inner {
   height: 100%;
   width: 0;
-  background-color: var(--theme-1-primary);
-  opacity: .5;
-  transition: width .5s;
+  box-sizing: border-box;
+  background-color: #202020;
+  border: 1px solid #222223;
+  border-radius: 3px;
+  transition: width .5s linear;
+  box-shadow: 0 0 1px 1px #27282e;
 }
 
 #status-indeterminate {
+  height: 42px;
   visibility: visible;
   position: relative;
-  top: 50%;
-  left: 50%;
 }
 
 #status-indeterminate > div {
@@ -219,140 +126,135 @@
 }
 
 </style>
-				<canvas id="canvas" style="position: fixed">
-					HTML5 canvas appears to be unsupported in the current browser.<br>
-					Please try updating or use a different browser.
-				</canvas>
-				<div id="status">
-					<div id="status-progress" style="display: none" oncontextmenu="event.preventDefault();"><div id="status-progress-inner"></div></div>
-					<div id="status-indeterminate" style="display: none" oncontextmenu="event.preventDefault();">
-						<div></div>
-						<div></div>
-						<div></div>
-						<div></div>
-						<div></div>
-						<div></div>
-						<div></div>
-						<div></div>
-					</div>
-					<div id="status-notice" class="godot" style="display: none"></div>
-				</div>
-            </article>
-        </main>
-
-        <footer>
-            <div id="record" class="music-scale">
-                <div id="record-outer">
-                    <img id="image">
-                </div>
-            </div>
-            <div id="music-control">
-                <div id="bar-holder">   
-                    <div class="song-info">
-                        <div id="song-name"></div>
-                        <div id="song-note"></div>
-                    </div>
-                    <div id="progress-container">
-                        <div id="progress"></div>
-                    </div>
-                    <div id="volume-container">
-                        <div id="volume"></div>
-                    </div>
-                </div>
-                <div id="music-nav" class="music-scale">
-                    <div id="prev"></div>
-                    <div id="playpause-control">
-                        <div class="playpause"></div>
-                    </div>
-                    <div id="next"></div>
-                </div>
-            </div>
-            <p id="color-mode" class="interact">
-                <svg id="moon" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="40px" height="40px" viewbox="0 0 312.999 312.999" style="enable-background: new 0 0 312.999 312.999" xml:space="preserve" class="interact current-mode">
-                    <g>
-                        <g>
-                            <path fill="currentColor" d="M305.6,178.053c-3.2-0.8-6.4,0-9.2,2c-10.4,8.8-22.4,16-35.6,20.8c-12.4,4.8-26,7.2-40.4,7.2c-32.4,0-62-13.2-83.2-34.4
-                                c-21.2-21.2-34.4-50.8-34.4-83.2c0-13.6,2.4-26.8,6.4-38.8c4.4-12.8,10.8-24.4,19.2-34.4c3.6-4.4,2.8-10.8-1.6-14.4
-                                c-2.8-2-6-2.8-9.2-2c-34,9.2-63.6,29.6-84.8,56.8c-20.4,26.8-32.8,60-32.8,96.4c0,43.6,17.6,83.2,46.4,112s68.4,46.4,112,46.4
-                                c36.8,0,70.8-12.8,98-34c27.6-21.6,47.6-52.4,56-87.6C314.4,184.853,311.2,179.253,305.6,178.053z M244.4,261.653
-                                c-23.2,18.4-52.8,29.6-85.2,29.6c-38,0-72.4-15.6-97.2-40.4c-24.8-24.8-40.4-59.2-40.4-97.2c0-31.6,10.4-60.4,28.4-83.6
-                                c12.4-16,28-29.2,46-38.4c-2,4.4-4,8.8-5.6,13.6c-5.2,14.4-7.6,29.6-7.6,45.6c0,38,15.6,72.8,40.4,97.6s59.6,40.4,97.6,40.4
-                                c16.8,0,32.8-2.8,47.6-8.4c5.2-2,10.4-4,15.2-6.4C274,232.453,260.8,248.853,244.4,261.653z"></path>
-                        </g>
-                </g></svg>
-                <svg id="sun" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="40px" height="40px" viewbox="0 0 302.4 302.4" style="enable-background: new 0 0 302.4 302.4" xml:space="preserve" class="interact other-mode">
-                <g>
-                    <g>
-                        <path fill="currentColor" d="M204.8,97.6C191.2,84,172,75.2,151.2,75.2s-40,8.4-53.6,22.4c-13.6,13.6-22.4,32.8-22.4,53.6s8.8,40,22.4,53.6
-                            c13.6,13.6,32.8,22.4,53.6,22.4s40-8.4,53.6-22.4c13.6-13.6,22.4-32.8,22.4-53.6S218.8,111.2,204.8,97.6z M190.4,190.4
-                            c-10,10-24,16-39.2,16s-29.2-6-39.2-16s-16-24-16-39.2s6-29.2,16-39.2s24-16,39.2-16s29.2,6,39.2,16s16,24,16,39.2
-                            S200.4,180.4,190.4,190.4z"></path>
-                    </g>
-                </g>
-                <g>
-                    <g>
-                        <path fill="currentColor" d="M292,140.8h-30.8c-5.6,0-10.4,4.8-10.4,10.4c0,5.6,4.8,10.4,10.4,10.4H292c5.6,0,10.4-4.8,10.4-10.4
-                            C302.4,145.6,297.6,140.8,292,140.8z"></path>
-                    </g>
-                </g>
-                <g>
-                    <g>
-                        <path fill="currentColor" d="M151.2,250.8c-5.6,0-10.4,4.8-10.4,10.4V292c0,5.6,4.8,10.4,10.4,10.4c5.6,0,10.4-4.8,10.4-10.4v-30.8
-                            C161.6,255.6,156.8,250.8,151.2,250.8z"></path>
-                    </g>
-                </g>
-                <g>
-                    <g>
-                        <path fill="currentColor" d="M258,243.6l-22-22c-3.6-4-10.4-4-14.4,0s-4,10.4,0,14.4l22,22c4,4,10.4,4,14.4,0S262,247.6,258,243.6z"></path>
-                    </g>
-                </g>
-                <g>
-                    <g>
-                        <path fill="currentColor" d="M151.2,0c-5.6,0-10.4,4.8-10.4,10.4v30.8c0,5.6,4.8,10.4,10.4,10.4c5.6,0,10.4-4.8,10.4-10.4V10.4
-                            C161.6,4.8,156.8,0,151.2,0z"></path>
-                    </g>
-                </g>
-                <g>
-                    <g>
-                        <path fill="currentColor" d="M258.4,44.4c-4-4-10.4-4-14.4,0l-22,22c-4,4-4,10.4,0,14.4c3.6,4,10.4,4,14.4,0l22-22C262.4,54.8,262.4,48.4,258.4,44.4z"></path>
-                    </g>
-                </g>
-                <g>
-                    <g>
-                        <path fill="currentColor" d="M41.2,140.8H10.4c-5.6,0-10.4,4.8-10.4,10.4s4.4,10.4,10.4,10.4h30.8c5.6,0,10.4-4.8,10.4-10.4
-                            C51.6,145.6,46.8,140.8,41.2,140.8z"></path>
-                    </g>
-                </g>
-                <g>
-                    <g>
-                        <path fill="currentColor" d="M80.4,221.6c-3.6-4-10.4-4-14.4,0l-22,22c-4,4-4,10.4,0,14.4s10.4,4,14.4,0l22-22C84.4,232,84.4,225.6,80.4,221.6z"></path>
-                    </g>
-                </g>
-                <g>
-                    <g>
-                        <path fill="currentColor" d="M80.4,66.4l-22-22c-4-4-10.4-4-14.4,0s-4,10.4,0,14.4l22,22c4,4,10.4,4,14.4,0S84.4,70.4,80.4,66.4z"></path>
-                    </g>
-                </g></svg>
-            </p>
-            <div id="scrollthing"> <div>FunQuotesSection();</div><p id="quote-scroll">return "";</p> </div>
-        </footer>
-        <script src="/art.20c66a70.js"></script>
-        <script src="/me.43d43591.js" defer=""></script>
-        <script src="/me.da7cedbd.js" defer=""></script>
-    </body>
-</html>
-
-
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, user-scalable=no">
-	<title>GameGallery</title>
-
+<link id="-gd-engine-icon" rel="icon" type="image/png" href="/GameGallery.icon.b3a57cae.png">
+<link rel="apple-touch-icon" href="/GameGallery.apple-touch-icon.38194290.png">
 
 </head>
 <body>
+	<canvas id="canvas">
+		HTML5 canvas appears to be unsupported in the current browser.<br>
+		Please try updating or use a different browser.
+	</canvas>
+	<div id="status">
+		<div id="status-progress" style="display: none" oncontextmenu="event.preventDefault();"><div id="status-progress-inner"></div></div>
+		<div id="status-indeterminate" style="display: none" oncontextmenu="event.preventDefault();">
+			<div></div>
+			<div></div>
+			<div></div>
+			<div></div>
+			<div></div>
+			<div></div>
+			<div></div>
+			<div></div>
+		</div>
+		<div id="status-notice" class="godot" style="display: none"></div>
+	</div>
 
-</body>
+	<script src="/games/GameGallery.5a83b49b.js"></script>
+	<script type="text/javascript">//<![CDATA[
+const GODOT_CONFIG = {
+    "args": [],
+    "canvasResizePolicy": 2,
+    "executable": "GameGallery",
+    "experimentalVK": false,
+    "fileSizes": {
+        "GameGallery.pck": 2532416,
+        "GameGallery.wasm": 14060605
+    },
+    "focusCanvas": true,
+    "gdnativeLibs": []
+};
+var engine = new Engine(GODOT_CONFIG);
+(function() {
+    const INDETERMINATE_STATUS_STEP_MS = 100;
+    var statusProgress = document.getElementById("status-progress");
+    var statusProgressInner = document.getElementById("status-progress-inner");
+    var statusIndeterminate = document.getElementById("status-indeterminate");
+    var statusNotice = document.getElementById("status-notice");
+    var initializing = true;
+    var statusMode = "hidden";
+    var animationCallbacks = [];
+    function animate(time) {
+        animationCallbacks.forEach((callback)=>callback(time));
+        requestAnimationFrame(animate);
+    }
+    requestAnimationFrame(animate);
+    function setStatusMode(mode) {
+        if (statusMode === mode || !initializing) return;
+        [
+            statusProgress,
+            statusIndeterminate,
+            statusNotice
+        ].forEach((elem)=>{
+            elem.style.display = "none";
+        });
+        animationCallbacks = animationCallbacks.filter(function(value) {
+            return value != animateStatusIndeterminate;
+        });
+        switch(mode){
+            case "progress":
+                statusProgress.style.display = "block";
+                break;
+            case "indeterminate":
+                statusIndeterminate.style.display = "block";
+                animationCallbacks.push(animateStatusIndeterminate);
+                break;
+            case "notice":
+                statusNotice.style.display = "block";
+                break;
+            case "hidden":
+                break;
+            default:
+                throw new Error("Invalid status mode");
+        }
+        statusMode = mode;
+    }
+    function animateStatusIndeterminate(ms) {
+        var i = Math.floor(ms / INDETERMINATE_STATUS_STEP_MS % 8);
+        if (statusIndeterminate.children[i].style.borderTopColor == "") {
+            Array.prototype.slice.call(statusIndeterminate.children).forEach((child)=>{
+                child.style.borderTopColor = "";
+            });
+            statusIndeterminate.children[i].style.borderTopColor = "#dfdfdf";
+        }
+    }
+    function setStatusNotice(text) {
+        while(statusNotice.lastChild)statusNotice.removeChild(statusNotice.lastChild);
+        var lines = text.split("\n");
+        lines.forEach((line)=>{
+            statusNotice.appendChild(document.createTextNode(line));
+            statusNotice.appendChild(document.createElement("br"));
+        });
+    }
+    function displayFailureNotice(err) {
+        var msg = err.message || err;
+        console.error(msg);
+        setStatusNotice(msg);
+        setStatusMode("notice");
+        initializing = false;
+    }
+    if (!Engine.isWebGLAvailable()) displayFailureNotice("WebGL not available");
+    else {
+        setStatusMode("indeterminate");
+        engine.startGame({
+            "onProgress": function(current, total) {
+                if (total > 0) {
+                    statusProgressInner.style.width = current / total * 100 + "%";
+                    setStatusMode("progress");
+                    if (current === total) // wait for progress bar animation
+                    setTimeout(()=>{
+                        setStatusMode("indeterminate");
+                    }, 500);
+                } else setStatusMode("indeterminate");
+            }
+        }).then(()=>{
+            setStatusMode("hidden");
+            initializing = false;
+        }, displayFailureNotice);
+    }
+})(); //]]>
+
+</script>
+<script src="/GameGallery.bc40f3c9.js"></script></body>
 </html>
+
