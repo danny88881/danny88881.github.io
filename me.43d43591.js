@@ -5589,7 +5589,7 @@ var notes = {
     "31\xb0 CLOUDY feels like 22\xb0 H 31\xb0 / L 22\xb0 UV Index 1 of 10": "",
     "3 30 20 alt": "this goes so soft",
     "10-7-17": "i made this on an iphone. it is not very good",
-    "11-14-21guitar": "i've been told this sounds like keshi, whoever that is.",
+    "11-14-21guitar": "i enjoy",
     "1985": "",
     "a week in minutes": "two and one tenth to be exact",
     "club penguin \uD83E\uDD24": "the ninja card game thing from club pengin",
@@ -6187,7 +6187,7 @@ var quotes = [
     "Never let the fear of striking out keep you from playing the game. -Babe Ruth",
     "Life is never fair, and perhaps it is a good thing for most of us that it is not. -Oscar Wilde",
     "The greatest glory in living lies not in never falling, but in rising every time we fall. -Nelson Mandela",
-    "Life is what happens when you’re busy making other plans. -John Lennon",
+    "Life is what happens when you’re busy making other plans. -Hatsune Miku",
     "In three words I can sum up everything I’ve learned about life: it goes on. -Robert Frost",
     "Sometimes the smallest things take up the most room in your heart. -Winnie the Pooh"
 ];
