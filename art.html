@@ -98,13 +98,11 @@
             </ul>
         </header>
         <script>const el = document.createElement("div");
-el.innerHTML = `Cross origin isolated: ${window.crossOriginIsolated ? "\u2705" : "\u274C"}`;
+if (window.crossOriginIsolated) el.innerHTML = `<iframe frameborder="0" src="https://itch.io/embed-upload/8988426?color=333333" allowfullscreen="" width="525" height="655"><a href="https://danny88881.itch.io/websitecamera"></a></iframe>`;
 document.body.append(el);
 
 </script>
-                <div id="photo-minigame">
-                    <iframe frameborder="0" src="https://itch.io/embed-upload/8988426?color=333333" allowfullscreen="" width="525" height="655"><a href="https://danny88881.itch.io/websitecamera"></a></iframe>
-                </div>
+                
         <!--main data-router-wrapper>
             <article data-router-view="mainart" class="mainart" style="position: absolute;">
                 <canvas id="arttitlecanvas" style="height:100vh; max-width: 100%; overflow: hidden;"></canvas>
