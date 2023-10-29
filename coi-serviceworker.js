@@ -3,7 +3,6 @@ let coepCredentialless = false;
 if (typeof window === 'undefined') {
     (() => {
         console.log("COI WINDOW UNDEFINED");
-        console.log(window);
     })();
     self.addEventListener("install", () => self.skipWaiting());
     self.addEventListener("activate", (event) => event.waitUntil(self.clients.claim()));
