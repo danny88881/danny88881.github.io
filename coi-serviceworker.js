@@ -1,6 +1,10 @@
 /*! coi-serviceworker v0.1.7 - Guido Zuidhof and contributors, licensed under MIT */
 let coepCredentialless = false;
 if (typeof window === 'undefined') {
+    (() => {
+        console.log("COI WINDOW UNDEFINED");
+        console.log(window);
+    })();
     self.addEventListener("install", () => self.skipWaiting());
     self.addEventListener("activate", (event) => event.waitUntil(self.clients.claim()));
 
@@ -47,7 +51,7 @@ if (typeof window === 'undefined') {
                         newHeaders.set("Cross-Origin-Resource-Policy", "cross-origin");
                     }
                     newHeaders.set("Cross-Origin-Opener-Policy", "same-origin");
-
+                    console.log(coepCredentialless);
                     return new Response(response.body, {
                         status: response.status,
                         statusText: response.statusText,
@@ -60,6 +64,7 @@ if (typeof window === 'undefined') {
 
 } else {
     (() => {
+        console.log("COI WINDOW DEFINED");
         // You can customize the behavior of this script through a global `coi` variable.
         const coi = {
             shouldRegister: () => true,
