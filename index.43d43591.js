@@ -672,7 +672,7 @@ themeButton.onclick = ()=>{
     }
 };
 
-},{"@dogstudio/highway":"26LRT","gsap":"fPSuC","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./games":"d1VX1","./music":"8tXhl","./art":"7C9M0","./me":"fc8E8",".":"ebWYT","../games/GameGallerySetup":"hdJc0"}],"26LRT":[function(require,module,exports) {
+},{"@dogstudio/highway":"26LRT","gsap":"fPSuC","./games":"d1VX1","./music":"8tXhl","./art":"7C9M0","./me":"fc8E8",".":"ebWYT","../games/GameGallerySetup":"hdJc0","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"26LRT":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 function t() {}

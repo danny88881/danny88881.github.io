@@ -1,4 +1,4 @@
-/*! coi-serviceworker v0.1.7 - Guido Zuidhof and contributors, licensed under MIT */ let coepCredentialless = true;
+/*! coi-serviceworker v0.1.7 - Guido Zuidhof and contributors, licensed under MIT */ let coepCredentialless = false;
 if (typeof window === "undefined") {
     self.addEventListener("install", ()=>self.skipWaiting());
     self.addEventListener("activate", (event)=>event.waitUntil(self.clients.claim()));
@@ -9,7 +9,7 @@ if (typeof window === "undefined") {
         }).then((clients)=>{
             clients.forEach((client)=>client.navigate(client.url));
         });
-        else if (ev.data.type === "coepCredentialless") coepCredentialless = true; //ev.data.value;
+        else if (ev.data.type === "coepCredentialless") coepCredentialless = ev.data.value;
     });
     self.addEventListener("fetch", function(event) {
         const r = event.request;
@@ -35,7 +35,7 @@ if (typeof window === "undefined") {
     const coi = {
         shouldRegister: ()=>true,
         shouldDeregister: ()=>false,
-        coepCredentialless: ()=>true,
+        coepCredentialless: ()=>window.chrome !== undefined || window.netscape !== undefined,
         doReload: ()=>window.location.reload(),
         quiet: false,
         ...window.coi
