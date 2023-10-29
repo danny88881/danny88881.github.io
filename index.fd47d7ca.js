@@ -2,7 +2,6 @@
 if (typeof window === "undefined") {
     (()=>{
         console.log("COI WINDOW UNDEFINED");
-        console.log(window);
     })();
     self.addEventListener("install", ()=>self.skipWaiting());
     self.addEventListener("activate", (event)=>event.waitUntil(self.clients.claim()));
@@ -36,6 +35,7 @@ if (typeof window === "undefined") {
         }).catch((e)=>console.error(e)));
     });
 } else (()=>{
+    console.log("COI WINDOW DEFINED");
     // You can customize the behavior of this script through a global `coi` variable.
     const coi = {
         shouldRegister: ()=>true,
@@ -79,4 +79,4 @@ if (typeof window === "undefined") {
     });
 })();
 
-//# sourceMappingURL=art.fd47d7ca.js.map
+//# sourceMappingURL=index.fd47d7ca.js.map
