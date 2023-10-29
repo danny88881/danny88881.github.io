@@ -1,16 +1,16 @@
 @font-face {
   font-family: VCR;
-  src: url("VCR_OSD_MONO.98f81b8f.ttf");
+  src: url("VCR_OSD_MONO.8a781d7e.ttf");
 }
 
 @font-face {
   font-family: MajorMono;
-  src: url("MajorMonoDisplay-Regular.66d1e107.ttf");
+  src: url("MajorMonoDisplay-Regular.2dc92050.ttf");
 }
 
 @font-face {
   font-family: cappx;
-  src: url("cappx.83c4562c.ttf");
+  src: url("cappx.8b78cd63.ttf");
 }
 
 html {
@@ -94,22 +94,22 @@ body.me.light {
 #background {
   pointer-events: none;
   opacity: .3;
-  width: 100%;
-  height: 100%;
   z-index: -10;
   background-image: url("static.d0f11346.gif");
   background-position: center;
   background-size: cover;
+  width: 100%;
+  height: 100%;
   position: fixed;
 }
 
 .layer {
   background-color: var(--negative);
-  width: 100%;
-  height: 100%;
   pointer-events: none;
   z-index: 100;
-  animation: bg_layer_fade 4s ease-in forwards;
+  width: 100%;
+  height: 100%;
+  animation: 4s ease-in forwards bg_layer_fade;
   position: fixed;
   top: 0;
   left: 0;
@@ -170,11 +170,11 @@ body.me.light {
 
 #main-nav {
   pointer-events: none;
-  height: 100vh;
-  width: 100vw;
   z-index: 5;
   justify-content: center;
   align-items: center;
+  width: 100vw;
+  height: 100vh;
   list-style: none;
   transition: height .8s ease-in-out, width .8s ease-in-out;
   display: flex;
@@ -197,19 +197,19 @@ body.me.light {
   flex-direction: row;
   margin: 20px;
   transition: all .2s ease-in;
-  animation: floaty 3s ease-in-out infinite;
+  animation: 3s ease-in-out infinite floaty;
   display: flex;
 }
 
 #main-nav div a p {
   color: var(--positive);
-  width: 60%;
   writing-mode: vertical-rl;
   -webkit-writing-mode: vertical-rl;
   -ms-writing-mode: vertical-rl;
   text-align: center;
   vertical-align: center;
   opacity: 1;
+  width: 60%;
   margin: 0 auto;
   font-size: 32px;
   transition: all .2s ease-in;
@@ -236,8 +236,8 @@ body.me.light {
 }
 
 #main-nav.compact {
-  height: 10vh;
   transition: height width .3s ease-in-out;
+  height: 10vh;
 }
 
 #main-nav.compact li {
@@ -272,8 +272,6 @@ body.me.light {
   white-space: nowrap;
   z-index: 1;
   text-align: center;
-  width: 100%;
-  height: 0;
   opacity: 0;
   writing-mode: vertical-rl;
   -webkit-writing-mode: vertical-rl;
@@ -281,6 +279,8 @@ body.me.light {
   -webkit-user-select: none;
   user-select: none;
   pointer-events: none;
+  width: 100%;
+  height: 0;
   margin: 0;
   font-family: Courier New, Courier, monospace;
   font-size: 64px;
@@ -302,12 +302,12 @@ body.me.light {
 }
 
 #main-nav .shadow-bar {
-  width: 100%;
-  height: 84px;
   opacity: 1;
   flex-direction: row;
   place-content: center;
   gap: 50vh;
+  width: 100%;
+  height: 84px;
   margin: 0;
   padding: 0;
   transition: all 1s ease-in;
@@ -341,13 +341,13 @@ body.me.light {
 
 #main-nav .shadow {
   opacity: 0;
-  width: 84px;
-  height: 200vh;
   pointer-events: none;
   z-index: 1;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  width: 84px;
+  height: 200vh;
   margin-left: -84px;
   padding: 0;
   transition: all 1s ease-in;
@@ -389,9 +389,9 @@ body.me.light {
 }
 
 #main-nav #music:hover .hover-bg {
-  height: 200vw;
   pointer-events: all;
   background-color: #cf48cf80;
+  height: 200vw;
   padding: 2px;
   transition: background-color .2s ease-in-out, height .5s ease-in-out;
 }
@@ -410,9 +410,9 @@ body.me.light {
 }
 
 #main-nav #art:hover .hover-bg {
-  height: 200vw;
   pointer-events: all;
   background-color: #c0c03b80;
+  height: 200vw;
   padding: 2px;
   transition: background-color .2s ease-in-out, height .5s ease-in-out;
 }
@@ -431,9 +431,9 @@ body.me.light {
 }
 
 #main-nav #me:hover .hover-bg {
-  height: 200vw;
   pointer-events: all;
   background-color: #dcdcdc80;
+  height: 200vw;
   padding: 2px;
   transition: background-color .2s ease-in-out, height .5s ease-in-out;
 }
@@ -443,9 +443,9 @@ body.me.light {
   white-space: nowrap;
   z-index: 1;
   text-align: center;
-  height: 300px;
   opacity: 1;
   pointer-events: all;
+  height: 300px;
   margin-top: 20px;
   font-style: normal;
   transition: all .5s ease-in-out;
@@ -475,9 +475,9 @@ body.me.light {
 }
 
 #main-nav.compact :hover .box-label {
-  height: 0;
   opacity: 0;
   pointer-events: all;
+  height: 0;
 }
 
 #main-nav.compact .shadow {
@@ -505,9 +505,9 @@ body.me.light {
 }
 
 #main-nav.compact #music:hover .hover-bg {
-  height: 200vw;
   pointer-events: all;
   background-color: #cf48cf00;
+  height: 200vw;
   padding: 2px;
   transition: background-color .2s ease-in-out, height .5s ease-in-out;
 }
@@ -517,9 +517,9 @@ body.me.light {
 }
 
 #main-nav.compact #art:hover .hover-bg {
-  height: 200vw;
   pointer-events: all;
   background-color: #c0c03b00;
+  height: 200vw;
   padding: 2px;
   transition: background-color .2s ease-in-out, height .5s ease-in-out;
 }
@@ -529,9 +529,9 @@ body.me.light {
 }
 
 #main-nav.compact #me:hover .hover-bg {
-  height: 200vw;
   pointer-events: all;
   background-color: #dcdcdc00;
+  height: 200vw;
   padding: 2px;
   transition: background-color .2s ease-in-out, height .5s ease-in-out;
 }
@@ -559,9 +559,9 @@ body.me.light {
 }
 
 .light #main-nav.compact :hover .box-label {
-  height: 0;
   opacity: 0;
   pointer-events: all;
+  height: 0;
 }
 
 .light #main-nav.compact .shadow {
@@ -587,9 +587,9 @@ body.me.light {
 }
 
 .light #main-nav.compact #music:hover .hover-bg {
-  height: 200vw;
   pointer-events: all;
   background-color: #cf48cf00;
+  height: 200vw;
   padding: 2px;
   transition: background-color .2s ease-in-out, height .5s ease-in-out;
 }
@@ -599,9 +599,9 @@ body.me.light {
 }
 
 .light #main-nav.compact #art:hover .hover-bg {
-  height: 200vw;
   pointer-events: all;
   background-color: #c0c03b00;
+  height: 200vw;
   padding: 2px;
   transition: background-color .2s ease-in-out, height .5s ease-in-out;
 }
@@ -611,9 +611,9 @@ body.me.light {
 }
 
 .light #main-nav.compact #me:hover .hover-bg {
-  height: 200vw;
   pointer-events: all;
   background-color: #dcdcdc00;
+  height: 200vw;
   padding: 2px;
   transition: background-color .2s ease-in-out, height .5s ease-in-out;
 }
@@ -713,8 +713,8 @@ body.me.light {
 }
 
 #scrollthing {
-  width: 100%;
   flex-direction: row;
+  width: 100%;
   margin: 0;
   padding: 0;
   display: flex;
@@ -755,12 +755,12 @@ body.me.light {
 }
 
 .hover-bg {
-  height: 200vh;
-  width: 84px;
   pointer-events: none;
   flex-direction: row;
   align-content: center;
   align-items: center;
+  width: 84px;
+  height: 200vh;
   margin: 0;
   padding: 0;
   transition: all 1s ease-in;
@@ -773,9 +773,9 @@ body.me.light {
 }
 
 .logo img {
+  float: left;
   width: 150px;
   height: auto;
-  float: left;
   margin-top: 10px;
   margin-left: 30px;
 }
@@ -790,29 +790,13 @@ body.me.light {
   color: var(--positive);
 }
 
-#particles-dark {
+#particles-dark, #particles-light {
   pointer-events: all;
-  width: 100%;
-  height: 100%;
   opacity: .5;
   z-index: -4;
   clip-path: inset(0);
-  transition: opacity 1.5s ease-in;
-  position: fixed;
-}
-
-.light #particles-dark {
-  opacity: 0;
-  pointer-events: none;
-}
-
-#particles-light {
-  pointer-events: all;
   width: 100%;
   height: 100%;
-  opacity: .5;
-  z-index: -4;
-  clip-path: inset(0);
   transition: opacity 1.5s ease-in;
   position: fixed;
 }
@@ -823,19 +807,19 @@ body.me.light {
 }
 
 #games {
-  animation: floaty 3s ease-in-out .5s infinite;
+  animation: 3s ease-in-out .5s infinite floaty;
 }
 
 #music {
-  animation: floaty 3.2s ease-in-out infinite;
+  animation: 3.2s ease-in-out infinite floaty;
 }
 
 #art {
-  animation: floaty 2.8s ease-in-out .2s infinite;
+  animation: 2.8s ease-in-out .2s infinite floaty;
 }
 
 #me {
-  animation: floaty 2.4s ease-in-out .8s infinite;
+  animation: 2.4s ease-in-out .8s infinite floaty;
 }
 
 @keyframes floaty {
@@ -863,9 +847,9 @@ body.me.light {
 }
 
 #constr {
-  width: 100%;
   text-align: center;
   pointer-events: none;
+  width: 100%;
   font-size: 200px;
   position: absolute;
   top: 50%;

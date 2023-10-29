@@ -36,24 +36,24 @@ var Godot = (()=>{
         }
         var Module = typeof Godot != "undefined" ? Godot : {};
         var readyPromiseResolve, readyPromiseReject;
-        Module["ready"] = new Promise(function(resolve, reject) {
-            readyPromiseResolve = resolve;
-            readyPromiseReject = reject;
+        Module["ready"] = new Promise(function(resolve1, reject1) {
+            readyPromiseResolve = resolve1;
+            readyPromiseReject = reject1;
         });
         var moduleOverrides = Object.assign({}, Module);
         var arguments_ = [];
         var thisProgram = "./this.program";
-        var quit_ = (status, toThrow)=>{
-            throw toThrow;
+        var quit_ = (status1, toThrow1)=>{
+            throw toThrow1;
         };
         var ENVIRONMENT_IS_WEB = typeof window == "object";
         var ENVIRONMENT_IS_WORKER = typeof importScripts == "function";
         var ENVIRONMENT_IS_NODE = typeof process == "object" && typeof process.versions == "object" && typeof process.versions.node == "string";
         var ENVIRONMENT_IS_PTHREAD = Module["ENVIRONMENT_IS_PTHREAD"] || false;
         var scriptDirectory = "";
-        function locateFile(path) {
-            if (Module["locateFile"]) return Module["locateFile"](path, scriptDirectory);
-            return scriptDirectory + path;
+        function locateFile(path1) {
+            if (Module["locateFile"]) return Module["locateFile"](path1, scriptDirectory);
+            return scriptDirectory + path1;
         }
         var read_, readAsync, readBinary, setWindowTitle;
         if (ENVIRONMENT_IS_WEB || ENVIRONMENT_IS_WORKER) {
@@ -62,34 +62,34 @@ var Godot = (()=>{
             if (_scriptDir) scriptDirectory = _scriptDir;
             if (scriptDirectory.indexOf("blob:") !== 0) scriptDirectory = scriptDirectory.substr(0, scriptDirectory.replace(/[?#].*/, "").lastIndexOf("/") + 1);
             else scriptDirectory = "";
-            read_ = (url)=>{
-                var xhr = new XMLHttpRequest;
-                xhr.open("GET", url, false);
-                xhr.send(null);
-                return xhr.responseText;
+            read_ = (url1)=>{
+                var xhr1 = new XMLHttpRequest;
+                xhr1.open("GET", url1, false);
+                xhr1.send(null);
+                return xhr1.responseText;
             };
-            if (ENVIRONMENT_IS_WORKER) readBinary = (url)=>{
-                var xhr = new XMLHttpRequest;
-                xhr.open("GET", url, false);
-                xhr.responseType = "arraybuffer";
-                xhr.send(null);
-                return new Uint8Array(xhr.response);
+            if (ENVIRONMENT_IS_WORKER) readBinary = (url1)=>{
+                var xhr1 = new XMLHttpRequest;
+                xhr1.open("GET", url1, false);
+                xhr1.responseType = "arraybuffer";
+                xhr1.send(null);
+                return new Uint8Array(xhr1.response);
             };
-            readAsync = (url, onload, onerror)=>{
-                var xhr = new XMLHttpRequest;
-                xhr.open("GET", url, true);
-                xhr.responseType = "arraybuffer";
-                xhr.onload = ()=>{
-                    if (xhr.status == 200 || xhr.status == 0 && xhr.response) {
-                        onload(xhr.response);
+            readAsync = (url1, onload1, onerror1)=>{
+                var xhr1 = new XMLHttpRequest;
+                xhr1.open("GET", url1, true);
+                xhr1.responseType = "arraybuffer";
+                xhr1.onload = ()=>{
+                    if (xhr1.status == 200 || xhr1.status == 0 && xhr1.response) {
+                        onload1(xhr1.response);
                         return;
                     }
-                    onerror();
+                    onerror1();
                 };
-                xhr.onerror = onerror;
-                xhr.send(null);
+                xhr1.onerror = onerror1;
+                xhr1.send(null);
             };
-            setWindowTitle = (title)=>document.title = title;
+            setWindowTitle = (title1)=>document.title = title1;
         }
         var out = Module["print"] || console.log.bind(console);
         var err = Module["printErr"] || console.warn.bind(console);
@@ -98,16 +98,16 @@ var Godot = (()=>{
         if (Module["arguments"]) arguments_ = Module["arguments"];
         if (Module["thisProgram"]) thisProgram = Module["thisProgram"];
         if (Module["quit"]) quit_ = Module["quit"];
-        function warnOnce(text) {
+        function warnOnce(text1) {
             if (!warnOnce.shown) warnOnce.shown = {};
-            if (!warnOnce.shown[text]) {
-                warnOnce.shown[text] = 1;
-                err(text);
+            if (!warnOnce.shown[text1]) {
+                warnOnce.shown[text1] = 1;
+                err(text1);
             }
         }
         var tempRet0 = 0;
-        var setTempRet0 = (value)=>{
-            tempRet0 = value;
+        var setTempRet0 = (value1)=>{
+            tempRet0 = value1;
         };
         var getTempRet0 = ()=>tempRet0;
         var Atomics_load = Atomics.load;
@@ -121,177 +121,177 @@ var Godot = (()=>{
         var wasmModule;
         var ABORT = false;
         var EXITSTATUS;
-        function assert(condition, text) {
-            if (!condition) abort(text);
+        function assert(condition1, text1) {
+            if (!condition1) abort(text1);
         }
-        function getCFunc(ident) {
-            var func = Module["_" + ident];
-            return func;
+        function getCFunc(ident1) {
+            var func1 = Module["_" + ident1];
+            return func1;
         }
-        function ccall(ident, returnType, argTypes, args, opts) {
-            var toC = {
-                "string": function(str) {
-                    var ret = 0;
-                    if (str !== null && str !== undefined && str !== 0) {
-                        var len = (str.length << 2) + 1;
-                        ret = stackAlloc(len);
-                        stringToUTF8(str, ret, len);
+        function ccall(ident1, returnType1, argTypes1, args1, opts1) {
+            var toC1 = {
+                "string": function(str1) {
+                    var ret1 = 0;
+                    if (str1 !== null && str1 !== undefined && str1 !== 0) {
+                        var len1 = (str1.length << 2) + 1;
+                        ret1 = stackAlloc(len1);
+                        stringToUTF8(str1, ret1, len1);
                     }
-                    return ret;
+                    return ret1;
                 },
-                "array": function(arr) {
-                    var ret = stackAlloc(arr.length);
-                    writeArrayToMemory(arr, ret);
-                    return ret;
+                "array": function(arr1) {
+                    var ret1 = stackAlloc(arr1.length);
+                    writeArrayToMemory(arr1, ret1);
+                    return ret1;
                 }
             };
-            function convertReturnValue(ret) {
-                if (returnType === "string") return UTF8ToString(ret);
-                if (returnType === "boolean") return Boolean(ret);
-                return ret;
+            function convertReturnValue1(ret1) {
+                if (returnType1 === "string") return UTF8ToString(ret1);
+                if (returnType1 === "boolean") return Boolean(ret1);
+                return ret1;
             }
-            var func = getCFunc(ident);
-            var cArgs = [];
-            var stack = 0;
-            if (args) for(var i = 0; i < args.length; i++){
-                var converter = toC[argTypes[i]];
-                if (converter) {
-                    if (stack === 0) stack = stackSave();
-                    cArgs[i] = converter(args[i]);
-                } else cArgs[i] = args[i];
+            var func1 = getCFunc(ident1);
+            var cArgs1 = [];
+            var stack1 = 0;
+            if (args1) for(var i1 = 0; i1 < args1.length; i1++){
+                var converter1 = toC1[argTypes1[i1]];
+                if (converter1) {
+                    if (stack1 === 0) stack1 = stackSave();
+                    cArgs1[i1] = converter1(args1[i1]);
+                } else cArgs1[i1] = args1[i1];
             }
-            var ret = func.apply(null, cArgs);
-            function onDone(ret) {
-                if (stack !== 0) stackRestore(stack);
-                return convertReturnValue(ret);
+            var ret1 = func1.apply(null, cArgs1);
+            function onDone1(ret1) {
+                if (stack1 !== 0) stackRestore(stack1);
+                return convertReturnValue1(ret1);
             }
-            ret = onDone(ret);
-            return ret;
+            ret1 = onDone1(ret1);
+            return ret1;
         }
-        function cwrap(ident, returnType, argTypes, opts) {
-            argTypes = argTypes || [];
-            var numericArgs = argTypes.every(function(type) {
-                return type === "number";
+        function cwrap(ident1, returnType1, argTypes1, opts1) {
+            argTypes1 = argTypes1 || [];
+            var numericArgs1 = argTypes1.every(function(type1) {
+                return type1 === "number";
             });
-            var numericRet = returnType !== "string";
-            if (numericRet && numericArgs && !opts) return getCFunc(ident);
+            var numericRet1 = returnType1 !== "string";
+            if (numericRet1 && numericArgs1 && !opts1) return getCFunc(ident1);
             return function() {
-                return ccall(ident, returnType, argTypes, arguments, opts);
+                return ccall(ident1, returnType1, argTypes1, arguments, opts1);
             };
         }
         var UTF8Decoder = typeof TextDecoder != "undefined" ? new TextDecoder("utf8") : undefined;
-        function UTF8ArrayToString(heapOrArray, idx, maxBytesToRead) {
-            var endIdx = idx + maxBytesToRead;
-            var endPtr = idx;
-            while(heapOrArray[endPtr] && !(endPtr >= endIdx))++endPtr;
-            if (endPtr - idx > 16 && heapOrArray.buffer && UTF8Decoder) return UTF8Decoder.decode(heapOrArray.buffer instanceof SharedArrayBuffer ? heapOrArray.slice(idx, endPtr) : heapOrArray.subarray(idx, endPtr));
+        function UTF8ArrayToString(heapOrArray1, idx1, maxBytesToRead1) {
+            var endIdx1 = idx1 + maxBytesToRead1;
+            var endPtr1 = idx1;
+            while(heapOrArray1[endPtr1] && !(endPtr1 >= endIdx1))++endPtr1;
+            if (endPtr1 - idx1 > 16 && heapOrArray1.buffer && UTF8Decoder) return UTF8Decoder.decode(heapOrArray1.buffer instanceof SharedArrayBuffer ? heapOrArray1.slice(idx1, endPtr1) : heapOrArray1.subarray(idx1, endPtr1));
             else {
-                var str = "";
-                while(idx < endPtr){
-                    var u0 = heapOrArray[idx++];
-                    if (!(u0 & 128)) {
-                        str += String.fromCharCode(u0);
+                var str1 = "";
+                while(idx1 < endPtr1){
+                    var u01 = heapOrArray1[idx1++];
+                    if (!(u01 & 128)) {
+                        str1 += String.fromCharCode(u01);
                         continue;
                     }
-                    var u1 = heapOrArray[idx++] & 63;
-                    if ((u0 & 224) == 192) {
-                        str += String.fromCharCode((u0 & 31) << 6 | u1);
+                    var u11 = heapOrArray1[idx1++] & 63;
+                    if ((u01 & 224) == 192) {
+                        str1 += String.fromCharCode((u01 & 31) << 6 | u11);
                         continue;
                     }
-                    var u2 = heapOrArray[idx++] & 63;
-                    if ((u0 & 240) == 224) u0 = (u0 & 15) << 12 | u1 << 6 | u2;
-                    else u0 = (u0 & 7) << 18 | u1 << 12 | u2 << 6 | heapOrArray[idx++] & 63;
-                    if (u0 < 65536) str += String.fromCharCode(u0);
+                    var u21 = heapOrArray1[idx1++] & 63;
+                    if ((u01 & 240) == 224) u01 = (u01 & 15) << 12 | u11 << 6 | u21;
+                    else u01 = (u01 & 7) << 18 | u11 << 12 | u21 << 6 | heapOrArray1[idx1++] & 63;
+                    if (u01 < 65536) str1 += String.fromCharCode(u01);
                     else {
-                        var ch = u0 - 65536;
-                        str += String.fromCharCode(55296 | ch >> 10, 56320 | ch & 1023);
+                        var ch1 = u01 - 65536;
+                        str1 += String.fromCharCode(55296 | ch1 >> 10, 56320 | ch1 & 1023);
                     }
                 }
             }
-            return str;
+            return str1;
         }
-        function UTF8ToString(ptr, maxBytesToRead) {
-            return ptr ? UTF8ArrayToString(GROWABLE_HEAP_U8(), ptr, maxBytesToRead) : "";
+        function UTF8ToString(ptr1, maxBytesToRead1) {
+            return ptr1 ? UTF8ArrayToString(GROWABLE_HEAP_U8(), ptr1, maxBytesToRead1) : "";
         }
-        function stringToUTF8Array(str, heap, outIdx, maxBytesToWrite) {
-            if (!(maxBytesToWrite > 0)) return 0;
-            var startIdx = outIdx;
-            var endIdx = outIdx + maxBytesToWrite - 1;
-            for(var i = 0; i < str.length; ++i){
-                var u = str.charCodeAt(i);
-                if (u >= 55296 && u <= 57343) {
-                    var u1 = str.charCodeAt(++i);
-                    u = 65536 + ((u & 1023) << 10) | u1 & 1023;
+        function stringToUTF8Array(str1, heap1, outIdx1, maxBytesToWrite1) {
+            if (!(maxBytesToWrite1 > 0)) return 0;
+            var startIdx1 = outIdx1;
+            var endIdx1 = outIdx1 + maxBytesToWrite1 - 1;
+            for(var i1 = 0; i1 < str1.length; ++i1){
+                var u3 = str1.charCodeAt(i1);
+                if (u3 >= 55296 && u3 <= 57343) {
+                    var u11 = str1.charCodeAt(++i1);
+                    u3 = 65536 + ((u3 & 1023) << 10) | u11 & 1023;
                 }
-                if (u <= 127) {
-                    if (outIdx >= endIdx) break;
-                    heap[outIdx++] = u;
-                } else if (u <= 2047) {
-                    if (outIdx + 1 >= endIdx) break;
-                    heap[outIdx++] = 192 | u >> 6;
-                    heap[outIdx++] = 128 | u & 63;
-                } else if (u <= 65535) {
-                    if (outIdx + 2 >= endIdx) break;
-                    heap[outIdx++] = 224 | u >> 12;
-                    heap[outIdx++] = 128 | u >> 6 & 63;
-                    heap[outIdx++] = 128 | u & 63;
+                if (u3 <= 127) {
+                    if (outIdx1 >= endIdx1) break;
+                    heap1[outIdx1++] = u3;
+                } else if (u3 <= 2047) {
+                    if (outIdx1 + 1 >= endIdx1) break;
+                    heap1[outIdx1++] = 192 | u3 >> 6;
+                    heap1[outIdx1++] = 128 | u3 & 63;
+                } else if (u3 <= 65535) {
+                    if (outIdx1 + 2 >= endIdx1) break;
+                    heap1[outIdx1++] = 224 | u3 >> 12;
+                    heap1[outIdx1++] = 128 | u3 >> 6 & 63;
+                    heap1[outIdx1++] = 128 | u3 & 63;
                 } else {
-                    if (outIdx + 3 >= endIdx) break;
-                    heap[outIdx++] = 240 | u >> 18;
-                    heap[outIdx++] = 128 | u >> 12 & 63;
-                    heap[outIdx++] = 128 | u >> 6 & 63;
-                    heap[outIdx++] = 128 | u & 63;
+                    if (outIdx1 + 3 >= endIdx1) break;
+                    heap1[outIdx1++] = 240 | u3 >> 18;
+                    heap1[outIdx1++] = 128 | u3 >> 12 & 63;
+                    heap1[outIdx1++] = 128 | u3 >> 6 & 63;
+                    heap1[outIdx1++] = 128 | u3 & 63;
                 }
             }
-            heap[outIdx] = 0;
-            return outIdx - startIdx;
+            heap1[outIdx1] = 0;
+            return outIdx1 - startIdx1;
         }
-        function stringToUTF8(str, outPtr, maxBytesToWrite) {
-            return stringToUTF8Array(str, GROWABLE_HEAP_U8(), outPtr, maxBytesToWrite);
+        function stringToUTF8(str1, outPtr1, maxBytesToWrite1) {
+            return stringToUTF8Array(str1, GROWABLE_HEAP_U8(), outPtr1, maxBytesToWrite1);
         }
-        function lengthBytesUTF8(str) {
-            var len = 0;
-            for(var i = 0; i < str.length; ++i){
-                var u = str.charCodeAt(i);
-                if (u >= 55296 && u <= 57343) u = 65536 + ((u & 1023) << 10) | str.charCodeAt(++i) & 1023;
-                if (u <= 127) ++len;
-                else if (u <= 2047) len += 2;
-                else if (u <= 65535) len += 3;
-                else len += 4;
+        function lengthBytesUTF8(str1) {
+            var len1 = 0;
+            for(var i1 = 0; i1 < str1.length; ++i1){
+                var u3 = str1.charCodeAt(i1);
+                if (u3 >= 55296 && u3 <= 57343) u3 = 65536 + ((u3 & 1023) << 10) | str1.charCodeAt(++i1) & 1023;
+                if (u3 <= 127) ++len1;
+                else if (u3 <= 2047) len1 += 2;
+                else if (u3 <= 65535) len1 += 3;
+                else len1 += 4;
             }
-            return len;
+            return len1;
         }
-        function allocateUTF8(str) {
-            var size = lengthBytesUTF8(str) + 1;
-            var ret = _malloc(size);
-            if (ret) stringToUTF8Array(str, GROWABLE_HEAP_I8(), ret, size);
-            return ret;
+        function allocateUTF8(str1) {
+            var size1 = lengthBytesUTF8(str1) + 1;
+            var ret1 = _malloc(size1);
+            if (ret1) stringToUTF8Array(str1, GROWABLE_HEAP_I8(), ret1, size1);
+            return ret1;
         }
-        function allocateUTF8OnStack(str) {
-            var size = lengthBytesUTF8(str) + 1;
-            var ret = stackAlloc(size);
-            stringToUTF8Array(str, GROWABLE_HEAP_I8(), ret, size);
-            return ret;
+        function allocateUTF8OnStack(str1) {
+            var size1 = lengthBytesUTF8(str1) + 1;
+            var ret1 = stackAlloc(size1);
+            stringToUTF8Array(str1, GROWABLE_HEAP_I8(), ret1, size1);
+            return ret1;
         }
-        function writeArrayToMemory(array, buffer) {
-            GROWABLE_HEAP_I8().set(array, buffer);
+        function writeArrayToMemory(array1, buffer1) {
+            GROWABLE_HEAP_I8().set(array1, buffer1);
         }
-        function writeAsciiToMemory(str, buffer, dontAddNull) {
-            for(var i = 0; i < str.length; ++i)GROWABLE_HEAP_I8()[(buffer++) >> 0] = str.charCodeAt(i);
-            if (!dontAddNull) GROWABLE_HEAP_I8()[buffer >> 0] = 0;
+        function writeAsciiToMemory(str1, buffer1, dontAddNull1) {
+            for(var i1 = 0; i1 < str1.length; ++i1)GROWABLE_HEAP_I8()[buffer1++ >> 0] = str1.charCodeAt(i1);
+            if (!dontAddNull1) GROWABLE_HEAP_I8()[buffer1 >> 0] = 0;
         }
         var buffer, HEAP8, HEAPU8, HEAP16, HEAPU16, HEAP32, HEAPU32, HEAPF32, HEAPF64;
         if (ENVIRONMENT_IS_PTHREAD) buffer = Module["buffer"];
-        function updateGlobalBufferAndViews(buf) {
-            buffer = buf;
-            Module["HEAP8"] = HEAP8 = new Int8Array(buf);
-            Module["HEAP16"] = HEAP16 = new Int16Array(buf);
-            Module["HEAP32"] = HEAP32 = new Int32Array(buf);
-            Module["HEAPU8"] = HEAPU8 = new Uint8Array(buf);
-            Module["HEAPU16"] = HEAPU16 = new Uint16Array(buf);
-            Module["HEAPU32"] = HEAPU32 = new Uint32Array(buf);
-            Module["HEAPF32"] = HEAPF32 = new Float32Array(buf);
-            Module["HEAPF64"] = HEAPF64 = new Float64Array(buf);
+        function updateGlobalBufferAndViews(buf1) {
+            buffer = buf1;
+            Module["HEAP8"] = HEAP8 = new Int8Array(buf1);
+            Module["HEAP16"] = HEAP16 = new Int16Array(buf1);
+            Module["HEAP32"] = HEAP32 = new Int32Array(buf1);
+            Module["HEAPU8"] = HEAPU8 = new Uint8Array(buf1);
+            Module["HEAPU16"] = HEAPU16 = new Uint16Array(buf1);
+            Module["HEAPU32"] = HEAPU32 = new Uint32Array(buf1);
+            Module["HEAPF32"] = HEAPF32 = new Float32Array(buf1);
+            Module["HEAPF64"] = HEAPF64 = new Float64Array(buf1);
         }
         var INITIAL_MEMORY = Module["INITIAL_MEMORY"] || 33554432;
         if (ENVIRONMENT_IS_PTHREAD) {
@@ -367,26 +367,26 @@ var Godot = (()=>{
             }
             callRuntimeCallbacks(__ATPOSTRUN__);
         }
-        function addOnPreRun(cb) {
-            __ATPRERUN__.unshift(cb);
+        function addOnPreRun(cb1) {
+            __ATPRERUN__.unshift(cb1);
         }
-        function addOnInit(cb) {
-            __ATINIT__.unshift(cb);
+        function addOnInit(cb1) {
+            __ATINIT__.unshift(cb1);
         }
-        function addOnPostRun(cb) {
-            __ATPOSTRUN__.unshift(cb);
+        function addOnPostRun(cb1) {
+            __ATPOSTRUN__.unshift(cb1);
         }
         var runDependencies = 0;
         var runDependencyWatcher = null;
         var dependenciesFulfilled = null;
-        function getUniqueRunDependency(id) {
-            return id;
+        function getUniqueRunDependency(id1) {
+            return id1;
         }
-        function addRunDependency(id) {
+        function addRunDependency(id1) {
             runDependencies++;
             if (Module["monitorRunDependencies"]) Module["monitorRunDependencies"](runDependencies);
         }
-        function removeRunDependency(id) {
+        function removeRunDependency(id1) {
             runDependencies--;
             if (Module["monitorRunDependencies"]) Module["monitorRunDependencies"](runDependencies);
             if (runDependencies == 0) {
@@ -395,50 +395,50 @@ var Godot = (()=>{
                     runDependencyWatcher = null;
                 }
                 if (dependenciesFulfilled) {
-                    var callback = dependenciesFulfilled;
+                    var callback1 = dependenciesFulfilled;
                     dependenciesFulfilled = null;
-                    callback();
+                    callback1();
                 }
             }
         }
-        function abort(what) {
+        function abort(what1) {
             if (ENVIRONMENT_IS_PTHREAD) postMessage({
                 "cmd": "onAbort",
-                "arg": what
+                "arg": what1
             });
-            else if (Module["onAbort"]) Module["onAbort"](what);
-            what = "Aborted(" + what + ")";
-            err(what);
+            else if (Module["onAbort"]) Module["onAbort"](what1);
+            what1 = "Aborted(" + what1 + ")";
+            err(what1);
             ABORT = true;
             EXITSTATUS = 1;
-            what += ". Build with -sASSERTIONS for more info.";
-            var e = new WebAssembly.RuntimeError(what);
-            readyPromiseReject(e);
-            throw e;
+            what1 += ". Build with -sASSERTIONS for more info.";
+            var e1 = new WebAssembly.RuntimeError(what1);
+            readyPromiseReject(e1);
+            throw e1;
         }
         var dataURIPrefix = "data:application/octet-stream;base64,";
-        function isDataURI(filename) {
-            return filename.startsWith(dataURIPrefix);
+        function isDataURI(filename1) {
+            return filename1.startsWith(dataURIPrefix);
         }
         var wasmBinaryFile;
         wasmBinaryFile = "godot.javascript.opt.threads.wasm";
         if (!isDataURI(wasmBinaryFile)) wasmBinaryFile = locateFile(wasmBinaryFile);
-        function getBinary(file) {
+        function getBinary(file1) {
             try {
-                if (file == wasmBinaryFile && wasmBinary) return new Uint8Array(wasmBinary);
-                if (readBinary) return readBinary(file);
+                if (file1 == wasmBinaryFile && wasmBinary) return new Uint8Array(wasmBinary);
+                if (readBinary) return readBinary(file1);
                 else throw "both async and sync fetching of the wasm failed";
-            } catch (err) {
-                abort(err);
+            } catch (err1) {
+                abort(err1);
             }
         }
         function getBinaryPromise() {
             if (!wasmBinary && (ENVIRONMENT_IS_WEB || ENVIRONMENT_IS_WORKER)) {
                 if (typeof fetch == "function") return fetch(wasmBinaryFile, {
                     credentials: "same-origin"
-                }).then(function(response) {
-                    if (!response["ok"]) throw "failed to load wasm binary file at '" + wasmBinaryFile + "'";
-                    return response["arrayBuffer"]();
+                }).then(function(response1) {
+                    if (!response1["ok"]) throw "failed to load wasm binary file at '" + wasmBinaryFile + "'";
+                    return response1["arrayBuffer"]();
                 }).catch(function() {
                     return getBinary(wasmBinaryFile);
                 });
@@ -448,119 +448,119 @@ var Godot = (()=>{
             });
         }
         function createWasm() {
-            var info = {
+            var info1 = {
                 "a": asmLibraryArg
             };
-            function receiveInstance(instance, module1) {
-                var exports1 = instance.exports;
+            function receiveInstance1(instance1, module1) {
+                var exports1 = instance1.exports;
                 Module["asm"] = exports1;
                 registerTLSInit(Module["asm"]["di"]);
                 wasmTable = Module["asm"]["hi"];
                 addOnInit(Module["asm"]["Rh"]);
                 wasmModule = module1;
                 if (!ENVIRONMENT_IS_PTHREAD) {
-                    var numWorkersToLoad = PThread.unusedWorkers.length;
-                    PThread.unusedWorkers.forEach(function(w) {
-                        PThread.loadWasmModuleToWorker(w, function() {
-                            if (!--numWorkersToLoad) removeRunDependency("wasm-instantiate");
+                    var numWorkersToLoad1 = PThread.unusedWorkers.length;
+                    PThread.unusedWorkers.forEach(function(w1) {
+                        PThread.loadWasmModuleToWorker(w1, function() {
+                            if (!--numWorkersToLoad1) removeRunDependency("wasm-instantiate");
                         });
                     });
                 }
             }
             if (!ENVIRONMENT_IS_PTHREAD) addRunDependency("wasm-instantiate");
-            function receiveInstantiationResult(result) {
-                receiveInstance(result["instance"], result["module"]);
+            function receiveInstantiationResult1(result1) {
+                receiveInstance1(result1["instance"], result1["module"]);
             }
-            function instantiateArrayBuffer(receiver) {
-                return getBinaryPromise().then(function(binary) {
-                    return WebAssembly.instantiate(binary, info);
-                }).then(function(instance) {
-                    return instance;
-                }).then(receiver, function(reason) {
-                    err("failed to asynchronously prepare wasm: " + reason);
-                    abort(reason);
+            function instantiateArrayBuffer1(receiver1) {
+                return getBinaryPromise().then(function(binary1) {
+                    return WebAssembly.instantiate(binary1, info1);
+                }).then(function(instance1) {
+                    return instance1;
+                }).then(receiver1, function(reason1) {
+                    err("failed to asynchronously prepare wasm: " + reason1);
+                    abort(reason1);
                 });
             }
-            function instantiateAsync() {
+            function instantiateAsync1() {
                 if (!wasmBinary && typeof WebAssembly.instantiateStreaming == "function" && !isDataURI(wasmBinaryFile) && typeof fetch == "function") return fetch(wasmBinaryFile, {
                     credentials: "same-origin"
-                }).then(function(response) {
-                    var result = WebAssembly.instantiateStreaming(response, info);
-                    return result.then(receiveInstantiationResult, function(reason) {
-                        err("wasm streaming compile failed: " + reason);
+                }).then(function(response1) {
+                    var result1 = WebAssembly.instantiateStreaming(response1, info1);
+                    return result1.then(receiveInstantiationResult1, function(reason1) {
+                        err("wasm streaming compile failed: " + reason1);
                         err("falling back to ArrayBuffer instantiation");
-                        return instantiateArrayBuffer(receiveInstantiationResult);
+                        return instantiateArrayBuffer1(receiveInstantiationResult1);
                     });
                 });
-                else return instantiateArrayBuffer(receiveInstantiationResult);
+                else return instantiateArrayBuffer1(receiveInstantiationResult1);
             }
             if (Module["instantiateWasm"]) try {
-                var exports1 = Module["instantiateWasm"](info, receiveInstance);
+                var exports1 = Module["instantiateWasm"](info1, receiveInstance1);
                 return exports1;
-            } catch (e) {
-                err("Module.instantiateWasm callback failed with error: " + e);
+            } catch (e1) {
+                err("Module.instantiateWasm callback failed with error: " + e1);
                 return false;
             }
-            instantiateAsync().catch(readyPromiseReject);
+            instantiateAsync1().catch(readyPromiseReject);
             return {};
         }
         var tempDouble;
         var tempI64;
         var ASM_CONSTS = {};
-        function killThread(pthread_ptr) {
-            var pthread = PThread.pthreads[pthread_ptr];
-            delete PThread.pthreads[pthread_ptr];
-            pthread.worker.terminate();
-            __emscripten_thread_free_data(pthread_ptr);
-            PThread.runningWorkers.splice(PThread.runningWorkers.indexOf(pthread.worker), 1);
-            pthread.worker.pthread = undefined;
+        function killThread(pthread_ptr1) {
+            var pthread1 = PThread.pthreads[pthread_ptr1];
+            delete PThread.pthreads[pthread_ptr1];
+            pthread1.worker.terminate();
+            __emscripten_thread_free_data(pthread_ptr1);
+            PThread.runningWorkers.splice(PThread.runningWorkers.indexOf(pthread1.worker), 1);
+            pthread1.worker.pthread = undefined;
         }
-        function cancelThread(pthread_ptr) {
-            var pthread = PThread.pthreads[pthread_ptr];
-            pthread.worker.postMessage({
+        function cancelThread(pthread_ptr1) {
+            var pthread1 = PThread.pthreads[pthread_ptr1];
+            pthread1.worker.postMessage({
                 "cmd": "cancel"
             });
         }
-        function cleanupThread(pthread_ptr) {
-            var pthread = PThread.pthreads[pthread_ptr];
-            assert(pthread);
-            var worker = pthread.worker;
-            PThread.returnWorkerToPool(worker);
+        function cleanupThread(pthread_ptr1) {
+            var pthread1 = PThread.pthreads[pthread_ptr1];
+            assert(pthread1);
+            var worker1 = pthread1.worker;
+            PThread.returnWorkerToPool(worker1);
         }
-        function zeroMemory(address, size) {
-            GROWABLE_HEAP_U8().fill(0, address, address + size);
+        function zeroMemory(address1, size1) {
+            GROWABLE_HEAP_U8().fill(0, address1, address1 + size1);
         }
-        function spawnThread(threadParams) {
-            var worker = PThread.getNewWorker();
-            if (!worker) return 6;
-            PThread.runningWorkers.push(worker);
-            var pthread = PThread.pthreads[threadParams.pthread_ptr] = {
-                worker: worker,
-                threadInfoStruct: threadParams.pthread_ptr
+        function spawnThread(threadParams1) {
+            var worker1 = PThread.getNewWorker();
+            if (!worker1) return 6;
+            PThread.runningWorkers.push(worker1);
+            var pthread1 = PThread.pthreads[threadParams1.pthread_ptr] = {
+                worker: worker1,
+                threadInfoStruct: threadParams1.pthread_ptr
             };
-            worker.pthread = pthread;
-            var msg = {
+            worker1.pthread = pthread1;
+            var msg1 = {
                 "cmd": "run",
-                "start_routine": threadParams.startRoutine,
-                "arg": threadParams.arg,
-                "threadInfoStruct": threadParams.pthread_ptr
+                "start_routine": threadParams1.startRoutine,
+                "arg": threadParams1.arg,
+                "threadInfoStruct": threadParams1.pthread_ptr
             };
-            worker.runPthread = ()=>{
-                msg.time = performance.now();
-                worker.postMessage(msg, threadParams.transferList);
+            worker1.runPthread = ()=>{
+                msg1.time = performance.now();
+                worker1.postMessage(msg1, threadParams1.transferList);
             };
-            if (worker.loaded) {
-                worker.runPthread();
-                delete worker.runPthread;
+            if (worker1.loaded) {
+                worker1.runPthread();
+                delete worker1.runPthread;
             }
             return 0;
         }
-        function _exit(status) {
-            exit(status);
+        function _exit(status1) {
+            exit(status1);
         }
-        function handleException(e) {
-            if (e instanceof ExitStatus || e == "unwind") return EXITSTATUS;
-            quit_(1, e);
+        function handleException(e1) {
+            if (e1 instanceof ExitStatus || e1 == "unwind") return EXITSTATUS;
+            quit_(1, e1);
         }
         var PThread = {
             unusedWorkers: [],
@@ -571,78 +571,78 @@ var Godot = (()=>{
                 else PThread.initMainThread();
             },
             initMainThread: function() {
-                var pthreadPoolSize = 8;
-                for(var i = 0; i < pthreadPoolSize; ++i)PThread.allocateUnusedWorker();
+                var pthreadPoolSize1 = 8;
+                for(var i1 = 0; i1 < pthreadPoolSize1; ++i1)PThread.allocateUnusedWorker();
             },
             initWorker: function() {
                 noExitRuntime = false;
             },
             pthreads: {},
-            setExitStatus: function(status) {
-                EXITSTATUS = status;
+            setExitStatus: function(status1) {
+                EXITSTATUS = status1;
             },
             terminateAllThreads: function() {
-                for(var t in PThread.pthreads){
-                    var pthread = PThread.pthreads[t];
-                    if (pthread && pthread.worker) PThread.returnWorkerToPool(pthread.worker);
+                for(var t1 in PThread.pthreads){
+                    var pthread1 = PThread.pthreads[t1];
+                    if (pthread1 && pthread1.worker) PThread.returnWorkerToPool(pthread1.worker);
                 }
-                for(var i = 0; i < PThread.unusedWorkers.length; ++i){
-                    var worker = PThread.unusedWorkers[i];
-                    worker.terminate();
+                for(var i1 = 0; i1 < PThread.unusedWorkers.length; ++i1){
+                    var worker1 = PThread.unusedWorkers[i1];
+                    worker1.terminate();
                 }
                 PThread.unusedWorkers = [];
             },
-            returnWorkerToPool: function(worker) {
-                var pthread_ptr = worker.pthread.threadInfoStruct;
-                delete PThread.pthreads[pthread_ptr];
-                PThread.unusedWorkers.push(worker);
-                PThread.runningWorkers.splice(PThread.runningWorkers.indexOf(worker), 1);
-                worker.pthread = undefined;
-                __emscripten_thread_free_data(pthread_ptr);
+            returnWorkerToPool: function(worker1) {
+                var pthread_ptr1 = worker1.pthread.threadInfoStruct;
+                delete PThread.pthreads[pthread_ptr1];
+                PThread.unusedWorkers.push(worker1);
+                PThread.runningWorkers.splice(PThread.runningWorkers.indexOf(worker1), 1);
+                worker1.pthread = undefined;
+                __emscripten_thread_free_data(pthread_ptr1);
             },
-            receiveObjectTransfer: function(data) {},
+            receiveObjectTransfer: function(data1) {},
             threadInitTLS: function() {
-                for(var i in PThread.tlsInitFunctions)if (PThread.tlsInitFunctions.hasOwnProperty(i)) PThread.tlsInitFunctions[i]();
+                for(var i1 in PThread.tlsInitFunctions)if (PThread.tlsInitFunctions.hasOwnProperty(i1)) PThread.tlsInitFunctions[i1]();
             },
-            loadWasmModuleToWorker: function(worker, onFinishedLoading) {
-                worker.onmessage = (e)=>{
-                    var d = e["data"];
-                    var cmd = d["cmd"];
-                    if (worker.pthread) PThread.currentProxiedOperationCallerThread = worker.pthread.threadInfoStruct;
-                    if (d["targetThread"] && d["targetThread"] != _pthread_self()) {
-                        var thread = PThread.pthreads[d.targetThread];
-                        if (thread) thread.worker.postMessage(d, d["transferList"]);
-                        else err('Internal error! Worker sent a message "' + cmd + '" to target pthread ' + d["targetThread"] + ", but that thread no longer exists!");
+            loadWasmModuleToWorker: function(worker1, onFinishedLoading1) {
+                worker1.onmessage = (e1)=>{
+                    var d1 = e1["data"];
+                    var cmd1 = d1["cmd"];
+                    if (worker1.pthread) PThread.currentProxiedOperationCallerThread = worker1.pthread.threadInfoStruct;
+                    if (d1["targetThread"] && d1["targetThread"] != _pthread_self()) {
+                        var thread1 = PThread.pthreads[d1.targetThread];
+                        if (thread1) thread1.worker.postMessage(d1, d1["transferList"]);
+                        else err('Internal error! Worker sent a message "' + cmd1 + '" to target pthread ' + d1["targetThread"] + ", but that thread no longer exists!");
                         PThread.currentProxiedOperationCallerThread = undefined;
                         return;
                     }
-                    if (cmd === "processProxyingQueue") executeNotifiedProxyingQueue(d["queue"]);
-                    else if (cmd === "spawnThread") spawnThread(d);
-                    else if (cmd === "cleanupThread") cleanupThread(d["thread"]);
-                    else if (cmd === "killThread") killThread(d["thread"]);
-                    else if (cmd === "cancelThread") cancelThread(d["thread"]);
-                    else if (cmd === "loaded") {
-                        worker.loaded = true;
-                        if (onFinishedLoading) onFinishedLoading(worker);
-                        if (worker.runPthread) {
-                            worker.runPthread();
-                            delete worker.runPthread;
+                    if (cmd1 === "processProxyingQueue") executeNotifiedProxyingQueue(d1["queue"]);
+                    else if (cmd1 === "spawnThread") spawnThread(d1);
+                    else if (cmd1 === "cleanupThread") cleanupThread(d1["thread"]);
+                    else if (cmd1 === "killThread") killThread(d1["thread"]);
+                    else if (cmd1 === "cancelThread") cancelThread(d1["thread"]);
+                    else if (cmd1 === "loaded") {
+                        worker1.loaded = true;
+                        if (onFinishedLoading1) onFinishedLoading1(worker1);
+                        if (worker1.runPthread) {
+                            worker1.runPthread();
+                            delete worker1.runPthread;
                         }
-                    } else if (cmd === "print") out("Thread " + d["threadId"] + ": " + d["text"]);
-                    else if (cmd === "printErr") err("Thread " + d["threadId"] + ": " + d["text"]);
-                    else if (cmd === "alert") alert("Thread " + d["threadId"] + ": " + d["text"]);
-                    else if (d.target === "setimmediate") worker.postMessage(d);
-                    else if (cmd === "onAbort") {
-                        if (Module["onAbort"]) Module["onAbort"](d["arg"]);
-                    } else if (cmd) err("worker sent an unknown command " + cmd);
+                    } else if (cmd1 === "print") out("Thread " + d1["threadId"] + ": " + d1["text"]);
+                    else if (cmd1 === "printErr") err("Thread " + d1["threadId"] + ": " + d1["text"]);
+                    else if (cmd1 === "alert") alert("Thread " + d1["threadId"] + ": " + d1["text"]);
+                    else if (d1.target === "setimmediate") worker1.postMessage(d1);
+                    else if (cmd1 === "onAbort") {
+                        if (Module["onAbort"]) Module["onAbort"](d1["arg"]);
+                    } else if (cmd1) err("worker sent an unknown command " + cmd1);
                     PThread.currentProxiedOperationCallerThread = undefined;
                 };
-                worker.onerror = (e)=>{
-                    var message = "worker sent an error!";
-                    err(message + " " + e.filename + ":" + e.lineno + ": " + e.message);
-                    throw e;
+                worker1.onerror = (e1)=>{
+                    var message1 = "worker sent an error!";
+                    err(message1 + " " + e1.filename + ":" + e1.lineno + ": " + e1.message);
+                    throw e1;
                 };
-                worker.postMessage({
+                worker1.postMessage({
                     "cmd": "load",
                     "urlOrBlob": Module["mainScriptUrlOrBlob"] || _scriptDir,
                     "wasmMemory": wasmMemory,
@@ -650,8 +650,8 @@ var Godot = (()=>{
                 });
             },
             allocateUnusedWorker: function() {
-                var pthreadMainJs = locateFile("godot.javascript.opt.threads.worker.js");
-                PThread.unusedWorkers.push(new Worker(pthreadMainJs));
+                var pthreadMainJs1 = locateFile("godot.javascript.opt.threads.worker.js");
+                PThread.unusedWorkers.push(new Worker(pthreadMainJs1));
             },
             getNewWorker: function() {
                 if (PThread.unusedWorkers.length == 0) {
@@ -662,205 +662,205 @@ var Godot = (()=>{
             }
         };
         Module["PThread"] = PThread;
-        function callRuntimeCallbacks(callbacks) {
-            while(callbacks.length > 0){
-                var callback = callbacks.shift();
-                if (typeof callback == "function") {
-                    callback(Module);
+        function callRuntimeCallbacks(callbacks1) {
+            while(callbacks1.length > 0){
+                var callback1 = callbacks1.shift();
+                if (typeof callback1 == "function") {
+                    callback1(Module);
                     continue;
                 }
-                var func = callback.func;
-                if (typeof func == "number") {
-                    if (callback.arg === undefined) getWasmTableEntry(func)();
-                    else getWasmTableEntry(func)(callback.arg);
-                } else func(callback.arg === undefined ? null : callback.arg);
+                var func1 = callback1.func;
+                if (typeof func1 == "number") {
+                    if (callback1.arg === undefined) getWasmTableEntry(func1)();
+                    else getWasmTableEntry(func1)(callback1.arg);
+                } else func1(callback1.arg === undefined ? null : callback1.arg);
             }
         }
-        function withStackSave(f) {
-            var stack = stackSave();
-            var ret = f();
-            stackRestore(stack);
-            return ret;
+        function withStackSave(f1) {
+            var stack1 = stackSave();
+            var ret1 = f1();
+            stackRestore(stack1);
+            return ret1;
         }
         function establishStackSpace() {
-            var pthread_ptr = _pthread_self();
-            var stackTop = GROWABLE_HEAP_I32()[pthread_ptr + 44 >> 2];
-            var stackSize = GROWABLE_HEAP_I32()[pthread_ptr + 48 >> 2];
-            var stackMax = stackTop - stackSize;
-            _emscripten_stack_set_limits(stackTop, stackMax);
-            stackRestore(stackTop);
+            var pthread_ptr1 = _pthread_self();
+            var stackTop1 = GROWABLE_HEAP_I32()[pthread_ptr1 + 44 >> 2];
+            var stackSize1 = GROWABLE_HEAP_I32()[pthread_ptr1 + 48 >> 2];
+            var stackMax1 = stackTop1 - stackSize1;
+            _emscripten_stack_set_limits(stackTop1, stackMax1);
+            stackRestore(stackTop1);
         }
         Module["establishStackSpace"] = establishStackSpace;
-        function exitOnMainThread(returnCode) {
-            if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(1, 0, returnCode);
+        function exitOnMainThread(returnCode1) {
+            if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(1, 0, returnCode1);
             try {
-                _exit(returnCode);
-            } catch (e) {
-                handleException(e);
+                _exit(returnCode1);
+            } catch (e1) {
+                handleException(e1);
             }
         }
-        function getValue(ptr, type = "i8") {
-            if (type.endsWith("*")) type = "i32";
-            switch(type){
+        function getValue(ptr1, type1 = "i8") {
+            if (type1.endsWith("*")) type1 = "i32";
+            switch(type1){
                 case "i1":
-                    return GROWABLE_HEAP_I8()[ptr >> 0];
+                    return GROWABLE_HEAP_I8()[ptr1 >> 0];
                 case "i8":
-                    return GROWABLE_HEAP_I8()[ptr >> 0];
+                    return GROWABLE_HEAP_I8()[ptr1 >> 0];
                 case "i16":
-                    return GROWABLE_HEAP_I16()[ptr >> 1];
+                    return GROWABLE_HEAP_I16()[ptr1 >> 1];
                 case "i32":
-                    return GROWABLE_HEAP_I32()[ptr >> 2];
+                    return GROWABLE_HEAP_I32()[ptr1 >> 2];
                 case "i64":
-                    return GROWABLE_HEAP_I32()[ptr >> 2];
+                    return GROWABLE_HEAP_I32()[ptr1 >> 2];
                 case "float":
-                    return GROWABLE_HEAP_F32()[ptr >> 2];
+                    return GROWABLE_HEAP_F32()[ptr1 >> 2];
                 case "double":
-                    return Number(GROWABLE_HEAP_F64()[ptr >> 3]);
+                    return Number(GROWABLE_HEAP_F64()[ptr1 >> 3]);
                 default:
-                    abort("invalid type for getValue: " + type);
+                    abort("invalid type for getValue: " + type1);
             }
             return null;
         }
-        function getWasmTableEntry(funcPtr) {
-            return wasmTable.get(funcPtr);
+        function getWasmTableEntry(funcPtr1) {
+            return wasmTable.get(funcPtr1);
         }
-        function invokeEntryPoint(ptr, arg) {
-            var result = getWasmTableEntry(ptr)(arg);
-            if (keepRuntimeAlive()) PThread.setExitStatus(result);
-            else __emscripten_thread_exit(result);
+        function invokeEntryPoint(ptr1, arg1) {
+            var result1 = getWasmTableEntry(ptr1)(arg1);
+            if (keepRuntimeAlive()) PThread.setExitStatus(result1);
+            else __emscripten_thread_exit(result1);
         }
         Module["invokeEntryPoint"] = invokeEntryPoint;
-        function registerTLSInit(tlsInitFunc) {
-            PThread.tlsInitFunctions.push(tlsInitFunc);
+        function registerTLSInit(tlsInitFunc1) {
+            PThread.tlsInitFunctions.push(tlsInitFunc1);
         }
-        function setValue(ptr, value, type = "i8") {
-            if (type.endsWith("*")) type = "i32";
-            switch(type){
+        function setValue(ptr1, value1, type1 = "i8") {
+            if (type1.endsWith("*")) type1 = "i32";
+            switch(type1){
                 case "i1":
-                    GROWABLE_HEAP_I8()[ptr >> 0] = value;
+                    GROWABLE_HEAP_I8()[ptr1 >> 0] = value1;
                     break;
                 case "i8":
-                    GROWABLE_HEAP_I8()[ptr >> 0] = value;
+                    GROWABLE_HEAP_I8()[ptr1 >> 0] = value1;
                     break;
                 case "i16":
-                    GROWABLE_HEAP_I16()[ptr >> 1] = value;
+                    GROWABLE_HEAP_I16()[ptr1 >> 1] = value1;
                     break;
                 case "i32":
-                    GROWABLE_HEAP_I32()[ptr >> 2] = value;
+                    GROWABLE_HEAP_I32()[ptr1 >> 2] = value1;
                     break;
                 case "i64":
                     tempI64 = [
-                        value >>> 0,
-                        (tempDouble = value, +Math.abs(tempDouble) >= 1 ? tempDouble > 0 ? (Math.min(+Math.floor(tempDouble / 4294967296), 4294967295) | 0) >>> 0 : ~~+Math.ceil((tempDouble - +(~~tempDouble >>> 0)) / 4294967296) >>> 0 : 0)
-                    ], GROWABLE_HEAP_I32()[ptr >> 2] = tempI64[0], GROWABLE_HEAP_I32()[ptr + 4 >> 2] = tempI64[1];
+                        value1 >>> 0,
+                        (tempDouble = value1, +Math.abs(tempDouble) >= 1 ? tempDouble > 0 ? (Math.min(+Math.floor(tempDouble / 4294967296), 4294967295) | 0) >>> 0 : ~~+Math.ceil((tempDouble - +(~~tempDouble >>> 0)) / 4294967296) >>> 0 : 0)
+                    ], GROWABLE_HEAP_I32()[ptr1 >> 2] = tempI64[0], GROWABLE_HEAP_I32()[ptr1 + 4 >> 2] = tempI64[1];
                     break;
                 case "float":
-                    GROWABLE_HEAP_F32()[ptr >> 2] = value;
+                    GROWABLE_HEAP_F32()[ptr1 >> 2] = value1;
                     break;
                 case "double":
-                    GROWABLE_HEAP_F64()[ptr >> 3] = value;
+                    GROWABLE_HEAP_F64()[ptr1 >> 3] = value1;
                     break;
                 default:
-                    abort("invalid type for setValue: " + type);
+                    abort("invalid type for setValue: " + type1);
             }
         }
-        function ___call_sighandler(fp, sig) {
-            getWasmTableEntry(fp)(sig);
+        function ___call_sighandler(fp1, sig1) {
+            getWasmTableEntry(fp1)(sig1);
         }
-        function ___emscripten_init_main_thread_js(tb) {
-            __emscripten_thread_init(tb, !ENVIRONMENT_IS_WORKER, 1, !ENVIRONMENT_IS_WEB);
+        function ___emscripten_init_main_thread_js(tb1) {
+            __emscripten_thread_init(tb1, !ENVIRONMENT_IS_WORKER, 1, !ENVIRONMENT_IS_WEB);
             PThread.threadInitTLS();
         }
-        function ___emscripten_thread_cleanup(thread) {
-            if (!ENVIRONMENT_IS_PTHREAD) cleanupThread(thread);
+        function ___emscripten_thread_cleanup(thread1) {
+            if (!ENVIRONMENT_IS_PTHREAD) cleanupThread(thread1);
             else postMessage({
                 "cmd": "cleanupThread",
-                "thread": thread
+                "thread": thread1
             });
         }
-        function pthreadCreateProxied(pthread_ptr, attr, start_routine, arg) {
-            if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(2, 1, pthread_ptr, attr, start_routine, arg);
-            return ___pthread_create_js(pthread_ptr, attr, start_routine, arg);
+        function pthreadCreateProxied(pthread_ptr1, attr1, start_routine1, arg1) {
+            if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(2, 1, pthread_ptr1, attr1, start_routine1, arg1);
+            return ___pthread_create_js(pthread_ptr1, attr1, start_routine1, arg1);
         }
-        function ___pthread_create_js(pthread_ptr, attr, start_routine, arg) {
+        function ___pthread_create_js(pthread_ptr1, attr1, start_routine1, arg1) {
             if (typeof SharedArrayBuffer == "undefined") {
                 err("Current environment does not support SharedArrayBuffer, pthreads are not available!");
                 return 6;
             }
-            var transferList = [];
-            var error = 0;
-            if (ENVIRONMENT_IS_PTHREAD && (transferList.length === 0 || error)) return pthreadCreateProxied(pthread_ptr, attr, start_routine, arg);
-            if (error) return error;
-            var threadParams = {
-                startRoutine: start_routine,
-                pthread_ptr: pthread_ptr,
-                arg: arg,
-                transferList: transferList
+            var transferList1 = [];
+            var error1 = 0;
+            if (ENVIRONMENT_IS_PTHREAD && (transferList1.length === 0 || error1)) return pthreadCreateProxied(pthread_ptr1, attr1, start_routine1, arg1);
+            if (error1) return error1;
+            var threadParams1 = {
+                startRoutine: start_routine1,
+                pthread_ptr: pthread_ptr1,
+                arg: arg1,
+                transferList: transferList1
             };
             if (ENVIRONMENT_IS_PTHREAD) {
-                threadParams.cmd = "spawnThread";
-                postMessage(threadParams, transferList);
+                threadParams1.cmd = "spawnThread";
+                postMessage(threadParams1, transferList1);
                 return 0;
             }
-            return spawnThread(threadParams);
+            return spawnThread(threadParams1);
         }
         var PATH = {
-            isAbs: (path)=>path.charAt(0) === "/",
-            splitPath: (filename)=>{
-                var splitPathRe = /^(\/?|)([\s\S]*?)((?:\.{1,2}|[^\/]+?|)(\.[^.\/]*|))(?:[\/]*)$/;
-                return splitPathRe.exec(filename).slice(1);
+            isAbs: (path1)=>path1.charAt(0) === "/",
+            splitPath: (filename1)=>{
+                var splitPathRe1 = /^(\/?|)([\s\S]*?)((?:\.{1,2}|[^\/]+?|)(\.[^.\/]*|))(?:[\/]*)$/;
+                return splitPathRe1.exec(filename1).slice(1);
             },
-            normalizeArray: (parts, allowAboveRoot)=>{
-                var up = 0;
-                for(var i = parts.length - 1; i >= 0; i--){
-                    var last = parts[i];
-                    if (last === ".") parts.splice(i, 1);
-                    else if (last === "..") {
-                        parts.splice(i, 1);
-                        up++;
-                    } else if (up) {
-                        parts.splice(i, 1);
-                        up--;
+            normalizeArray: (parts1, allowAboveRoot1)=>{
+                var up1 = 0;
+                for(var i1 = parts1.length - 1; i1 >= 0; i1--){
+                    var last1 = parts1[i1];
+                    if (last1 === ".") parts1.splice(i1, 1);
+                    else if (last1 === "..") {
+                        parts1.splice(i1, 1);
+                        up1++;
+                    } else if (up1) {
+                        parts1.splice(i1, 1);
+                        up1--;
                     }
                 }
-                if (allowAboveRoot) for(; up; up--)parts.unshift("..");
-                return parts;
+                if (allowAboveRoot1) for(; up1; up1--)parts1.unshift("..");
+                return parts1;
             },
-            normalize: (path)=>{
-                var isAbsolute = PATH.isAbs(path), trailingSlash = path.substr(-1) === "/";
-                path = PATH.normalizeArray(path.split("/").filter((p)=>!!p), !isAbsolute).join("/");
-                if (!path && !isAbsolute) path = ".";
-                if (path && trailingSlash) path += "/";
-                return (isAbsolute ? "/" : "") + path;
+            normalize: (path1)=>{
+                var isAbsolute1 = PATH.isAbs(path1), trailingSlash1 = path1.substr(-1) === "/";
+                path1 = PATH.normalizeArray(path1.split("/").filter((p1)=>!!p1), !isAbsolute1).join("/");
+                if (!path1 && !isAbsolute1) path1 = ".";
+                if (path1 && trailingSlash1) path1 += "/";
+                return (isAbsolute1 ? "/" : "") + path1;
             },
-            dirname: (path)=>{
-                var result = PATH.splitPath(path), root = result[0], dir = result[1];
-                if (!root && !dir) return ".";
-                if (dir) dir = dir.substr(0, dir.length - 1);
-                return root + dir;
+            dirname: (path1)=>{
+                var result1 = PATH.splitPath(path1), root1 = result1[0], dir1 = result1[1];
+                if (!root1 && !dir1) return ".";
+                if (dir1) dir1 = dir1.substr(0, dir1.length - 1);
+                return root1 + dir1;
             },
-            basename: (path)=>{
-                if (path === "/") return "/";
-                path = PATH.normalize(path);
-                path = path.replace(/\/$/, "");
-                var lastSlash = path.lastIndexOf("/");
-                if (lastSlash === -1) return path;
-                return path.substr(lastSlash + 1);
+            basename: (path1)=>{
+                if (path1 === "/") return "/";
+                path1 = PATH.normalize(path1);
+                path1 = path1.replace(/\/$/, "");
+                var lastSlash1 = path1.lastIndexOf("/");
+                if (lastSlash1 === -1) return path1;
+                return path1.substr(lastSlash1 + 1);
             },
             join: function() {
-                var paths = Array.prototype.slice.call(arguments, 0);
-                return PATH.normalize(paths.join("/"));
+                var paths1 = Array.prototype.slice.call(arguments, 0);
+                return PATH.normalize(paths1.join("/"));
             },
-            join2: (l, r)=>{
-                return PATH.normalize(l + "/" + r);
+            join2: (l1, r1)=>{
+                return PATH.normalize(l1 + "/" + r1);
             }
         };
         function getRandomDevice() {
             if (typeof crypto == "object" && typeof crypto["getRandomValues"] == "function") {
-                var randomBuffer = new Uint8Array(1);
+                var randomBuffer1 = new Uint8Array(1);
                 return function() {
-                    crypto.getRandomValues(randomBuffer);
-                    return randomBuffer[0];
+                    crypto.getRandomValues(randomBuffer1);
+                    return randomBuffer1[0];
                 };
             } else return function() {
                 abort("randomDevice");
@@ -868,154 +868,154 @@ var Godot = (()=>{
         }
         var PATH_FS = {
             resolve: function() {
-                var resolvedPath = "", resolvedAbsolute = false;
-                for(var i = arguments.length - 1; i >= -1 && !resolvedAbsolute; i--){
-                    var path = i >= 0 ? arguments[i] : FS.cwd();
-                    if (typeof path != "string") throw new TypeError("Arguments to path.resolve must be strings");
-                    else if (!path) return "";
-                    resolvedPath = path + "/" + resolvedPath;
-                    resolvedAbsolute = PATH.isAbs(path);
+                var resolvedPath1 = "", resolvedAbsolute1 = false;
+                for(var i1 = arguments.length - 1; i1 >= -1 && !resolvedAbsolute1; i1--){
+                    var path1 = i1 >= 0 ? arguments[i1] : FS.cwd();
+                    if (typeof path1 != "string") throw new TypeError("Arguments to path.resolve must be strings");
+                    else if (!path1) return "";
+                    resolvedPath1 = path1 + "/" + resolvedPath1;
+                    resolvedAbsolute1 = PATH.isAbs(path1);
                 }
-                resolvedPath = PATH.normalizeArray(resolvedPath.split("/").filter((p)=>!!p), !resolvedAbsolute).join("/");
-                return (resolvedAbsolute ? "/" : "") + resolvedPath || ".";
+                resolvedPath1 = PATH.normalizeArray(resolvedPath1.split("/").filter((p1)=>!!p1), !resolvedAbsolute1).join("/");
+                return (resolvedAbsolute1 ? "/" : "") + resolvedPath1 || ".";
             },
-            relative: (from, to)=>{
-                from = PATH_FS.resolve(from).substr(1);
-                to = PATH_FS.resolve(to).substr(1);
-                function trim(arr) {
-                    var start = 0;
-                    for(; start < arr.length; start++){
-                        if (arr[start] !== "") break;
+            relative: (from1, to1)=>{
+                from1 = PATH_FS.resolve(from1).substr(1);
+                to1 = PATH_FS.resolve(to1).substr(1);
+                function trim1(arr1) {
+                    var start1 = 0;
+                    for(; start1 < arr1.length; start1++){
+                        if (arr1[start1] !== "") break;
                     }
-                    var end = arr.length - 1;
-                    for(; end >= 0; end--){
-                        if (arr[end] !== "") break;
+                    var end1 = arr1.length - 1;
+                    for(; end1 >= 0; end1--){
+                        if (arr1[end1] !== "") break;
                     }
-                    if (start > end) return [];
-                    return arr.slice(start, end - start + 1);
+                    if (start1 > end1) return [];
+                    return arr1.slice(start1, end1 - start1 + 1);
                 }
-                var fromParts = trim(from.split("/"));
-                var toParts = trim(to.split("/"));
-                var length = Math.min(fromParts.length, toParts.length);
-                var samePartsLength = length;
-                for(var i = 0; i < length; i++)if (fromParts[i] !== toParts[i]) {
-                    samePartsLength = i;
+                var fromParts1 = trim1(from1.split("/"));
+                var toParts1 = trim1(to1.split("/"));
+                var length1 = Math.min(fromParts1.length, toParts1.length);
+                var samePartsLength1 = length1;
+                for(var i1 = 0; i1 < length1; i1++)if (fromParts1[i1] !== toParts1[i1]) {
+                    samePartsLength1 = i1;
                     break;
                 }
-                var outputParts = [];
-                for(var i = samePartsLength; i < fromParts.length; i++)outputParts.push("..");
-                outputParts = outputParts.concat(toParts.slice(samePartsLength));
-                return outputParts.join("/");
+                var outputParts1 = [];
+                for(var i1 = samePartsLength1; i1 < fromParts1.length; i1++)outputParts1.push("..");
+                outputParts1 = outputParts1.concat(toParts1.slice(samePartsLength1));
+                return outputParts1.join("/");
             }
         };
         var TTY = {
             ttys: [],
             init: function() {},
             shutdown: function() {},
-            register: function(dev, ops) {
-                TTY.ttys[dev] = {
+            register: function(dev1, ops1) {
+                TTY.ttys[dev1] = {
                     input: [],
                     output: [],
-                    ops: ops
+                    ops: ops1
                 };
-                FS.registerDevice(dev, TTY.stream_ops);
+                FS.registerDevice(dev1, TTY.stream_ops);
             },
             stream_ops: {
-                open: function(stream) {
-                    var tty = TTY.ttys[stream.node.rdev];
-                    if (!tty) throw new FS.ErrnoError(43);
-                    stream.tty = tty;
-                    stream.seekable = false;
+                open: function(stream1) {
+                    var tty1 = TTY.ttys[stream1.node.rdev];
+                    if (!tty1) throw new FS.ErrnoError(43);
+                    stream1.tty = tty1;
+                    stream1.seekable = false;
                 },
-                close: function(stream) {
-                    stream.tty.ops.flush(stream.tty);
+                close: function(stream1) {
+                    stream1.tty.ops.flush(stream1.tty);
                 },
-                flush: function(stream) {
-                    stream.tty.ops.flush(stream.tty);
+                flush: function(stream1) {
+                    stream1.tty.ops.flush(stream1.tty);
                 },
-                read: function(stream, buffer, offset, length, pos) {
-                    if (!stream.tty || !stream.tty.ops.get_char) throw new FS.ErrnoError(60);
-                    var bytesRead = 0;
-                    for(var i = 0; i < length; i++){
-                        var result;
+                read: function(stream1, buffer1, offset1, length1, pos1) {
+                    if (!stream1.tty || !stream1.tty.ops.get_char) throw new FS.ErrnoError(60);
+                    var bytesRead1 = 0;
+                    for(var i1 = 0; i1 < length1; i1++){
+                        var result1;
                         try {
-                            result = stream.tty.ops.get_char(stream.tty);
-                        } catch (e) {
+                            result1 = stream1.tty.ops.get_char(stream1.tty);
+                        } catch (e1) {
                             throw new FS.ErrnoError(29);
                         }
-                        if (result === undefined && bytesRead === 0) throw new FS.ErrnoError(6);
-                        if (result === null || result === undefined) break;
-                        bytesRead++;
-                        buffer[offset + i] = result;
+                        if (result1 === undefined && bytesRead1 === 0) throw new FS.ErrnoError(6);
+                        if (result1 === null || result1 === undefined) break;
+                        bytesRead1++;
+                        buffer1[offset1 + i1] = result1;
                     }
-                    if (bytesRead) stream.node.timestamp = Date.now();
-                    return bytesRead;
+                    if (bytesRead1) stream1.node.timestamp = Date.now();
+                    return bytesRead1;
                 },
-                write: function(stream, buffer, offset, length, pos) {
-                    if (!stream.tty || !stream.tty.ops.put_char) throw new FS.ErrnoError(60);
+                write: function(stream1, buffer1, offset1, length1, pos1) {
+                    if (!stream1.tty || !stream1.tty.ops.put_char) throw new FS.ErrnoError(60);
                     try {
-                        for(var i = 0; i < length; i++)stream.tty.ops.put_char(stream.tty, buffer[offset + i]);
-                    } catch (e) {
+                        for(var i1 = 0; i1 < length1; i1++)stream1.tty.ops.put_char(stream1.tty, buffer1[offset1 + i1]);
+                    } catch (e1) {
                         throw new FS.ErrnoError(29);
                     }
-                    if (length) stream.node.timestamp = Date.now();
-                    return i;
+                    if (length1) stream1.node.timestamp = Date.now();
+                    return i1;
                 }
             },
             default_tty_ops: {
-                get_char: function(tty) {
-                    if (!tty.input.length) {
-                        var result = null;
+                get_char: function(tty1) {
+                    if (!tty1.input.length) {
+                        var result1 = null;
                         if (typeof window != "undefined" && typeof window.prompt == "function") {
-                            result = window.prompt("Input: ");
-                            if (result !== null) result += "\n";
+                            result1 = window.prompt("Input: ");
+                            if (result1 !== null) result1 += "\n";
                         } else if (typeof readline == "function") {
-                            result = readline();
-                            if (result !== null) result += "\n";
+                            result1 = readline();
+                            if (result1 !== null) result1 += "\n";
                         }
-                        if (!result) return null;
-                        tty.input = intArrayFromString(result, true);
+                        if (!result1) return null;
+                        tty1.input = intArrayFromString(result1, true);
                     }
-                    return tty.input.shift();
+                    return tty1.input.shift();
                 },
-                put_char: function(tty, val) {
-                    if (val === null || val === 10) {
-                        out(UTF8ArrayToString(tty.output, 0));
-                        tty.output = [];
-                    } else if (val != 0) tty.output.push(val);
+                put_char: function(tty1, val1) {
+                    if (val1 === null || val1 === 10) {
+                        out(UTF8ArrayToString(tty1.output, 0));
+                        tty1.output = [];
+                    } else if (val1 != 0) tty1.output.push(val1);
                 },
-                flush: function(tty) {
-                    if (tty.output && tty.output.length > 0) {
-                        out(UTF8ArrayToString(tty.output, 0));
-                        tty.output = [];
+                flush: function(tty1) {
+                    if (tty1.output && tty1.output.length > 0) {
+                        out(UTF8ArrayToString(tty1.output, 0));
+                        tty1.output = [];
                     }
                 }
             },
             default_tty1_ops: {
-                put_char: function(tty, val) {
-                    if (val === null || val === 10) {
-                        err(UTF8ArrayToString(tty.output, 0));
-                        tty.output = [];
-                    } else if (val != 0) tty.output.push(val);
+                put_char: function(tty1, val1) {
+                    if (val1 === null || val1 === 10) {
+                        err(UTF8ArrayToString(tty1.output, 0));
+                        tty1.output = [];
+                    } else if (val1 != 0) tty1.output.push(val1);
                 },
-                flush: function(tty) {
-                    if (tty.output && tty.output.length > 0) {
-                        err(UTF8ArrayToString(tty.output, 0));
-                        tty.output = [];
+                flush: function(tty1) {
+                    if (tty1.output && tty1.output.length > 0) {
+                        err(UTF8ArrayToString(tty1.output, 0));
+                        tty1.output = [];
                     }
                 }
             }
         };
-        function mmapAlloc(size) {
+        function mmapAlloc(size1) {
             abort();
         }
         var MEMFS = {
             ops_table: null,
-            mount: function(mount) {
+            mount: function(mount1) {
                 return MEMFS.createNode(null, "/", 16895, 0);
             },
-            createNode: function(parent, name, mode, dev) {
-                if (FS.isBlkdev(mode) || FS.isFIFO(mode)) throw new FS.ErrnoError(63);
+            createNode: function(parent1, name1, mode1, dev1) {
+                if (FS.isBlkdev(mode1) || FS.isFIFO(mode1)) throw new FS.ErrnoError(63);
                 if (!MEMFS.ops_table) MEMFS.ops_table = {
                     dir: {
                         node: {
@@ -1063,478 +1063,478 @@ var Godot = (()=>{
                         stream: FS.chrdev_stream_ops
                     }
                 };
-                var node = FS.createNode(parent, name, mode, dev);
-                if (FS.isDir(node.mode)) {
-                    node.node_ops = MEMFS.ops_table.dir.node;
-                    node.stream_ops = MEMFS.ops_table.dir.stream;
-                    node.contents = {};
-                } else if (FS.isFile(node.mode)) {
-                    node.node_ops = MEMFS.ops_table.file.node;
-                    node.stream_ops = MEMFS.ops_table.file.stream;
-                    node.usedBytes = 0;
-                    node.contents = null;
-                } else if (FS.isLink(node.mode)) {
-                    node.node_ops = MEMFS.ops_table.link.node;
-                    node.stream_ops = MEMFS.ops_table.link.stream;
-                } else if (FS.isChrdev(node.mode)) {
-                    node.node_ops = MEMFS.ops_table.chrdev.node;
-                    node.stream_ops = MEMFS.ops_table.chrdev.stream;
+                var node1 = FS.createNode(parent1, name1, mode1, dev1);
+                if (FS.isDir(node1.mode)) {
+                    node1.node_ops = MEMFS.ops_table.dir.node;
+                    node1.stream_ops = MEMFS.ops_table.dir.stream;
+                    node1.contents = {};
+                } else if (FS.isFile(node1.mode)) {
+                    node1.node_ops = MEMFS.ops_table.file.node;
+                    node1.stream_ops = MEMFS.ops_table.file.stream;
+                    node1.usedBytes = 0;
+                    node1.contents = null;
+                } else if (FS.isLink(node1.mode)) {
+                    node1.node_ops = MEMFS.ops_table.link.node;
+                    node1.stream_ops = MEMFS.ops_table.link.stream;
+                } else if (FS.isChrdev(node1.mode)) {
+                    node1.node_ops = MEMFS.ops_table.chrdev.node;
+                    node1.stream_ops = MEMFS.ops_table.chrdev.stream;
                 }
-                node.timestamp = Date.now();
-                if (parent) {
-                    parent.contents[name] = node;
-                    parent.timestamp = node.timestamp;
+                node1.timestamp = Date.now();
+                if (parent1) {
+                    parent1.contents[name1] = node1;
+                    parent1.timestamp = node1.timestamp;
                 }
-                return node;
+                return node1;
             },
-            getFileDataAsTypedArray: function(node) {
-                if (!node.contents) return new Uint8Array(0);
-                if (node.contents.subarray) return node.contents.subarray(0, node.usedBytes);
-                return new Uint8Array(node.contents);
+            getFileDataAsTypedArray: function(node1) {
+                if (!node1.contents) return new Uint8Array(0);
+                if (node1.contents.subarray) return node1.contents.subarray(0, node1.usedBytes);
+                return new Uint8Array(node1.contents);
             },
-            expandFileStorage: function(node, newCapacity) {
-                var prevCapacity = node.contents ? node.contents.length : 0;
-                if (prevCapacity >= newCapacity) return;
-                var CAPACITY_DOUBLING_MAX = 1048576;
-                newCapacity = Math.max(newCapacity, prevCapacity * (prevCapacity < CAPACITY_DOUBLING_MAX ? 2 : 1.125) >>> 0);
-                if (prevCapacity != 0) newCapacity = Math.max(newCapacity, 256);
-                var oldContents = node.contents;
-                node.contents = new Uint8Array(newCapacity);
-                if (node.usedBytes > 0) node.contents.set(oldContents.subarray(0, node.usedBytes), 0);
+            expandFileStorage: function(node1, newCapacity1) {
+                var prevCapacity1 = node1.contents ? node1.contents.length : 0;
+                if (prevCapacity1 >= newCapacity1) return;
+                var CAPACITY_DOUBLING_MAX1 = 1048576;
+                newCapacity1 = Math.max(newCapacity1, prevCapacity1 * (prevCapacity1 < CAPACITY_DOUBLING_MAX1 ? 2 : 1.125) >>> 0);
+                if (prevCapacity1 != 0) newCapacity1 = Math.max(newCapacity1, 256);
+                var oldContents1 = node1.contents;
+                node1.contents = new Uint8Array(newCapacity1);
+                if (node1.usedBytes > 0) node1.contents.set(oldContents1.subarray(0, node1.usedBytes), 0);
             },
-            resizeFileStorage: function(node, newSize) {
-                if (node.usedBytes == newSize) return;
-                if (newSize == 0) {
-                    node.contents = null;
-                    node.usedBytes = 0;
+            resizeFileStorage: function(node1, newSize1) {
+                if (node1.usedBytes == newSize1) return;
+                if (newSize1 == 0) {
+                    node1.contents = null;
+                    node1.usedBytes = 0;
                 } else {
-                    var oldContents = node.contents;
-                    node.contents = new Uint8Array(newSize);
-                    if (oldContents) node.contents.set(oldContents.subarray(0, Math.min(newSize, node.usedBytes)));
-                    node.usedBytes = newSize;
+                    var oldContents1 = node1.contents;
+                    node1.contents = new Uint8Array(newSize1);
+                    if (oldContents1) node1.contents.set(oldContents1.subarray(0, Math.min(newSize1, node1.usedBytes)));
+                    node1.usedBytes = newSize1;
                 }
             },
             node_ops: {
-                getattr: function(node) {
-                    var attr = {};
-                    attr.dev = FS.isChrdev(node.mode) ? node.id : 1;
-                    attr.ino = node.id;
-                    attr.mode = node.mode;
-                    attr.nlink = 1;
-                    attr.uid = 0;
-                    attr.gid = 0;
-                    attr.rdev = node.rdev;
-                    if (FS.isDir(node.mode)) attr.size = 4096;
-                    else if (FS.isFile(node.mode)) attr.size = node.usedBytes;
-                    else if (FS.isLink(node.mode)) attr.size = node.link.length;
-                    else attr.size = 0;
-                    attr.atime = new Date(node.timestamp);
-                    attr.mtime = new Date(node.timestamp);
-                    attr.ctime = new Date(node.timestamp);
-                    attr.blksize = 4096;
-                    attr.blocks = Math.ceil(attr.size / attr.blksize);
-                    return attr;
+                getattr: function(node1) {
+                    var attr1 = {};
+                    attr1.dev = FS.isChrdev(node1.mode) ? node1.id : 1;
+                    attr1.ino = node1.id;
+                    attr1.mode = node1.mode;
+                    attr1.nlink = 1;
+                    attr1.uid = 0;
+                    attr1.gid = 0;
+                    attr1.rdev = node1.rdev;
+                    if (FS.isDir(node1.mode)) attr1.size = 4096;
+                    else if (FS.isFile(node1.mode)) attr1.size = node1.usedBytes;
+                    else if (FS.isLink(node1.mode)) attr1.size = node1.link.length;
+                    else attr1.size = 0;
+                    attr1.atime = new Date(node1.timestamp);
+                    attr1.mtime = new Date(node1.timestamp);
+                    attr1.ctime = new Date(node1.timestamp);
+                    attr1.blksize = 4096;
+                    attr1.blocks = Math.ceil(attr1.size / attr1.blksize);
+                    return attr1;
                 },
-                setattr: function(node, attr) {
-                    if (attr.mode !== undefined) node.mode = attr.mode;
-                    if (attr.timestamp !== undefined) node.timestamp = attr.timestamp;
-                    if (attr.size !== undefined) MEMFS.resizeFileStorage(node, attr.size);
+                setattr: function(node1, attr1) {
+                    if (attr1.mode !== undefined) node1.mode = attr1.mode;
+                    if (attr1.timestamp !== undefined) node1.timestamp = attr1.timestamp;
+                    if (attr1.size !== undefined) MEMFS.resizeFileStorage(node1, attr1.size);
                 },
-                lookup: function(parent, name) {
+                lookup: function(parent1, name1) {
                     throw FS.genericErrors[44];
                 },
-                mknod: function(parent, name, mode, dev) {
-                    return MEMFS.createNode(parent, name, mode, dev);
+                mknod: function(parent1, name1, mode1, dev1) {
+                    return MEMFS.createNode(parent1, name1, mode1, dev1);
                 },
-                rename: function(old_node, new_dir, new_name) {
-                    if (FS.isDir(old_node.mode)) {
-                        var new_node;
+                rename: function(old_node1, new_dir1, new_name1) {
+                    if (FS.isDir(old_node1.mode)) {
+                        var new_node1;
                         try {
-                            new_node = FS.lookupNode(new_dir, new_name);
-                        } catch (e) {}
-                        if (new_node) {
-                            for(var i in new_node.contents)throw new FS.ErrnoError(55);
+                            new_node1 = FS.lookupNode(new_dir1, new_name1);
+                        } catch (e1) {}
+                        if (new_node1) {
+                            for(var i1 in new_node1.contents)throw new FS.ErrnoError(55);
                         }
                     }
-                    delete old_node.parent.contents[old_node.name];
-                    old_node.parent.timestamp = Date.now();
-                    old_node.name = new_name;
-                    new_dir.contents[new_name] = old_node;
-                    new_dir.timestamp = old_node.parent.timestamp;
-                    old_node.parent = new_dir;
+                    delete old_node1.parent.contents[old_node1.name];
+                    old_node1.parent.timestamp = Date.now();
+                    old_node1.name = new_name1;
+                    new_dir1.contents[new_name1] = old_node1;
+                    new_dir1.timestamp = old_node1.parent.timestamp;
+                    old_node1.parent = new_dir1;
                 },
-                unlink: function(parent, name) {
-                    delete parent.contents[name];
-                    parent.timestamp = Date.now();
+                unlink: function(parent1, name1) {
+                    delete parent1.contents[name1];
+                    parent1.timestamp = Date.now();
                 },
-                rmdir: function(parent, name) {
-                    var node = FS.lookupNode(parent, name);
-                    for(var i in node.contents)throw new FS.ErrnoError(55);
-                    delete parent.contents[name];
-                    parent.timestamp = Date.now();
+                rmdir: function(parent1, name1) {
+                    var node1 = FS.lookupNode(parent1, name1);
+                    for(var i1 in node1.contents)throw new FS.ErrnoError(55);
+                    delete parent1.contents[name1];
+                    parent1.timestamp = Date.now();
                 },
-                readdir: function(node) {
-                    var entries = [
+                readdir: function(node1) {
+                    var entries1 = [
                         ".",
                         ".."
                     ];
-                    for(var key in node.contents){
-                        if (!node.contents.hasOwnProperty(key)) continue;
-                        entries.push(key);
+                    for(var key1 in node1.contents){
+                        if (!node1.contents.hasOwnProperty(key1)) continue;
+                        entries1.push(key1);
                     }
-                    return entries;
+                    return entries1;
                 },
-                symlink: function(parent, newname, oldpath) {
-                    var node = MEMFS.createNode(parent, newname, 41471, 0);
-                    node.link = oldpath;
-                    return node;
+                symlink: function(parent1, newname1, oldpath1) {
+                    var node1 = MEMFS.createNode(parent1, newname1, 41471, 0);
+                    node1.link = oldpath1;
+                    return node1;
                 },
-                readlink: function(node) {
-                    if (!FS.isLink(node.mode)) throw new FS.ErrnoError(28);
-                    return node.link;
+                readlink: function(node1) {
+                    if (!FS.isLink(node1.mode)) throw new FS.ErrnoError(28);
+                    return node1.link;
                 }
             },
             stream_ops: {
-                read: function(stream, buffer, offset, length, position) {
-                    var contents = stream.node.contents;
-                    if (position >= stream.node.usedBytes) return 0;
-                    var size = Math.min(stream.node.usedBytes - position, length);
-                    if (size > 8 && contents.subarray) buffer.set(contents.subarray(position, position + size), offset);
-                    else for(var i = 0; i < size; i++)buffer[offset + i] = contents[position + i];
-                    return size;
+                read: function(stream1, buffer1, offset1, length1, position1) {
+                    var contents1 = stream1.node.contents;
+                    if (position1 >= stream1.node.usedBytes) return 0;
+                    var size1 = Math.min(stream1.node.usedBytes - position1, length1);
+                    if (size1 > 8 && contents1.subarray) buffer1.set(contents1.subarray(position1, position1 + size1), offset1);
+                    else for(var i1 = 0; i1 < size1; i1++)buffer1[offset1 + i1] = contents1[position1 + i1];
+                    return size1;
                 },
-                write: function(stream, buffer, offset, length, position, canOwn) {
-                    if (buffer.buffer === GROWABLE_HEAP_I8().buffer) canOwn = false;
-                    if (!length) return 0;
-                    var node = stream.node;
-                    node.timestamp = Date.now();
-                    if (buffer.subarray && (!node.contents || node.contents.subarray)) {
-                        if (canOwn) {
-                            node.contents = buffer.subarray(offset, offset + length);
-                            node.usedBytes = length;
-                            return length;
-                        } else if (node.usedBytes === 0 && position === 0) {
-                            node.contents = buffer.slice(offset, offset + length);
-                            node.usedBytes = length;
-                            return length;
-                        } else if (position + length <= node.usedBytes) {
-                            node.contents.set(buffer.subarray(offset, offset + length), position);
-                            return length;
+                write: function(stream1, buffer1, offset1, length1, position1, canOwn1) {
+                    if (buffer1.buffer === GROWABLE_HEAP_I8().buffer) canOwn1 = false;
+                    if (!length1) return 0;
+                    var node1 = stream1.node;
+                    node1.timestamp = Date.now();
+                    if (buffer1.subarray && (!node1.contents || node1.contents.subarray)) {
+                        if (canOwn1) {
+                            node1.contents = buffer1.subarray(offset1, offset1 + length1);
+                            node1.usedBytes = length1;
+                            return length1;
+                        } else if (node1.usedBytes === 0 && position1 === 0) {
+                            node1.contents = buffer1.slice(offset1, offset1 + length1);
+                            node1.usedBytes = length1;
+                            return length1;
+                        } else if (position1 + length1 <= node1.usedBytes) {
+                            node1.contents.set(buffer1.subarray(offset1, offset1 + length1), position1);
+                            return length1;
                         }
                     }
-                    MEMFS.expandFileStorage(node, position + length);
-                    if (node.contents.subarray && buffer.subarray) node.contents.set(buffer.subarray(offset, offset + length), position);
-                    else for(var i = 0; i < length; i++)node.contents[position + i] = buffer[offset + i];
-                    node.usedBytes = Math.max(node.usedBytes, position + length);
-                    return length;
+                    MEMFS.expandFileStorage(node1, position1 + length1);
+                    if (node1.contents.subarray && buffer1.subarray) node1.contents.set(buffer1.subarray(offset1, offset1 + length1), position1);
+                    else for(var i1 = 0; i1 < length1; i1++)node1.contents[position1 + i1] = buffer1[offset1 + i1];
+                    node1.usedBytes = Math.max(node1.usedBytes, position1 + length1);
+                    return length1;
                 },
-                llseek: function(stream, offset, whence) {
-                    var position = offset;
-                    if (whence === 1) position += stream.position;
-                    else if (whence === 2) {
-                        if (FS.isFile(stream.node.mode)) position += stream.node.usedBytes;
+                llseek: function(stream1, offset1, whence1) {
+                    var position1 = offset1;
+                    if (whence1 === 1) position1 += stream1.position;
+                    else if (whence1 === 2) {
+                        if (FS.isFile(stream1.node.mode)) position1 += stream1.node.usedBytes;
                     }
-                    if (position < 0) throw new FS.ErrnoError(28);
-                    return position;
+                    if (position1 < 0) throw new FS.ErrnoError(28);
+                    return position1;
                 },
-                allocate: function(stream, offset, length) {
-                    MEMFS.expandFileStorage(stream.node, offset + length);
-                    stream.node.usedBytes = Math.max(stream.node.usedBytes, offset + length);
+                allocate: function(stream1, offset1, length1) {
+                    MEMFS.expandFileStorage(stream1.node, offset1 + length1);
+                    stream1.node.usedBytes = Math.max(stream1.node.usedBytes, offset1 + length1);
                 },
-                mmap: function(stream, length, position, prot, flags) {
-                    if (!FS.isFile(stream.node.mode)) throw new FS.ErrnoError(43);
-                    var ptr;
-                    var allocated;
-                    var contents = stream.node.contents;
-                    if (!(flags & 2) && contents.buffer === buffer) {
-                        allocated = false;
-                        ptr = contents.byteOffset;
+                mmap: function(stream1, length1, position1, prot1, flags1) {
+                    if (!FS.isFile(stream1.node.mode)) throw new FS.ErrnoError(43);
+                    var ptr1;
+                    var allocated1;
+                    var contents1 = stream1.node.contents;
+                    if (!(flags1 & 2) && contents1.buffer === buffer) {
+                        allocated1 = false;
+                        ptr1 = contents1.byteOffset;
                     } else {
-                        if (position > 0 || position + length < contents.length) {
-                            if (contents.subarray) contents = contents.subarray(position, position + length);
-                            else contents = Array.prototype.slice.call(contents, position, position + length);
+                        if (position1 > 0 || position1 + length1 < contents1.length) {
+                            if (contents1.subarray) contents1 = contents1.subarray(position1, position1 + length1);
+                            else contents1 = Array.prototype.slice.call(contents1, position1, position1 + length1);
                         }
-                        allocated = true;
-                        ptr = mmapAlloc(length);
-                        if (!ptr) throw new FS.ErrnoError(48);
-                        GROWABLE_HEAP_I8().set(contents, ptr);
+                        allocated1 = true;
+                        ptr1 = mmapAlloc(length1);
+                        if (!ptr1) throw new FS.ErrnoError(48);
+                        GROWABLE_HEAP_I8().set(contents1, ptr1);
                     }
                     return {
-                        ptr: ptr,
-                        allocated: allocated
+                        ptr: ptr1,
+                        allocated: allocated1
                     };
                 },
-                msync: function(stream, buffer, offset, length, mmapFlags) {
-                    if (!FS.isFile(stream.node.mode)) throw new FS.ErrnoError(43);
-                    if (mmapFlags & 2) return 0;
-                    var bytesWritten = MEMFS.stream_ops.write(stream, buffer, 0, length, offset, false);
+                msync: function(stream1, buffer1, offset1, length1, mmapFlags1) {
+                    if (!FS.isFile(stream1.node.mode)) throw new FS.ErrnoError(43);
+                    if (mmapFlags1 & 2) return 0;
+                    var bytesWritten1 = MEMFS.stream_ops.write(stream1, buffer1, 0, length1, offset1, false);
                     return 0;
                 }
             }
         };
-        function asyncLoad(url, onload, onerror, noRunDep) {
-            var dep = !noRunDep ? getUniqueRunDependency("al " + url) : "";
-            readAsync(url, function(arrayBuffer) {
-                assert(arrayBuffer, 'Loading data file "' + url + '" failed (no arrayBuffer).');
-                onload(new Uint8Array(arrayBuffer));
-                if (dep) removeRunDependency(dep);
-            }, function(event) {
-                if (onerror) onerror();
-                else throw 'Loading data file "' + url + '" failed.';
+        function asyncLoad(url1, onload1, onerror1, noRunDep1) {
+            var dep1 = !noRunDep1 ? getUniqueRunDependency("al " + url1) : "";
+            readAsync(url1, function(arrayBuffer1) {
+                assert(arrayBuffer1, 'Loading data file "' + url1 + '" failed (no arrayBuffer).');
+                onload1(new Uint8Array(arrayBuffer1));
+                if (dep1) removeRunDependency(dep1);
+            }, function(event1) {
+                if (onerror1) onerror1();
+                else throw 'Loading data file "' + url1 + '" failed.';
             });
-            if (dep) addRunDependency(dep);
+            if (dep1) addRunDependency(dep1);
         }
         var IDBFS = {
             dbs: {},
             indexedDB: ()=>{
                 if (typeof indexedDB != "undefined") return indexedDB;
-                var ret = null;
-                if (typeof window == "object") ret = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
-                assert(ret, "IDBFS used, but indexedDB not supported");
-                return ret;
+                var ret1 = null;
+                if (typeof window == "object") ret1 = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
+                assert(ret1, "IDBFS used, but indexedDB not supported");
+                return ret1;
             },
             DB_VERSION: 21,
             DB_STORE_NAME: "FILE_DATA",
-            mount: function(mount) {
+            mount: function(mount1) {
                 return MEMFS.mount.apply(null, arguments);
             },
-            syncfs: (mount, populate, callback)=>{
-                IDBFS.getLocalSet(mount, (err, local)=>{
-                    if (err) return callback(err);
-                    IDBFS.getRemoteSet(mount, (err, remote)=>{
-                        if (err) return callback(err);
-                        var src = populate ? remote : local;
-                        var dst = populate ? local : remote;
-                        IDBFS.reconcile(src, dst, callback);
+            syncfs: (mount1, populate1, callback1)=>{
+                IDBFS.getLocalSet(mount1, (err1, local1)=>{
+                    if (err1) return callback1(err1);
+                    IDBFS.getRemoteSet(mount1, (err1, remote1)=>{
+                        if (err1) return callback1(err1);
+                        var src1 = populate1 ? remote1 : local1;
+                        var dst1 = populate1 ? local1 : remote1;
+                        IDBFS.reconcile(src1, dst1, callback1);
                     });
                 });
             },
             quit: ()=>{
-                Object.values(IDBFS.dbs).forEach((value)=>value.close());
+                Object.values(IDBFS.dbs).forEach((value1)=>value1.close());
                 IDBFS.dbs = {};
             },
-            getDB: (name, callback)=>{
-                var db = IDBFS.dbs[name];
-                if (db) return callback(null, db);
-                var req;
+            getDB: (name1, callback1)=>{
+                var db1 = IDBFS.dbs[name1];
+                if (db1) return callback1(null, db1);
+                var req1;
                 try {
-                    req = IDBFS.indexedDB().open(name, IDBFS.DB_VERSION);
-                } catch (e) {
-                    return callback(e);
+                    req1 = IDBFS.indexedDB().open(name1, IDBFS.DB_VERSION);
+                } catch (e1) {
+                    return callback1(e1);
                 }
-                if (!req) return callback("Unable to connect to IndexedDB");
-                req.onupgradeneeded = (e)=>{
-                    var db = e.target.result;
-                    var transaction = e.target.transaction;
-                    var fileStore;
-                    if (db.objectStoreNames.contains(IDBFS.DB_STORE_NAME)) fileStore = transaction.objectStore(IDBFS.DB_STORE_NAME);
-                    else fileStore = db.createObjectStore(IDBFS.DB_STORE_NAME);
-                    if (!fileStore.indexNames.contains("timestamp")) fileStore.createIndex("timestamp", "timestamp", {
+                if (!req1) return callback1("Unable to connect to IndexedDB");
+                req1.onupgradeneeded = (e1)=>{
+                    var db1 = e1.target.result;
+                    var transaction1 = e1.target.transaction;
+                    var fileStore1;
+                    if (db1.objectStoreNames.contains(IDBFS.DB_STORE_NAME)) fileStore1 = transaction1.objectStore(IDBFS.DB_STORE_NAME);
+                    else fileStore1 = db1.createObjectStore(IDBFS.DB_STORE_NAME);
+                    if (!fileStore1.indexNames.contains("timestamp")) fileStore1.createIndex("timestamp", "timestamp", {
                         unique: false
                     });
                 };
-                req.onsuccess = ()=>{
-                    db = req.result;
-                    IDBFS.dbs[name] = db;
-                    callback(null, db);
+                req1.onsuccess = ()=>{
+                    db1 = req1.result;
+                    IDBFS.dbs[name1] = db1;
+                    callback1(null, db1);
                 };
-                req.onerror = (e)=>{
-                    callback(this.error);
-                    e.preventDefault();
+                req1.onerror = (e1)=>{
+                    callback1(this.error);
+                    e1.preventDefault();
                 };
             },
-            getLocalSet: (mount, callback)=>{
-                var entries = {};
-                function isRealDir(p) {
-                    return p !== "." && p !== "..";
+            getLocalSet: (mount1, callback1)=>{
+                var entries1 = {};
+                function isRealDir1(p1) {
+                    return p1 !== "." && p1 !== "..";
                 }
-                function toAbsolute(root) {
-                    return (p)=>{
-                        return PATH.join2(root, p);
+                function toAbsolute1(root1) {
+                    return (p1)=>{
+                        return PATH.join2(root1, p1);
                     };
                 }
-                var check = FS.readdir(mount.mountpoint).filter(isRealDir).map(toAbsolute(mount.mountpoint));
-                while(check.length){
-                    var path = check.pop();
-                    var stat;
+                var check1 = FS.readdir(mount1.mountpoint).filter(isRealDir1).map(toAbsolute1(mount1.mountpoint));
+                while(check1.length){
+                    var path1 = check1.pop();
+                    var stat1;
                     try {
-                        stat = FS.stat(path);
-                    } catch (e) {
-                        return callback(e);
+                        stat1 = FS.stat(path1);
+                    } catch (e1) {
+                        return callback1(e1);
                     }
-                    if (FS.isDir(stat.mode)) check.push.apply(check, FS.readdir(path).filter(isRealDir).map(toAbsolute(path)));
-                    entries[path] = {
-                        "timestamp": stat.mtime
+                    if (FS.isDir(stat1.mode)) check1.push.apply(check1, FS.readdir(path1).filter(isRealDir1).map(toAbsolute1(path1)));
+                    entries1[path1] = {
+                        "timestamp": stat1.mtime
                     };
                 }
-                return callback(null, {
+                return callback1(null, {
                     type: "local",
-                    entries: entries
+                    entries: entries1
                 });
             },
-            getRemoteSet: (mount, callback)=>{
-                var entries = {};
-                IDBFS.getDB(mount.mountpoint, (err, db)=>{
-                    if (err) return callback(err);
+            getRemoteSet: (mount1, callback1)=>{
+                var entries1 = {};
+                IDBFS.getDB(mount1.mountpoint, (err1, db1)=>{
+                    if (err1) return callback1(err1);
                     try {
-                        var transaction = db.transaction([
+                        var transaction1 = db1.transaction([
                             IDBFS.DB_STORE_NAME
                         ], "readonly");
-                        transaction.onerror = (e)=>{
-                            callback(this.error);
-                            e.preventDefault();
+                        transaction1.onerror = (e1)=>{
+                            callback1(this.error);
+                            e1.preventDefault();
                         };
-                        var store = transaction.objectStore(IDBFS.DB_STORE_NAME);
-                        var index = store.index("timestamp");
-                        index.openKeyCursor().onsuccess = (event)=>{
-                            var cursor = event.target.result;
-                            if (!cursor) return callback(null, {
+                        var store1 = transaction1.objectStore(IDBFS.DB_STORE_NAME);
+                        var index1 = store1.index("timestamp");
+                        index1.openKeyCursor().onsuccess = (event1)=>{
+                            var cursor1 = event1.target.result;
+                            if (!cursor1) return callback1(null, {
                                 type: "remote",
-                                db: db,
-                                entries: entries
+                                db: db1,
+                                entries: entries1
                             });
-                            entries[cursor.primaryKey] = {
-                                "timestamp": cursor.key
+                            entries1[cursor1.primaryKey] = {
+                                "timestamp": cursor1.key
                             };
-                            cursor.continue();
+                            cursor1.continue();
                         };
-                    } catch (e) {
-                        return callback(e);
+                    } catch (e1) {
+                        return callback1(e1);
                     }
                 });
             },
-            loadLocalEntry: (path, callback)=>{
-                var stat, node;
+            loadLocalEntry: (path1, callback1)=>{
+                var stat1, node1;
                 try {
-                    var lookup = FS.lookupPath(path);
-                    node = lookup.node;
-                    stat = FS.stat(path);
-                } catch (e) {
-                    return callback(e);
+                    var lookup1 = FS.lookupPath(path1);
+                    node1 = lookup1.node;
+                    stat1 = FS.stat(path1);
+                } catch (e1) {
+                    return callback1(e1);
                 }
-                if (FS.isDir(stat.mode)) return callback(null, {
-                    "timestamp": stat.mtime,
-                    "mode": stat.mode
+                if (FS.isDir(stat1.mode)) return callback1(null, {
+                    "timestamp": stat1.mtime,
+                    "mode": stat1.mode
                 });
-                else if (FS.isFile(stat.mode)) {
-                    node.contents = MEMFS.getFileDataAsTypedArray(node);
-                    return callback(null, {
-                        "timestamp": stat.mtime,
-                        "mode": stat.mode,
-                        "contents": node.contents
+                else if (FS.isFile(stat1.mode)) {
+                    node1.contents = MEMFS.getFileDataAsTypedArray(node1);
+                    return callback1(null, {
+                        "timestamp": stat1.mtime,
+                        "mode": stat1.mode,
+                        "contents": node1.contents
                     });
-                } else return callback(new Error("node type not supported"));
+                } else return callback1(new Error("node type not supported"));
             },
-            storeLocalEntry: (path, entry, callback)=>{
+            storeLocalEntry: (path1, entry1, callback1)=>{
                 try {
-                    if (FS.isDir(entry["mode"])) FS.mkdirTree(path, entry["mode"]);
-                    else if (FS.isFile(entry["mode"])) FS.writeFile(path, entry["contents"], {
+                    if (FS.isDir(entry1["mode"])) FS.mkdirTree(path1, entry1["mode"]);
+                    else if (FS.isFile(entry1["mode"])) FS.writeFile(path1, entry1["contents"], {
                         canOwn: true
                     });
-                    else return callback(new Error("node type not supported"));
-                    FS.chmod(path, entry["mode"]);
-                    FS.utime(path, entry["timestamp"], entry["timestamp"]);
-                } catch (e) {
-                    return callback(e);
+                    else return callback1(new Error("node type not supported"));
+                    FS.chmod(path1, entry1["mode"]);
+                    FS.utime(path1, entry1["timestamp"], entry1["timestamp"]);
+                } catch (e1) {
+                    return callback1(e1);
                 }
-                callback(null);
+                callback1(null);
             },
-            removeLocalEntry: (path, callback)=>{
+            removeLocalEntry: (path1, callback1)=>{
                 try {
-                    var stat = FS.stat(path);
-                    if (FS.isDir(stat.mode)) FS.rmdir(path);
-                    else if (FS.isFile(stat.mode)) FS.unlink(path);
-                } catch (e) {
-                    return callback(e);
+                    var stat1 = FS.stat(path1);
+                    if (FS.isDir(stat1.mode)) FS.rmdir(path1);
+                    else if (FS.isFile(stat1.mode)) FS.unlink(path1);
+                } catch (e1) {
+                    return callback1(e1);
                 }
-                callback(null);
+                callback1(null);
             },
-            loadRemoteEntry: (store, path, callback)=>{
-                var req = store.get(path);
-                req.onsuccess = (event)=>{
-                    callback(null, event.target.result);
+            loadRemoteEntry: (store1, path1, callback1)=>{
+                var req1 = store1.get(path1);
+                req1.onsuccess = (event1)=>{
+                    callback1(null, event1.target.result);
                 };
-                req.onerror = (e)=>{
-                    callback(this.error);
-                    e.preventDefault();
+                req1.onerror = (e1)=>{
+                    callback1(this.error);
+                    e1.preventDefault();
                 };
             },
-            storeRemoteEntry: (store, path, entry, callback)=>{
+            storeRemoteEntry: (store1, path1, entry1, callback1)=>{
                 try {
-                    var req = store.put(entry, path);
-                } catch (e) {
-                    callback(e);
+                    var req1 = store1.put(entry1, path1);
+                } catch (e1) {
+                    callback1(e1);
                     return;
                 }
-                req.onsuccess = ()=>{
-                    callback(null);
+                req1.onsuccess = ()=>{
+                    callback1(null);
                 };
-                req.onerror = (e)=>{
-                    callback(this.error);
-                    e.preventDefault();
-                };
-            },
-            removeRemoteEntry: (store, path, callback)=>{
-                var req = store.delete(path);
-                req.onsuccess = ()=>{
-                    callback(null);
-                };
-                req.onerror = (e)=>{
-                    callback(this.error);
-                    e.preventDefault();
+                req1.onerror = (e1)=>{
+                    callback1(this.error);
+                    e1.preventDefault();
                 };
             },
-            reconcile: (src, dst, callback)=>{
-                var total = 0;
-                var create = [];
-                Object.keys(src.entries).forEach(function(key) {
-                    var e = src.entries[key];
-                    var e2 = dst.entries[key];
-                    if (!e2 || e["timestamp"].getTime() != e2["timestamp"].getTime()) {
-                        create.push(key);
-                        total++;
+            removeRemoteEntry: (store1, path1, callback1)=>{
+                var req1 = store1.delete(path1);
+                req1.onsuccess = ()=>{
+                    callback1(null);
+                };
+                req1.onerror = (e1)=>{
+                    callback1(this.error);
+                    e1.preventDefault();
+                };
+            },
+            reconcile: (src1, dst1, callback1)=>{
+                var total1 = 0;
+                var create1 = [];
+                Object.keys(src1.entries).forEach(function(key1) {
+                    var e1 = src1.entries[key1];
+                    var e21 = dst1.entries[key1];
+                    if (!e21 || e1["timestamp"].getTime() != e21["timestamp"].getTime()) {
+                        create1.push(key1);
+                        total1++;
                     }
                 });
-                var remove = [];
-                Object.keys(dst.entries).forEach(function(key) {
-                    if (!src.entries[key]) {
-                        remove.push(key);
-                        total++;
+                var remove1 = [];
+                Object.keys(dst1.entries).forEach(function(key1) {
+                    if (!src1.entries[key1]) {
+                        remove1.push(key1);
+                        total1++;
                     }
                 });
-                if (!total) return callback(null);
-                var errored = false;
-                var db = src.type === "remote" ? src.db : dst.db;
-                var transaction = db.transaction([
+                if (!total1) return callback1(null);
+                var errored1 = false;
+                var db1 = src1.type === "remote" ? src1.db : dst1.db;
+                var transaction1 = db1.transaction([
                     IDBFS.DB_STORE_NAME
                 ], "readwrite");
-                var store = transaction.objectStore(IDBFS.DB_STORE_NAME);
-                function done(err) {
-                    if (err && !errored) {
-                        errored = true;
-                        return callback(err);
+                var store1 = transaction1.objectStore(IDBFS.DB_STORE_NAME);
+                function done1(err1) {
+                    if (err1 && !errored1) {
+                        errored1 = true;
+                        return callback1(err1);
                     }
                 }
-                transaction.onerror = (e)=>{
-                    done(this.error);
-                    e.preventDefault();
+                transaction1.onerror = (e1)=>{
+                    done1(this.error);
+                    e1.preventDefault();
                 };
-                transaction.oncomplete = (e)=>{
-                    if (!errored) callback(null);
+                transaction1.oncomplete = (e1)=>{
+                    if (!errored1) callback1(null);
                 };
-                create.sort().forEach((path)=>{
-                    if (dst.type === "local") IDBFS.loadRemoteEntry(store, path, (err, entry)=>{
-                        if (err) return done(err);
-                        IDBFS.storeLocalEntry(path, entry, done);
+                create1.sort().forEach((path1)=>{
+                    if (dst1.type === "local") IDBFS.loadRemoteEntry(store1, path1, (err1, entry1)=>{
+                        if (err1) return done1(err1);
+                        IDBFS.storeLocalEntry(path1, entry1, done1);
                     });
-                    else IDBFS.loadLocalEntry(path, (err, entry)=>{
-                        if (err) return done(err);
-                        IDBFS.storeRemoteEntry(store, path, entry, done);
+                    else IDBFS.loadLocalEntry(path1, (err1, entry1)=>{
+                        if (err1) return done1(err1);
+                        IDBFS.storeRemoteEntry(store1, path1, entry1, done1);
                     });
                 });
-                remove.sort().reverse().forEach((path)=>{
-                    if (dst.type === "local") IDBFS.removeLocalEntry(path, done);
-                    else IDBFS.removeRemoteEntry(store, path, done);
+                remove1.sort().reverse().forEach((path1)=>{
+                    if (dst1.type === "local") IDBFS.removeLocalEntry(path1, done1);
+                    else IDBFS.removeRemoteEntry(store1, path1, done1);
                 });
             }
         };
@@ -1552,127 +1552,127 @@ var Godot = (()=>{
             genericErrors: {},
             filesystems: null,
             syncFSRequests: 0,
-            lookupPath: (path, opts = {})=>{
-                path = PATH_FS.resolve(FS.cwd(), path);
-                if (!path) return {
+            lookupPath: (path1, opts1 = {})=>{
+                path1 = PATH_FS.resolve(FS.cwd(), path1);
+                if (!path1) return {
                     path: "",
                     node: null
                 };
-                var defaults = {
+                var defaults1 = {
                     follow_mount: true,
                     recurse_count: 0
                 };
-                opts = Object.assign(defaults, opts);
-                if (opts.recurse_count > 8) throw new FS.ErrnoError(32);
-                var parts = PATH.normalizeArray(path.split("/").filter((p)=>!!p), false);
-                var current = FS.root;
-                var current_path = "/";
-                for(var i = 0; i < parts.length; i++){
-                    var islast = i === parts.length - 1;
-                    if (islast && opts.parent) break;
-                    current = FS.lookupNode(current, parts[i]);
-                    current_path = PATH.join2(current_path, parts[i]);
-                    if (FS.isMountpoint(current)) {
-                        if (!islast || islast && opts.follow_mount) current = current.mounted.root;
+                opts1 = Object.assign(defaults1, opts1);
+                if (opts1.recurse_count > 8) throw new FS.ErrnoError(32);
+                var parts1 = PATH.normalizeArray(path1.split("/").filter((p1)=>!!p1), false);
+                var current1 = FS.root;
+                var current_path1 = "/";
+                for(var i1 = 0; i1 < parts1.length; i1++){
+                    var islast1 = i1 === parts1.length - 1;
+                    if (islast1 && opts1.parent) break;
+                    current1 = FS.lookupNode(current1, parts1[i1]);
+                    current_path1 = PATH.join2(current_path1, parts1[i1]);
+                    if (FS.isMountpoint(current1)) {
+                        if (!islast1 || islast1 && opts1.follow_mount) current1 = current1.mounted.root;
                     }
-                    if (!islast || opts.follow) {
-                        var count = 0;
-                        while(FS.isLink(current.mode)){
-                            var link = FS.readlink(current_path);
-                            current_path = PATH_FS.resolve(PATH.dirname(current_path), link);
-                            var lookup = FS.lookupPath(current_path, {
-                                recurse_count: opts.recurse_count + 1
+                    if (!islast1 || opts1.follow) {
+                        var count1 = 0;
+                        while(FS.isLink(current1.mode)){
+                            var link1 = FS.readlink(current_path1);
+                            current_path1 = PATH_FS.resolve(PATH.dirname(current_path1), link1);
+                            var lookup1 = FS.lookupPath(current_path1, {
+                                recurse_count: opts1.recurse_count + 1
                             });
-                            current = lookup.node;
-                            if (count++ > 40) throw new FS.ErrnoError(32);
+                            current1 = lookup1.node;
+                            if (count1++ > 40) throw new FS.ErrnoError(32);
                         }
                     }
                 }
                 return {
-                    path: current_path,
-                    node: current
+                    path: current_path1,
+                    node: current1
                 };
             },
-            getPath: (node)=>{
-                var path;
+            getPath: (node1)=>{
+                var path1;
                 while(true){
-                    if (FS.isRoot(node)) {
-                        var mount = node.mount.mountpoint;
-                        if (!path) return mount;
-                        return mount[mount.length - 1] !== "/" ? mount + "/" + path : mount + path;
+                    if (FS.isRoot(node1)) {
+                        var mount1 = node1.mount.mountpoint;
+                        if (!path1) return mount1;
+                        return mount1[mount1.length - 1] !== "/" ? mount1 + "/" + path1 : mount1 + path1;
                     }
-                    path = path ? node.name + "/" + path : node.name;
-                    node = node.parent;
+                    path1 = path1 ? node1.name + "/" + path1 : node1.name;
+                    node1 = node1.parent;
                 }
             },
-            hashName: (parentid, name)=>{
-                var hash = 0;
-                for(var i = 0; i < name.length; i++)hash = (hash << 5) - hash + name.charCodeAt(i) | 0;
-                return (parentid + hash >>> 0) % FS.nameTable.length;
+            hashName: (parentid1, name1)=>{
+                var hash1 = 0;
+                for(var i1 = 0; i1 < name1.length; i1++)hash1 = (hash1 << 5) - hash1 + name1.charCodeAt(i1) | 0;
+                return (parentid1 + hash1 >>> 0) % FS.nameTable.length;
             },
-            hashAddNode: (node)=>{
-                var hash = FS.hashName(node.parent.id, node.name);
-                node.name_next = FS.nameTable[hash];
-                FS.nameTable[hash] = node;
+            hashAddNode: (node1)=>{
+                var hash1 = FS.hashName(node1.parent.id, node1.name);
+                node1.name_next = FS.nameTable[hash1];
+                FS.nameTable[hash1] = node1;
             },
-            hashRemoveNode: (node)=>{
-                var hash = FS.hashName(node.parent.id, node.name);
-                if (FS.nameTable[hash] === node) FS.nameTable[hash] = node.name_next;
+            hashRemoveNode: (node1)=>{
+                var hash1 = FS.hashName(node1.parent.id, node1.name);
+                if (FS.nameTable[hash1] === node1) FS.nameTable[hash1] = node1.name_next;
                 else {
-                    var current = FS.nameTable[hash];
-                    while(current){
-                        if (current.name_next === node) {
-                            current.name_next = node.name_next;
+                    var current1 = FS.nameTable[hash1];
+                    while(current1){
+                        if (current1.name_next === node1) {
+                            current1.name_next = node1.name_next;
                             break;
                         }
-                        current = current.name_next;
+                        current1 = current1.name_next;
                     }
                 }
             },
-            lookupNode: (parent, name)=>{
-                var errCode = FS.mayLookup(parent);
-                if (errCode) throw new FS.ErrnoError(errCode, parent);
-                var hash = FS.hashName(parent.id, name);
-                for(var node = FS.nameTable[hash]; node; node = node.name_next){
-                    var nodeName = node.name;
-                    if (node.parent.id === parent.id && nodeName === name) return node;
+            lookupNode: (parent1, name1)=>{
+                var errCode1 = FS.mayLookup(parent1);
+                if (errCode1) throw new FS.ErrnoError(errCode1, parent1);
+                var hash1 = FS.hashName(parent1.id, name1);
+                for(var node1 = FS.nameTable[hash1]; node1; node1 = node1.name_next){
+                    var nodeName1 = node1.name;
+                    if (node1.parent.id === parent1.id && nodeName1 === name1) return node1;
                 }
-                return FS.lookup(parent, name);
+                return FS.lookup(parent1, name1);
             },
-            createNode: (parent, name, mode, rdev)=>{
-                var node = new FS.FSNode(parent, name, mode, rdev);
-                FS.hashAddNode(node);
-                return node;
+            createNode: (parent1, name1, mode1, rdev1)=>{
+                var node1 = new FS.FSNode(parent1, name1, mode1, rdev1);
+                FS.hashAddNode(node1);
+                return node1;
             },
-            destroyNode: (node)=>{
-                FS.hashRemoveNode(node);
+            destroyNode: (node1)=>{
+                FS.hashRemoveNode(node1);
             },
-            isRoot: (node)=>{
-                return node === node.parent;
+            isRoot: (node1)=>{
+                return node1 === node1.parent;
             },
-            isMountpoint: (node)=>{
-                return !!node.mounted;
+            isMountpoint: (node1)=>{
+                return !!node1.mounted;
             },
-            isFile: (mode)=>{
-                return (mode & 61440) === 32768;
+            isFile: (mode1)=>{
+                return (mode1 & 61440) === 32768;
             },
-            isDir: (mode)=>{
-                return (mode & 61440) === 16384;
+            isDir: (mode1)=>{
+                return (mode1 & 61440) === 16384;
             },
-            isLink: (mode)=>{
-                return (mode & 61440) === 40960;
+            isLink: (mode1)=>{
+                return (mode1 & 61440) === 40960;
             },
-            isChrdev: (mode)=>{
-                return (mode & 61440) === 8192;
+            isChrdev: (mode1)=>{
+                return (mode1 & 61440) === 8192;
             },
-            isBlkdev: (mode)=>{
-                return (mode & 61440) === 24576;
+            isBlkdev: (mode1)=>{
+                return (mode1 & 61440) === 24576;
             },
-            isFIFO: (mode)=>{
-                return (mode & 61440) === 4096;
+            isFIFO: (mode1)=>{
+                return (mode1 & 61440) === 4096;
             },
-            isSocket: (mode)=>{
-                return (mode & 49152) === 49152;
+            isSocket: (mode1)=>{
+                return (mode1 & 49152) === 49152;
             },
             flagModes: {
                 "r": 0,
@@ -1682,74 +1682,74 @@ var Godot = (()=>{
                 "a": 1089,
                 "a+": 1090
             },
-            modeStringToFlags: (str)=>{
-                var flags = FS.flagModes[str];
-                if (typeof flags == "undefined") throw new Error("Unknown file open mode: " + str);
-                return flags;
+            modeStringToFlags: (str1)=>{
+                var flags1 = FS.flagModes[str1];
+                if (typeof flags1 == "undefined") throw new Error("Unknown file open mode: " + str1);
+                return flags1;
             },
-            flagsToPermissionString: (flag)=>{
-                var perms = [
+            flagsToPermissionString: (flag1)=>{
+                var perms1 = [
                     "r",
                     "w",
                     "rw"
-                ][flag & 3];
-                if (flag & 512) perms += "w";
-                return perms;
+                ][flag1 & 3];
+                if (flag1 & 512) perms1 += "w";
+                return perms1;
             },
-            nodePermissions: (node, perms)=>{
+            nodePermissions: (node1, perms1)=>{
                 if (FS.ignorePermissions) return 0;
-                if (perms.includes("r") && !(node.mode & 292)) return 2;
-                else if (perms.includes("w") && !(node.mode & 146)) return 2;
-                else if (perms.includes("x") && !(node.mode & 73)) return 2;
+                if (perms1.includes("r") && !(node1.mode & 292)) return 2;
+                else if (perms1.includes("w") && !(node1.mode & 146)) return 2;
+                else if (perms1.includes("x") && !(node1.mode & 73)) return 2;
                 return 0;
             },
-            mayLookup: (dir)=>{
-                var errCode = FS.nodePermissions(dir, "x");
-                if (errCode) return errCode;
-                if (!dir.node_ops.lookup) return 2;
+            mayLookup: (dir1)=>{
+                var errCode1 = FS.nodePermissions(dir1, "x");
+                if (errCode1) return errCode1;
+                if (!dir1.node_ops.lookup) return 2;
                 return 0;
             },
-            mayCreate: (dir, name)=>{
+            mayCreate: (dir1, name1)=>{
                 try {
-                    var node = FS.lookupNode(dir, name);
+                    var node1 = FS.lookupNode(dir1, name1);
                     return 20;
-                } catch (e) {}
-                return FS.nodePermissions(dir, "wx");
+                } catch (e1) {}
+                return FS.nodePermissions(dir1, "wx");
             },
-            mayDelete: (dir, name, isdir)=>{
-                var node;
+            mayDelete: (dir1, name1, isdir1)=>{
+                var node1;
                 try {
-                    node = FS.lookupNode(dir, name);
-                } catch (e) {
-                    return e.errno;
+                    node1 = FS.lookupNode(dir1, name1);
+                } catch (e1) {
+                    return e1.errno;
                 }
-                var errCode = FS.nodePermissions(dir, "wx");
-                if (errCode) return errCode;
-                if (isdir) {
-                    if (!FS.isDir(node.mode)) return 54;
-                    if (FS.isRoot(node) || FS.getPath(node) === FS.cwd()) return 10;
+                var errCode1 = FS.nodePermissions(dir1, "wx");
+                if (errCode1) return errCode1;
+                if (isdir1) {
+                    if (!FS.isDir(node1.mode)) return 54;
+                    if (FS.isRoot(node1) || FS.getPath(node1) === FS.cwd()) return 10;
                 } else {
-                    if (FS.isDir(node.mode)) return 31;
+                    if (FS.isDir(node1.mode)) return 31;
                 }
                 return 0;
             },
-            mayOpen: (node, flags)=>{
-                if (!node) return 44;
-                if (FS.isLink(node.mode)) return 32;
-                else if (FS.isDir(node.mode)) {
-                    if (FS.flagsToPermissionString(flags) !== "r" || flags & 512) return 31;
+            mayOpen: (node1, flags1)=>{
+                if (!node1) return 44;
+                if (FS.isLink(node1.mode)) return 32;
+                else if (FS.isDir(node1.mode)) {
+                    if (FS.flagsToPermissionString(flags1) !== "r" || flags1 & 512) return 31;
                 }
-                return FS.nodePermissions(node, FS.flagsToPermissionString(flags));
+                return FS.nodePermissions(node1, FS.flagsToPermissionString(flags1));
             },
             MAX_OPEN_FDS: 4096,
-            nextfd: (fd_start = 0, fd_end = FS.MAX_OPEN_FDS)=>{
-                for(var fd = fd_start; fd <= fd_end; fd++){
-                    if (!FS.streams[fd]) return fd;
+            nextfd: (fd_start1 = 0, fd_end1 = FS.MAX_OPEN_FDS)=>{
+                for(var fd1 = fd_start1; fd1 <= fd_end1; fd1++){
+                    if (!FS.streams[fd1]) return fd1;
                 }
                 throw new FS.ErrnoError(33);
             },
-            getStream: (fd)=>FS.streams[fd],
-            createStream: (stream, fd_start, fd_end)=>{
+            getStream: (fd1)=>FS.streams[fd1],
+            createStream: (stream1, fd_start1, fd_end1)=>{
                 if (!FS.FSStream) {
                     FS.FSStream = function() {
                         this.shared = {};
@@ -1760,8 +1760,8 @@ var Godot = (()=>{
                             get: function() {
                                 return this.node;
                             },
-                            set: function(val) {
-                                this.node = val;
+                            set: function(val1) {
+                                this.node = val1;
                             }
                         },
                         isRead: {
@@ -1783,539 +1783,539 @@ var Godot = (()=>{
                             get: function() {
                                 return this.shared.flags;
                             },
-                            set: function(val) {
-                                this.shared.flags = val;
+                            set: function(val1) {
+                                this.shared.flags = val1;
                             }
                         },
                         position: {
                             get: function() {
                                 return this.shared.position;
                             },
-                            set: function(val) {
-                                this.shared.position = val;
+                            set: function(val1) {
+                                this.shared.position = val1;
                             }
                         }
                     });
                 }
-                stream = Object.assign(new FS.FSStream, stream);
-                var fd = FS.nextfd(fd_start, fd_end);
-                stream.fd = fd;
-                FS.streams[fd] = stream;
-                return stream;
+                stream1 = Object.assign(new FS.FSStream, stream1);
+                var fd1 = FS.nextfd(fd_start1, fd_end1);
+                stream1.fd = fd1;
+                FS.streams[fd1] = stream1;
+                return stream1;
             },
-            closeStream: (fd)=>{
-                FS.streams[fd] = null;
+            closeStream: (fd1)=>{
+                FS.streams[fd1] = null;
             },
             chrdev_stream_ops: {
-                open: (stream)=>{
-                    var device = FS.getDevice(stream.node.rdev);
-                    stream.stream_ops = device.stream_ops;
-                    if (stream.stream_ops.open) stream.stream_ops.open(stream);
+                open: (stream1)=>{
+                    var device1 = FS.getDevice(stream1.node.rdev);
+                    stream1.stream_ops = device1.stream_ops;
+                    if (stream1.stream_ops.open) stream1.stream_ops.open(stream1);
                 },
                 llseek: ()=>{
                     throw new FS.ErrnoError(70);
                 }
             },
-            major: (dev)=>dev >> 8,
-            minor: (dev)=>dev & 255,
-            makedev: (ma, mi)=>ma << 8 | mi,
-            registerDevice: (dev, ops)=>{
-                FS.devices[dev] = {
-                    stream_ops: ops
+            major: (dev1)=>dev1 >> 8,
+            minor: (dev1)=>dev1 & 255,
+            makedev: (ma1, mi1)=>ma1 << 8 | mi1,
+            registerDevice: (dev1, ops1)=>{
+                FS.devices[dev1] = {
+                    stream_ops: ops1
                 };
             },
-            getDevice: (dev)=>FS.devices[dev],
-            getMounts: (mount)=>{
-                var mounts = [];
-                var check = [
-                    mount
+            getDevice: (dev1)=>FS.devices[dev1],
+            getMounts: (mount1)=>{
+                var mounts1 = [];
+                var check1 = [
+                    mount1
                 ];
-                while(check.length){
-                    var m = check.pop();
-                    mounts.push(m);
-                    check.push.apply(check, m.mounts);
+                while(check1.length){
+                    var m1 = check1.pop();
+                    mounts1.push(m1);
+                    check1.push.apply(check1, m1.mounts);
                 }
-                return mounts;
+                return mounts1;
             },
-            syncfs: (populate, callback)=>{
-                if (typeof populate == "function") {
-                    callback = populate;
-                    populate = false;
+            syncfs: (populate1, callback1)=>{
+                if (typeof populate1 == "function") {
+                    callback1 = populate1;
+                    populate1 = false;
                 }
                 FS.syncFSRequests++;
                 if (FS.syncFSRequests > 1) err("warning: " + FS.syncFSRequests + " FS.syncfs operations in flight at once, probably just doing extra work");
-                var mounts = FS.getMounts(FS.root.mount);
-                var completed = 0;
-                function doCallback(errCode) {
+                var mounts1 = FS.getMounts(FS.root.mount);
+                var completed1 = 0;
+                function doCallback1(errCode1) {
                     FS.syncFSRequests--;
-                    return callback(errCode);
+                    return callback1(errCode1);
                 }
-                function done(errCode) {
-                    if (errCode) {
-                        if (!done.errored) {
-                            done.errored = true;
-                            return doCallback(errCode);
+                function done1(errCode1) {
+                    if (errCode1) {
+                        if (!done1.errored) {
+                            done1.errored = true;
+                            return doCallback1(errCode1);
                         }
                         return;
                     }
-                    if (++completed >= mounts.length) doCallback(null);
+                    if (++completed1 >= mounts1.length) doCallback1(null);
                 }
-                mounts.forEach((mount)=>{
-                    if (!mount.type.syncfs) return done(null);
-                    mount.type.syncfs(mount, populate, done);
+                mounts1.forEach((mount1)=>{
+                    if (!mount1.type.syncfs) return done1(null);
+                    mount1.type.syncfs(mount1, populate1, done1);
                 });
             },
-            mount: (type, opts, mountpoint)=>{
-                var root = mountpoint === "/";
-                var pseudo = !mountpoint;
-                var node;
-                if (root && FS.root) throw new FS.ErrnoError(10);
-                else if (!root && !pseudo) {
-                    var lookup = FS.lookupPath(mountpoint, {
+            mount: (type1, opts1, mountpoint1)=>{
+                var root1 = mountpoint1 === "/";
+                var pseudo1 = !mountpoint1;
+                var node1;
+                if (root1 && FS.root) throw new FS.ErrnoError(10);
+                else if (!root1 && !pseudo1) {
+                    var lookup1 = FS.lookupPath(mountpoint1, {
                         follow_mount: false
                     });
-                    mountpoint = lookup.path;
-                    node = lookup.node;
-                    if (FS.isMountpoint(node)) throw new FS.ErrnoError(10);
-                    if (!FS.isDir(node.mode)) throw new FS.ErrnoError(54);
+                    mountpoint1 = lookup1.path;
+                    node1 = lookup1.node;
+                    if (FS.isMountpoint(node1)) throw new FS.ErrnoError(10);
+                    if (!FS.isDir(node1.mode)) throw new FS.ErrnoError(54);
                 }
-                var mount = {
-                    type: type,
-                    opts: opts,
-                    mountpoint: mountpoint,
+                var mount1 = {
+                    type: type1,
+                    opts: opts1,
+                    mountpoint: mountpoint1,
                     mounts: []
                 };
-                var mountRoot = type.mount(mount);
-                mountRoot.mount = mount;
-                mount.root = mountRoot;
-                if (root) FS.root = mountRoot;
-                else if (node) {
-                    node.mounted = mount;
-                    if (node.mount) node.mount.mounts.push(mount);
+                var mountRoot1 = type1.mount(mount1);
+                mountRoot1.mount = mount1;
+                mount1.root = mountRoot1;
+                if (root1) FS.root = mountRoot1;
+                else if (node1) {
+                    node1.mounted = mount1;
+                    if (node1.mount) node1.mount.mounts.push(mount1);
                 }
-                return mountRoot;
+                return mountRoot1;
             },
-            unmount: (mountpoint)=>{
-                var lookup = FS.lookupPath(mountpoint, {
+            unmount: (mountpoint1)=>{
+                var lookup1 = FS.lookupPath(mountpoint1, {
                     follow_mount: false
                 });
-                if (!FS.isMountpoint(lookup.node)) throw new FS.ErrnoError(28);
-                var node = lookup.node;
-                var mount = node.mounted;
-                var mounts = FS.getMounts(mount);
-                Object.keys(FS.nameTable).forEach((hash)=>{
-                    var current = FS.nameTable[hash];
-                    while(current){
-                        var next = current.name_next;
-                        if (mounts.includes(current.mount)) FS.destroyNode(current);
-                        current = next;
+                if (!FS.isMountpoint(lookup1.node)) throw new FS.ErrnoError(28);
+                var node1 = lookup1.node;
+                var mount1 = node1.mounted;
+                var mounts1 = FS.getMounts(mount1);
+                Object.keys(FS.nameTable).forEach((hash1)=>{
+                    var current1 = FS.nameTable[hash1];
+                    while(current1){
+                        var next1 = current1.name_next;
+                        if (mounts1.includes(current1.mount)) FS.destroyNode(current1);
+                        current1 = next1;
                     }
                 });
-                node.mounted = null;
-                var idx = node.mount.mounts.indexOf(mount);
-                node.mount.mounts.splice(idx, 1);
+                node1.mounted = null;
+                var idx1 = node1.mount.mounts.indexOf(mount1);
+                node1.mount.mounts.splice(idx1, 1);
             },
-            lookup: (parent, name)=>{
-                return parent.node_ops.lookup(parent, name);
+            lookup: (parent1, name1)=>{
+                return parent1.node_ops.lookup(parent1, name1);
             },
-            mknod: (path, mode, dev)=>{
-                var lookup = FS.lookupPath(path, {
+            mknod: (path1, mode1, dev1)=>{
+                var lookup1 = FS.lookupPath(path1, {
                     parent: true
                 });
-                var parent = lookup.node;
-                var name = PATH.basename(path);
-                if (!name || name === "." || name === "..") throw new FS.ErrnoError(28);
-                var errCode = FS.mayCreate(parent, name);
-                if (errCode) throw new FS.ErrnoError(errCode);
-                if (!parent.node_ops.mknod) throw new FS.ErrnoError(63);
-                return parent.node_ops.mknod(parent, name, mode, dev);
+                var parent1 = lookup1.node;
+                var name1 = PATH.basename(path1);
+                if (!name1 || name1 === "." || name1 === "..") throw new FS.ErrnoError(28);
+                var errCode1 = FS.mayCreate(parent1, name1);
+                if (errCode1) throw new FS.ErrnoError(errCode1);
+                if (!parent1.node_ops.mknod) throw new FS.ErrnoError(63);
+                return parent1.node_ops.mknod(parent1, name1, mode1, dev1);
             },
-            create: (path, mode)=>{
-                mode = mode !== undefined ? mode : 438;
-                mode &= 4095;
-                mode |= 32768;
-                return FS.mknod(path, mode, 0);
+            create: (path1, mode1)=>{
+                mode1 = mode1 !== undefined ? mode1 : 438;
+                mode1 &= 4095;
+                mode1 |= 32768;
+                return FS.mknod(path1, mode1, 0);
             },
-            mkdir: (path, mode)=>{
-                mode = mode !== undefined ? mode : 511;
-                mode &= 1023;
-                mode |= 16384;
-                return FS.mknod(path, mode, 0);
+            mkdir: (path1, mode1)=>{
+                mode1 = mode1 !== undefined ? mode1 : 511;
+                mode1 &= 1023;
+                mode1 |= 16384;
+                return FS.mknod(path1, mode1, 0);
             },
-            mkdirTree: (path, mode)=>{
-                var dirs = path.split("/");
-                var d = "";
-                for(var i = 0; i < dirs.length; ++i){
-                    if (!dirs[i]) continue;
-                    d += "/" + dirs[i];
+            mkdirTree: (path1, mode1)=>{
+                var dirs1 = path1.split("/");
+                var d1 = "";
+                for(var i1 = 0; i1 < dirs1.length; ++i1){
+                    if (!dirs1[i1]) continue;
+                    d1 += "/" + dirs1[i1];
                     try {
-                        FS.mkdir(d, mode);
-                    } catch (e) {
-                        if (e.errno != 20) throw e;
+                        FS.mkdir(d1, mode1);
+                    } catch (e1) {
+                        if (e1.errno != 20) throw e1;
                     }
                 }
             },
-            mkdev: (path, mode, dev)=>{
-                if (typeof dev == "undefined") {
-                    dev = mode;
-                    mode = 438;
+            mkdev: (path1, mode1, dev1)=>{
+                if (typeof dev1 == "undefined") {
+                    dev1 = mode1;
+                    mode1 = 438;
                 }
-                mode |= 8192;
-                return FS.mknod(path, mode, dev);
+                mode1 |= 8192;
+                return FS.mknod(path1, mode1, dev1);
             },
-            symlink: (oldpath, newpath)=>{
-                if (!PATH_FS.resolve(oldpath)) throw new FS.ErrnoError(44);
-                var lookup = FS.lookupPath(newpath, {
+            symlink: (oldpath1, newpath1)=>{
+                if (!PATH_FS.resolve(oldpath1)) throw new FS.ErrnoError(44);
+                var lookup1 = FS.lookupPath(newpath1, {
                     parent: true
                 });
-                var parent = lookup.node;
-                if (!parent) throw new FS.ErrnoError(44);
-                var newname = PATH.basename(newpath);
-                var errCode = FS.mayCreate(parent, newname);
-                if (errCode) throw new FS.ErrnoError(errCode);
-                if (!parent.node_ops.symlink) throw new FS.ErrnoError(63);
-                return parent.node_ops.symlink(parent, newname, oldpath);
+                var parent1 = lookup1.node;
+                if (!parent1) throw new FS.ErrnoError(44);
+                var newname1 = PATH.basename(newpath1);
+                var errCode1 = FS.mayCreate(parent1, newname1);
+                if (errCode1) throw new FS.ErrnoError(errCode1);
+                if (!parent1.node_ops.symlink) throw new FS.ErrnoError(63);
+                return parent1.node_ops.symlink(parent1, newname1, oldpath1);
             },
-            rename: (old_path, new_path)=>{
-                var old_dirname = PATH.dirname(old_path);
-                var new_dirname = PATH.dirname(new_path);
-                var old_name = PATH.basename(old_path);
-                var new_name = PATH.basename(new_path);
-                var lookup, old_dir, new_dir;
-                lookup = FS.lookupPath(old_path, {
+            rename: (old_path1, new_path1)=>{
+                var old_dirname1 = PATH.dirname(old_path1);
+                var new_dirname1 = PATH.dirname(new_path1);
+                var old_name1 = PATH.basename(old_path1);
+                var new_name1 = PATH.basename(new_path1);
+                var lookup1, old_dir1, new_dir1;
+                lookup1 = FS.lookupPath(old_path1, {
                     parent: true
                 });
-                old_dir = lookup.node;
-                lookup = FS.lookupPath(new_path, {
+                old_dir1 = lookup1.node;
+                lookup1 = FS.lookupPath(new_path1, {
                     parent: true
                 });
-                new_dir = lookup.node;
-                if (!old_dir || !new_dir) throw new FS.ErrnoError(44);
-                if (old_dir.mount !== new_dir.mount) throw new FS.ErrnoError(75);
-                var old_node = FS.lookupNode(old_dir, old_name);
-                var relative = PATH_FS.relative(old_path, new_dirname);
-                if (relative.charAt(0) !== ".") throw new FS.ErrnoError(28);
-                relative = PATH_FS.relative(new_path, old_dirname);
-                if (relative.charAt(0) !== ".") throw new FS.ErrnoError(55);
-                var new_node;
+                new_dir1 = lookup1.node;
+                if (!old_dir1 || !new_dir1) throw new FS.ErrnoError(44);
+                if (old_dir1.mount !== new_dir1.mount) throw new FS.ErrnoError(75);
+                var old_node1 = FS.lookupNode(old_dir1, old_name1);
+                var relative1 = PATH_FS.relative(old_path1, new_dirname1);
+                if (relative1.charAt(0) !== ".") throw new FS.ErrnoError(28);
+                relative1 = PATH_FS.relative(new_path1, old_dirname1);
+                if (relative1.charAt(0) !== ".") throw new FS.ErrnoError(55);
+                var new_node1;
                 try {
-                    new_node = FS.lookupNode(new_dir, new_name);
-                } catch (e) {}
-                if (old_node === new_node) return;
-                var isdir = FS.isDir(old_node.mode);
-                var errCode = FS.mayDelete(old_dir, old_name, isdir);
-                if (errCode) throw new FS.ErrnoError(errCode);
-                errCode = new_node ? FS.mayDelete(new_dir, new_name, isdir) : FS.mayCreate(new_dir, new_name);
-                if (errCode) throw new FS.ErrnoError(errCode);
-                if (!old_dir.node_ops.rename) throw new FS.ErrnoError(63);
-                if (FS.isMountpoint(old_node) || new_node && FS.isMountpoint(new_node)) throw new FS.ErrnoError(10);
-                if (new_dir !== old_dir) {
-                    errCode = FS.nodePermissions(old_dir, "w");
-                    if (errCode) throw new FS.ErrnoError(errCode);
+                    new_node1 = FS.lookupNode(new_dir1, new_name1);
+                } catch (e1) {}
+                if (old_node1 === new_node1) return;
+                var isdir1 = FS.isDir(old_node1.mode);
+                var errCode1 = FS.mayDelete(old_dir1, old_name1, isdir1);
+                if (errCode1) throw new FS.ErrnoError(errCode1);
+                errCode1 = new_node1 ? FS.mayDelete(new_dir1, new_name1, isdir1) : FS.mayCreate(new_dir1, new_name1);
+                if (errCode1) throw new FS.ErrnoError(errCode1);
+                if (!old_dir1.node_ops.rename) throw new FS.ErrnoError(63);
+                if (FS.isMountpoint(old_node1) || new_node1 && FS.isMountpoint(new_node1)) throw new FS.ErrnoError(10);
+                if (new_dir1 !== old_dir1) {
+                    errCode1 = FS.nodePermissions(old_dir1, "w");
+                    if (errCode1) throw new FS.ErrnoError(errCode1);
                 }
-                FS.hashRemoveNode(old_node);
+                FS.hashRemoveNode(old_node1);
                 try {
-                    old_dir.node_ops.rename(old_node, new_dir, new_name);
+                    old_dir1.node_ops.rename(old_node1, new_dir1, new_name1);
                 } catch (e1) {
                     throw e1;
                 } finally{
-                    FS.hashAddNode(old_node);
+                    FS.hashAddNode(old_node1);
                 }
             },
-            rmdir: (path)=>{
-                var lookup = FS.lookupPath(path, {
+            rmdir: (path1)=>{
+                var lookup1 = FS.lookupPath(path1, {
                     parent: true
                 });
-                var parent = lookup.node;
-                var name = PATH.basename(path);
-                var node = FS.lookupNode(parent, name);
-                var errCode = FS.mayDelete(parent, name, true);
-                if (errCode) throw new FS.ErrnoError(errCode);
-                if (!parent.node_ops.rmdir) throw new FS.ErrnoError(63);
-                if (FS.isMountpoint(node)) throw new FS.ErrnoError(10);
-                parent.node_ops.rmdir(parent, name);
-                FS.destroyNode(node);
+                var parent1 = lookup1.node;
+                var name1 = PATH.basename(path1);
+                var node1 = FS.lookupNode(parent1, name1);
+                var errCode1 = FS.mayDelete(parent1, name1, true);
+                if (errCode1) throw new FS.ErrnoError(errCode1);
+                if (!parent1.node_ops.rmdir) throw new FS.ErrnoError(63);
+                if (FS.isMountpoint(node1)) throw new FS.ErrnoError(10);
+                parent1.node_ops.rmdir(parent1, name1);
+                FS.destroyNode(node1);
             },
-            readdir: (path)=>{
-                var lookup = FS.lookupPath(path, {
+            readdir: (path1)=>{
+                var lookup1 = FS.lookupPath(path1, {
                     follow: true
                 });
-                var node = lookup.node;
-                if (!node.node_ops.readdir) throw new FS.ErrnoError(54);
-                return node.node_ops.readdir(node);
+                var node1 = lookup1.node;
+                if (!node1.node_ops.readdir) throw new FS.ErrnoError(54);
+                return node1.node_ops.readdir(node1);
             },
-            unlink: (path)=>{
-                var lookup = FS.lookupPath(path, {
+            unlink: (path1)=>{
+                var lookup1 = FS.lookupPath(path1, {
                     parent: true
                 });
-                var parent = lookup.node;
-                if (!parent) throw new FS.ErrnoError(44);
-                var name = PATH.basename(path);
-                var node = FS.lookupNode(parent, name);
-                var errCode = FS.mayDelete(parent, name, false);
-                if (errCode) throw new FS.ErrnoError(errCode);
-                if (!parent.node_ops.unlink) throw new FS.ErrnoError(63);
-                if (FS.isMountpoint(node)) throw new FS.ErrnoError(10);
-                parent.node_ops.unlink(parent, name);
-                FS.destroyNode(node);
+                var parent1 = lookup1.node;
+                if (!parent1) throw new FS.ErrnoError(44);
+                var name1 = PATH.basename(path1);
+                var node1 = FS.lookupNode(parent1, name1);
+                var errCode1 = FS.mayDelete(parent1, name1, false);
+                if (errCode1) throw new FS.ErrnoError(errCode1);
+                if (!parent1.node_ops.unlink) throw new FS.ErrnoError(63);
+                if (FS.isMountpoint(node1)) throw new FS.ErrnoError(10);
+                parent1.node_ops.unlink(parent1, name1);
+                FS.destroyNode(node1);
             },
-            readlink: (path)=>{
-                var lookup = FS.lookupPath(path);
-                var link = lookup.node;
-                if (!link) throw new FS.ErrnoError(44);
-                if (!link.node_ops.readlink) throw new FS.ErrnoError(28);
-                return PATH_FS.resolve(FS.getPath(link.parent), link.node_ops.readlink(link));
+            readlink: (path1)=>{
+                var lookup1 = FS.lookupPath(path1);
+                var link1 = lookup1.node;
+                if (!link1) throw new FS.ErrnoError(44);
+                if (!link1.node_ops.readlink) throw new FS.ErrnoError(28);
+                return PATH_FS.resolve(FS.getPath(link1.parent), link1.node_ops.readlink(link1));
             },
-            stat: (path, dontFollow)=>{
-                var lookup = FS.lookupPath(path, {
-                    follow: !dontFollow
+            stat: (path1, dontFollow1)=>{
+                var lookup1 = FS.lookupPath(path1, {
+                    follow: !dontFollow1
                 });
-                var node = lookup.node;
-                if (!node) throw new FS.ErrnoError(44);
-                if (!node.node_ops.getattr) throw new FS.ErrnoError(63);
-                return node.node_ops.getattr(node);
+                var node1 = lookup1.node;
+                if (!node1) throw new FS.ErrnoError(44);
+                if (!node1.node_ops.getattr) throw new FS.ErrnoError(63);
+                return node1.node_ops.getattr(node1);
             },
-            lstat: (path)=>{
-                return FS.stat(path, true);
+            lstat: (path1)=>{
+                return FS.stat(path1, true);
             },
-            chmod: (path, mode, dontFollow)=>{
-                var node;
-                if (typeof path == "string") {
-                    var lookup = FS.lookupPath(path, {
-                        follow: !dontFollow
+            chmod: (path1, mode1, dontFollow1)=>{
+                var node1;
+                if (typeof path1 == "string") {
+                    var lookup1 = FS.lookupPath(path1, {
+                        follow: !dontFollow1
                     });
-                    node = lookup.node;
-                } else node = path;
-                if (!node.node_ops.setattr) throw new FS.ErrnoError(63);
-                node.node_ops.setattr(node, {
-                    mode: mode & 4095 | node.mode & -4096,
+                    node1 = lookup1.node;
+                } else node1 = path1;
+                if (!node1.node_ops.setattr) throw new FS.ErrnoError(63);
+                node1.node_ops.setattr(node1, {
+                    mode: mode1 & 4095 | node1.mode & -4096,
                     timestamp: Date.now()
                 });
             },
-            lchmod: (path, mode)=>{
-                FS.chmod(path, mode, true);
+            lchmod: (path1, mode1)=>{
+                FS.chmod(path1, mode1, true);
             },
-            fchmod: (fd, mode)=>{
-                var stream = FS.getStream(fd);
-                if (!stream) throw new FS.ErrnoError(8);
-                FS.chmod(stream.node, mode);
+            fchmod: (fd1, mode1)=>{
+                var stream1 = FS.getStream(fd1);
+                if (!stream1) throw new FS.ErrnoError(8);
+                FS.chmod(stream1.node, mode1);
             },
-            chown: (path, uid, gid, dontFollow)=>{
-                var node;
-                if (typeof path == "string") {
-                    var lookup = FS.lookupPath(path, {
-                        follow: !dontFollow
+            chown: (path1, uid1, gid1, dontFollow1)=>{
+                var node1;
+                if (typeof path1 == "string") {
+                    var lookup1 = FS.lookupPath(path1, {
+                        follow: !dontFollow1
                     });
-                    node = lookup.node;
-                } else node = path;
-                if (!node.node_ops.setattr) throw new FS.ErrnoError(63);
-                node.node_ops.setattr(node, {
+                    node1 = lookup1.node;
+                } else node1 = path1;
+                if (!node1.node_ops.setattr) throw new FS.ErrnoError(63);
+                node1.node_ops.setattr(node1, {
                     timestamp: Date.now()
                 });
             },
-            lchown: (path, uid, gid)=>{
-                FS.chown(path, uid, gid, true);
+            lchown: (path1, uid1, gid1)=>{
+                FS.chown(path1, uid1, gid1, true);
             },
-            fchown: (fd, uid, gid)=>{
-                var stream = FS.getStream(fd);
-                if (!stream) throw new FS.ErrnoError(8);
-                FS.chown(stream.node, uid, gid);
+            fchown: (fd1, uid1, gid1)=>{
+                var stream1 = FS.getStream(fd1);
+                if (!stream1) throw new FS.ErrnoError(8);
+                FS.chown(stream1.node, uid1, gid1);
             },
-            truncate: (path, len)=>{
-                if (len < 0) throw new FS.ErrnoError(28);
-                var node;
-                if (typeof path == "string") {
-                    var lookup = FS.lookupPath(path, {
+            truncate: (path1, len1)=>{
+                if (len1 < 0) throw new FS.ErrnoError(28);
+                var node1;
+                if (typeof path1 == "string") {
+                    var lookup1 = FS.lookupPath(path1, {
                         follow: true
                     });
-                    node = lookup.node;
-                } else node = path;
-                if (!node.node_ops.setattr) throw new FS.ErrnoError(63);
-                if (FS.isDir(node.mode)) throw new FS.ErrnoError(31);
-                if (!FS.isFile(node.mode)) throw new FS.ErrnoError(28);
-                var errCode = FS.nodePermissions(node, "w");
-                if (errCode) throw new FS.ErrnoError(errCode);
-                node.node_ops.setattr(node, {
-                    size: len,
+                    node1 = lookup1.node;
+                } else node1 = path1;
+                if (!node1.node_ops.setattr) throw new FS.ErrnoError(63);
+                if (FS.isDir(node1.mode)) throw new FS.ErrnoError(31);
+                if (!FS.isFile(node1.mode)) throw new FS.ErrnoError(28);
+                var errCode1 = FS.nodePermissions(node1, "w");
+                if (errCode1) throw new FS.ErrnoError(errCode1);
+                node1.node_ops.setattr(node1, {
+                    size: len1,
                     timestamp: Date.now()
                 });
             },
-            ftruncate: (fd, len)=>{
-                var stream = FS.getStream(fd);
-                if (!stream) throw new FS.ErrnoError(8);
-                if ((stream.flags & 2097155) === 0) throw new FS.ErrnoError(28);
-                FS.truncate(stream.node, len);
+            ftruncate: (fd1, len1)=>{
+                var stream1 = FS.getStream(fd1);
+                if (!stream1) throw new FS.ErrnoError(8);
+                if ((stream1.flags & 2097155) === 0) throw new FS.ErrnoError(28);
+                FS.truncate(stream1.node, len1);
             },
-            utime: (path, atime, mtime)=>{
-                var lookup = FS.lookupPath(path, {
+            utime: (path1, atime1, mtime1)=>{
+                var lookup1 = FS.lookupPath(path1, {
                     follow: true
                 });
-                var node = lookup.node;
-                node.node_ops.setattr(node, {
-                    timestamp: Math.max(atime, mtime)
+                var node1 = lookup1.node;
+                node1.node_ops.setattr(node1, {
+                    timestamp: Math.max(atime1, mtime1)
                 });
             },
-            open: (path, flags, mode)=>{
-                if (path === "") throw new FS.ErrnoError(44);
-                flags = typeof flags == "string" ? FS.modeStringToFlags(flags) : flags;
-                mode = typeof mode == "undefined" ? 438 : mode;
-                if (flags & 64) mode = mode & 4095 | 32768;
-                else mode = 0;
-                var node;
-                if (typeof path == "object") node = path;
+            open: (path1, flags1, mode1)=>{
+                if (path1 === "") throw new FS.ErrnoError(44);
+                flags1 = typeof flags1 == "string" ? FS.modeStringToFlags(flags1) : flags1;
+                mode1 = typeof mode1 == "undefined" ? 438 : mode1;
+                if (flags1 & 64) mode1 = mode1 & 4095 | 32768;
+                else mode1 = 0;
+                var node1;
+                if (typeof path1 == "object") node1 = path1;
                 else {
-                    path = PATH.normalize(path);
+                    path1 = PATH.normalize(path1);
                     try {
-                        var lookup = FS.lookupPath(path, {
-                            follow: !(flags & 131072)
+                        var lookup1 = FS.lookupPath(path1, {
+                            follow: !(flags1 & 131072)
                         });
-                        node = lookup.node;
-                    } catch (e) {}
+                        node1 = lookup1.node;
+                    } catch (e1) {}
                 }
-                var created = false;
-                if (flags & 64) {
-                    if (node) {
-                        if (flags & 128) throw new FS.ErrnoError(20);
+                var created1 = false;
+                if (flags1 & 64) {
+                    if (node1) {
+                        if (flags1 & 128) throw new FS.ErrnoError(20);
                     } else {
-                        node = FS.mknod(path, mode, 0);
-                        created = true;
+                        node1 = FS.mknod(path1, mode1, 0);
+                        created1 = true;
                     }
                 }
-                if (!node) throw new FS.ErrnoError(44);
-                if (FS.isChrdev(node.mode)) flags &= -513;
-                if (flags & 65536 && !FS.isDir(node.mode)) throw new FS.ErrnoError(54);
-                if (!created) {
-                    var errCode = FS.mayOpen(node, flags);
-                    if (errCode) throw new FS.ErrnoError(errCode);
+                if (!node1) throw new FS.ErrnoError(44);
+                if (FS.isChrdev(node1.mode)) flags1 &= -513;
+                if (flags1 & 65536 && !FS.isDir(node1.mode)) throw new FS.ErrnoError(54);
+                if (!created1) {
+                    var errCode1 = FS.mayOpen(node1, flags1);
+                    if (errCode1) throw new FS.ErrnoError(errCode1);
                 }
-                if (flags & 512 && !created) FS.truncate(node, 0);
-                flags &= -131713;
-                var stream = FS.createStream({
-                    node: node,
-                    path: FS.getPath(node),
-                    flags: flags,
+                if (flags1 & 512 && !created1) FS.truncate(node1, 0);
+                flags1 &= -131713;
+                var stream1 = FS.createStream({
+                    node: node1,
+                    path: FS.getPath(node1),
+                    flags: flags1,
                     seekable: true,
                     position: 0,
-                    stream_ops: node.stream_ops,
+                    stream_ops: node1.stream_ops,
                     ungotten: [],
                     error: false
                 });
-                if (stream.stream_ops.open) stream.stream_ops.open(stream);
-                if (Module["logReadFiles"] && !(flags & 1)) {
+                if (stream1.stream_ops.open) stream1.stream_ops.open(stream1);
+                if (Module["logReadFiles"] && !(flags1 & 1)) {
                     if (!FS.readFiles) FS.readFiles = {};
-                    if (!(path in FS.readFiles)) FS.readFiles[path] = 1;
+                    if (!(path1 in FS.readFiles)) FS.readFiles[path1] = 1;
                 }
-                return stream;
+                return stream1;
             },
-            close: (stream)=>{
-                if (FS.isClosed(stream)) throw new FS.ErrnoError(8);
-                if (stream.getdents) stream.getdents = null;
+            close: (stream1)=>{
+                if (FS.isClosed(stream1)) throw new FS.ErrnoError(8);
+                if (stream1.getdents) stream1.getdents = null;
                 try {
-                    if (stream.stream_ops.close) stream.stream_ops.close(stream);
-                } catch (e) {
-                    throw e;
+                    if (stream1.stream_ops.close) stream1.stream_ops.close(stream1);
+                } catch (e1) {
+                    throw e1;
                 } finally{
-                    FS.closeStream(stream.fd);
+                    FS.closeStream(stream1.fd);
                 }
-                stream.fd = null;
+                stream1.fd = null;
             },
-            isClosed: (stream)=>{
-                return stream.fd === null;
+            isClosed: (stream1)=>{
+                return stream1.fd === null;
             },
-            llseek: (stream, offset, whence)=>{
-                if (FS.isClosed(stream)) throw new FS.ErrnoError(8);
-                if (!stream.seekable || !stream.stream_ops.llseek) throw new FS.ErrnoError(70);
-                if (whence != 0 && whence != 1 && whence != 2) throw new FS.ErrnoError(28);
-                stream.position = stream.stream_ops.llseek(stream, offset, whence);
-                stream.ungotten = [];
-                return stream.position;
+            llseek: (stream1, offset1, whence1)=>{
+                if (FS.isClosed(stream1)) throw new FS.ErrnoError(8);
+                if (!stream1.seekable || !stream1.stream_ops.llseek) throw new FS.ErrnoError(70);
+                if (whence1 != 0 && whence1 != 1 && whence1 != 2) throw new FS.ErrnoError(28);
+                stream1.position = stream1.stream_ops.llseek(stream1, offset1, whence1);
+                stream1.ungotten = [];
+                return stream1.position;
             },
-            read: (stream, buffer, offset, length, position)=>{
-                if (length < 0 || position < 0) throw new FS.ErrnoError(28);
-                if (FS.isClosed(stream)) throw new FS.ErrnoError(8);
-                if ((stream.flags & 2097155) === 1) throw new FS.ErrnoError(8);
-                if (FS.isDir(stream.node.mode)) throw new FS.ErrnoError(31);
-                if (!stream.stream_ops.read) throw new FS.ErrnoError(28);
-                var seeking = typeof position != "undefined";
-                if (!seeking) position = stream.position;
-                else if (!stream.seekable) throw new FS.ErrnoError(70);
-                var bytesRead = stream.stream_ops.read(stream, buffer, offset, length, position);
-                if (!seeking) stream.position += bytesRead;
-                return bytesRead;
+            read: (stream1, buffer1, offset1, length1, position1)=>{
+                if (length1 < 0 || position1 < 0) throw new FS.ErrnoError(28);
+                if (FS.isClosed(stream1)) throw new FS.ErrnoError(8);
+                if ((stream1.flags & 2097155) === 1) throw new FS.ErrnoError(8);
+                if (FS.isDir(stream1.node.mode)) throw new FS.ErrnoError(31);
+                if (!stream1.stream_ops.read) throw new FS.ErrnoError(28);
+                var seeking1 = typeof position1 != "undefined";
+                if (!seeking1) position1 = stream1.position;
+                else if (!stream1.seekable) throw new FS.ErrnoError(70);
+                var bytesRead1 = stream1.stream_ops.read(stream1, buffer1, offset1, length1, position1);
+                if (!seeking1) stream1.position += bytesRead1;
+                return bytesRead1;
             },
-            write: (stream, buffer, offset, length, position, canOwn)=>{
-                if (length < 0 || position < 0) throw new FS.ErrnoError(28);
-                if (FS.isClosed(stream)) throw new FS.ErrnoError(8);
-                if ((stream.flags & 2097155) === 0) throw new FS.ErrnoError(8);
-                if (FS.isDir(stream.node.mode)) throw new FS.ErrnoError(31);
-                if (!stream.stream_ops.write) throw new FS.ErrnoError(28);
-                if (stream.seekable && stream.flags & 1024) FS.llseek(stream, 0, 2);
-                var seeking = typeof position != "undefined";
-                if (!seeking) position = stream.position;
-                else if (!stream.seekable) throw new FS.ErrnoError(70);
-                var bytesWritten = stream.stream_ops.write(stream, buffer, offset, length, position, canOwn);
-                if (!seeking) stream.position += bytesWritten;
-                return bytesWritten;
+            write: (stream1, buffer1, offset1, length1, position1, canOwn1)=>{
+                if (length1 < 0 || position1 < 0) throw new FS.ErrnoError(28);
+                if (FS.isClosed(stream1)) throw new FS.ErrnoError(8);
+                if ((stream1.flags & 2097155) === 0) throw new FS.ErrnoError(8);
+                if (FS.isDir(stream1.node.mode)) throw new FS.ErrnoError(31);
+                if (!stream1.stream_ops.write) throw new FS.ErrnoError(28);
+                if (stream1.seekable && stream1.flags & 1024) FS.llseek(stream1, 0, 2);
+                var seeking1 = typeof position1 != "undefined";
+                if (!seeking1) position1 = stream1.position;
+                else if (!stream1.seekable) throw new FS.ErrnoError(70);
+                var bytesWritten1 = stream1.stream_ops.write(stream1, buffer1, offset1, length1, position1, canOwn1);
+                if (!seeking1) stream1.position += bytesWritten1;
+                return bytesWritten1;
             },
-            allocate: (stream, offset, length)=>{
-                if (FS.isClosed(stream)) throw new FS.ErrnoError(8);
-                if (offset < 0 || length <= 0) throw new FS.ErrnoError(28);
-                if ((stream.flags & 2097155) === 0) throw new FS.ErrnoError(8);
-                if (!FS.isFile(stream.node.mode) && !FS.isDir(stream.node.mode)) throw new FS.ErrnoError(43);
-                if (!stream.stream_ops.allocate) throw new FS.ErrnoError(138);
-                stream.stream_ops.allocate(stream, offset, length);
+            allocate: (stream1, offset1, length1)=>{
+                if (FS.isClosed(stream1)) throw new FS.ErrnoError(8);
+                if (offset1 < 0 || length1 <= 0) throw new FS.ErrnoError(28);
+                if ((stream1.flags & 2097155) === 0) throw new FS.ErrnoError(8);
+                if (!FS.isFile(stream1.node.mode) && !FS.isDir(stream1.node.mode)) throw new FS.ErrnoError(43);
+                if (!stream1.stream_ops.allocate) throw new FS.ErrnoError(138);
+                stream1.stream_ops.allocate(stream1, offset1, length1);
             },
-            mmap: (stream, length, position, prot, flags)=>{
-                if ((prot & 2) !== 0 && (flags & 2) === 0 && (stream.flags & 2097155) !== 2) throw new FS.ErrnoError(2);
-                if ((stream.flags & 2097155) === 1) throw new FS.ErrnoError(2);
-                if (!stream.stream_ops.mmap) throw new FS.ErrnoError(43);
-                return stream.stream_ops.mmap(stream, length, position, prot, flags);
+            mmap: (stream1, length1, position1, prot1, flags1)=>{
+                if ((prot1 & 2) !== 0 && (flags1 & 2) === 0 && (stream1.flags & 2097155) !== 2) throw new FS.ErrnoError(2);
+                if ((stream1.flags & 2097155) === 1) throw new FS.ErrnoError(2);
+                if (!stream1.stream_ops.mmap) throw new FS.ErrnoError(43);
+                return stream1.stream_ops.mmap(stream1, length1, position1, prot1, flags1);
             },
-            msync: (stream, buffer, offset, length, mmapFlags)=>{
-                if (!stream || !stream.stream_ops.msync) return 0;
-                return stream.stream_ops.msync(stream, buffer, offset, length, mmapFlags);
+            msync: (stream1, buffer1, offset1, length1, mmapFlags1)=>{
+                if (!stream1 || !stream1.stream_ops.msync) return 0;
+                return stream1.stream_ops.msync(stream1, buffer1, offset1, length1, mmapFlags1);
             },
-            munmap: (stream)=>0,
-            ioctl: (stream, cmd, arg)=>{
-                if (!stream.stream_ops.ioctl) throw new FS.ErrnoError(59);
-                return stream.stream_ops.ioctl(stream, cmd, arg);
+            munmap: (stream1)=>0,
+            ioctl: (stream1, cmd1, arg1)=>{
+                if (!stream1.stream_ops.ioctl) throw new FS.ErrnoError(59);
+                return stream1.stream_ops.ioctl(stream1, cmd1, arg1);
             },
-            readFile: (path, opts = {})=>{
-                opts.flags = opts.flags || 0;
-                opts.encoding = opts.encoding || "binary";
-                if (opts.encoding !== "utf8" && opts.encoding !== "binary") throw new Error('Invalid encoding type "' + opts.encoding + '"');
-                var ret;
-                var stream = FS.open(path, opts.flags);
-                var stat = FS.stat(path);
-                var length = stat.size;
-                var buf = new Uint8Array(length);
-                FS.read(stream, buf, 0, length, 0);
-                if (opts.encoding === "utf8") ret = UTF8ArrayToString(buf, 0);
-                else if (opts.encoding === "binary") ret = buf;
-                FS.close(stream);
-                return ret;
+            readFile: (path1, opts1 = {})=>{
+                opts1.flags = opts1.flags || 0;
+                opts1.encoding = opts1.encoding || "binary";
+                if (opts1.encoding !== "utf8" && opts1.encoding !== "binary") throw new Error('Invalid encoding type "' + opts1.encoding + '"');
+                var ret1;
+                var stream1 = FS.open(path1, opts1.flags);
+                var stat1 = FS.stat(path1);
+                var length1 = stat1.size;
+                var buf1 = new Uint8Array(length1);
+                FS.read(stream1, buf1, 0, length1, 0);
+                if (opts1.encoding === "utf8") ret1 = UTF8ArrayToString(buf1, 0);
+                else if (opts1.encoding === "binary") ret1 = buf1;
+                FS.close(stream1);
+                return ret1;
             },
-            writeFile: (path, data, opts = {})=>{
-                opts.flags = opts.flags || 577;
-                var stream = FS.open(path, opts.flags, opts.mode);
-                if (typeof data == "string") {
-                    var buf = new Uint8Array(lengthBytesUTF8(data) + 1);
-                    var actualNumBytes = stringToUTF8Array(data, buf, 0, buf.length);
-                    FS.write(stream, buf, 0, actualNumBytes, undefined, opts.canOwn);
-                } else if (ArrayBuffer.isView(data)) FS.write(stream, data, 0, data.byteLength, undefined, opts.canOwn);
+            writeFile: (path1, data1, opts1 = {})=>{
+                opts1.flags = opts1.flags || 577;
+                var stream1 = FS.open(path1, opts1.flags, opts1.mode);
+                if (typeof data1 == "string") {
+                    var buf1 = new Uint8Array(lengthBytesUTF8(data1) + 1);
+                    var actualNumBytes1 = stringToUTF8Array(data1, buf1, 0, buf1.length);
+                    FS.write(stream1, buf1, 0, actualNumBytes1, undefined, opts1.canOwn);
+                } else if (ArrayBuffer.isView(data1)) FS.write(stream1, data1, 0, data1.byteLength, undefined, opts1.canOwn);
                 else throw new Error("Unsupported data type");
-                FS.close(stream);
+                FS.close(stream1);
             },
             cwd: ()=>FS.currentPath,
-            chdir: (path)=>{
-                var lookup = FS.lookupPath(path, {
+            chdir: (path1)=>{
+                var lookup1 = FS.lookupPath(path1, {
                     follow: true
                 });
-                if (lookup.node === null) throw new FS.ErrnoError(44);
-                if (!FS.isDir(lookup.node.mode)) throw new FS.ErrnoError(54);
-                var errCode = FS.nodePermissions(lookup.node, "x");
-                if (errCode) throw new FS.ErrnoError(errCode);
-                FS.currentPath = lookup.path;
+                if (lookup1.node === null) throw new FS.ErrnoError(44);
+                if (!FS.isDir(lookup1.node.mode)) throw new FS.ErrnoError(54);
+                var errCode1 = FS.nodePermissions(lookup1.node, "x");
+                if (errCode1) throw new FS.ErrnoError(errCode1);
+                FS.currentPath = lookup1.path;
             },
             createDefaultDirectories: ()=>{
                 FS.mkdir("/tmp");
@@ -2326,45 +2326,45 @@ var Godot = (()=>{
                 FS.mkdir("/dev");
                 FS.registerDevice(FS.makedev(1, 3), {
                     read: ()=>0,
-                    write: (stream, buffer, offset, length, pos)=>length
+                    write: (stream1, buffer1, offset1, length1, pos1)=>length1
                 });
                 FS.mkdev("/dev/null", FS.makedev(1, 3));
                 TTY.register(FS.makedev(5, 0), TTY.default_tty_ops);
                 TTY.register(FS.makedev(6, 0), TTY.default_tty1_ops);
                 FS.mkdev("/dev/tty", FS.makedev(5, 0));
                 FS.mkdev("/dev/tty1", FS.makedev(6, 0));
-                var random_device = getRandomDevice();
-                FS.createDevice("/dev", "random", random_device);
-                FS.createDevice("/dev", "urandom", random_device);
+                var random_device1 = getRandomDevice();
+                FS.createDevice("/dev", "random", random_device1);
+                FS.createDevice("/dev", "urandom", random_device1);
                 FS.mkdir("/dev/shm");
                 FS.mkdir("/dev/shm/tmp");
             },
             createSpecialDirectories: ()=>{
                 FS.mkdir("/proc");
-                var proc_self = FS.mkdir("/proc/self");
+                var proc_self1 = FS.mkdir("/proc/self");
                 FS.mkdir("/proc/self/fd");
                 FS.mount({
                     mount: ()=>{
-                        var node = FS.createNode(proc_self, "fd", 16895, 73);
-                        node.node_ops = {
-                            lookup: (parent, name)=>{
-                                var fd = +name;
-                                var stream = FS.getStream(fd);
-                                if (!stream) throw new FS.ErrnoError(8);
-                                var ret = {
+                        var node1 = FS.createNode(proc_self1, "fd", 16895, 73);
+                        node1.node_ops = {
+                            lookup: (parent1, name1)=>{
+                                var fd1 = +name1;
+                                var stream1 = FS.getStream(fd1);
+                                if (!stream1) throw new FS.ErrnoError(8);
+                                var ret1 = {
                                     parent: null,
                                     mount: {
                                         mountpoint: "fake"
                                     },
                                     node_ops: {
-                                        readlink: ()=>stream.path
+                                        readlink: ()=>stream1.path
                                     }
                                 };
-                                ret.parent = ret;
-                                return ret;
+                                ret1.parent = ret1;
+                                return ret1;
                             }
                         };
-                        return node;
+                        return node1;
                     }
                 }, {}, "/proc/self/fd");
             },
@@ -2375,27 +2375,27 @@ var Godot = (()=>{
                 else FS.symlink("/dev/tty", "/dev/stdout");
                 if (Module["stderr"]) FS.createDevice("/dev", "stderr", null, Module["stderr"]);
                 else FS.symlink("/dev/tty1", "/dev/stderr");
-                var stdin = FS.open("/dev/stdin", 0);
-                var stdout = FS.open("/dev/stdout", 1);
-                var stderr = FS.open("/dev/stderr", 1);
+                var stdin1 = FS.open("/dev/stdin", 0);
+                var stdout1 = FS.open("/dev/stdout", 1);
+                var stderr1 = FS.open("/dev/stderr", 1);
             },
             ensureErrnoError: ()=>{
                 if (FS.ErrnoError) return;
-                FS.ErrnoError = function ErrnoError(errno, node) {
-                    this.node = node;
-                    this.setErrno = function(errno) {
-                        this.errno = errno;
+                FS.ErrnoError = function ErrnoError1(errno1, node1) {
+                    this.node = node1;
+                    this.setErrno = function(errno1) {
+                        this.errno = errno1;
                     };
-                    this.setErrno(errno);
+                    this.setErrno(errno1);
                     this.message = "FS error";
                 };
                 FS.ErrnoError.prototype = new Error;
                 FS.ErrnoError.prototype.constructor = FS.ErrnoError;
                 [
                     44
-                ].forEach((code)=>{
-                    FS.genericErrors[code] = new FS.ErrnoError(code);
-                    FS.genericErrors[code].stack = "<generic error, no stack>";
+                ].forEach((code1)=>{
+                    FS.genericErrors[code1] = new FS.ErrnoError(code1);
+                    FS.genericErrors[code1].stack = "<generic error, no stack>";
                 });
             },
             staticInit: ()=>{
@@ -2410,42 +2410,42 @@ var Godot = (()=>{
                     "IDBFS": IDBFS
                 };
             },
-            init: (input, output, error)=>{
+            init: (input1, output1, error1)=>{
                 FS.init.initialized = true;
                 FS.ensureErrnoError();
-                Module["stdin"] = input || Module["stdin"];
-                Module["stdout"] = output || Module["stdout"];
-                Module["stderr"] = error || Module["stderr"];
+                Module["stdin"] = input1 || Module["stdin"];
+                Module["stdout"] = output1 || Module["stdout"];
+                Module["stderr"] = error1 || Module["stderr"];
                 FS.createStandardStreams();
             },
             quit: ()=>{
                 FS.init.initialized = false;
                 _fflush(0);
-                for(var i = 0; i < FS.streams.length; i++){
-                    var stream = FS.streams[i];
-                    if (!stream) continue;
-                    FS.close(stream);
+                for(var i1 = 0; i1 < FS.streams.length; i1++){
+                    var stream1 = FS.streams[i1];
+                    if (!stream1) continue;
+                    FS.close(stream1);
                 }
             },
-            getMode: (canRead, canWrite)=>{
-                var mode = 0;
-                if (canRead) mode |= 365;
-                if (canWrite) mode |= 146;
-                return mode;
+            getMode: (canRead1, canWrite1)=>{
+                var mode1 = 0;
+                if (canRead1) mode1 |= 365;
+                if (canWrite1) mode1 |= 146;
+                return mode1;
             },
-            findObject: (path, dontResolveLastLink)=>{
-                var ret = FS.analyzePath(path, dontResolveLastLink);
-                if (ret.exists) return ret.object;
+            findObject: (path1, dontResolveLastLink1)=>{
+                var ret1 = FS.analyzePath(path1, dontResolveLastLink1);
+                if (ret1.exists) return ret1.object;
                 else return null;
             },
-            analyzePath: (path, dontResolveLastLink)=>{
+            analyzePath: (path1, dontResolveLastLink1)=>{
                 try {
-                    var lookup = FS.lookupPath(path, {
-                        follow: !dontResolveLastLink
+                    var lookup1 = FS.lookupPath(path1, {
+                        follow: !dontResolveLastLink1
                     });
-                    path = lookup.path;
-                } catch (e) {}
-                var ret = {
+                    path1 = lookup1.path;
+                } catch (e1) {}
+                var ret1 = {
                     isRoot: false,
                     exists: false,
                     error: 0,
@@ -2457,180 +2457,180 @@ var Godot = (()=>{
                     parentObject: null
                 };
                 try {
-                    var lookup = FS.lookupPath(path, {
+                    var lookup1 = FS.lookupPath(path1, {
                         parent: true
                     });
-                    ret.parentExists = true;
-                    ret.parentPath = lookup.path;
-                    ret.parentObject = lookup.node;
-                    ret.name = PATH.basename(path);
-                    lookup = FS.lookupPath(path, {
-                        follow: !dontResolveLastLink
+                    ret1.parentExists = true;
+                    ret1.parentPath = lookup1.path;
+                    ret1.parentObject = lookup1.node;
+                    ret1.name = PATH.basename(path1);
+                    lookup1 = FS.lookupPath(path1, {
+                        follow: !dontResolveLastLink1
                     });
-                    ret.exists = true;
-                    ret.path = lookup.path;
-                    ret.object = lookup.node;
-                    ret.name = lookup.node.name;
-                    ret.isRoot = lookup.path === "/";
+                    ret1.exists = true;
+                    ret1.path = lookup1.path;
+                    ret1.object = lookup1.node;
+                    ret1.name = lookup1.node.name;
+                    ret1.isRoot = lookup1.path === "/";
                 } catch (e1) {
-                    ret.error = e1.errno;
+                    ret1.error = e1.errno;
                 }
-                return ret;
+                return ret1;
             },
-            createPath: (parent, path, canRead, canWrite)=>{
-                parent = typeof parent == "string" ? parent : FS.getPath(parent);
-                var parts = path.split("/").reverse();
-                while(parts.length){
-                    var part = parts.pop();
-                    if (!part) continue;
-                    var current = PATH.join2(parent, part);
+            createPath: (parent1, path1, canRead1, canWrite1)=>{
+                parent1 = typeof parent1 == "string" ? parent1 : FS.getPath(parent1);
+                var parts1 = path1.split("/").reverse();
+                while(parts1.length){
+                    var part1 = parts1.pop();
+                    if (!part1) continue;
+                    var current1 = PATH.join2(parent1, part1);
                     try {
-                        FS.mkdir(current);
-                    } catch (e) {}
-                    parent = current;
+                        FS.mkdir(current1);
+                    } catch (e1) {}
+                    parent1 = current1;
                 }
-                return current;
+                return current1;
             },
-            createFile: (parent, name, properties, canRead, canWrite)=>{
-                var path = PATH.join2(typeof parent == "string" ? parent : FS.getPath(parent), name);
-                var mode = FS.getMode(canRead, canWrite);
-                return FS.create(path, mode);
+            createFile: (parent1, name1, properties1, canRead1, canWrite1)=>{
+                var path1 = PATH.join2(typeof parent1 == "string" ? parent1 : FS.getPath(parent1), name1);
+                var mode1 = FS.getMode(canRead1, canWrite1);
+                return FS.create(path1, mode1);
             },
-            createDataFile: (parent, name, data, canRead, canWrite, canOwn)=>{
-                var path = name;
-                if (parent) {
-                    parent = typeof parent == "string" ? parent : FS.getPath(parent);
-                    path = name ? PATH.join2(parent, name) : parent;
+            createDataFile: (parent1, name1, data1, canRead1, canWrite1, canOwn1)=>{
+                var path1 = name1;
+                if (parent1) {
+                    parent1 = typeof parent1 == "string" ? parent1 : FS.getPath(parent1);
+                    path1 = name1 ? PATH.join2(parent1, name1) : parent1;
                 }
-                var mode = FS.getMode(canRead, canWrite);
-                var node = FS.create(path, mode);
-                if (data) {
-                    if (typeof data == "string") {
-                        var arr = new Array(data.length);
-                        for(var i = 0, len = data.length; i < len; ++i)arr[i] = data.charCodeAt(i);
-                        data = arr;
+                var mode1 = FS.getMode(canRead1, canWrite1);
+                var node1 = FS.create(path1, mode1);
+                if (data1) {
+                    if (typeof data1 == "string") {
+                        var arr1 = new Array(data1.length);
+                        for(var i1 = 0, len1 = data1.length; i1 < len1; ++i1)arr1[i1] = data1.charCodeAt(i1);
+                        data1 = arr1;
                     }
-                    FS.chmod(node, mode | 146);
-                    var stream = FS.open(node, 577);
-                    FS.write(stream, data, 0, data.length, 0, canOwn);
-                    FS.close(stream);
-                    FS.chmod(node, mode);
+                    FS.chmod(node1, mode1 | 146);
+                    var stream1 = FS.open(node1, 577);
+                    FS.write(stream1, data1, 0, data1.length, 0, canOwn1);
+                    FS.close(stream1);
+                    FS.chmod(node1, mode1);
                 }
-                return node;
+                return node1;
             },
-            createDevice: (parent, name, input, output)=>{
-                var path = PATH.join2(typeof parent == "string" ? parent : FS.getPath(parent), name);
-                var mode = FS.getMode(!!input, !!output);
+            createDevice: (parent1, name1, input1, output1)=>{
+                var path1 = PATH.join2(typeof parent1 == "string" ? parent1 : FS.getPath(parent1), name1);
+                var mode1 = FS.getMode(!!input1, !!output1);
                 if (!FS.createDevice.major) FS.createDevice.major = 64;
-                var dev = FS.makedev(FS.createDevice.major++, 0);
-                FS.registerDevice(dev, {
-                    open: (stream)=>{
-                        stream.seekable = false;
+                var dev1 = FS.makedev(FS.createDevice.major++, 0);
+                FS.registerDevice(dev1, {
+                    open: (stream1)=>{
+                        stream1.seekable = false;
                     },
-                    close: (stream)=>{
-                        if (output && output.buffer && output.buffer.length) output(10);
+                    close: (stream1)=>{
+                        if (output1 && output1.buffer && output1.buffer.length) output1(10);
                     },
-                    read: (stream, buffer, offset, length, pos)=>{
-                        var bytesRead = 0;
-                        for(var i = 0; i < length; i++){
-                            var result;
+                    read: (stream1, buffer1, offset1, length1, pos1)=>{
+                        var bytesRead1 = 0;
+                        for(var i1 = 0; i1 < length1; i1++){
+                            var result1;
                             try {
-                                result = input();
-                            } catch (e) {
+                                result1 = input1();
+                            } catch (e1) {
                                 throw new FS.ErrnoError(29);
                             }
-                            if (result === undefined && bytesRead === 0) throw new FS.ErrnoError(6);
-                            if (result === null || result === undefined) break;
-                            bytesRead++;
-                            buffer[offset + i] = result;
+                            if (result1 === undefined && bytesRead1 === 0) throw new FS.ErrnoError(6);
+                            if (result1 === null || result1 === undefined) break;
+                            bytesRead1++;
+                            buffer1[offset1 + i1] = result1;
                         }
-                        if (bytesRead) stream.node.timestamp = Date.now();
-                        return bytesRead;
+                        if (bytesRead1) stream1.node.timestamp = Date.now();
+                        return bytesRead1;
                     },
-                    write: (stream, buffer, offset, length, pos)=>{
-                        for(var i = 0; i < length; i++)try {
-                            output(buffer[offset + i]);
-                        } catch (e) {
+                    write: (stream1, buffer1, offset1, length1, pos1)=>{
+                        for(var i1 = 0; i1 < length1; i1++)try {
+                            output1(buffer1[offset1 + i1]);
+                        } catch (e1) {
                             throw new FS.ErrnoError(29);
                         }
-                        if (length) stream.node.timestamp = Date.now();
-                        return i;
+                        if (length1) stream1.node.timestamp = Date.now();
+                        return i1;
                     }
                 });
-                return FS.mkdev(path, mode, dev);
+                return FS.mkdev(path1, mode1, dev1);
             },
-            forceLoadFile: (obj)=>{
-                if (obj.isDevice || obj.isFolder || obj.link || obj.contents) return true;
+            forceLoadFile: (obj1)=>{
+                if (obj1.isDevice || obj1.isFolder || obj1.link || obj1.contents) return true;
                 if (typeof XMLHttpRequest != "undefined") throw new Error("Lazy loading should have been performed (contents set) in createLazyFile, but it was not. Lazy loading only works in web workers. Use --embed-file or --preload-file in emcc on the main thread.");
                 else if (read_) try {
-                    obj.contents = intArrayFromString(read_(obj.url), true);
-                    obj.usedBytes = obj.contents.length;
-                } catch (e) {
+                    obj1.contents = intArrayFromString(read_(obj1.url), true);
+                    obj1.usedBytes = obj1.contents.length;
+                } catch (e1) {
                     throw new FS.ErrnoError(29);
                 }
                 else throw new Error("Cannot load without read() or XMLHttpRequest.");
             },
-            createLazyFile: (parent, name, url, canRead, canWrite)=>{
-                function LazyUint8Array() {
+            createLazyFile: (parent1, name1, url1, canRead1, canWrite1)=>{
+                function LazyUint8Array1() {
                     this.lengthKnown = false;
                     this.chunks = [];
                 }
-                LazyUint8Array.prototype.get = function LazyUint8Array_get(idx) {
-                    if (idx > this.length - 1 || idx < 0) return undefined;
-                    var chunkOffset = idx % this.chunkSize;
-                    var chunkNum = idx / this.chunkSize | 0;
-                    return this.getter(chunkNum)[chunkOffset];
+                LazyUint8Array1.prototype.get = function LazyUint8Array_get1(idx1) {
+                    if (idx1 > this.length - 1 || idx1 < 0) return undefined;
+                    var chunkOffset1 = idx1 % this.chunkSize;
+                    var chunkNum1 = idx1 / this.chunkSize | 0;
+                    return this.getter(chunkNum1)[chunkOffset1];
                 };
-                LazyUint8Array.prototype.setDataGetter = function LazyUint8Array_setDataGetter(getter) {
-                    this.getter = getter;
+                LazyUint8Array1.prototype.setDataGetter = function LazyUint8Array_setDataGetter1(getter1) {
+                    this.getter = getter1;
                 };
-                LazyUint8Array.prototype.cacheLength = function LazyUint8Array_cacheLength() {
-                    var xhr = new XMLHttpRequest;
-                    xhr.open("HEAD", url, false);
-                    xhr.send(null);
-                    if (!(xhr.status >= 200 && xhr.status < 300 || xhr.status === 304)) throw new Error("Couldn't load " + url + ". Status: " + xhr.status);
-                    var datalength = Number(xhr.getResponseHeader("Content-length"));
-                    var header;
-                    var hasByteServing = (header = xhr.getResponseHeader("Accept-Ranges")) && header === "bytes";
-                    var usesGzip = (header = xhr.getResponseHeader("Content-Encoding")) && header === "gzip";
-                    var chunkSize = 1048576;
-                    if (!hasByteServing) chunkSize = datalength;
-                    var doXHR = (from, to)=>{
-                        if (from > to) throw new Error("invalid range (" + from + ", " + to + ") or no bytes requested!");
-                        if (to > datalength - 1) throw new Error("only " + datalength + " bytes available! programmer error!");
-                        var xhr = new XMLHttpRequest;
-                        xhr.open("GET", url, false);
-                        if (datalength !== chunkSize) xhr.setRequestHeader("Range", "bytes=" + from + "-" + to);
-                        xhr.responseType = "arraybuffer";
-                        if (xhr.overrideMimeType) xhr.overrideMimeType("text/plain; charset=x-user-defined");
-                        xhr.send(null);
-                        if (!(xhr.status >= 200 && xhr.status < 300 || xhr.status === 304)) throw new Error("Couldn't load " + url + ". Status: " + xhr.status);
-                        if (xhr.response !== undefined) return new Uint8Array(xhr.response || []);
-                        else return intArrayFromString(xhr.responseText || "", true);
+                LazyUint8Array1.prototype.cacheLength = function LazyUint8Array_cacheLength1() {
+                    var xhr1 = new XMLHttpRequest;
+                    xhr1.open("HEAD", url1, false);
+                    xhr1.send(null);
+                    if (!(xhr1.status >= 200 && xhr1.status < 300 || xhr1.status === 304)) throw new Error("Couldn't load " + url1 + ". Status: " + xhr1.status);
+                    var datalength1 = Number(xhr1.getResponseHeader("Content-length"));
+                    var header1;
+                    var hasByteServing1 = (header1 = xhr1.getResponseHeader("Accept-Ranges")) && header1 === "bytes";
+                    var usesGzip1 = (header1 = xhr1.getResponseHeader("Content-Encoding")) && header1 === "gzip";
+                    var chunkSize1 = 1048576;
+                    if (!hasByteServing1) chunkSize1 = datalength1;
+                    var doXHR1 = (from1, to1)=>{
+                        if (from1 > to1) throw new Error("invalid range (" + from1 + ", " + to1 + ") or no bytes requested!");
+                        if (to1 > datalength1 - 1) throw new Error("only " + datalength1 + " bytes available! programmer error!");
+                        var xhr1 = new XMLHttpRequest;
+                        xhr1.open("GET", url1, false);
+                        if (datalength1 !== chunkSize1) xhr1.setRequestHeader("Range", "bytes=" + from1 + "-" + to1);
+                        xhr1.responseType = "arraybuffer";
+                        if (xhr1.overrideMimeType) xhr1.overrideMimeType("text/plain; charset=x-user-defined");
+                        xhr1.send(null);
+                        if (!(xhr1.status >= 200 && xhr1.status < 300 || xhr1.status === 304)) throw new Error("Couldn't load " + url1 + ". Status: " + xhr1.status);
+                        if (xhr1.response !== undefined) return new Uint8Array(xhr1.response || []);
+                        else return intArrayFromString(xhr1.responseText || "", true);
                     };
-                    var lazyArray = this;
-                    lazyArray.setDataGetter((chunkNum)=>{
-                        var start = chunkNum * chunkSize;
-                        var end = (chunkNum + 1) * chunkSize - 1;
-                        end = Math.min(end, datalength - 1);
-                        if (typeof lazyArray.chunks[chunkNum] == "undefined") lazyArray.chunks[chunkNum] = doXHR(start, end);
-                        if (typeof lazyArray.chunks[chunkNum] == "undefined") throw new Error("doXHR failed!");
-                        return lazyArray.chunks[chunkNum];
+                    var lazyArray1 = this;
+                    lazyArray1.setDataGetter((chunkNum1)=>{
+                        var start1 = chunkNum1 * chunkSize1;
+                        var end1 = (chunkNum1 + 1) * chunkSize1 - 1;
+                        end1 = Math.min(end1, datalength1 - 1);
+                        if (typeof lazyArray1.chunks[chunkNum1] == "undefined") lazyArray1.chunks[chunkNum1] = doXHR1(start1, end1);
+                        if (typeof lazyArray1.chunks[chunkNum1] == "undefined") throw new Error("doXHR failed!");
+                        return lazyArray1.chunks[chunkNum1];
                     });
-                    if (usesGzip || !datalength) {
-                        chunkSize = datalength = 1;
-                        datalength = this.getter(0).length;
-                        chunkSize = datalength;
+                    if (usesGzip1 || !datalength1) {
+                        chunkSize1 = datalength1 = 1;
+                        datalength1 = this.getter(0).length;
+                        chunkSize1 = datalength1;
                         out("LazyFiles on gzip forces download of the whole file when length is accessed");
                     }
-                    this._length = datalength;
-                    this._chunkSize = chunkSize;
+                    this._length = datalength1;
+                    this._chunkSize = chunkSize1;
                     this.lengthKnown = true;
                 };
                 if (typeof XMLHttpRequest != "undefined") {
                     if (!ENVIRONMENT_IS_WORKER) throw "Cannot do synchronous binary XHRs outside webworkers in modern browsers. Use --embed-file or --preload-file in emcc";
-                    var lazyArray = new LazyUint8Array;
-                    Object.defineProperties(lazyArray, {
+                    var lazyArray1 = new LazyUint8Array1;
+                    Object.defineProperties(lazyArray1, {
                         length: {
                             get: function() {
                                 if (!this.lengthKnown) this.cacheLength();
@@ -2644,80 +2644,80 @@ var Godot = (()=>{
                             }
                         }
                     });
-                    var properties = {
+                    var properties1 = {
                         isDevice: false,
-                        contents: lazyArray
+                        contents: lazyArray1
                     };
-                } else var properties = {
+                } else var properties1 = {
                     isDevice: false,
-                    url: url
+                    url: url1
                 };
-                var node = FS.createFile(parent, name, properties, canRead, canWrite);
-                if (properties.contents) node.contents = properties.contents;
-                else if (properties.url) {
-                    node.contents = null;
-                    node.url = properties.url;
+                var node1 = FS.createFile(parent1, name1, properties1, canRead1, canWrite1);
+                if (properties1.contents) node1.contents = properties1.contents;
+                else if (properties1.url) {
+                    node1.contents = null;
+                    node1.url = properties1.url;
                 }
-                Object.defineProperties(node, {
+                Object.defineProperties(node1, {
                     usedBytes: {
                         get: function() {
                             return this.contents.length;
                         }
                     }
                 });
-                var stream_ops = {};
-                var keys = Object.keys(node.stream_ops);
-                keys.forEach((key)=>{
-                    var fn = node.stream_ops[key];
-                    stream_ops[key] = function forceLoadLazyFile() {
-                        FS.forceLoadFile(node);
-                        return fn.apply(null, arguments);
+                var stream_ops1 = {};
+                var keys1 = Object.keys(node1.stream_ops);
+                keys1.forEach((key1)=>{
+                    var fn1 = node1.stream_ops[key1];
+                    stream_ops1[key1] = function forceLoadLazyFile1() {
+                        FS.forceLoadFile(node1);
+                        return fn1.apply(null, arguments);
                     };
                 });
-                function writeChunks(stream, buffer, offset, length, position) {
-                    var contents = stream.node.contents;
-                    if (position >= contents.length) return 0;
-                    var size = Math.min(contents.length - position, length);
-                    if (contents.slice) for(var i = 0; i < size; i++)buffer[offset + i] = contents[position + i];
-                    else for(var i = 0; i < size; i++)buffer[offset + i] = contents.get(position + i);
-                    return size;
+                function writeChunks1(stream1, buffer1, offset1, length1, position1) {
+                    var contents1 = stream1.node.contents;
+                    if (position1 >= contents1.length) return 0;
+                    var size1 = Math.min(contents1.length - position1, length1);
+                    if (contents1.slice) for(var i1 = 0; i1 < size1; i1++)buffer1[offset1 + i1] = contents1[position1 + i1];
+                    else for(var i1 = 0; i1 < size1; i1++)buffer1[offset1 + i1] = contents1.get(position1 + i1);
+                    return size1;
                 }
-                stream_ops.read = (stream, buffer, offset, length, position)=>{
-                    FS.forceLoadFile(node);
-                    return writeChunks(stream, buffer, offset, length, position);
+                stream_ops1.read = (stream1, buffer1, offset1, length1, position1)=>{
+                    FS.forceLoadFile(node1);
+                    return writeChunks1(stream1, buffer1, offset1, length1, position1);
                 };
-                stream_ops.mmap = (stream, length, position, prot, flags)=>{
-                    FS.forceLoadFile(node);
-                    var ptr = mmapAlloc(length);
-                    if (!ptr) throw new FS.ErrnoError(48);
-                    writeChunks(stream, GROWABLE_HEAP_I8(), ptr, length, position);
+                stream_ops1.mmap = (stream1, length1, position1, prot1, flags1)=>{
+                    FS.forceLoadFile(node1);
+                    var ptr1 = mmapAlloc(length1);
+                    if (!ptr1) throw new FS.ErrnoError(48);
+                    writeChunks1(stream1, GROWABLE_HEAP_I8(), ptr1, length1, position1);
                     return {
-                        ptr: ptr,
+                        ptr: ptr1,
                         allocated: true
                     };
                 };
-                node.stream_ops = stream_ops;
-                return node;
+                node1.stream_ops = stream_ops1;
+                return node1;
             },
-            createPreloadedFile: (parent, name, url, canRead, canWrite, onload, onerror, dontCreateFile, canOwn, preFinish)=>{
-                var fullname = name ? PATH_FS.resolve(PATH.join2(parent, name)) : parent;
-                var dep = getUniqueRunDependency("cp " + fullname);
-                function processData(byteArray) {
-                    function finish(byteArray) {
-                        if (preFinish) preFinish();
-                        if (!dontCreateFile) FS.createDataFile(parent, name, byteArray, canRead, canWrite, canOwn);
-                        if (onload) onload();
-                        removeRunDependency(dep);
+            createPreloadedFile: (parent1, name1, url1, canRead1, canWrite1, onload1, onerror1, dontCreateFile1, canOwn1, preFinish1)=>{
+                var fullname1 = name1 ? PATH_FS.resolve(PATH.join2(parent1, name1)) : parent1;
+                var dep1 = getUniqueRunDependency("cp " + fullname1);
+                function processData1(byteArray1) {
+                    function finish1(byteArray1) {
+                        if (preFinish1) preFinish1();
+                        if (!dontCreateFile1) FS.createDataFile(parent1, name1, byteArray1, canRead1, canWrite1, canOwn1);
+                        if (onload1) onload1();
+                        removeRunDependency(dep1);
                     }
-                    if (Browser.handledByPreloadPlugin(byteArray, fullname, finish, ()=>{
-                        if (onerror) onerror();
-                        removeRunDependency(dep);
+                    if (Browser.handledByPreloadPlugin(byteArray1, fullname1, finish1, ()=>{
+                        if (onerror1) onerror1();
+                        removeRunDependency(dep1);
                     })) return;
-                    finish(byteArray);
+                    finish1(byteArray1);
                 }
-                addRunDependency(dep);
-                if (typeof url == "string") asyncLoad(url, (byteArray)=>processData(byteArray), onerror);
-                else processData(url);
+                addRunDependency(dep1);
+                if (typeof url1 == "string") asyncLoad(url1, (byteArray1)=>processData1(byteArray1), onerror1);
+                else processData1(url1);
             },
             indexedDB: ()=>{
                 return window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
@@ -2727,235 +2727,235 @@ var Godot = (()=>{
             },
             DB_VERSION: 20,
             DB_STORE_NAME: "FILE_DATA",
-            saveFilesToDB: (paths, onload, onerror)=>{
-                onload = onload || (()=>{});
-                onerror = onerror || (()=>{});
+            saveFilesToDB: (paths1, onload1, onerror1)=>{
+                onload1 = onload1 || (()=>{});
+                onerror1 = onerror1 || (()=>{});
                 var indexedDB1 = FS.indexedDB();
                 try {
-                    var openRequest = indexedDB1.open(FS.DB_NAME(), FS.DB_VERSION);
-                } catch (e) {
-                    return onerror(e);
+                    var openRequest1 = indexedDB1.open(FS.DB_NAME(), FS.DB_VERSION);
+                } catch (e1) {
+                    return onerror1(e1);
                 }
-                openRequest.onupgradeneeded = ()=>{
+                openRequest1.onupgradeneeded = ()=>{
                     out("creating db");
-                    var db = openRequest.result;
-                    db.createObjectStore(FS.DB_STORE_NAME);
+                    var db1 = openRequest1.result;
+                    db1.createObjectStore(FS.DB_STORE_NAME);
                 };
-                openRequest.onsuccess = ()=>{
-                    var db = openRequest.result;
-                    var transaction = db.transaction([
+                openRequest1.onsuccess = ()=>{
+                    var db1 = openRequest1.result;
+                    var transaction1 = db1.transaction([
                         FS.DB_STORE_NAME
                     ], "readwrite");
-                    var files = transaction.objectStore(FS.DB_STORE_NAME);
-                    var ok = 0, fail = 0, total = paths.length;
-                    function finish() {
-                        if (fail == 0) onload();
-                        else onerror();
+                    var files1 = transaction1.objectStore(FS.DB_STORE_NAME);
+                    var ok1 = 0, fail1 = 0, total1 = paths1.length;
+                    function finish1() {
+                        if (fail1 == 0) onload1();
+                        else onerror1();
                     }
-                    paths.forEach((path)=>{
-                        var putRequest = files.put(FS.analyzePath(path).object.contents, path);
-                        putRequest.onsuccess = ()=>{
-                            ok++;
-                            if (ok + fail == total) finish();
+                    paths1.forEach((path1)=>{
+                        var putRequest1 = files1.put(FS.analyzePath(path1).object.contents, path1);
+                        putRequest1.onsuccess = ()=>{
+                            ok1++;
+                            if (ok1 + fail1 == total1) finish1();
                         };
-                        putRequest.onerror = ()=>{
-                            fail++;
-                            if (ok + fail == total) finish();
+                        putRequest1.onerror = ()=>{
+                            fail1++;
+                            if (ok1 + fail1 == total1) finish1();
                         };
                     });
-                    transaction.onerror = onerror;
+                    transaction1.onerror = onerror1;
                 };
-                openRequest.onerror = onerror;
+                openRequest1.onerror = onerror1;
             },
-            loadFilesFromDB: (paths, onload, onerror)=>{
-                onload = onload || (()=>{});
-                onerror = onerror || (()=>{});
+            loadFilesFromDB: (paths1, onload1, onerror1)=>{
+                onload1 = onload1 || (()=>{});
+                onerror1 = onerror1 || (()=>{});
                 var indexedDB1 = FS.indexedDB();
                 try {
-                    var openRequest = indexedDB1.open(FS.DB_NAME(), FS.DB_VERSION);
-                } catch (e) {
-                    return onerror(e);
+                    var openRequest1 = indexedDB1.open(FS.DB_NAME(), FS.DB_VERSION);
+                } catch (e1) {
+                    return onerror1(e1);
                 }
-                openRequest.onupgradeneeded = onerror;
-                openRequest.onsuccess = ()=>{
-                    var db = openRequest.result;
+                openRequest1.onupgradeneeded = onerror1;
+                openRequest1.onsuccess = ()=>{
+                    var db1 = openRequest1.result;
                     try {
-                        var transaction = db.transaction([
+                        var transaction1 = db1.transaction([
                             FS.DB_STORE_NAME
                         ], "readonly");
-                    } catch (e) {
-                        onerror(e);
+                    } catch (e1) {
+                        onerror1(e1);
                         return;
                     }
-                    var files = transaction.objectStore(FS.DB_STORE_NAME);
-                    var ok = 0, fail = 0, total = paths.length;
-                    function finish() {
-                        if (fail == 0) onload();
-                        else onerror();
+                    var files1 = transaction1.objectStore(FS.DB_STORE_NAME);
+                    var ok1 = 0, fail1 = 0, total1 = paths1.length;
+                    function finish1() {
+                        if (fail1 == 0) onload1();
+                        else onerror1();
                     }
-                    paths.forEach((path)=>{
-                        var getRequest = files.get(path);
-                        getRequest.onsuccess = ()=>{
-                            if (FS.analyzePath(path).exists) FS.unlink(path);
-                            FS.createDataFile(PATH.dirname(path), PATH.basename(path), getRequest.result, true, true, true);
-                            ok++;
-                            if (ok + fail == total) finish();
+                    paths1.forEach((path1)=>{
+                        var getRequest1 = files1.get(path1);
+                        getRequest1.onsuccess = ()=>{
+                            if (FS.analyzePath(path1).exists) FS.unlink(path1);
+                            FS.createDataFile(PATH.dirname(path1), PATH.basename(path1), getRequest1.result, true, true, true);
+                            ok1++;
+                            if (ok1 + fail1 == total1) finish1();
                         };
-                        getRequest.onerror = ()=>{
-                            fail++;
-                            if (ok + fail == total) finish();
+                        getRequest1.onerror = ()=>{
+                            fail1++;
+                            if (ok1 + fail1 == total1) finish1();
                         };
                     });
-                    transaction.onerror = onerror;
+                    transaction1.onerror = onerror1;
                 };
-                openRequest.onerror = onerror;
+                openRequest1.onerror = onerror1;
             }
         };
         var SYSCALLS = {
             DEFAULT_POLLMASK: 5,
-            calculateAt: function(dirfd, path, allowEmpty) {
-                if (PATH.isAbs(path)) return path;
-                var dir;
-                if (dirfd === -100) dir = FS.cwd();
+            calculateAt: function(dirfd1, path1, allowEmpty1) {
+                if (PATH.isAbs(path1)) return path1;
+                var dir1;
+                if (dirfd1 === -100) dir1 = FS.cwd();
                 else {
-                    var dirstream = FS.getStream(dirfd);
-                    if (!dirstream) throw new FS.ErrnoError(8);
-                    dir = dirstream.path;
+                    var dirstream1 = FS.getStream(dirfd1);
+                    if (!dirstream1) throw new FS.ErrnoError(8);
+                    dir1 = dirstream1.path;
                 }
-                if (path.length == 0) {
-                    if (!allowEmpty) throw new FS.ErrnoError(44);
-                    return dir;
+                if (path1.length == 0) {
+                    if (!allowEmpty1) throw new FS.ErrnoError(44);
+                    return dir1;
                 }
-                return PATH.join2(dir, path);
+                return PATH.join2(dir1, path1);
             },
-            doStat: function(func, path, buf) {
+            doStat: function(func1, path1, buf1) {
                 try {
-                    var stat = func(path);
-                } catch (e) {
-                    if (e && e.node && PATH.normalize(path) !== PATH.normalize(FS.getPath(e.node))) return -54;
-                    throw e;
+                    var stat1 = func1(path1);
+                } catch (e1) {
+                    if (e1 && e1.node && PATH.normalize(path1) !== PATH.normalize(FS.getPath(e1.node))) return -54;
+                    throw e1;
                 }
-                GROWABLE_HEAP_I32()[buf >> 2] = stat.dev;
-                GROWABLE_HEAP_I32()[buf + 4 >> 2] = 0;
-                GROWABLE_HEAP_I32()[buf + 8 >> 2] = stat.ino;
-                GROWABLE_HEAP_I32()[buf + 12 >> 2] = stat.mode;
-                GROWABLE_HEAP_I32()[buf + 16 >> 2] = stat.nlink;
-                GROWABLE_HEAP_I32()[buf + 20 >> 2] = stat.uid;
-                GROWABLE_HEAP_I32()[buf + 24 >> 2] = stat.gid;
-                GROWABLE_HEAP_I32()[buf + 28 >> 2] = stat.rdev;
-                GROWABLE_HEAP_I32()[buf + 32 >> 2] = 0;
+                GROWABLE_HEAP_I32()[buf1 >> 2] = stat1.dev;
+                GROWABLE_HEAP_I32()[buf1 + 4 >> 2] = 0;
+                GROWABLE_HEAP_I32()[buf1 + 8 >> 2] = stat1.ino;
+                GROWABLE_HEAP_I32()[buf1 + 12 >> 2] = stat1.mode;
+                GROWABLE_HEAP_I32()[buf1 + 16 >> 2] = stat1.nlink;
+                GROWABLE_HEAP_I32()[buf1 + 20 >> 2] = stat1.uid;
+                GROWABLE_HEAP_I32()[buf1 + 24 >> 2] = stat1.gid;
+                GROWABLE_HEAP_I32()[buf1 + 28 >> 2] = stat1.rdev;
+                GROWABLE_HEAP_I32()[buf1 + 32 >> 2] = 0;
                 tempI64 = [
-                    stat.size >>> 0,
-                    (tempDouble = stat.size, +Math.abs(tempDouble) >= 1 ? tempDouble > 0 ? (Math.min(+Math.floor(tempDouble / 4294967296), 4294967295) | 0) >>> 0 : ~~+Math.ceil((tempDouble - +(~~tempDouble >>> 0)) / 4294967296) >>> 0 : 0)
-                ], GROWABLE_HEAP_I32()[buf + 40 >> 2] = tempI64[0], GROWABLE_HEAP_I32()[buf + 44 >> 2] = tempI64[1];
-                GROWABLE_HEAP_I32()[buf + 48 >> 2] = 4096;
-                GROWABLE_HEAP_I32()[buf + 52 >> 2] = stat.blocks;
-                GROWABLE_HEAP_I32()[buf + 56 >> 2] = stat.atime.getTime() / 1e3 | 0;
-                GROWABLE_HEAP_I32()[buf + 60 >> 2] = 0;
-                GROWABLE_HEAP_I32()[buf + 64 >> 2] = stat.mtime.getTime() / 1e3 | 0;
-                GROWABLE_HEAP_I32()[buf + 68 >> 2] = 0;
-                GROWABLE_HEAP_I32()[buf + 72 >> 2] = stat.ctime.getTime() / 1e3 | 0;
-                GROWABLE_HEAP_I32()[buf + 76 >> 2] = 0;
+                    stat1.size >>> 0,
+                    (tempDouble = stat1.size, +Math.abs(tempDouble) >= 1 ? tempDouble > 0 ? (Math.min(+Math.floor(tempDouble / 4294967296), 4294967295) | 0) >>> 0 : ~~+Math.ceil((tempDouble - +(~~tempDouble >>> 0)) / 4294967296) >>> 0 : 0)
+                ], GROWABLE_HEAP_I32()[buf1 + 40 >> 2] = tempI64[0], GROWABLE_HEAP_I32()[buf1 + 44 >> 2] = tempI64[1];
+                GROWABLE_HEAP_I32()[buf1 + 48 >> 2] = 4096;
+                GROWABLE_HEAP_I32()[buf1 + 52 >> 2] = stat1.blocks;
+                GROWABLE_HEAP_I32()[buf1 + 56 >> 2] = stat1.atime.getTime() / 1e3 | 0;
+                GROWABLE_HEAP_I32()[buf1 + 60 >> 2] = 0;
+                GROWABLE_HEAP_I32()[buf1 + 64 >> 2] = stat1.mtime.getTime() / 1e3 | 0;
+                GROWABLE_HEAP_I32()[buf1 + 68 >> 2] = 0;
+                GROWABLE_HEAP_I32()[buf1 + 72 >> 2] = stat1.ctime.getTime() / 1e3 | 0;
+                GROWABLE_HEAP_I32()[buf1 + 76 >> 2] = 0;
                 tempI64 = [
-                    stat.ino >>> 0,
-                    (tempDouble = stat.ino, +Math.abs(tempDouble) >= 1 ? tempDouble > 0 ? (Math.min(+Math.floor(tempDouble / 4294967296), 4294967295) | 0) >>> 0 : ~~+Math.ceil((tempDouble - +(~~tempDouble >>> 0)) / 4294967296) >>> 0 : 0)
-                ], GROWABLE_HEAP_I32()[buf + 80 >> 2] = tempI64[0], GROWABLE_HEAP_I32()[buf + 84 >> 2] = tempI64[1];
+                    stat1.ino >>> 0,
+                    (tempDouble = stat1.ino, +Math.abs(tempDouble) >= 1 ? tempDouble > 0 ? (Math.min(+Math.floor(tempDouble / 4294967296), 4294967295) | 0) >>> 0 : ~~+Math.ceil((tempDouble - +(~~tempDouble >>> 0)) / 4294967296) >>> 0 : 0)
+                ], GROWABLE_HEAP_I32()[buf1 + 80 >> 2] = tempI64[0], GROWABLE_HEAP_I32()[buf1 + 84 >> 2] = tempI64[1];
                 return 0;
             },
-            doMsync: function(addr, stream, len, flags, offset) {
-                var buffer = GROWABLE_HEAP_U8().slice(addr, addr + len);
-                FS.msync(stream, buffer, offset, len, flags);
+            doMsync: function(addr1, stream1, len1, flags1, offset1) {
+                var buffer1 = GROWABLE_HEAP_U8().slice(addr1, addr1 + len1);
+                FS.msync(stream1, buffer1, offset1, len1, flags1);
             },
             varargs: undefined,
             get: function() {
                 SYSCALLS.varargs += 4;
-                var ret = GROWABLE_HEAP_I32()[SYSCALLS.varargs - 4 >> 2];
-                return ret;
+                var ret1 = GROWABLE_HEAP_I32()[SYSCALLS.varargs - 4 >> 2];
+                return ret1;
             },
-            getStr: function(ptr) {
-                var ret = UTF8ToString(ptr);
-                return ret;
+            getStr: function(ptr1) {
+                var ret1 = UTF8ToString(ptr1);
+                return ret1;
             },
-            getStreamFromFD: function(fd) {
-                var stream = FS.getStream(fd);
-                if (!stream) throw new FS.ErrnoError(8);
-                return stream;
+            getStreamFromFD: function(fd1) {
+                var stream1 = FS.getStream(fd1);
+                if (!stream1) throw new FS.ErrnoError(8);
+                return stream1;
             }
         };
-        function ___syscall__newselect(nfds, readfds, writefds, exceptfds, timeout) {
-            if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(3, 1, nfds, readfds, writefds, exceptfds, timeout);
+        function ___syscall__newselect(nfds1, readfds1, writefds1, exceptfds1, timeout1) {
+            if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(3, 1, nfds1, readfds1, writefds1, exceptfds1, timeout1);
             try {
-                var total = 0;
-                var srcReadLow = readfds ? GROWABLE_HEAP_I32()[readfds >> 2] : 0, srcReadHigh = readfds ? GROWABLE_HEAP_I32()[readfds + 4 >> 2] : 0;
-                var srcWriteLow = writefds ? GROWABLE_HEAP_I32()[writefds >> 2] : 0, srcWriteHigh = writefds ? GROWABLE_HEAP_I32()[writefds + 4 >> 2] : 0;
-                var srcExceptLow = exceptfds ? GROWABLE_HEAP_I32()[exceptfds >> 2] : 0, srcExceptHigh = exceptfds ? GROWABLE_HEAP_I32()[exceptfds + 4 >> 2] : 0;
-                var dstReadLow = 0, dstReadHigh = 0;
-                var dstWriteLow = 0, dstWriteHigh = 0;
-                var dstExceptLow = 0, dstExceptHigh = 0;
-                var allLow = (readfds ? GROWABLE_HEAP_I32()[readfds >> 2] : 0) | (writefds ? GROWABLE_HEAP_I32()[writefds >> 2] : 0) | (exceptfds ? GROWABLE_HEAP_I32()[exceptfds >> 2] : 0);
-                var allHigh = (readfds ? GROWABLE_HEAP_I32()[readfds + 4 >> 2] : 0) | (writefds ? GROWABLE_HEAP_I32()[writefds + 4 >> 2] : 0) | (exceptfds ? GROWABLE_HEAP_I32()[exceptfds + 4 >> 2] : 0);
-                var check = function(fd, low, high, val) {
-                    return fd < 32 ? low & val : high & val;
+                var total1 = 0;
+                var srcReadLow1 = readfds1 ? GROWABLE_HEAP_I32()[readfds1 >> 2] : 0, srcReadHigh1 = readfds1 ? GROWABLE_HEAP_I32()[readfds1 + 4 >> 2] : 0;
+                var srcWriteLow1 = writefds1 ? GROWABLE_HEAP_I32()[writefds1 >> 2] : 0, srcWriteHigh1 = writefds1 ? GROWABLE_HEAP_I32()[writefds1 + 4 >> 2] : 0;
+                var srcExceptLow1 = exceptfds1 ? GROWABLE_HEAP_I32()[exceptfds1 >> 2] : 0, srcExceptHigh1 = exceptfds1 ? GROWABLE_HEAP_I32()[exceptfds1 + 4 >> 2] : 0;
+                var dstReadLow1 = 0, dstReadHigh1 = 0;
+                var dstWriteLow1 = 0, dstWriteHigh1 = 0;
+                var dstExceptLow1 = 0, dstExceptHigh1 = 0;
+                var allLow1 = (readfds1 ? GROWABLE_HEAP_I32()[readfds1 >> 2] : 0) | (writefds1 ? GROWABLE_HEAP_I32()[writefds1 >> 2] : 0) | (exceptfds1 ? GROWABLE_HEAP_I32()[exceptfds1 >> 2] : 0);
+                var allHigh1 = (readfds1 ? GROWABLE_HEAP_I32()[readfds1 + 4 >> 2] : 0) | (writefds1 ? GROWABLE_HEAP_I32()[writefds1 + 4 >> 2] : 0) | (exceptfds1 ? GROWABLE_HEAP_I32()[exceptfds1 + 4 >> 2] : 0);
+                var check1 = function(fd1, low1, high1, val1) {
+                    return fd1 < 32 ? low1 & val1 : high1 & val1;
                 };
-                for(var fd = 0; fd < nfds; fd++){
-                    var mask = 1 << fd % 32;
-                    if (!check(fd, allLow, allHigh, mask)) continue;
-                    var stream = FS.getStream(fd);
-                    if (!stream) throw new FS.ErrnoError(8);
-                    var flags = SYSCALLS.DEFAULT_POLLMASK;
-                    if (stream.stream_ops.poll) flags = stream.stream_ops.poll(stream);
-                    if (flags & 1 && check(fd, srcReadLow, srcReadHigh, mask)) {
-                        fd < 32 ? dstReadLow = dstReadLow | mask : dstReadHigh = dstReadHigh | mask;
-                        total++;
+                for(var fd1 = 0; fd1 < nfds1; fd1++){
+                    var mask1 = 1 << fd1 % 32;
+                    if (!check1(fd1, allLow1, allHigh1, mask1)) continue;
+                    var stream1 = FS.getStream(fd1);
+                    if (!stream1) throw new FS.ErrnoError(8);
+                    var flags1 = SYSCALLS.DEFAULT_POLLMASK;
+                    if (stream1.stream_ops.poll) flags1 = stream1.stream_ops.poll(stream1);
+                    if (flags1 & 1 && check1(fd1, srcReadLow1, srcReadHigh1, mask1)) {
+                        fd1 < 32 ? dstReadLow1 = dstReadLow1 | mask1 : dstReadHigh1 = dstReadHigh1 | mask1;
+                        total1++;
                     }
-                    if (flags & 4 && check(fd, srcWriteLow, srcWriteHigh, mask)) {
-                        fd < 32 ? dstWriteLow = dstWriteLow | mask : dstWriteHigh = dstWriteHigh | mask;
-                        total++;
+                    if (flags1 & 4 && check1(fd1, srcWriteLow1, srcWriteHigh1, mask1)) {
+                        fd1 < 32 ? dstWriteLow1 = dstWriteLow1 | mask1 : dstWriteHigh1 = dstWriteHigh1 | mask1;
+                        total1++;
                     }
-                    if (flags & 2 && check(fd, srcExceptLow, srcExceptHigh, mask)) {
-                        fd < 32 ? dstExceptLow = dstExceptLow | mask : dstExceptHigh = dstExceptHigh | mask;
-                        total++;
+                    if (flags1 & 2 && check1(fd1, srcExceptLow1, srcExceptHigh1, mask1)) {
+                        fd1 < 32 ? dstExceptLow1 = dstExceptLow1 | mask1 : dstExceptHigh1 = dstExceptHigh1 | mask1;
+                        total1++;
                     }
                 }
-                if (readfds) {
-                    GROWABLE_HEAP_I32()[readfds >> 2] = dstReadLow;
-                    GROWABLE_HEAP_I32()[readfds + 4 >> 2] = dstReadHigh;
+                if (readfds1) {
+                    GROWABLE_HEAP_I32()[readfds1 >> 2] = dstReadLow1;
+                    GROWABLE_HEAP_I32()[readfds1 + 4 >> 2] = dstReadHigh1;
                 }
-                if (writefds) {
-                    GROWABLE_HEAP_I32()[writefds >> 2] = dstWriteLow;
-                    GROWABLE_HEAP_I32()[writefds + 4 >> 2] = dstWriteHigh;
+                if (writefds1) {
+                    GROWABLE_HEAP_I32()[writefds1 >> 2] = dstWriteLow1;
+                    GROWABLE_HEAP_I32()[writefds1 + 4 >> 2] = dstWriteHigh1;
                 }
-                if (exceptfds) {
-                    GROWABLE_HEAP_I32()[exceptfds >> 2] = dstExceptLow;
-                    GROWABLE_HEAP_I32()[exceptfds + 4 >> 2] = dstExceptHigh;
+                if (exceptfds1) {
+                    GROWABLE_HEAP_I32()[exceptfds1 >> 2] = dstExceptLow1;
+                    GROWABLE_HEAP_I32()[exceptfds1 + 4 >> 2] = dstExceptHigh1;
                 }
-                return total;
-            } catch (e) {
-                if (typeof FS == "undefined" || !(e instanceof FS.ErrnoError)) throw e;
-                return -e.errno;
+                return total1;
+            } catch (e1) {
+                if (typeof FS == "undefined" || !(e1 instanceof FS.ErrnoError)) throw e1;
+                return -e1.errno;
             }
         }
         var SOCKFS = {
-            mount: function(mount) {
+            mount: function(mount1) {
                 Module["websocket"] = Module["websocket"] && "object" === typeof Module["websocket"] ? Module["websocket"] : {};
                 Module["websocket"]._callbacks = {};
-                Module["websocket"]["on"] = function(event, callback) {
-                    if ("function" === typeof callback) this._callbacks[event] = callback;
+                Module["websocket"]["on"] = function(event1, callback1) {
+                    if ("function" === typeof callback1) this._callbacks[event1] = callback1;
                     return this;
                 };
-                Module["websocket"].emit = function(event, param) {
-                    if ("function" === typeof this._callbacks[event]) this._callbacks[event].call(this, param);
+                Module["websocket"].emit = function(event1, param1) {
+                    if ("function" === typeof this._callbacks[event1]) this._callbacks[event1].call(this, param1);
                 };
                 return FS.createNode(null, "/", 16895, 0);
             },
-            createSocket: function(family, type, protocol) {
-                type &= -526337;
-                var streaming = type == 1;
-                if (streaming && protocol && protocol != 6) throw new FS.ErrnoError(66);
-                var sock = {
-                    family: family,
-                    type: type,
-                    protocol: protocol,
+            createSocket: function(family1, type1, protocol1) {
+                type1 &= -526337;
+                var streaming1 = type1 == 1;
+                if (streaming1 && protocol1 && protocol1 != 6) throw new FS.ErrnoError(66);
+                var sock1 = {
+                    family: family1,
+                    type: type1,
+                    protocol: protocol1,
                     server: null,
                     error: null,
                     peers: {},
@@ -2963,47 +2963,47 @@ var Godot = (()=>{
                     recv_queue: [],
                     sock_ops: SOCKFS.websocket_sock_ops
                 };
-                var name = SOCKFS.nextname();
-                var node = FS.createNode(SOCKFS.root, name, 49152, 0);
-                node.sock = sock;
-                var stream = FS.createStream({
-                    path: name,
-                    node: node,
+                var name1 = SOCKFS.nextname();
+                var node1 = FS.createNode(SOCKFS.root, name1, 49152, 0);
+                node1.sock = sock1;
+                var stream1 = FS.createStream({
+                    path: name1,
+                    node: node1,
                     flags: 2,
                     seekable: false,
                     stream_ops: SOCKFS.stream_ops
                 });
-                sock.stream = stream;
-                return sock;
+                sock1.stream = stream1;
+                return sock1;
             },
-            getSocket: function(fd) {
-                var stream = FS.getStream(fd);
-                if (!stream || !FS.isSocket(stream.node.mode)) return null;
-                return stream.node.sock;
+            getSocket: function(fd1) {
+                var stream1 = FS.getStream(fd1);
+                if (!stream1 || !FS.isSocket(stream1.node.mode)) return null;
+                return stream1.node.sock;
             },
             stream_ops: {
-                poll: function(stream) {
-                    var sock = stream.node.sock;
-                    return sock.sock_ops.poll(sock);
+                poll: function(stream1) {
+                    var sock1 = stream1.node.sock;
+                    return sock1.sock_ops.poll(sock1);
                 },
-                ioctl: function(stream, request, varargs) {
-                    var sock = stream.node.sock;
-                    return sock.sock_ops.ioctl(sock, request, varargs);
+                ioctl: function(stream1, request1, varargs1) {
+                    var sock1 = stream1.node.sock;
+                    return sock1.sock_ops.ioctl(sock1, request1, varargs1);
                 },
-                read: function(stream, buffer, offset, length, position) {
-                    var sock = stream.node.sock;
-                    var msg = sock.sock_ops.recvmsg(sock, length);
-                    if (!msg) return 0;
-                    buffer.set(msg.buffer, offset);
-                    return msg.buffer.length;
+                read: function(stream1, buffer1, offset1, length1, position1) {
+                    var sock1 = stream1.node.sock;
+                    var msg1 = sock1.sock_ops.recvmsg(sock1, length1);
+                    if (!msg1) return 0;
+                    buffer1.set(msg1.buffer, offset1);
+                    return msg1.buffer.length;
                 },
-                write: function(stream, buffer, offset, length, position) {
-                    var sock = stream.node.sock;
-                    return sock.sock_ops.sendmsg(sock, buffer, offset, length);
+                write: function(stream1, buffer1, offset1, length1, position1) {
+                    var sock1 = stream1.node.sock;
+                    return sock1.sock_ops.sendmsg(sock1, buffer1, offset1, length1);
                 },
-                close: function(stream) {
-                    var sock = stream.node.sock;
-                    sock.sock_ops.close(sock);
+                close: function(stream1) {
+                    var sock1 = stream1.node.sock;
+                    sock1.sock_ops.close(sock1);
                 }
             },
             nextname: function() {
@@ -3011,62 +3011,62 @@ var Godot = (()=>{
                 return "socket[" + SOCKFS.nextname.current++ + "]";
             },
             websocket_sock_ops: {
-                createPeer: function(sock, addr, port) {
-                    var ws;
-                    if (typeof addr == "object") {
-                        ws = addr;
-                        addr = null;
-                        port = null;
+                createPeer: function(sock1, addr1, port1) {
+                    var ws1;
+                    if (typeof addr1 == "object") {
+                        ws1 = addr1;
+                        addr1 = null;
+                        port1 = null;
                     }
-                    if (ws) {
-                        if (ws._socket) {
-                            addr = ws._socket.remoteAddress;
-                            port = ws._socket.remotePort;
+                    if (ws1) {
+                        if (ws1._socket) {
+                            addr1 = ws1._socket.remoteAddress;
+                            port1 = ws1._socket.remotePort;
                         } else {
-                            var result = /ws[s]?:\/\/([^:]+):(\d+)/.exec(ws.url);
-                            if (!result) throw new Error("WebSocket URL must be in the format ws(s)://address:port");
-                            addr = result[1];
-                            port = parseInt(result[2], 10);
+                            var result1 = /ws[s]?:\/\/([^:]+):(\d+)/.exec(ws1.url);
+                            if (!result1) throw new Error("WebSocket URL must be in the format ws(s)://address:port");
+                            addr1 = result1[1];
+                            port1 = parseInt(result1[2], 10);
                         }
                     } else try {
-                        var runtimeConfig = Module["websocket"] && "object" === typeof Module["websocket"];
-                        var url = "ws:#".replace("#", "//");
-                        if (runtimeConfig) {
-                            if ("string" === typeof Module["websocket"]["url"]) url = Module["websocket"]["url"];
+                        var runtimeConfig1 = Module["websocket"] && "object" === typeof Module["websocket"];
+                        var url1 = "ws:#".replace("#", "//");
+                        if (runtimeConfig1) {
+                            if ("string" === typeof Module["websocket"]["url"]) url1 = Module["websocket"]["url"];
                         }
-                        if (url === "ws://" || url === "wss://") {
-                            var parts = addr.split("/");
-                            url = url + parts[0] + ":" + port + "/" + parts.slice(1).join("/");
+                        if (url1 === "ws://" || url1 === "wss://") {
+                            var parts1 = addr1.split("/");
+                            url1 = url1 + parts1[0] + ":" + port1 + "/" + parts1.slice(1).join("/");
                         }
-                        var subProtocols = "binary";
-                        if (runtimeConfig) {
-                            if ("string" === typeof Module["websocket"]["subprotocol"]) subProtocols = Module["websocket"]["subprotocol"];
+                        var subProtocols1 = "binary";
+                        if (runtimeConfig1) {
+                            if ("string" === typeof Module["websocket"]["subprotocol"]) subProtocols1 = Module["websocket"]["subprotocol"];
                         }
-                        var opts = undefined;
-                        if (subProtocols !== "null") {
-                            subProtocols = subProtocols.replace(/^ +| +$/g, "").split(/ *, */);
-                            opts = subProtocols;
+                        var opts1 = undefined;
+                        if (subProtocols1 !== "null") {
+                            subProtocols1 = subProtocols1.replace(/^ +| +$/g, "").split(/ *, */);
+                            opts1 = subProtocols1;
                         }
-                        if (runtimeConfig && null === Module["websocket"]["subprotocol"]) {
-                            subProtocols = "null";
-                            opts = undefined;
+                        if (runtimeConfig1 && null === Module["websocket"]["subprotocol"]) {
+                            subProtocols1 = "null";
+                            opts1 = undefined;
                         }
-                        var WebSocketConstructor;
-                        WebSocketConstructor = WebSocket;
-                        ws = new WebSocketConstructor(url, opts);
-                        ws.binaryType = "arraybuffer";
-                    } catch (e) {
+                        var WebSocketConstructor1;
+                        WebSocketConstructor1 = WebSocket;
+                        ws1 = new WebSocketConstructor1(url1, opts1);
+                        ws1.binaryType = "arraybuffer";
+                    } catch (e1) {
                         throw new FS.ErrnoError(23);
                     }
-                    var peer = {
-                        addr: addr,
-                        port: port,
-                        socket: ws,
+                    var peer1 = {
+                        addr: addr1,
+                        port: port1,
+                        socket: ws1,
                         dgram_send_queue: []
                     };
-                    SOCKFS.websocket_sock_ops.addPeer(sock, peer);
-                    SOCKFS.websocket_sock_ops.handlePeerEvents(sock, peer);
-                    if (sock.type === 2 && typeof sock.sport != "undefined") peer.dgram_send_queue.push(new Uint8Array([
+                    SOCKFS.websocket_sock_ops.addPeer(sock1, peer1);
+                    SOCKFS.websocket_sock_ops.handlePeerEvents(sock1, peer1);
+                    if (sock1.type === 2 && typeof sock1.sport != "undefined") peer1.dgram_send_queue.push(new Uint8Array([
                         255,
                         255,
                         255,
@@ -3075,280 +3075,280 @@ var Godot = (()=>{
                         "o".charCodeAt(0),
                         "r".charCodeAt(0),
                         "t".charCodeAt(0),
-                        (sock.sport & 65280) >> 8,
-                        sock.sport & 255
+                        (sock1.sport & 65280) >> 8,
+                        sock1.sport & 255
                     ]));
-                    return peer;
+                    return peer1;
                 },
-                getPeer: function(sock, addr, port) {
-                    return sock.peers[addr + ":" + port];
+                getPeer: function(sock1, addr1, port1) {
+                    return sock1.peers[addr1 + ":" + port1];
                 },
-                addPeer: function(sock, peer) {
-                    sock.peers[peer.addr + ":" + peer.port] = peer;
+                addPeer: function(sock1, peer1) {
+                    sock1.peers[peer1.addr + ":" + peer1.port] = peer1;
                 },
-                removePeer: function(sock, peer) {
-                    delete sock.peers[peer.addr + ":" + peer.port];
+                removePeer: function(sock1, peer1) {
+                    delete sock1.peers[peer1.addr + ":" + peer1.port];
                 },
-                handlePeerEvents: function(sock, peer) {
-                    var first = true;
-                    var handleOpen = function() {
-                        Module["websocket"].emit("open", sock.stream.fd);
+                handlePeerEvents: function(sock1, peer1) {
+                    var first1 = true;
+                    var handleOpen1 = function() {
+                        Module["websocket"].emit("open", sock1.stream.fd);
                         try {
-                            var queued = peer.dgram_send_queue.shift();
-                            while(queued){
-                                peer.socket.send(queued);
-                                queued = peer.dgram_send_queue.shift();
+                            var queued1 = peer1.dgram_send_queue.shift();
+                            while(queued1){
+                                peer1.socket.send(queued1);
+                                queued1 = peer1.dgram_send_queue.shift();
                             }
-                        } catch (e) {
-                            peer.socket.close();
+                        } catch (e1) {
+                            peer1.socket.close();
                         }
                     };
-                    function handleMessage(data) {
-                        if (typeof data == "string") {
-                            var encoder = new TextEncoder;
-                            data = encoder.encode(data);
+                    function handleMessage1(data1) {
+                        if (typeof data1 == "string") {
+                            var encoder1 = new TextEncoder;
+                            data1 = encoder1.encode(data1);
                         } else {
-                            assert(data.byteLength !== undefined);
-                            if (data.byteLength == 0) return;
-                            else data = new Uint8Array(data);
+                            assert(data1.byteLength !== undefined);
+                            if (data1.byteLength == 0) return;
+                            else data1 = new Uint8Array(data1);
                         }
-                        var wasfirst = first;
-                        first = false;
-                        if (wasfirst && data.length === 10 && data[0] === 255 && data[1] === 255 && data[2] === 255 && data[3] === 255 && data[4] === "p".charCodeAt(0) && data[5] === "o".charCodeAt(0) && data[6] === "r".charCodeAt(0) && data[7] === "t".charCodeAt(0)) {
-                            var newport = data[8] << 8 | data[9];
-                            SOCKFS.websocket_sock_ops.removePeer(sock, peer);
-                            peer.port = newport;
-                            SOCKFS.websocket_sock_ops.addPeer(sock, peer);
+                        var wasfirst1 = first1;
+                        first1 = false;
+                        if (wasfirst1 && data1.length === 10 && data1[0] === 255 && data1[1] === 255 && data1[2] === 255 && data1[3] === 255 && data1[4] === "p".charCodeAt(0) && data1[5] === "o".charCodeAt(0) && data1[6] === "r".charCodeAt(0) && data1[7] === "t".charCodeAt(0)) {
+                            var newport1 = data1[8] << 8 | data1[9];
+                            SOCKFS.websocket_sock_ops.removePeer(sock1, peer1);
+                            peer1.port = newport1;
+                            SOCKFS.websocket_sock_ops.addPeer(sock1, peer1);
                             return;
                         }
-                        sock.recv_queue.push({
-                            addr: peer.addr,
-                            port: peer.port,
-                            data: data
+                        sock1.recv_queue.push({
+                            addr: peer1.addr,
+                            port: peer1.port,
+                            data: data1
                         });
-                        Module["websocket"].emit("message", sock.stream.fd);
+                        Module["websocket"].emit("message", sock1.stream.fd);
                     }
                     if (ENVIRONMENT_IS_NODE) {
-                        peer.socket.on("open", handleOpen);
-                        peer.socket.on("message", function(data, isBinary) {
-                            if (!isBinary) return;
-                            handleMessage(new Uint8Array(data).buffer);
+                        peer1.socket.on("open", handleOpen1);
+                        peer1.socket.on("message", function(data1, isBinary1) {
+                            if (!isBinary1) return;
+                            handleMessage1(new Uint8Array(data1).buffer);
                         });
-                        peer.socket.on("close", function() {
-                            Module["websocket"].emit("close", sock.stream.fd);
+                        peer1.socket.on("close", function() {
+                            Module["websocket"].emit("close", sock1.stream.fd);
                         });
-                        peer.socket.on("error", function(error) {
-                            sock.error = 14;
+                        peer1.socket.on("error", function(error1) {
+                            sock1.error = 14;
                             Module["websocket"].emit("error", [
-                                sock.stream.fd,
-                                sock.error,
+                                sock1.stream.fd,
+                                sock1.error,
                                 "ECONNREFUSED: Connection refused"
                             ]);
                         });
                     } else {
-                        peer.socket.onopen = handleOpen;
-                        peer.socket.onclose = function() {
-                            Module["websocket"].emit("close", sock.stream.fd);
+                        peer1.socket.onopen = handleOpen1;
+                        peer1.socket.onclose = function() {
+                            Module["websocket"].emit("close", sock1.stream.fd);
                         };
-                        peer.socket.onmessage = function peer_socket_onmessage(event) {
-                            handleMessage(event.data);
+                        peer1.socket.onmessage = function peer_socket_onmessage1(event1) {
+                            handleMessage1(event1.data);
                         };
-                        peer.socket.onerror = function(error) {
-                            sock.error = 14;
+                        peer1.socket.onerror = function(error1) {
+                            sock1.error = 14;
                             Module["websocket"].emit("error", [
-                                sock.stream.fd,
-                                sock.error,
+                                sock1.stream.fd,
+                                sock1.error,
                                 "ECONNREFUSED: Connection refused"
                             ]);
                         };
                     }
                 },
-                poll: function(sock) {
-                    if (sock.type === 1 && sock.server) return sock.pending.length ? 65 : 0;
-                    var mask = 0;
-                    var dest = sock.type === 1 ? SOCKFS.websocket_sock_ops.getPeer(sock, sock.daddr, sock.dport) : null;
-                    if (sock.recv_queue.length || !dest || dest && dest.socket.readyState === dest.socket.CLOSING || dest && dest.socket.readyState === dest.socket.CLOSED) mask |= 65;
-                    if (!dest || dest && dest.socket.readyState === dest.socket.OPEN) mask |= 4;
-                    if (dest && dest.socket.readyState === dest.socket.CLOSING || dest && dest.socket.readyState === dest.socket.CLOSED) mask |= 16;
-                    return mask;
+                poll: function(sock1) {
+                    if (sock1.type === 1 && sock1.server) return sock1.pending.length ? 65 : 0;
+                    var mask1 = 0;
+                    var dest1 = sock1.type === 1 ? SOCKFS.websocket_sock_ops.getPeer(sock1, sock1.daddr, sock1.dport) : null;
+                    if (sock1.recv_queue.length || !dest1 || dest1 && dest1.socket.readyState === dest1.socket.CLOSING || dest1 && dest1.socket.readyState === dest1.socket.CLOSED) mask1 |= 65;
+                    if (!dest1 || dest1 && dest1.socket.readyState === dest1.socket.OPEN) mask1 |= 4;
+                    if (dest1 && dest1.socket.readyState === dest1.socket.CLOSING || dest1 && dest1.socket.readyState === dest1.socket.CLOSED) mask1 |= 16;
+                    return mask1;
                 },
-                ioctl: function(sock, request, arg) {
-                    switch(request){
+                ioctl: function(sock1, request1, arg1) {
+                    switch(request1){
                         case 21531:
-                            var bytes = 0;
-                            if (sock.recv_queue.length) bytes = sock.recv_queue[0].data.length;
-                            GROWABLE_HEAP_I32()[arg >> 2] = bytes;
+                            var bytes1 = 0;
+                            if (sock1.recv_queue.length) bytes1 = sock1.recv_queue[0].data.length;
+                            GROWABLE_HEAP_I32()[arg1 >> 2] = bytes1;
                             return 0;
                         default:
                             return 28;
                     }
                 },
-                close: function(sock) {
-                    if (sock.server) {
+                close: function(sock1) {
+                    if (sock1.server) {
                         try {
-                            sock.server.close();
-                        } catch (e) {}
-                        sock.server = null;
-                    }
-                    var peers = Object.keys(sock.peers);
-                    for(var i = 0; i < peers.length; i++){
-                        var peer = sock.peers[peers[i]];
-                        try {
-                            peer.socket.close();
+                            sock1.server.close();
                         } catch (e1) {}
-                        SOCKFS.websocket_sock_ops.removePeer(sock, peer);
+                        sock1.server = null;
+                    }
+                    var peers1 = Object.keys(sock1.peers);
+                    for(var i1 = 0; i1 < peers1.length; i1++){
+                        var peer1 = sock1.peers[peers1[i1]];
+                        try {
+                            peer1.socket.close();
+                        } catch (e1) {}
+                        SOCKFS.websocket_sock_ops.removePeer(sock1, peer1);
                     }
                     return 0;
                 },
-                bind: function(sock, addr, port) {
-                    if (typeof sock.saddr != "undefined" || typeof sock.sport != "undefined") throw new FS.ErrnoError(28);
-                    sock.saddr = addr;
-                    sock.sport = port;
-                    if (sock.type === 2) {
-                        if (sock.server) {
-                            sock.server.close();
-                            sock.server = null;
+                bind: function(sock1, addr1, port1) {
+                    if (typeof sock1.saddr != "undefined" || typeof sock1.sport != "undefined") throw new FS.ErrnoError(28);
+                    sock1.saddr = addr1;
+                    sock1.sport = port1;
+                    if (sock1.type === 2) {
+                        if (sock1.server) {
+                            sock1.server.close();
+                            sock1.server = null;
                         }
                         try {
-                            sock.sock_ops.listen(sock, 0);
-                        } catch (e) {
-                            if (!(e instanceof FS.ErrnoError)) throw e;
-                            if (e.errno !== 138) throw e;
+                            sock1.sock_ops.listen(sock1, 0);
+                        } catch (e1) {
+                            if (!(e1 instanceof FS.ErrnoError)) throw e1;
+                            if (e1.errno !== 138) throw e1;
                         }
                     }
                 },
-                connect: function(sock, addr, port) {
-                    if (sock.server) throw new FS.ErrnoError(138);
-                    if (typeof sock.daddr != "undefined" && typeof sock.dport != "undefined") {
-                        var dest = SOCKFS.websocket_sock_ops.getPeer(sock, sock.daddr, sock.dport);
-                        if (dest) {
-                            if (dest.socket.readyState === dest.socket.CONNECTING) throw new FS.ErrnoError(7);
+                connect: function(sock1, addr1, port1) {
+                    if (sock1.server) throw new FS.ErrnoError(138);
+                    if (typeof sock1.daddr != "undefined" && typeof sock1.dport != "undefined") {
+                        var dest1 = SOCKFS.websocket_sock_ops.getPeer(sock1, sock1.daddr, sock1.dport);
+                        if (dest1) {
+                            if (dest1.socket.readyState === dest1.socket.CONNECTING) throw new FS.ErrnoError(7);
                             else throw new FS.ErrnoError(30);
                         }
                     }
-                    var peer = SOCKFS.websocket_sock_ops.createPeer(sock, addr, port);
-                    sock.daddr = peer.addr;
-                    sock.dport = peer.port;
+                    var peer1 = SOCKFS.websocket_sock_ops.createPeer(sock1, addr1, port1);
+                    sock1.daddr = peer1.addr;
+                    sock1.dport = peer1.port;
                     throw new FS.ErrnoError(26);
                 },
-                listen: function(sock, backlog) {
+                listen: function(sock1, backlog1) {
                     if (!ENVIRONMENT_IS_NODE) throw new FS.ErrnoError(138);
                 },
-                accept: function(listensock) {
-                    if (!listensock.server || !listensock.pending.length) throw new FS.ErrnoError(28);
-                    var newsock = listensock.pending.shift();
-                    newsock.stream.flags = listensock.stream.flags;
-                    return newsock;
+                accept: function(listensock1) {
+                    if (!listensock1.server || !listensock1.pending.length) throw new FS.ErrnoError(28);
+                    var newsock1 = listensock1.pending.shift();
+                    newsock1.stream.flags = listensock1.stream.flags;
+                    return newsock1;
                 },
-                getname: function(sock, peer) {
-                    var addr, port;
-                    if (peer) {
-                        if (sock.daddr === undefined || sock.dport === undefined) throw new FS.ErrnoError(53);
-                        addr = sock.daddr;
-                        port = sock.dport;
+                getname: function(sock1, peer1) {
+                    var addr1, port1;
+                    if (peer1) {
+                        if (sock1.daddr === undefined || sock1.dport === undefined) throw new FS.ErrnoError(53);
+                        addr1 = sock1.daddr;
+                        port1 = sock1.dport;
                     } else {
-                        addr = sock.saddr || 0;
-                        port = sock.sport || 0;
+                        addr1 = sock1.saddr || 0;
+                        port1 = sock1.sport || 0;
                     }
                     return {
-                        addr: addr,
-                        port: port
+                        addr: addr1,
+                        port: port1
                     };
                 },
-                sendmsg: function(sock, buffer, offset, length, addr, port) {
-                    if (sock.type === 2) {
-                        if (addr === undefined || port === undefined) {
-                            addr = sock.daddr;
-                            port = sock.dport;
+                sendmsg: function(sock1, buffer1, offset1, length1, addr1, port1) {
+                    if (sock1.type === 2) {
+                        if (addr1 === undefined || port1 === undefined) {
+                            addr1 = sock1.daddr;
+                            port1 = sock1.dport;
                         }
-                        if (addr === undefined || port === undefined) throw new FS.ErrnoError(17);
+                        if (addr1 === undefined || port1 === undefined) throw new FS.ErrnoError(17);
                     } else {
-                        addr = sock.daddr;
-                        port = sock.dport;
+                        addr1 = sock1.daddr;
+                        port1 = sock1.dport;
                     }
-                    var dest = SOCKFS.websocket_sock_ops.getPeer(sock, addr, port);
-                    if (sock.type === 1) {
-                        if (!dest || dest.socket.readyState === dest.socket.CLOSING || dest.socket.readyState === dest.socket.CLOSED) throw new FS.ErrnoError(53);
-                        else if (dest.socket.readyState === dest.socket.CONNECTING) throw new FS.ErrnoError(6);
+                    var dest1 = SOCKFS.websocket_sock_ops.getPeer(sock1, addr1, port1);
+                    if (sock1.type === 1) {
+                        if (!dest1 || dest1.socket.readyState === dest1.socket.CLOSING || dest1.socket.readyState === dest1.socket.CLOSED) throw new FS.ErrnoError(53);
+                        else if (dest1.socket.readyState === dest1.socket.CONNECTING) throw new FS.ErrnoError(6);
                     }
-                    if (ArrayBuffer.isView(buffer)) {
-                        offset += buffer.byteOffset;
-                        buffer = buffer.buffer;
+                    if (ArrayBuffer.isView(buffer1)) {
+                        offset1 += buffer1.byteOffset;
+                        buffer1 = buffer1.buffer;
                     }
-                    var data;
-                    if (buffer instanceof SharedArrayBuffer) data = new Uint8Array(new Uint8Array(buffer.slice(offset, offset + length))).buffer;
-                    else data = buffer.slice(offset, offset + length);
-                    if (sock.type === 2) {
-                        if (!dest || dest.socket.readyState !== dest.socket.OPEN) {
-                            if (!dest || dest.socket.readyState === dest.socket.CLOSING || dest.socket.readyState === dest.socket.CLOSED) dest = SOCKFS.websocket_sock_ops.createPeer(sock, addr, port);
-                            dest.dgram_send_queue.push(data);
-                            return length;
+                    var data1;
+                    if (buffer1 instanceof SharedArrayBuffer) data1 = new Uint8Array(new Uint8Array(buffer1.slice(offset1, offset1 + length1))).buffer;
+                    else data1 = buffer1.slice(offset1, offset1 + length1);
+                    if (sock1.type === 2) {
+                        if (!dest1 || dest1.socket.readyState !== dest1.socket.OPEN) {
+                            if (!dest1 || dest1.socket.readyState === dest1.socket.CLOSING || dest1.socket.readyState === dest1.socket.CLOSED) dest1 = SOCKFS.websocket_sock_ops.createPeer(sock1, addr1, port1);
+                            dest1.dgram_send_queue.push(data1);
+                            return length1;
                         }
                     }
                     try {
-                        dest.socket.send(data);
-                        return length;
-                    } catch (e) {
+                        dest1.socket.send(data1);
+                        return length1;
+                    } catch (e1) {
                         throw new FS.ErrnoError(28);
                     }
                 },
-                recvmsg: function(sock, length) {
-                    if (sock.type === 1 && sock.server) throw new FS.ErrnoError(53);
-                    var queued = sock.recv_queue.shift();
-                    if (!queued) {
-                        if (sock.type === 1) {
-                            var dest = SOCKFS.websocket_sock_ops.getPeer(sock, sock.daddr, sock.dport);
-                            if (!dest) throw new FS.ErrnoError(53);
-                            else if (dest.socket.readyState === dest.socket.CLOSING || dest.socket.readyState === dest.socket.CLOSED) return null;
+                recvmsg: function(sock1, length1) {
+                    if (sock1.type === 1 && sock1.server) throw new FS.ErrnoError(53);
+                    var queued1 = sock1.recv_queue.shift();
+                    if (!queued1) {
+                        if (sock1.type === 1) {
+                            var dest1 = SOCKFS.websocket_sock_ops.getPeer(sock1, sock1.daddr, sock1.dport);
+                            if (!dest1) throw new FS.ErrnoError(53);
+                            else if (dest1.socket.readyState === dest1.socket.CLOSING || dest1.socket.readyState === dest1.socket.CLOSED) return null;
                             else throw new FS.ErrnoError(6);
                         } else throw new FS.ErrnoError(6);
                     }
-                    var queuedLength = queued.data.byteLength || queued.data.length;
-                    var queuedOffset = queued.data.byteOffset || 0;
-                    var queuedBuffer = queued.data.buffer || queued.data;
-                    var bytesRead = Math.min(length, queuedLength);
-                    var res = {
-                        buffer: new Uint8Array(queuedBuffer, queuedOffset, bytesRead),
-                        addr: queued.addr,
-                        port: queued.port
+                    var queuedLength1 = queued1.data.byteLength || queued1.data.length;
+                    var queuedOffset1 = queued1.data.byteOffset || 0;
+                    var queuedBuffer1 = queued1.data.buffer || queued1.data;
+                    var bytesRead1 = Math.min(length1, queuedLength1);
+                    var res1 = {
+                        buffer: new Uint8Array(queuedBuffer1, queuedOffset1, bytesRead1),
+                        addr: queued1.addr,
+                        port: queued1.port
                     };
-                    if (sock.type === 1 && bytesRead < queuedLength) {
-                        var bytesRemaining = queuedLength - bytesRead;
-                        queued.data = new Uint8Array(queuedBuffer, queuedOffset + bytesRead, bytesRemaining);
-                        sock.recv_queue.unshift(queued);
+                    if (sock1.type === 1 && bytesRead1 < queuedLength1) {
+                        var bytesRemaining1 = queuedLength1 - bytesRead1;
+                        queued1.data = new Uint8Array(queuedBuffer1, queuedOffset1 + bytesRead1, bytesRemaining1);
+                        sock1.recv_queue.unshift(queued1);
                     }
-                    return res;
+                    return res1;
                 }
             }
         };
-        function getSocketFromFD(fd) {
-            var socket = SOCKFS.getSocket(fd);
-            if (!socket) throw new FS.ErrnoError(8);
-            return socket;
+        function getSocketFromFD(fd1) {
+            var socket1 = SOCKFS.getSocket(fd1);
+            if (!socket1) throw new FS.ErrnoError(8);
+            return socket1;
         }
-        function setErrNo(value) {
-            GROWABLE_HEAP_I32()[___errno_location() >> 2] = value;
-            return value;
+        function setErrNo(value1) {
+            GROWABLE_HEAP_I32()[___errno_location() >> 2] = value1;
+            return value1;
         }
-        function inetPton4(str) {
-            var b = str.split(".");
-            for(var i = 0; i < 4; i++){
-                var tmp = Number(b[i]);
-                if (isNaN(tmp)) return null;
-                b[i] = tmp;
+        function inetPton4(str1) {
+            var b1 = str1.split(".");
+            for(var i1 = 0; i1 < 4; i1++){
+                var tmp1 = Number(b1[i1]);
+                if (isNaN(tmp1)) return null;
+                b1[i1] = tmp1;
             }
-            return (b[0] | b[1] << 8 | b[2] << 16 | b[3] << 24) >>> 0;
+            return (b1[0] | b1[1] << 8 | b1[2] << 16 | b1[3] << 24) >>> 0;
         }
-        function jstoi_q(str) {
-            return parseInt(str);
+        function jstoi_q(str1) {
+            return parseInt(str1);
         }
-        function inetPton6(str) {
-            var words;
-            var w, offset, z;
-            var valid6regx = /^((?=.*::)(?!.*::.+::)(::)?([\dA-F]{1,4}:(:|\b)|){5}|([\dA-F]{1,4}:){6})((([\dA-F]{1,4}((?!\3)::|:\b|$))|(?!\2\3)){2}|(((2[0-4]|1\d|[1-9])?\d|25[0-5])\.?\b){4})$/i;
-            var parts = [];
-            if (!valid6regx.test(str)) return null;
-            if (str === "::") return [
+        function inetPton6(str1) {
+            var words1;
+            var w1, offset1, z1;
+            var valid6regx1 = /^((?=.*::)(?!.*::.+::)(::)?([\dA-F]{1,4}:(:|\b)|){5}|([\dA-F]{1,4}:){6})((([\dA-F]{1,4}((?!\3)::|:\b|$))|(?!\2\3)){2}|(((2[0-4]|1\d|[1-9])?\d|25[0-5])\.?\b){4})$/i;
+            var parts1 = [];
+            if (!valid6regx1.test(str1)) return null;
+            if (str1 === "::") return [
                 0,
                 0,
                 0,
@@ -3358,50 +3358,50 @@ var Godot = (()=>{
                 0,
                 0
             ];
-            if (str.startsWith("::")) str = str.replace("::", "Z:");
-            else str = str.replace("::", ":Z:");
-            if (str.indexOf(".") > 0) {
-                str = str.replace(new RegExp("[.]", "g"), ":");
-                words = str.split(":");
-                words[words.length - 4] = jstoi_q(words[words.length - 4]) + jstoi_q(words[words.length - 3]) * 256;
-                words[words.length - 3] = jstoi_q(words[words.length - 2]) + jstoi_q(words[words.length - 1]) * 256;
-                words = words.slice(0, words.length - 2);
-            } else words = str.split(":");
-            offset = 0;
-            z = 0;
-            for(w = 0; w < words.length; w++)if (typeof words[w] == "string") {
-                if (words[w] === "Z") {
-                    for(z = 0; z < 8 - words.length + 1; z++)parts[w + z] = 0;
-                    offset = z - 1;
-                } else parts[w + offset] = _htons(parseInt(words[w], 16));
-            } else parts[w + offset] = words[w];
+            if (str1.startsWith("::")) str1 = str1.replace("::", "Z:");
+            else str1 = str1.replace("::", ":Z:");
+            if (str1.indexOf(".") > 0) {
+                str1 = str1.replace(new RegExp("[.]", "g"), ":");
+                words1 = str1.split(":");
+                words1[words1.length - 4] = jstoi_q(words1[words1.length - 4]) + jstoi_q(words1[words1.length - 3]) * 256;
+                words1[words1.length - 3] = jstoi_q(words1[words1.length - 2]) + jstoi_q(words1[words1.length - 1]) * 256;
+                words1 = words1.slice(0, words1.length - 2);
+            } else words1 = str1.split(":");
+            offset1 = 0;
+            z1 = 0;
+            for(w1 = 0; w1 < words1.length; w1++)if (typeof words1[w1] == "string") {
+                if (words1[w1] === "Z") {
+                    for(z1 = 0; z1 < 8 - words1.length + 1; z1++)parts1[w1 + z1] = 0;
+                    offset1 = z1 - 1;
+                } else parts1[w1 + offset1] = _htons(parseInt(words1[w1], 16));
+            } else parts1[w1 + offset1] = words1[w1];
             return [
-                parts[1] << 16 | parts[0],
-                parts[3] << 16 | parts[2],
-                parts[5] << 16 | parts[4],
-                parts[7] << 16 | parts[6]
+                parts1[1] << 16 | parts1[0],
+                parts1[3] << 16 | parts1[2],
+                parts1[5] << 16 | parts1[4],
+                parts1[7] << 16 | parts1[6]
             ];
         }
-        function writeSockaddr(sa, family, addr, port, addrlen) {
-            switch(family){
+        function writeSockaddr(sa1, family1, addr1, port1, addrlen1) {
+            switch(family1){
                 case 2:
-                    addr = inetPton4(addr);
-                    zeroMemory(sa, 16);
-                    if (addrlen) GROWABLE_HEAP_I32()[addrlen >> 2] = 16;
-                    GROWABLE_HEAP_I16()[sa >> 1] = family;
-                    GROWABLE_HEAP_I32()[sa + 4 >> 2] = addr;
-                    GROWABLE_HEAP_I16()[sa + 2 >> 1] = _htons(port);
+                    addr1 = inetPton4(addr1);
+                    zeroMemory(sa1, 16);
+                    if (addrlen1) GROWABLE_HEAP_I32()[addrlen1 >> 2] = 16;
+                    GROWABLE_HEAP_I16()[sa1 >> 1] = family1;
+                    GROWABLE_HEAP_I32()[sa1 + 4 >> 2] = addr1;
+                    GROWABLE_HEAP_I16()[sa1 + 2 >> 1] = _htons(port1);
                     break;
                 case 10:
-                    addr = inetPton6(addr);
-                    zeroMemory(sa, 28);
-                    if (addrlen) GROWABLE_HEAP_I32()[addrlen >> 2] = 28;
-                    GROWABLE_HEAP_I32()[sa >> 2] = family;
-                    GROWABLE_HEAP_I32()[sa + 8 >> 2] = addr[0];
-                    GROWABLE_HEAP_I32()[sa + 12 >> 2] = addr[1];
-                    GROWABLE_HEAP_I32()[sa + 16 >> 2] = addr[2];
-                    GROWABLE_HEAP_I32()[sa + 20 >> 2] = addr[3];
-                    GROWABLE_HEAP_I16()[sa + 2 >> 1] = _htons(port);
+                    addr1 = inetPton6(addr1);
+                    zeroMemory(sa1, 28);
+                    if (addrlen1) GROWABLE_HEAP_I32()[addrlen1 >> 2] = 28;
+                    GROWABLE_HEAP_I32()[sa1 >> 2] = family1;
+                    GROWABLE_HEAP_I32()[sa1 + 8 >> 2] = addr1[0];
+                    GROWABLE_HEAP_I32()[sa1 + 12 >> 2] = addr1[1];
+                    GROWABLE_HEAP_I32()[sa1 + 16 >> 2] = addr1[2];
+                    GROWABLE_HEAP_I32()[sa1 + 20 >> 2] = addr1[3];
+                    GROWABLE_HEAP_I16()[sa1 + 2 >> 1] = _htons(port1);
                     break;
                 default:
                     return 5;
@@ -3414,130 +3414,130 @@ var Godot = (()=>{
                 addrs: {},
                 names: {}
             },
-            lookup_name: function(name) {
-                var res = inetPton4(name);
-                if (res !== null) return name;
-                res = inetPton6(name);
-                if (res !== null) return name;
-                var addr;
-                if (DNS.address_map.addrs[name]) addr = DNS.address_map.addrs[name];
+            lookup_name: function(name1) {
+                var res1 = inetPton4(name1);
+                if (res1 !== null) return name1;
+                res1 = inetPton6(name1);
+                if (res1 !== null) return name1;
+                var addr1;
+                if (DNS.address_map.addrs[name1]) addr1 = DNS.address_map.addrs[name1];
                 else {
-                    var id = DNS.address_map.id++;
-                    assert(id < 65535, "exceeded max address mappings of 65535");
-                    addr = "172.29." + (id & 255) + "." + (id & 65280);
-                    DNS.address_map.names[addr] = name;
-                    DNS.address_map.addrs[name] = addr;
+                    var id1 = DNS.address_map.id++;
+                    assert(id1 < 65535, "exceeded max address mappings of 65535");
+                    addr1 = "172.29." + (id1 & 255) + "." + (id1 & 65280);
+                    DNS.address_map.names[addr1] = name1;
+                    DNS.address_map.addrs[name1] = addr1;
                 }
-                return addr;
+                return addr1;
             },
-            lookup_addr: function(addr) {
-                if (DNS.address_map.names[addr]) return DNS.address_map.names[addr];
+            lookup_addr: function(addr1) {
+                if (DNS.address_map.names[addr1]) return DNS.address_map.names[addr1];
                 return null;
             }
         };
-        function ___syscall_accept4(fd, addr, addrlen, flags) {
-            if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(4, 1, fd, addr, addrlen, flags);
+        function ___syscall_accept4(fd1, addr1, addrlen1, flags1) {
+            if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(4, 1, fd1, addr1, addrlen1, flags1);
             try {
-                var sock = getSocketFromFD(fd);
-                var newsock = sock.sock_ops.accept(sock);
-                if (addr) var errno = writeSockaddr(addr, newsock.family, DNS.lookup_name(newsock.daddr), newsock.dport, addrlen);
-                return newsock.stream.fd;
-            } catch (e) {
-                if (typeof FS == "undefined" || !(e instanceof FS.ErrnoError)) throw e;
-                return -e.errno;
+                var sock1 = getSocketFromFD(fd1);
+                var newsock1 = sock1.sock_ops.accept(sock1);
+                if (addr1) var errno1 = writeSockaddr(addr1, newsock1.family, DNS.lookup_name(newsock1.daddr), newsock1.dport, addrlen1);
+                return newsock1.stream.fd;
+            } catch (e1) {
+                if (typeof FS == "undefined" || !(e1 instanceof FS.ErrnoError)) throw e1;
+                return -e1.errno;
             }
         }
-        function inetNtop4(addr) {
-            return (addr & 255) + "." + (addr >> 8 & 255) + "." + (addr >> 16 & 255) + "." + (addr >> 24 & 255);
+        function inetNtop4(addr1) {
+            return (addr1 & 255) + "." + (addr1 >> 8 & 255) + "." + (addr1 >> 16 & 255) + "." + (addr1 >> 24 & 255);
         }
-        function inetNtop6(ints) {
-            var str = "";
-            var word = 0;
-            var longest = 0;
-            var lastzero = 0;
-            var zstart = 0;
-            var len = 0;
-            var i = 0;
-            var parts = [
-                ints[0] & 65535,
-                ints[0] >> 16,
-                ints[1] & 65535,
-                ints[1] >> 16,
-                ints[2] & 65535,
-                ints[2] >> 16,
-                ints[3] & 65535,
-                ints[3] >> 16
+        function inetNtop6(ints1) {
+            var str1 = "";
+            var word1 = 0;
+            var longest1 = 0;
+            var lastzero1 = 0;
+            var zstart1 = 0;
+            var len1 = 0;
+            var i1 = 0;
+            var parts1 = [
+                ints1[0] & 65535,
+                ints1[0] >> 16,
+                ints1[1] & 65535,
+                ints1[1] >> 16,
+                ints1[2] & 65535,
+                ints1[2] >> 16,
+                ints1[3] & 65535,
+                ints1[3] >> 16
             ];
-            var hasipv4 = true;
-            var v4part = "";
-            for(i = 0; i < 5; i++)if (parts[i] !== 0) {
-                hasipv4 = false;
+            var hasipv41 = true;
+            var v4part1 = "";
+            for(i1 = 0; i1 < 5; i1++)if (parts1[i1] !== 0) {
+                hasipv41 = false;
                 break;
             }
-            if (hasipv4) {
-                v4part = inetNtop4(parts[6] | parts[7] << 16);
-                if (parts[5] === -1) {
-                    str = "::ffff:";
-                    str += v4part;
-                    return str;
+            if (hasipv41) {
+                v4part1 = inetNtop4(parts1[6] | parts1[7] << 16);
+                if (parts1[5] === -1) {
+                    str1 = "::ffff:";
+                    str1 += v4part1;
+                    return str1;
                 }
-                if (parts[5] === 0) {
-                    str = "::";
-                    if (v4part === "0.0.0.0") v4part = "";
-                    if (v4part === "0.0.0.1") v4part = "1";
-                    str += v4part;
-                    return str;
-                }
-            }
-            for(word = 0; word < 8; word++){
-                if (parts[word] === 0) {
-                    if (word - lastzero > 1) len = 0;
-                    lastzero = word;
-                    len++;
-                }
-                if (len > longest) {
-                    longest = len;
-                    zstart = word - longest + 1;
+                if (parts1[5] === 0) {
+                    str1 = "::";
+                    if (v4part1 === "0.0.0.0") v4part1 = "";
+                    if (v4part1 === "0.0.0.1") v4part1 = "1";
+                    str1 += v4part1;
+                    return str1;
                 }
             }
-            for(word = 0; word < 8; word++){
-                if (longest > 1) {
-                    if (parts[word] === 0 && word >= zstart && word < zstart + longest) {
-                        if (word === zstart) {
-                            str += ":";
-                            if (zstart === 0) str += ":";
+            for(word1 = 0; word1 < 8; word1++){
+                if (parts1[word1] === 0) {
+                    if (word1 - lastzero1 > 1) len1 = 0;
+                    lastzero1 = word1;
+                    len1++;
+                }
+                if (len1 > longest1) {
+                    longest1 = len1;
+                    zstart1 = word1 - longest1 + 1;
+                }
+            }
+            for(word1 = 0; word1 < 8; word1++){
+                if (longest1 > 1) {
+                    if (parts1[word1] === 0 && word1 >= zstart1 && word1 < zstart1 + longest1) {
+                        if (word1 === zstart1) {
+                            str1 += ":";
+                            if (zstart1 === 0) str1 += ":";
                         }
                         continue;
                     }
                 }
-                str += Number(_ntohs(parts[word] & 65535)).toString(16);
-                str += word < 7 ? ":" : "";
+                str1 += Number(_ntohs(parts1[word1] & 65535)).toString(16);
+                str1 += word1 < 7 ? ":" : "";
             }
-            return str;
+            return str1;
         }
-        function readSockaddr(sa, salen) {
-            var family = GROWABLE_HEAP_I16()[sa >> 1];
-            var port = _ntohs(GROWABLE_HEAP_U16()[sa + 2 >> 1]);
-            var addr;
-            switch(family){
+        function readSockaddr(sa1, salen1) {
+            var family1 = GROWABLE_HEAP_I16()[sa1 >> 1];
+            var port1 = _ntohs(GROWABLE_HEAP_U16()[sa1 + 2 >> 1]);
+            var addr1;
+            switch(family1){
                 case 2:
-                    if (salen !== 16) return {
+                    if (salen1 !== 16) return {
                         errno: 28
                     };
-                    addr = GROWABLE_HEAP_I32()[sa + 4 >> 2];
-                    addr = inetNtop4(addr);
+                    addr1 = GROWABLE_HEAP_I32()[sa1 + 4 >> 2];
+                    addr1 = inetNtop4(addr1);
                     break;
                 case 10:
-                    if (salen !== 28) return {
+                    if (salen1 !== 28) return {
                         errno: 28
                     };
-                    addr = [
-                        GROWABLE_HEAP_I32()[sa + 8 >> 2],
-                        GROWABLE_HEAP_I32()[sa + 12 >> 2],
-                        GROWABLE_HEAP_I32()[sa + 16 >> 2],
-                        GROWABLE_HEAP_I32()[sa + 20 >> 2]
+                    addr1 = [
+                        GROWABLE_HEAP_I32()[sa1 + 8 >> 2],
+                        GROWABLE_HEAP_I32()[sa1 + 12 >> 2],
+                        GROWABLE_HEAP_I32()[sa1 + 16 >> 2],
+                        GROWABLE_HEAP_I32()[sa1 + 20 >> 2]
                     ];
-                    addr = inetNtop6(addr);
+                    addr1 = inetNtop6(addr1);
                     break;
                 default:
                     return {
@@ -3545,111 +3545,111 @@ var Godot = (()=>{
                     };
             }
             return {
-                family: family,
-                addr: addr,
-                port: port
+                family: family1,
+                addr: addr1,
+                port: port1
             };
         }
-        function getSocketAddress(addrp, addrlen, allowNull) {
-            if (allowNull && addrp === 0) return null;
-            var info = readSockaddr(addrp, addrlen);
-            if (info.errno) throw new FS.ErrnoError(info.errno);
-            info.addr = DNS.lookup_addr(info.addr) || info.addr;
-            return info;
+        function getSocketAddress(addrp1, addrlen1, allowNull1) {
+            if (allowNull1 && addrp1 === 0) return null;
+            var info1 = readSockaddr(addrp1, addrlen1);
+            if (info1.errno) throw new FS.ErrnoError(info1.errno);
+            info1.addr = DNS.lookup_addr(info1.addr) || info1.addr;
+            return info1;
         }
-        function ___syscall_bind(fd, addr, addrlen) {
-            if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(5, 1, fd, addr, addrlen);
+        function ___syscall_bind(fd1, addr1, addrlen1) {
+            if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(5, 1, fd1, addr1, addrlen1);
             try {
-                var sock = getSocketFromFD(fd);
-                var info = getSocketAddress(addr, addrlen);
-                sock.sock_ops.bind(sock, info.addr, info.port);
+                var sock1 = getSocketFromFD(fd1);
+                var info1 = getSocketAddress(addr1, addrlen1);
+                sock1.sock_ops.bind(sock1, info1.addr, info1.port);
                 return 0;
-            } catch (e) {
-                if (typeof FS == "undefined" || !(e instanceof FS.ErrnoError)) throw e;
-                return -e.errno;
+            } catch (e1) {
+                if (typeof FS == "undefined" || !(e1 instanceof FS.ErrnoError)) throw e1;
+                return -e1.errno;
             }
         }
-        function ___syscall_chdir(path) {
-            if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(6, 1, path);
+        function ___syscall_chdir(path1) {
+            if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(6, 1, path1);
             try {
-                path = SYSCALLS.getStr(path);
-                FS.chdir(path);
+                path1 = SYSCALLS.getStr(path1);
+                FS.chdir(path1);
                 return 0;
-            } catch (e) {
-                if (typeof FS == "undefined" || !(e instanceof FS.ErrnoError)) throw e;
-                return -e.errno;
+            } catch (e1) {
+                if (typeof FS == "undefined" || !(e1 instanceof FS.ErrnoError)) throw e1;
+                return -e1.errno;
             }
         }
-        function ___syscall_chmod(path, mode) {
-            if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(7, 1, path, mode);
+        function ___syscall_chmod(path1, mode1) {
+            if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(7, 1, path1, mode1);
             try {
-                path = SYSCALLS.getStr(path);
-                FS.chmod(path, mode);
+                path1 = SYSCALLS.getStr(path1);
+                FS.chmod(path1, mode1);
                 return 0;
-            } catch (e) {
-                if (typeof FS == "undefined" || !(e instanceof FS.ErrnoError)) throw e;
-                return -e.errno;
+            } catch (e1) {
+                if (typeof FS == "undefined" || !(e1 instanceof FS.ErrnoError)) throw e1;
+                return -e1.errno;
             }
         }
-        function ___syscall_connect(fd, addr, addrlen) {
-            if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(8, 1, fd, addr, addrlen);
+        function ___syscall_connect(fd1, addr1, addrlen1) {
+            if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(8, 1, fd1, addr1, addrlen1);
             try {
-                var sock = getSocketFromFD(fd);
-                var info = getSocketAddress(addr, addrlen);
-                sock.sock_ops.connect(sock, info.addr, info.port);
+                var sock1 = getSocketFromFD(fd1);
+                var info1 = getSocketAddress(addr1, addrlen1);
+                sock1.sock_ops.connect(sock1, info1.addr, info1.port);
                 return 0;
-            } catch (e) {
-                if (typeof FS == "undefined" || !(e instanceof FS.ErrnoError)) throw e;
-                return -e.errno;
+            } catch (e1) {
+                if (typeof FS == "undefined" || !(e1 instanceof FS.ErrnoError)) throw e1;
+                return -e1.errno;
             }
         }
-        function ___syscall_faccessat(dirfd, path, amode, flags) {
-            if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(9, 1, dirfd, path, amode, flags);
+        function ___syscall_faccessat(dirfd1, path1, amode1, flags1) {
+            if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(9, 1, dirfd1, path1, amode1, flags1);
             try {
-                path = SYSCALLS.getStr(path);
-                path = SYSCALLS.calculateAt(dirfd, path);
-                if (amode & -8) return -28;
-                var lookup = FS.lookupPath(path, {
+                path1 = SYSCALLS.getStr(path1);
+                path1 = SYSCALLS.calculateAt(dirfd1, path1);
+                if (amode1 & -8) return -28;
+                var lookup1 = FS.lookupPath(path1, {
                     follow: true
                 });
-                var node = lookup.node;
-                if (!node) return -44;
-                var perms = "";
-                if (amode & 4) perms += "r";
-                if (amode & 2) perms += "w";
-                if (amode & 1) perms += "x";
-                if (perms && FS.nodePermissions(node, perms)) return -2;
+                var node1 = lookup1.node;
+                if (!node1) return -44;
+                var perms1 = "";
+                if (amode1 & 4) perms1 += "r";
+                if (amode1 & 2) perms1 += "w";
+                if (amode1 & 1) perms1 += "x";
+                if (perms1 && FS.nodePermissions(node1, perms1)) return -2;
                 return 0;
-            } catch (e) {
-                if (typeof FS == "undefined" || !(e instanceof FS.ErrnoError)) throw e;
-                return -e.errno;
+            } catch (e1) {
+                if (typeof FS == "undefined" || !(e1 instanceof FS.ErrnoError)) throw e1;
+                return -e1.errno;
             }
         }
-        function ___syscall_fcntl64(fd, cmd, varargs) {
-            if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(10, 1, fd, cmd, varargs);
-            SYSCALLS.varargs = varargs;
+        function ___syscall_fcntl64(fd1, cmd1, varargs1) {
+            if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(10, 1, fd1, cmd1, varargs1);
+            SYSCALLS.varargs = varargs1;
             try {
-                var stream = SYSCALLS.getStreamFromFD(fd);
-                switch(cmd){
+                var stream1 = SYSCALLS.getStreamFromFD(fd1);
+                switch(cmd1){
                     case 0:
-                        var arg = SYSCALLS.get();
-                        if (arg < 0) return -28;
-                        var newStream;
-                        newStream = FS.createStream(stream, arg);
-                        return newStream.fd;
+                        var arg1 = SYSCALLS.get();
+                        if (arg1 < 0) return -28;
+                        var newStream1;
+                        newStream1 = FS.createStream(stream1, arg1);
+                        return newStream1.fd;
                     case 1:
                     case 2:
                         return 0;
                     case 3:
-                        return stream.flags;
+                        return stream1.flags;
                     case 4:
-                        var arg = SYSCALLS.get();
-                        stream.flags |= arg;
+                        var arg1 = SYSCALLS.get();
+                        stream1.flags |= arg1;
                         return 0;
                     case 5:
-                        var arg = SYSCALLS.get();
-                        var offset = 0;
-                        GROWABLE_HEAP_I16()[arg + offset >> 1] = 2;
+                        var arg1 = SYSCALLS.get();
+                        var offset1 = 0;
+                        GROWABLE_HEAP_I16()[arg1 + offset1 >> 1] = 2;
                         return 0;
                     case 6:
                     case 7:
@@ -3663,112 +3663,112 @@ var Godot = (()=>{
                     default:
                         return -28;
                 }
-            } catch (e) {
-                if (typeof FS == "undefined" || !(e instanceof FS.ErrnoError)) throw e;
-                return -e.errno;
+            } catch (e1) {
+                if (typeof FS == "undefined" || !(e1 instanceof FS.ErrnoError)) throw e1;
+                return -e1.errno;
             }
         }
-        function ___syscall_getcwd(buf, size) {
-            if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(11, 1, buf, size);
+        function ___syscall_getcwd(buf1, size1) {
+            if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(11, 1, buf1, size1);
             try {
-                if (size === 0) return -28;
-                var cwd = FS.cwd();
-                var cwdLengthInBytes = lengthBytesUTF8(cwd) + 1;
-                if (size < cwdLengthInBytes) return -68;
-                stringToUTF8(cwd, buf, size);
-                return cwdLengthInBytes;
-            } catch (e) {
-                if (typeof FS == "undefined" || !(e instanceof FS.ErrnoError)) throw e;
-                return -e.errno;
+                if (size1 === 0) return -28;
+                var cwd1 = FS.cwd();
+                var cwdLengthInBytes1 = lengthBytesUTF8(cwd1) + 1;
+                if (size1 < cwdLengthInBytes1) return -68;
+                stringToUTF8(cwd1, buf1, size1);
+                return cwdLengthInBytes1;
+            } catch (e1) {
+                if (typeof FS == "undefined" || !(e1 instanceof FS.ErrnoError)) throw e1;
+                return -e1.errno;
             }
         }
-        function ___syscall_getdents64(fd, dirp, count) {
-            if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(12, 1, fd, dirp, count);
+        function ___syscall_getdents64(fd1, dirp1, count1) {
+            if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(12, 1, fd1, dirp1, count1);
             try {
-                var stream = SYSCALLS.getStreamFromFD(fd);
-                if (!stream.getdents) stream.getdents = FS.readdir(stream.path);
-                var struct_size = 280;
-                var pos = 0;
-                var off = FS.llseek(stream, 0, 1);
-                var idx = Math.floor(off / struct_size);
-                while(idx < stream.getdents.length && pos + struct_size <= count){
-                    var id;
-                    var type;
-                    var name = stream.getdents[idx];
-                    if (name === ".") {
-                        id = stream.node.id;
-                        type = 4;
-                    } else if (name === "..") {
-                        var lookup = FS.lookupPath(stream.path, {
+                var stream1 = SYSCALLS.getStreamFromFD(fd1);
+                if (!stream1.getdents) stream1.getdents = FS.readdir(stream1.path);
+                var struct_size1 = 280;
+                var pos1 = 0;
+                var off1 = FS.llseek(stream1, 0, 1);
+                var idx1 = Math.floor(off1 / struct_size1);
+                while(idx1 < stream1.getdents.length && pos1 + struct_size1 <= count1){
+                    var id1;
+                    var type1;
+                    var name1 = stream1.getdents[idx1];
+                    if (name1 === ".") {
+                        id1 = stream1.node.id;
+                        type1 = 4;
+                    } else if (name1 === "..") {
+                        var lookup1 = FS.lookupPath(stream1.path, {
                             parent: true
                         });
-                        id = lookup.node.id;
-                        type = 4;
+                        id1 = lookup1.node.id;
+                        type1 = 4;
                     } else {
-                        var child = FS.lookupNode(stream.node, name);
-                        id = child.id;
-                        type = FS.isChrdev(child.mode) ? 2 : FS.isDir(child.mode) ? 4 : FS.isLink(child.mode) ? 10 : 8;
+                        var child1 = FS.lookupNode(stream1.node, name1);
+                        id1 = child1.id;
+                        type1 = FS.isChrdev(child1.mode) ? 2 : FS.isDir(child1.mode) ? 4 : FS.isLink(child1.mode) ? 10 : 8;
                     }
                     tempI64 = [
-                        id >>> 0,
-                        (tempDouble = id, +Math.abs(tempDouble) >= 1 ? tempDouble > 0 ? (Math.min(+Math.floor(tempDouble / 4294967296), 4294967295) | 0) >>> 0 : ~~+Math.ceil((tempDouble - +(~~tempDouble >>> 0)) / 4294967296) >>> 0 : 0)
-                    ], GROWABLE_HEAP_I32()[dirp + pos >> 2] = tempI64[0], GROWABLE_HEAP_I32()[dirp + pos + 4 >> 2] = tempI64[1];
+                        id1 >>> 0,
+                        (tempDouble = id1, +Math.abs(tempDouble) >= 1 ? tempDouble > 0 ? (Math.min(+Math.floor(tempDouble / 4294967296), 4294967295) | 0) >>> 0 : ~~+Math.ceil((tempDouble - +(~~tempDouble >>> 0)) / 4294967296) >>> 0 : 0)
+                    ], GROWABLE_HEAP_I32()[dirp1 + pos1 >> 2] = tempI64[0], GROWABLE_HEAP_I32()[dirp1 + pos1 + 4 >> 2] = tempI64[1];
                     tempI64 = [
-                        (idx + 1) * struct_size >>> 0,
-                        (tempDouble = (idx + 1) * struct_size, +Math.abs(tempDouble) >= 1 ? tempDouble > 0 ? (Math.min(+Math.floor(tempDouble / 4294967296), 4294967295) | 0) >>> 0 : ~~+Math.ceil((tempDouble - +(~~tempDouble >>> 0)) / 4294967296) >>> 0 : 0)
-                    ], GROWABLE_HEAP_I32()[dirp + pos + 8 >> 2] = tempI64[0], GROWABLE_HEAP_I32()[dirp + pos + 12 >> 2] = tempI64[1];
-                    GROWABLE_HEAP_I16()[dirp + pos + 16 >> 1] = 280;
-                    GROWABLE_HEAP_I8()[dirp + pos + 18 >> 0] = type;
-                    stringToUTF8(name, dirp + pos + 19, 256);
-                    pos += struct_size;
-                    idx += 1;
+                        (idx1 + 1) * struct_size1 >>> 0,
+                        (tempDouble = (idx1 + 1) * struct_size1, +Math.abs(tempDouble) >= 1 ? tempDouble > 0 ? (Math.min(+Math.floor(tempDouble / 4294967296), 4294967295) | 0) >>> 0 : ~~+Math.ceil((tempDouble - +(~~tempDouble >>> 0)) / 4294967296) >>> 0 : 0)
+                    ], GROWABLE_HEAP_I32()[dirp1 + pos1 + 8 >> 2] = tempI64[0], GROWABLE_HEAP_I32()[dirp1 + pos1 + 12 >> 2] = tempI64[1];
+                    GROWABLE_HEAP_I16()[dirp1 + pos1 + 16 >> 1] = 280;
+                    GROWABLE_HEAP_I8()[dirp1 + pos1 + 18 >> 0] = type1;
+                    stringToUTF8(name1, dirp1 + pos1 + 19, 256);
+                    pos1 += struct_size1;
+                    idx1 += 1;
                 }
-                FS.llseek(stream, idx * struct_size, 0);
-                return pos;
-            } catch (e) {
-                if (typeof FS == "undefined" || !(e instanceof FS.ErrnoError)) throw e;
-                return -e.errno;
+                FS.llseek(stream1, idx1 * struct_size1, 0);
+                return pos1;
+            } catch (e1) {
+                if (typeof FS == "undefined" || !(e1 instanceof FS.ErrnoError)) throw e1;
+                return -e1.errno;
             }
         }
-        function ___syscall_getsockname(fd, addr, addrlen) {
-            if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(13, 1, fd, addr, addrlen);
+        function ___syscall_getsockname(fd1, addr1, addrlen1) {
+            if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(13, 1, fd1, addr1, addrlen1);
             try {
-                err("__syscall_getsockname " + fd);
-                var sock = getSocketFromFD(fd);
-                var errno = writeSockaddr(addr, sock.family, DNS.lookup_name(sock.saddr || "0.0.0.0"), sock.sport, addrlen);
+                err("__syscall_getsockname " + fd1);
+                var sock1 = getSocketFromFD(fd1);
+                var errno1 = writeSockaddr(addr1, sock1.family, DNS.lookup_name(sock1.saddr || "0.0.0.0"), sock1.sport, addrlen1);
                 return 0;
-            } catch (e) {
-                if (typeof FS == "undefined" || !(e instanceof FS.ErrnoError)) throw e;
-                return -e.errno;
+            } catch (e1) {
+                if (typeof FS == "undefined" || !(e1 instanceof FS.ErrnoError)) throw e1;
+                return -e1.errno;
             }
         }
-        function ___syscall_getsockopt(fd, level, optname, optval, optlen) {
-            if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(14, 1, fd, level, optname, optval, optlen);
+        function ___syscall_getsockopt(fd1, level1, optname1, optval1, optlen1) {
+            if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(14, 1, fd1, level1, optname1, optval1, optlen1);
             try {
-                var sock = getSocketFromFD(fd);
-                if (level === 1) {
-                    if (optname === 4) {
-                        GROWABLE_HEAP_I32()[optval >> 2] = sock.error;
-                        GROWABLE_HEAP_I32()[optlen >> 2] = 4;
-                        sock.error = null;
+                var sock1 = getSocketFromFD(fd1);
+                if (level1 === 1) {
+                    if (optname1 === 4) {
+                        GROWABLE_HEAP_I32()[optval1 >> 2] = sock1.error;
+                        GROWABLE_HEAP_I32()[optlen1 >> 2] = 4;
+                        sock1.error = null;
                         return 0;
                     }
                 }
                 return -50;
-            } catch (e) {
-                if (typeof FS == "undefined" || !(e instanceof FS.ErrnoError)) throw e;
-                return -e.errno;
+            } catch (e1) {
+                if (typeof FS == "undefined" || !(e1 instanceof FS.ErrnoError)) throw e1;
+                return -e1.errno;
             }
         }
-        function ___syscall_ioctl(fd, op, varargs) {
-            if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(15, 1, fd, op, varargs);
-            SYSCALLS.varargs = varargs;
+        function ___syscall_ioctl(fd1, op1, varargs1) {
+            if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(15, 1, fd1, op1, varargs1);
+            SYSCALLS.varargs = varargs1;
             try {
-                var stream = SYSCALLS.getStreamFromFD(fd);
-                switch(op){
+                var stream1 = SYSCALLS.getStreamFromFD(fd1);
+                switch(op1){
                     case 21509:
                     case 21505:
-                        if (!stream.tty) return -59;
+                        if (!stream1.tty) return -59;
                         return 0;
                     case 21510:
                     case 21511:
@@ -3776,259 +3776,259 @@ var Godot = (()=>{
                     case 21506:
                     case 21507:
                     case 21508:
-                        if (!stream.tty) return -59;
+                        if (!stream1.tty) return -59;
                         return 0;
                     case 21519:
-                        if (!stream.tty) return -59;
-                        var argp = SYSCALLS.get();
-                        GROWABLE_HEAP_I32()[argp >> 2] = 0;
+                        if (!stream1.tty) return -59;
+                        var argp1 = SYSCALLS.get();
+                        GROWABLE_HEAP_I32()[argp1 >> 2] = 0;
                         return 0;
                     case 21520:
-                        if (!stream.tty) return -59;
+                        if (!stream1.tty) return -59;
                         return -28;
                     case 21531:
-                        var argp = SYSCALLS.get();
-                        return FS.ioctl(stream, op, argp);
+                        var argp1 = SYSCALLS.get();
+                        return FS.ioctl(stream1, op1, argp1);
                     case 21523:
-                        if (!stream.tty) return -59;
+                        if (!stream1.tty) return -59;
                         return 0;
                     case 21524:
-                        if (!stream.tty) return -59;
+                        if (!stream1.tty) return -59;
                         return 0;
                     default:
-                        abort("bad ioctl syscall " + op);
+                        abort("bad ioctl syscall " + op1);
                 }
-            } catch (e) {
-                if (typeof FS == "undefined" || !(e instanceof FS.ErrnoError)) throw e;
-                return -e.errno;
+            } catch (e1) {
+                if (typeof FS == "undefined" || !(e1 instanceof FS.ErrnoError)) throw e1;
+                return -e1.errno;
             }
         }
-        function ___syscall_listen(fd, backlog) {
-            if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(16, 1, fd, backlog);
+        function ___syscall_listen(fd1, backlog1) {
+            if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(16, 1, fd1, backlog1);
             try {
-                var sock = getSocketFromFD(fd);
-                sock.sock_ops.listen(sock, backlog);
+                var sock1 = getSocketFromFD(fd1);
+                sock1.sock_ops.listen(sock1, backlog1);
                 return 0;
-            } catch (e) {
-                if (typeof FS == "undefined" || !(e instanceof FS.ErrnoError)) throw e;
-                return -e.errno;
+            } catch (e1) {
+                if (typeof FS == "undefined" || !(e1 instanceof FS.ErrnoError)) throw e1;
+                return -e1.errno;
             }
         }
-        function ___syscall_lstat64(path, buf) {
-            if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(17, 1, path, buf);
+        function ___syscall_lstat64(path1, buf1) {
+            if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(17, 1, path1, buf1);
             try {
-                path = SYSCALLS.getStr(path);
-                return SYSCALLS.doStat(FS.lstat, path, buf);
-            } catch (e) {
-                if (typeof FS == "undefined" || !(e instanceof FS.ErrnoError)) throw e;
-                return -e.errno;
+                path1 = SYSCALLS.getStr(path1);
+                return SYSCALLS.doStat(FS.lstat, path1, buf1);
+            } catch (e1) {
+                if (typeof FS == "undefined" || !(e1 instanceof FS.ErrnoError)) throw e1;
+                return -e1.errno;
             }
         }
-        function ___syscall_mkdirat(dirfd, path, mode) {
-            if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(18, 1, dirfd, path, mode);
+        function ___syscall_mkdirat(dirfd1, path1, mode1) {
+            if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(18, 1, dirfd1, path1, mode1);
             try {
-                path = SYSCALLS.getStr(path);
-                path = SYSCALLS.calculateAt(dirfd, path);
-                path = PATH.normalize(path);
-                if (path[path.length - 1] === "/") path = path.substr(0, path.length - 1);
-                FS.mkdir(path, mode, 0);
+                path1 = SYSCALLS.getStr(path1);
+                path1 = SYSCALLS.calculateAt(dirfd1, path1);
+                path1 = PATH.normalize(path1);
+                if (path1[path1.length - 1] === "/") path1 = path1.substr(0, path1.length - 1);
+                FS.mkdir(path1, mode1, 0);
                 return 0;
-            } catch (e) {
-                if (typeof FS == "undefined" || !(e instanceof FS.ErrnoError)) throw e;
-                return -e.errno;
+            } catch (e1) {
+                if (typeof FS == "undefined" || !(e1 instanceof FS.ErrnoError)) throw e1;
+                return -e1.errno;
             }
         }
-        function ___syscall_newfstatat(dirfd, path, buf, flags) {
-            if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(19, 1, dirfd, path, buf, flags);
+        function ___syscall_newfstatat(dirfd1, path1, buf1, flags1) {
+            if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(19, 1, dirfd1, path1, buf1, flags1);
             try {
-                path = SYSCALLS.getStr(path);
-                var nofollow = flags & 256;
-                var allowEmpty = flags & 4096;
-                flags = flags & -4353;
-                path = SYSCALLS.calculateAt(dirfd, path, allowEmpty);
-                return SYSCALLS.doStat(nofollow ? FS.lstat : FS.stat, path, buf);
-            } catch (e) {
-                if (typeof FS == "undefined" || !(e instanceof FS.ErrnoError)) throw e;
-                return -e.errno;
+                path1 = SYSCALLS.getStr(path1);
+                var nofollow1 = flags1 & 256;
+                var allowEmpty1 = flags1 & 4096;
+                flags1 = flags1 & -4353;
+                path1 = SYSCALLS.calculateAt(dirfd1, path1, allowEmpty1);
+                return SYSCALLS.doStat(nofollow1 ? FS.lstat : FS.stat, path1, buf1);
+            } catch (e1) {
+                if (typeof FS == "undefined" || !(e1 instanceof FS.ErrnoError)) throw e1;
+                return -e1.errno;
             }
         }
-        function ___syscall_openat(dirfd, path, flags, varargs) {
-            if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(20, 1, dirfd, path, flags, varargs);
-            SYSCALLS.varargs = varargs;
+        function ___syscall_openat(dirfd1, path1, flags1, varargs1) {
+            if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(20, 1, dirfd1, path1, flags1, varargs1);
+            SYSCALLS.varargs = varargs1;
             try {
-                path = SYSCALLS.getStr(path);
-                path = SYSCALLS.calculateAt(dirfd, path);
-                var mode = varargs ? SYSCALLS.get() : 0;
-                return FS.open(path, flags, mode).fd;
-            } catch (e) {
-                if (typeof FS == "undefined" || !(e instanceof FS.ErrnoError)) throw e;
-                return -e.errno;
+                path1 = SYSCALLS.getStr(path1);
+                path1 = SYSCALLS.calculateAt(dirfd1, path1);
+                var mode1 = varargs1 ? SYSCALLS.get() : 0;
+                return FS.open(path1, flags1, mode1).fd;
+            } catch (e1) {
+                if (typeof FS == "undefined" || !(e1 instanceof FS.ErrnoError)) throw e1;
+                return -e1.errno;
             }
         }
-        function ___syscall_poll(fds, nfds, timeout) {
-            if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(21, 1, fds, nfds, timeout);
+        function ___syscall_poll(fds1, nfds1, timeout1) {
+            if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(21, 1, fds1, nfds1, timeout1);
             try {
-                var nonzero = 0;
-                for(var i = 0; i < nfds; i++){
-                    var pollfd = fds + 8 * i;
-                    var fd = GROWABLE_HEAP_I32()[pollfd >> 2];
-                    var events = GROWABLE_HEAP_I16()[pollfd + 4 >> 1];
-                    var mask = 32;
-                    var stream = FS.getStream(fd);
-                    if (stream) {
-                        mask = SYSCALLS.DEFAULT_POLLMASK;
-                        if (stream.stream_ops.poll) mask = stream.stream_ops.poll(stream);
+                var nonzero1 = 0;
+                for(var i1 = 0; i1 < nfds1; i1++){
+                    var pollfd1 = fds1 + 8 * i1;
+                    var fd1 = GROWABLE_HEAP_I32()[pollfd1 >> 2];
+                    var events1 = GROWABLE_HEAP_I16()[pollfd1 + 4 >> 1];
+                    var mask1 = 32;
+                    var stream1 = FS.getStream(fd1);
+                    if (stream1) {
+                        mask1 = SYSCALLS.DEFAULT_POLLMASK;
+                        if (stream1.stream_ops.poll) mask1 = stream1.stream_ops.poll(stream1);
                     }
-                    mask &= events | 24;
-                    if (mask) nonzero++;
-                    GROWABLE_HEAP_I16()[pollfd + 6 >> 1] = mask;
+                    mask1 &= events1 | 24;
+                    if (mask1) nonzero1++;
+                    GROWABLE_HEAP_I16()[pollfd1 + 6 >> 1] = mask1;
                 }
-                return nonzero;
-            } catch (e) {
-                if (typeof FS == "undefined" || !(e instanceof FS.ErrnoError)) throw e;
-                return -e.errno;
+                return nonzero1;
+            } catch (e1) {
+                if (typeof FS == "undefined" || !(e1 instanceof FS.ErrnoError)) throw e1;
+                return -e1.errno;
             }
         }
-        function ___syscall_readlinkat(dirfd, path, buf, bufsize) {
-            if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(22, 1, dirfd, path, buf, bufsize);
+        function ___syscall_readlinkat(dirfd1, path1, buf1, bufsize1) {
+            if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(22, 1, dirfd1, path1, buf1, bufsize1);
             try {
-                path = SYSCALLS.getStr(path);
-                path = SYSCALLS.calculateAt(dirfd, path);
-                if (bufsize <= 0) return -28;
-                var ret = FS.readlink(path);
-                var len = Math.min(bufsize, lengthBytesUTF8(ret));
-                var endChar = GROWABLE_HEAP_I8()[buf + len];
-                stringToUTF8(ret, buf, bufsize + 1);
-                GROWABLE_HEAP_I8()[buf + len] = endChar;
-                return len;
-            } catch (e) {
-                if (typeof FS == "undefined" || !(e instanceof FS.ErrnoError)) throw e;
-                return -e.errno;
+                path1 = SYSCALLS.getStr(path1);
+                path1 = SYSCALLS.calculateAt(dirfd1, path1);
+                if (bufsize1 <= 0) return -28;
+                var ret1 = FS.readlink(path1);
+                var len1 = Math.min(bufsize1, lengthBytesUTF8(ret1));
+                var endChar1 = GROWABLE_HEAP_I8()[buf1 + len1];
+                stringToUTF8(ret1, buf1, bufsize1 + 1);
+                GROWABLE_HEAP_I8()[buf1 + len1] = endChar1;
+                return len1;
+            } catch (e1) {
+                if (typeof FS == "undefined" || !(e1 instanceof FS.ErrnoError)) throw e1;
+                return -e1.errno;
             }
         }
-        function ___syscall_recvfrom(fd, buf, len, flags, addr, addrlen) {
-            if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(23, 1, fd, buf, len, flags, addr, addrlen);
+        function ___syscall_recvfrom(fd1, buf1, len1, flags1, addr1, addrlen1) {
+            if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(23, 1, fd1, buf1, len1, flags1, addr1, addrlen1);
             try {
-                var sock = getSocketFromFD(fd);
-                var msg = sock.sock_ops.recvmsg(sock, len);
-                if (!msg) return 0;
-                if (addr) var errno = writeSockaddr(addr, sock.family, DNS.lookup_name(msg.addr), msg.port, addrlen);
-                GROWABLE_HEAP_U8().set(msg.buffer, buf);
-                return msg.buffer.byteLength;
-            } catch (e) {
-                if (typeof FS == "undefined" || !(e instanceof FS.ErrnoError)) throw e;
-                return -e.errno;
+                var sock1 = getSocketFromFD(fd1);
+                var msg1 = sock1.sock_ops.recvmsg(sock1, len1);
+                if (!msg1) return 0;
+                if (addr1) var errno1 = writeSockaddr(addr1, sock1.family, DNS.lookup_name(msg1.addr), msg1.port, addrlen1);
+                GROWABLE_HEAP_U8().set(msg1.buffer, buf1);
+                return msg1.buffer.byteLength;
+            } catch (e1) {
+                if (typeof FS == "undefined" || !(e1 instanceof FS.ErrnoError)) throw e1;
+                return -e1.errno;
             }
         }
-        function ___syscall_renameat(olddirfd, oldpath, newdirfd, newpath) {
-            if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(24, 1, olddirfd, oldpath, newdirfd, newpath);
+        function ___syscall_renameat(olddirfd1, oldpath1, newdirfd1, newpath1) {
+            if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(24, 1, olddirfd1, oldpath1, newdirfd1, newpath1);
             try {
-                oldpath = SYSCALLS.getStr(oldpath);
-                newpath = SYSCALLS.getStr(newpath);
-                oldpath = SYSCALLS.calculateAt(olddirfd, oldpath);
-                newpath = SYSCALLS.calculateAt(newdirfd, newpath);
-                FS.rename(oldpath, newpath);
+                oldpath1 = SYSCALLS.getStr(oldpath1);
+                newpath1 = SYSCALLS.getStr(newpath1);
+                oldpath1 = SYSCALLS.calculateAt(olddirfd1, oldpath1);
+                newpath1 = SYSCALLS.calculateAt(newdirfd1, newpath1);
+                FS.rename(oldpath1, newpath1);
                 return 0;
-            } catch (e) {
-                if (typeof FS == "undefined" || !(e instanceof FS.ErrnoError)) throw e;
-                return -e.errno;
+            } catch (e1) {
+                if (typeof FS == "undefined" || !(e1 instanceof FS.ErrnoError)) throw e1;
+                return -e1.errno;
             }
         }
-        function ___syscall_rmdir(path) {
-            if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(25, 1, path);
+        function ___syscall_rmdir(path1) {
+            if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(25, 1, path1);
             try {
-                path = SYSCALLS.getStr(path);
-                FS.rmdir(path);
+                path1 = SYSCALLS.getStr(path1);
+                FS.rmdir(path1);
                 return 0;
-            } catch (e) {
-                if (typeof FS == "undefined" || !(e instanceof FS.ErrnoError)) throw e;
-                return -e.errno;
+            } catch (e1) {
+                if (typeof FS == "undefined" || !(e1 instanceof FS.ErrnoError)) throw e1;
+                return -e1.errno;
             }
         }
-        function ___syscall_sendto(fd, message, length, flags, addr, addr_len) {
-            if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(26, 1, fd, message, length, flags, addr, addr_len);
+        function ___syscall_sendto(fd1, message1, length1, flags1, addr1, addr_len1) {
+            if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(26, 1, fd1, message1, length1, flags1, addr1, addr_len1);
             try {
-                var sock = getSocketFromFD(fd);
-                var dest = getSocketAddress(addr, addr_len, true);
-                if (!dest) return FS.write(sock.stream, GROWABLE_HEAP_I8(), message, length);
-                else return sock.sock_ops.sendmsg(sock, GROWABLE_HEAP_I8(), message, length, dest.addr, dest.port);
-            } catch (e) {
-                if (typeof FS == "undefined" || !(e instanceof FS.ErrnoError)) throw e;
-                return -e.errno;
+                var sock1 = getSocketFromFD(fd1);
+                var dest1 = getSocketAddress(addr1, addr_len1, true);
+                if (!dest1) return FS.write(sock1.stream, GROWABLE_HEAP_I8(), message1, length1);
+                else return sock1.sock_ops.sendmsg(sock1, GROWABLE_HEAP_I8(), message1, length1, dest1.addr, dest1.port);
+            } catch (e1) {
+                if (typeof FS == "undefined" || !(e1 instanceof FS.ErrnoError)) throw e1;
+                return -e1.errno;
             }
         }
-        function ___syscall_socket(domain, type, protocol) {
-            if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(27, 1, domain, type, protocol);
+        function ___syscall_socket(domain1, type1, protocol1) {
+            if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(27, 1, domain1, type1, protocol1);
             try {
-                var sock = SOCKFS.createSocket(domain, type, protocol);
-                return sock.stream.fd;
-            } catch (e) {
-                if (typeof FS == "undefined" || !(e instanceof FS.ErrnoError)) throw e;
-                return -e.errno;
+                var sock1 = SOCKFS.createSocket(domain1, type1, protocol1);
+                return sock1.stream.fd;
+            } catch (e1) {
+                if (typeof FS == "undefined" || !(e1 instanceof FS.ErrnoError)) throw e1;
+                return -e1.errno;
             }
         }
-        function ___syscall_stat64(path, buf) {
-            if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(28, 1, path, buf);
+        function ___syscall_stat64(path1, buf1) {
+            if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(28, 1, path1, buf1);
             try {
-                path = SYSCALLS.getStr(path);
-                return SYSCALLS.doStat(FS.stat, path, buf);
-            } catch (e) {
-                if (typeof FS == "undefined" || !(e instanceof FS.ErrnoError)) throw e;
-                return -e.errno;
+                path1 = SYSCALLS.getStr(path1);
+                return SYSCALLS.doStat(FS.stat, path1, buf1);
+            } catch (e1) {
+                if (typeof FS == "undefined" || !(e1 instanceof FS.ErrnoError)) throw e1;
+                return -e1.errno;
             }
         }
-        function ___syscall_statfs64(path, size, buf) {
-            if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(29, 1, path, size, buf);
+        function ___syscall_statfs64(path1, size1, buf1) {
+            if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(29, 1, path1, size1, buf1);
             try {
-                path = SYSCALLS.getStr(path);
-                GROWABLE_HEAP_I32()[buf + 4 >> 2] = 4096;
-                GROWABLE_HEAP_I32()[buf + 40 >> 2] = 4096;
-                GROWABLE_HEAP_I32()[buf + 8 >> 2] = 1e6;
-                GROWABLE_HEAP_I32()[buf + 12 >> 2] = 5e5;
-                GROWABLE_HEAP_I32()[buf + 16 >> 2] = 5e5;
-                GROWABLE_HEAP_I32()[buf + 20 >> 2] = FS.nextInode;
-                GROWABLE_HEAP_I32()[buf + 24 >> 2] = 1e6;
-                GROWABLE_HEAP_I32()[buf + 28 >> 2] = 42;
-                GROWABLE_HEAP_I32()[buf + 44 >> 2] = 2;
-                GROWABLE_HEAP_I32()[buf + 36 >> 2] = 255;
+                path1 = SYSCALLS.getStr(path1);
+                GROWABLE_HEAP_I32()[buf1 + 4 >> 2] = 4096;
+                GROWABLE_HEAP_I32()[buf1 + 40 >> 2] = 4096;
+                GROWABLE_HEAP_I32()[buf1 + 8 >> 2] = 1e6;
+                GROWABLE_HEAP_I32()[buf1 + 12 >> 2] = 5e5;
+                GROWABLE_HEAP_I32()[buf1 + 16 >> 2] = 5e5;
+                GROWABLE_HEAP_I32()[buf1 + 20 >> 2] = FS.nextInode;
+                GROWABLE_HEAP_I32()[buf1 + 24 >> 2] = 1e6;
+                GROWABLE_HEAP_I32()[buf1 + 28 >> 2] = 42;
+                GROWABLE_HEAP_I32()[buf1 + 44 >> 2] = 2;
+                GROWABLE_HEAP_I32()[buf1 + 36 >> 2] = 255;
                 return 0;
-            } catch (e) {
-                if (typeof FS == "undefined" || !(e instanceof FS.ErrnoError)) throw e;
-                return -e.errno;
+            } catch (e1) {
+                if (typeof FS == "undefined" || !(e1 instanceof FS.ErrnoError)) throw e1;
+                return -e1.errno;
             }
         }
-        function ___syscall_symlink(target, linkpath) {
-            if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(30, 1, target, linkpath);
+        function ___syscall_symlink(target1, linkpath1) {
+            if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(30, 1, target1, linkpath1);
             try {
-                target = SYSCALLS.getStr(target);
-                linkpath = SYSCALLS.getStr(linkpath);
-                FS.symlink(target, linkpath);
+                target1 = SYSCALLS.getStr(target1);
+                linkpath1 = SYSCALLS.getStr(linkpath1);
+                FS.symlink(target1, linkpath1);
                 return 0;
-            } catch (e) {
-                if (typeof FS == "undefined" || !(e instanceof FS.ErrnoError)) throw e;
-                return -e.errno;
+            } catch (e1) {
+                if (typeof FS == "undefined" || !(e1 instanceof FS.ErrnoError)) throw e1;
+                return -e1.errno;
             }
         }
-        function ___syscall_unlinkat(dirfd, path, flags) {
-            if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(31, 1, dirfd, path, flags);
+        function ___syscall_unlinkat(dirfd1, path1, flags1) {
+            if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(31, 1, dirfd1, path1, flags1);
             try {
-                path = SYSCALLS.getStr(path);
-                path = SYSCALLS.calculateAt(dirfd, path);
-                if (flags === 0) FS.unlink(path);
-                else if (flags === 512) FS.rmdir(path);
+                path1 = SYSCALLS.getStr(path1);
+                path1 = SYSCALLS.calculateAt(dirfd1, path1);
+                if (flags1 === 0) FS.unlink(path1);
+                else if (flags1 === 512) FS.rmdir(path1);
                 else abort("Invalid flags passed to unlinkat");
                 return 0;
-            } catch (e) {
-                if (typeof FS == "undefined" || !(e instanceof FS.ErrnoError)) throw e;
-                return -e.errno;
+            } catch (e1) {
+                if (typeof FS == "undefined" || !(e1 instanceof FS.ErrnoError)) throw e1;
+                return -e1.errno;
             }
         }
-        function __dlinit(main_dso_handle) {}
+        function __dlinit(main_dso_handle1) {}
         var dlopenMissingError = "To use dlopen, you need enable dynamic linking, see https://github.com/emscripten-core/emscripten/wiki/Linking";
-        function __dlopen_js(filename, flag) {
+        function __dlopen_js(filename1, flag1) {
             abort(dlopenMissingError);
         }
-        function __dlsym_js(handle, symbol) {
+        function __dlsym_js(handle1, symbol1) {
             abort(dlopenMissingError);
         }
         function __emscripten_date_now() {
@@ -4041,147 +4041,147 @@ var Godot = (()=>{
         function __emscripten_get_now_is_monotonic() {
             return nowIsMonotonic;
         }
-        function executeNotifiedProxyingQueue(queue) {
-            Atomics.store(GROWABLE_HEAP_I32(), queue >> 2, 1);
-            if (_pthread_self()) __emscripten_proxy_execute_task_queue(queue);
-            Atomics.compareExchange(GROWABLE_HEAP_I32(), queue >> 2, 1, 0);
+        function executeNotifiedProxyingQueue(queue1) {
+            Atomics.store(GROWABLE_HEAP_I32(), queue1 >> 2, 1);
+            if (_pthread_self()) __emscripten_proxy_execute_task_queue(queue1);
+            Atomics.compareExchange(GROWABLE_HEAP_I32(), queue1 >> 2, 1, 0);
         }
         Module["executeNotifiedProxyingQueue"] = executeNotifiedProxyingQueue;
-        function __emscripten_notify_task_queue(targetThreadId, currThreadId, mainThreadId, queue) {
-            if (targetThreadId == currThreadId) setTimeout(()=>executeNotifiedProxyingQueue(queue));
+        function __emscripten_notify_task_queue(targetThreadId1, currThreadId1, mainThreadId1, queue1) {
+            if (targetThreadId1 == currThreadId1) setTimeout(()=>executeNotifiedProxyingQueue(queue1));
             else if (ENVIRONMENT_IS_PTHREAD) postMessage({
-                "targetThread": targetThreadId,
+                "targetThread": targetThreadId1,
                 "cmd": "processProxyingQueue",
-                "queue": queue
+                "queue": queue1
             });
             else {
-                var pthread = PThread.pthreads[targetThreadId];
-                var worker = pthread && pthread.worker;
-                if (!worker) return;
-                worker.postMessage({
+                var pthread1 = PThread.pthreads[targetThreadId1];
+                var worker1 = pthread1 && pthread1.worker;
+                if (!worker1) return;
+                worker1.postMessage({
                     "cmd": "processProxyingQueue",
-                    "queue": queue
+                    "queue": queue1
                 });
             }
             return 1;
         }
-        function __emscripten_proxied_gl_context_activated_from_main_browser_thread(contextHandle) {
-            GLctx = Module.ctx = GL.currentContext = contextHandle;
+        function __emscripten_proxied_gl_context_activated_from_main_browser_thread(contextHandle1) {
+            GLctx = Module.ctx = GL.currentContext = contextHandle1;
             GL.currentContextIsProxied = true;
         }
-        function __emscripten_set_offscreencanvas_size(target, width, height) {
+        function __emscripten_set_offscreencanvas_size(target1, width1, height1) {
             return -1;
         }
         function __emscripten_throw_longjmp() {
             throw Infinity;
         }
-        function __gmtime_js(time, tmPtr) {
-            var date = new Date(GROWABLE_HEAP_I32()[time >> 2] * 1e3);
-            GROWABLE_HEAP_I32()[tmPtr >> 2] = date.getUTCSeconds();
-            GROWABLE_HEAP_I32()[tmPtr + 4 >> 2] = date.getUTCMinutes();
-            GROWABLE_HEAP_I32()[tmPtr + 8 >> 2] = date.getUTCHours();
-            GROWABLE_HEAP_I32()[tmPtr + 12 >> 2] = date.getUTCDate();
-            GROWABLE_HEAP_I32()[tmPtr + 16 >> 2] = date.getUTCMonth();
-            GROWABLE_HEAP_I32()[tmPtr + 20 >> 2] = date.getUTCFullYear() - 1900;
-            GROWABLE_HEAP_I32()[tmPtr + 24 >> 2] = date.getUTCDay();
-            var start = Date.UTC(date.getUTCFullYear(), 0, 1, 0, 0, 0, 0);
-            var yday = (date.getTime() - start) / 86400000 | 0;
-            GROWABLE_HEAP_I32()[tmPtr + 28 >> 2] = yday;
+        function __gmtime_js(time1, tmPtr1) {
+            var date3 = new Date(GROWABLE_HEAP_I32()[time1 >> 2] * 1e3);
+            GROWABLE_HEAP_I32()[tmPtr1 >> 2] = date3.getUTCSeconds();
+            GROWABLE_HEAP_I32()[tmPtr1 + 4 >> 2] = date3.getUTCMinutes();
+            GROWABLE_HEAP_I32()[tmPtr1 + 8 >> 2] = date3.getUTCHours();
+            GROWABLE_HEAP_I32()[tmPtr1 + 12 >> 2] = date3.getUTCDate();
+            GROWABLE_HEAP_I32()[tmPtr1 + 16 >> 2] = date3.getUTCMonth();
+            GROWABLE_HEAP_I32()[tmPtr1 + 20 >> 2] = date3.getUTCFullYear() - 1900;
+            GROWABLE_HEAP_I32()[tmPtr1 + 24 >> 2] = date3.getUTCDay();
+            var start1 = Date.UTC(date3.getUTCFullYear(), 0, 1, 0, 0, 0, 0);
+            var yday1 = (date3.getTime() - start1) / 86400000 | 0;
+            GROWABLE_HEAP_I32()[tmPtr1 + 28 >> 2] = yday1;
         }
-        function __localtime_js(time, tmPtr) {
-            var date = new Date(GROWABLE_HEAP_I32()[time >> 2] * 1e3);
-            GROWABLE_HEAP_I32()[tmPtr >> 2] = date.getSeconds();
-            GROWABLE_HEAP_I32()[tmPtr + 4 >> 2] = date.getMinutes();
-            GROWABLE_HEAP_I32()[tmPtr + 8 >> 2] = date.getHours();
-            GROWABLE_HEAP_I32()[tmPtr + 12 >> 2] = date.getDate();
-            GROWABLE_HEAP_I32()[tmPtr + 16 >> 2] = date.getMonth();
-            GROWABLE_HEAP_I32()[tmPtr + 20 >> 2] = date.getFullYear() - 1900;
-            GROWABLE_HEAP_I32()[tmPtr + 24 >> 2] = date.getDay();
-            var start = new Date(date.getFullYear(), 0, 1);
-            var yday = (date.getTime() - start.getTime()) / 86400000 | 0;
-            GROWABLE_HEAP_I32()[tmPtr + 28 >> 2] = yday;
-            GROWABLE_HEAP_I32()[tmPtr + 36 >> 2] = -(date.getTimezoneOffset() * 60);
-            var summerOffset = new Date(date.getFullYear(), 6, 1).getTimezoneOffset();
-            var winterOffset = start.getTimezoneOffset();
-            var dst = (summerOffset != winterOffset && date.getTimezoneOffset() == Math.min(winterOffset, summerOffset)) | 0;
-            GROWABLE_HEAP_I32()[tmPtr + 32 >> 2] = dst;
+        function __localtime_js(time1, tmPtr1) {
+            var date3 = new Date(GROWABLE_HEAP_I32()[time1 >> 2] * 1e3);
+            GROWABLE_HEAP_I32()[tmPtr1 >> 2] = date3.getSeconds();
+            GROWABLE_HEAP_I32()[tmPtr1 + 4 >> 2] = date3.getMinutes();
+            GROWABLE_HEAP_I32()[tmPtr1 + 8 >> 2] = date3.getHours();
+            GROWABLE_HEAP_I32()[tmPtr1 + 12 >> 2] = date3.getDate();
+            GROWABLE_HEAP_I32()[tmPtr1 + 16 >> 2] = date3.getMonth();
+            GROWABLE_HEAP_I32()[tmPtr1 + 20 >> 2] = date3.getFullYear() - 1900;
+            GROWABLE_HEAP_I32()[tmPtr1 + 24 >> 2] = date3.getDay();
+            var start1 = new Date(date3.getFullYear(), 0, 1);
+            var yday1 = (date3.getTime() - start1.getTime()) / 86400000 | 0;
+            GROWABLE_HEAP_I32()[tmPtr1 + 28 >> 2] = yday1;
+            GROWABLE_HEAP_I32()[tmPtr1 + 36 >> 2] = -(date3.getTimezoneOffset() * 60);
+            var summerOffset1 = new Date(date3.getFullYear(), 6, 1).getTimezoneOffset();
+            var winterOffset1 = start1.getTimezoneOffset();
+            var dst1 = (summerOffset1 != winterOffset1 && date3.getTimezoneOffset() == Math.min(winterOffset1, summerOffset1)) | 0;
+            GROWABLE_HEAP_I32()[tmPtr1 + 32 >> 2] = dst1;
         }
-        function _tzset_impl(timezone, daylight, tzname) {
-            if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(32, 1, timezone, daylight, tzname);
-            var currentYear = (new Date).getFullYear();
-            var winter = new Date(currentYear, 0, 1);
-            var summer = new Date(currentYear, 6, 1);
-            var winterOffset = winter.getTimezoneOffset();
-            var summerOffset = summer.getTimezoneOffset();
-            var stdTimezoneOffset = Math.max(winterOffset, summerOffset);
-            GROWABLE_HEAP_I32()[timezone >> 2] = stdTimezoneOffset * 60;
-            GROWABLE_HEAP_I32()[daylight >> 2] = Number(winterOffset != summerOffset);
-            function extractZone(date) {
-                var match = date.toTimeString().match(/\(([A-Za-z ]+)\)$/);
-                return match ? match[1] : "GMT";
+        function _tzset_impl(timezone1, daylight1, tzname1) {
+            if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(32, 1, timezone1, daylight1, tzname1);
+            var currentYear1 = (new Date).getFullYear();
+            var winter1 = new Date(currentYear1, 0, 1);
+            var summer1 = new Date(currentYear1, 6, 1);
+            var winterOffset1 = winter1.getTimezoneOffset();
+            var summerOffset1 = summer1.getTimezoneOffset();
+            var stdTimezoneOffset1 = Math.max(winterOffset1, summerOffset1);
+            GROWABLE_HEAP_I32()[timezone1 >> 2] = stdTimezoneOffset1 * 60;
+            GROWABLE_HEAP_I32()[daylight1 >> 2] = Number(winterOffset1 != summerOffset1);
+            function extractZone1(date3) {
+                var match1 = date3.toTimeString().match(/\(([A-Za-z ]+)\)$/);
+                return match1 ? match1[1] : "GMT";
             }
-            var winterName = extractZone(winter);
-            var summerName = extractZone(summer);
-            var winterNamePtr = allocateUTF8(winterName);
-            var summerNamePtr = allocateUTF8(summerName);
-            if (summerOffset < winterOffset) {
-                GROWABLE_HEAP_U32()[tzname >> 2] = winterNamePtr;
-                GROWABLE_HEAP_U32()[tzname + 4 >> 2] = summerNamePtr;
+            var winterName1 = extractZone1(winter1);
+            var summerName1 = extractZone1(summer1);
+            var winterNamePtr1 = allocateUTF8(winterName1);
+            var summerNamePtr1 = allocateUTF8(summerName1);
+            if (summerOffset1 < winterOffset1) {
+                GROWABLE_HEAP_U32()[tzname1 >> 2] = winterNamePtr1;
+                GROWABLE_HEAP_U32()[tzname1 + 4 >> 2] = summerNamePtr1;
             } else {
-                GROWABLE_HEAP_U32()[tzname >> 2] = summerNamePtr;
-                GROWABLE_HEAP_U32()[tzname + 4 >> 2] = winterNamePtr;
+                GROWABLE_HEAP_U32()[tzname1 >> 2] = summerNamePtr1;
+                GROWABLE_HEAP_U32()[tzname1 + 4 >> 2] = winterNamePtr1;
             }
         }
-        function __tzset_js(timezone, daylight, tzname) {
+        function __tzset_js(timezone1, daylight1, tzname1) {
             if (__tzset_js.called) return;
             __tzset_js.called = true;
-            _tzset_impl(timezone, daylight, tzname);
+            _tzset_impl(timezone1, daylight1, tzname1);
         }
         function _abort() {
             abort("");
         }
-        function _emscripten_set_main_loop_timing(mode, value) {
-            Browser.mainLoop.timingMode = mode;
-            Browser.mainLoop.timingValue = value;
+        function _emscripten_set_main_loop_timing(mode1, value1) {
+            Browser.mainLoop.timingMode = mode1;
+            Browser.mainLoop.timingValue = value1;
             if (!Browser.mainLoop.func) return 1;
             if (!Browser.mainLoop.running) {
                 runtimeKeepalivePush();
                 Browser.mainLoop.running = true;
             }
-            if (mode == 0) {
-                Browser.mainLoop.scheduler = function Browser_mainLoop_scheduler_setTimeout() {
-                    var timeUntilNextTick = Math.max(0, Browser.mainLoop.tickStartTime + value - _emscripten_get_now()) | 0;
-                    setTimeout(Browser.mainLoop.runner, timeUntilNextTick);
+            if (mode1 == 0) {
+                Browser.mainLoop.scheduler = function Browser_mainLoop_scheduler_setTimeout1() {
+                    var timeUntilNextTick1 = Math.max(0, Browser.mainLoop.tickStartTime + value1 - _emscripten_get_now()) | 0;
+                    setTimeout(Browser.mainLoop.runner, timeUntilNextTick1);
                 };
                 Browser.mainLoop.method = "timeout";
-            } else if (mode == 1) {
-                Browser.mainLoop.scheduler = function Browser_mainLoop_scheduler_rAF() {
+            } else if (mode1 == 1) {
+                Browser.mainLoop.scheduler = function Browser_mainLoop_scheduler_rAF1() {
                     Browser.requestAnimationFrame(Browser.mainLoop.runner);
                 };
                 Browser.mainLoop.method = "rAF";
-            } else if (mode == 2) {
+            } else if (mode1 == 2) {
                 if (typeof setImmediate == "undefined") {
-                    var setImmediates = [];
-                    var emscriptenMainLoopMessageId = "setimmediate";
-                    var Browser_setImmediate_messageHandler = function(event) {
-                        if (event.data === emscriptenMainLoopMessageId || event.data.target === emscriptenMainLoopMessageId) {
-                            event.stopPropagation();
-                            setImmediates.shift()();
+                    var setImmediates1 = [];
+                    var emscriptenMainLoopMessageId1 = "setimmediate";
+                    var Browser_setImmediate_messageHandler1 = function(event1) {
+                        if (event1.data === emscriptenMainLoopMessageId1 || event1.data.target === emscriptenMainLoopMessageId1) {
+                            event1.stopPropagation();
+                            setImmediates1.shift()();
                         }
                     };
-                    addEventListener("message", Browser_setImmediate_messageHandler, true);
-                    setImmediate = function Browser_emulated_setImmediate(func) {
-                        setImmediates.push(func);
+                    addEventListener("message", Browser_setImmediate_messageHandler1, true);
+                    setImmediate = function Browser_emulated_setImmediate1(func1) {
+                        setImmediates1.push(func1);
                         if (ENVIRONMENT_IS_WORKER) {
                             if (Module["setImmediates"] === undefined) Module["setImmediates"] = [];
-                            Module["setImmediates"].push(func);
+                            Module["setImmediates"].push(func1);
                             postMessage({
-                                target: emscriptenMainLoopMessageId
+                                target: emscriptenMainLoopMessageId1
                             });
-                        } else postMessage(emscriptenMainLoopMessageId, "*");
+                        } else postMessage(emscriptenMainLoopMessageId1, "*");
                     };
                 }
-                Browser.mainLoop.scheduler = function Browser_mainLoop_scheduler_setImmediate() {
+                Browser.mainLoop.scheduler = function Browser_mainLoop_scheduler_setImmediate1() {
                     setImmediate(Browser.mainLoop.runner);
                 };
                 Browser.mainLoop.method = "immediate";
@@ -4198,17 +4198,17 @@ var Godot = (()=>{
             if (!keepRuntimeAlive()) try {
                 if (ENVIRONMENT_IS_PTHREAD) __emscripten_thread_exit(EXITSTATUS);
                 else _exit(EXITSTATUS);
-            } catch (e) {
-                handleException(e);
+            } catch (e1) {
+                handleException(e1);
             }
         }
-        function setMainLoop(browserIterationFunc, fps, simulateInfiniteLoop, arg, noSetTiming) {
+        function setMainLoop(browserIterationFunc1, fps1, simulateInfiniteLoop1, arg1, noSetTiming1) {
             assert(!Browser.mainLoop.func, "emscripten_set_main_loop: there can only be one main loop function at once: call emscripten_cancel_main_loop to cancel the previous one before setting a new one with different parameters.");
-            Browser.mainLoop.func = browserIterationFunc;
-            Browser.mainLoop.arg = arg;
-            var thisMainLoopId = Browser.mainLoop.currentlyRunningMainloop;
-            function checkIsRunning() {
-                if (thisMainLoopId < Browser.mainLoop.currentlyRunningMainloop) {
+            Browser.mainLoop.func = browserIterationFunc1;
+            Browser.mainLoop.arg = arg1;
+            var thisMainLoopId1 = Browser.mainLoop.currentlyRunningMainloop;
+            function checkIsRunning1() {
+                if (thisMainLoopId1 < Browser.mainLoop.currentlyRunningMainloop) {
                     runtimeKeepalivePop();
                     maybeExit();
                     return false;
@@ -4216,67 +4216,67 @@ var Godot = (()=>{
                 return true;
             }
             Browser.mainLoop.running = false;
-            Browser.mainLoop.runner = function Browser_mainLoop_runner() {
+            Browser.mainLoop.runner = function Browser_mainLoop_runner1() {
                 if (ABORT) return;
                 if (Browser.mainLoop.queue.length > 0) {
-                    var start = Date.now();
-                    var blocker = Browser.mainLoop.queue.shift();
-                    blocker.func(blocker.arg);
+                    var start1 = Date.now();
+                    var blocker1 = Browser.mainLoop.queue.shift();
+                    blocker1.func(blocker1.arg);
                     if (Browser.mainLoop.remainingBlockers) {
-                        var remaining = Browser.mainLoop.remainingBlockers;
-                        var next = remaining % 1 == 0 ? remaining - 1 : Math.floor(remaining);
-                        if (blocker.counted) Browser.mainLoop.remainingBlockers = next;
+                        var remaining1 = Browser.mainLoop.remainingBlockers;
+                        var next1 = remaining1 % 1 == 0 ? remaining1 - 1 : Math.floor(remaining1);
+                        if (blocker1.counted) Browser.mainLoop.remainingBlockers = next1;
                         else {
-                            next = next + .5;
-                            Browser.mainLoop.remainingBlockers = (8 * remaining + next) / 9;
+                            next1 = next1 + .5;
+                            Browser.mainLoop.remainingBlockers = (8 * remaining1 + next1) / 9;
                         }
                     }
-                    out('main loop blocker "' + blocker.name + '" took ' + (Date.now() - start) + " ms");
+                    out('main loop blocker "' + blocker1.name + '" took ' + (Date.now() - start1) + " ms");
                     Browser.mainLoop.updateStatus();
-                    if (!checkIsRunning()) return;
+                    if (!checkIsRunning1()) return;
                     setTimeout(Browser.mainLoop.runner, 0);
                     return;
                 }
-                if (!checkIsRunning()) return;
+                if (!checkIsRunning1()) return;
                 Browser.mainLoop.currentFrameNumber = Browser.mainLoop.currentFrameNumber + 1 | 0;
                 if (Browser.mainLoop.timingMode == 1 && Browser.mainLoop.timingValue > 1 && Browser.mainLoop.currentFrameNumber % Browser.mainLoop.timingValue != 0) {
                     Browser.mainLoop.scheduler();
                     return;
                 } else if (Browser.mainLoop.timingMode == 0) Browser.mainLoop.tickStartTime = _emscripten_get_now();
-                Browser.mainLoop.runIter(browserIterationFunc);
-                if (!checkIsRunning()) return;
+                Browser.mainLoop.runIter(browserIterationFunc1);
+                if (!checkIsRunning1()) return;
                 if (typeof SDL == "object" && SDL.audio && SDL.audio.queueNewAudioData) SDL.audio.queueNewAudioData();
                 Browser.mainLoop.scheduler();
             };
-            if (!noSetTiming) {
-                if (fps && fps > 0) _emscripten_set_main_loop_timing(0, 1e3 / fps);
+            if (!noSetTiming1) {
+                if (fps1 && fps1 > 0) _emscripten_set_main_loop_timing(0, 1e3 / fps1);
                 else _emscripten_set_main_loop_timing(1, 1);
                 Browser.mainLoop.scheduler();
             }
-            if (simulateInfiniteLoop) throw "unwind";
+            if (simulateInfiniteLoop1) throw "unwind";
         }
-        function callUserCallback(func, synchronous) {
+        function callUserCallback(func1, synchronous1) {
             if (runtimeExited || ABORT) return;
-            if (synchronous) {
-                func();
+            if (synchronous1) {
+                func1();
                 return;
             }
             try {
-                func();
+                func1();
                 maybeExit();
-            } catch (e) {
-                handleException(e);
+            } catch (e1) {
+                handleException(e1);
             }
         }
         function runtimeKeepalivePop() {
             runtimeKeepaliveCounter -= 1;
         }
-        function safeSetTimeout(func, timeout) {
+        function safeSetTimeout(func1, timeout1) {
             runtimeKeepalivePush();
             return setTimeout(function() {
                 runtimeKeepalivePop();
-                callUserCallback(func);
-            }, timeout);
+                callUserCallback(func1);
+            }, timeout1);
         }
         var Browser = {
             mainLoop: {
@@ -4296,32 +4296,32 @@ var Godot = (()=>{
                 },
                 resume: function() {
                     Browser.mainLoop.currentlyRunningMainloop++;
-                    var timingMode = Browser.mainLoop.timingMode;
-                    var timingValue = Browser.mainLoop.timingValue;
-                    var func = Browser.mainLoop.func;
+                    var timingMode1 = Browser.mainLoop.timingMode;
+                    var timingValue1 = Browser.mainLoop.timingValue;
+                    var func1 = Browser.mainLoop.func;
                     Browser.mainLoop.func = null;
-                    setMainLoop(func, 0, false, Browser.mainLoop.arg, true);
-                    _emscripten_set_main_loop_timing(timingMode, timingValue);
+                    setMainLoop(func1, 0, false, Browser.mainLoop.arg, true);
+                    _emscripten_set_main_loop_timing(timingMode1, timingValue1);
                     Browser.mainLoop.scheduler();
                 },
                 updateStatus: function() {
                     if (Module["setStatus"]) {
-                        var message = Module["statusMessage"] || "Please wait...";
-                        var remaining = Browser.mainLoop.remainingBlockers;
-                        var expected = Browser.mainLoop.expectedBlockers;
-                        if (remaining) {
-                            if (remaining < expected) Module["setStatus"](message + " (" + (expected - remaining) + "/" + expected + ")");
-                            else Module["setStatus"](message);
+                        var message1 = Module["statusMessage"] || "Please wait...";
+                        var remaining1 = Browser.mainLoop.remainingBlockers;
+                        var expected1 = Browser.mainLoop.expectedBlockers;
+                        if (remaining1) {
+                            if (remaining1 < expected1) Module["setStatus"](message1 + " (" + (expected1 - remaining1) + "/" + expected1 + ")");
+                            else Module["setStatus"](message1);
                         } else Module["setStatus"]("");
                     }
                 },
-                runIter: function(func) {
+                runIter: function(func1) {
                     if (ABORT) return;
                     if (Module["preMainLoop"]) {
-                        var preRet = Module["preMainLoop"]();
-                        if (preRet === false) return;
+                        var preRet1 = Module["preMainLoop"]();
+                        if (preRet1 === false) return;
                     }
-                    callUserCallback(func);
+                    callUserCallback(func1);
                     if (Module["postMainLoop"]) Module["postMainLoop"]();
                 }
             },
@@ -4336,7 +4336,7 @@ var Godot = (()=>{
                 try {
                     new Blob;
                     Browser.hasBlobConstructor = true;
-                } catch (e) {
+                } catch (e1) {
                     Browser.hasBlobConstructor = false;
                     out("warning: no blob constructor, cannot create blobs with mimetypes");
                 }
@@ -4346,264 +4346,264 @@ var Godot = (()=>{
                     out("warning: Browser does not support creating object URLs. Built-in browser image decoding will not be available.");
                     Module.noImageDecoding = true;
                 }
-                var imagePlugin = {};
-                imagePlugin["canHandle"] = function imagePlugin_canHandle(name) {
-                    return !Module.noImageDecoding && /\.(jpg|jpeg|png|bmp)$/i.test(name);
+                var imagePlugin1 = {};
+                imagePlugin1["canHandle"] = function imagePlugin_canHandle1(name1) {
+                    return !Module.noImageDecoding && /\.(jpg|jpeg|png|bmp)$/i.test(name1);
                 };
-                imagePlugin["handle"] = function imagePlugin_handle(byteArray, name, onload, onerror) {
-                    var b = null;
+                imagePlugin1["handle"] = function imagePlugin_handle1(byteArray1, name1, onload1, onerror1) {
+                    var b1 = null;
                     if (Browser.hasBlobConstructor) try {
-                        b = new Blob([
-                            byteArray
+                        b1 = new Blob([
+                            byteArray1
                         ], {
-                            type: Browser.getMimetype(name)
+                            type: Browser.getMimetype(name1)
                         });
-                        if (b.size !== byteArray.length) b = new Blob([
-                            new Uint8Array(byteArray).buffer
+                        if (b1.size !== byteArray1.length) b1 = new Blob([
+                            new Uint8Array(byteArray1).buffer
                         ], {
-                            type: Browser.getMimetype(name)
+                            type: Browser.getMimetype(name1)
                         });
-                    } catch (e) {
-                        warnOnce("Blob constructor present but fails: " + e + "; falling back to blob builder");
+                    } catch (e1) {
+                        warnOnce("Blob constructor present but fails: " + e1 + "; falling back to blob builder");
                     }
-                    if (!b) {
-                        var bb = new Browser.BlobBuilder;
-                        bb.append(new Uint8Array(byteArray).buffer);
-                        b = bb.getBlob();
+                    if (!b1) {
+                        var bb1 = new Browser.BlobBuilder;
+                        bb1.append(new Uint8Array(byteArray1).buffer);
+                        b1 = bb1.getBlob();
                     }
-                    var url = Browser.URLObject.createObjectURL(b);
-                    var img = new Image;
-                    img.onload = ()=>{
-                        assert(img.complete, "Image " + name + " could not be decoded");
-                        var canvas = document.createElement("canvas");
-                        canvas.width = img.width;
-                        canvas.height = img.height;
-                        var ctx = canvas.getContext("2d");
-                        ctx.drawImage(img, 0, 0);
-                        preloadedImages[name] = canvas;
-                        Browser.URLObject.revokeObjectURL(url);
-                        if (onload) onload(byteArray);
+                    var url1 = Browser.URLObject.createObjectURL(b1);
+                    var img1 = new Image;
+                    img1.onload = ()=>{
+                        assert(img1.complete, "Image " + name1 + " could not be decoded");
+                        var canvas1 = document.createElement("canvas");
+                        canvas1.width = img1.width;
+                        canvas1.height = img1.height;
+                        var ctx1 = canvas1.getContext("2d");
+                        ctx1.drawImage(img1, 0, 0);
+                        preloadedImages[name1] = canvas1;
+                        Browser.URLObject.revokeObjectURL(url1);
+                        if (onload1) onload1(byteArray1);
                     };
-                    img.onerror = (event)=>{
-                        out("Image " + url + " could not be decoded");
-                        if (onerror) onerror();
+                    img1.onerror = (event1)=>{
+                        out("Image " + url1 + " could not be decoded");
+                        if (onerror1) onerror1();
                     };
-                    img.src = url;
+                    img1.src = url1;
                 };
-                Module["preloadPlugins"].push(imagePlugin);
-                var audioPlugin = {};
-                audioPlugin["canHandle"] = function audioPlugin_canHandle(name) {
-                    return !Module.noAudioDecoding && name.substr(-4) in {
+                Module["preloadPlugins"].push(imagePlugin1);
+                var audioPlugin1 = {};
+                audioPlugin1["canHandle"] = function audioPlugin_canHandle1(name1) {
+                    return !Module.noAudioDecoding && name1.substr(-4) in {
                         ".ogg": 1,
                         ".wav": 1,
                         ".mp3": 1
                     };
                 };
-                audioPlugin["handle"] = function audioPlugin_handle(byteArray, name, onload, onerror) {
-                    var done = false;
-                    function finish(audio) {
-                        if (done) return;
-                        done = true;
-                        preloadedAudios[name] = audio;
-                        if (onload) onload(byteArray);
+                audioPlugin1["handle"] = function audioPlugin_handle1(byteArray1, name1, onload1, onerror1) {
+                    var done1 = false;
+                    function finish1(audio1) {
+                        if (done1) return;
+                        done1 = true;
+                        preloadedAudios[name1] = audio1;
+                        if (onload1) onload1(byteArray1);
                     }
-                    function fail() {
-                        if (done) return;
-                        done = true;
-                        preloadedAudios[name] = new Audio;
-                        if (onerror) onerror();
+                    function fail1() {
+                        if (done1) return;
+                        done1 = true;
+                        preloadedAudios[name1] = new Audio;
+                        if (onerror1) onerror1();
                     }
                     if (Browser.hasBlobConstructor) {
                         try {
-                            var b = new Blob([
-                                byteArray
+                            var b1 = new Blob([
+                                byteArray1
                             ], {
-                                type: Browser.getMimetype(name)
+                                type: Browser.getMimetype(name1)
                             });
-                        } catch (e) {
-                            return fail();
+                        } catch (e1) {
+                            return fail1();
                         }
-                        var url = Browser.URLObject.createObjectURL(b);
-                        var audio = new Audio;
-                        audio.addEventListener("canplaythrough", function() {
-                            finish(audio);
+                        var url1 = Browser.URLObject.createObjectURL(b1);
+                        var audio1 = new Audio;
+                        audio1.addEventListener("canplaythrough", function() {
+                            finish1(audio1);
                         }, false);
-                        audio.onerror = function audio_onerror(event) {
-                            if (done) return;
-                            out("warning: browser could not fully decode audio " + name + ", trying slower base64 approach");
-                            function encode64(data) {
-                                var BASE = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
-                                var PAD = "=";
-                                var ret = "";
-                                var leftchar = 0;
-                                var leftbits = 0;
-                                for(var i = 0; i < data.length; i++){
-                                    leftchar = leftchar << 8 | data[i];
-                                    leftbits += 8;
-                                    while(leftbits >= 6){
-                                        var curr = leftchar >> leftbits - 6 & 63;
-                                        leftbits -= 6;
-                                        ret += BASE[curr];
+                        audio1.onerror = function audio_onerror1(event1) {
+                            if (done1) return;
+                            out("warning: browser could not fully decode audio " + name1 + ", trying slower base64 approach");
+                            function encode641(data1) {
+                                var BASE1 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+                                var PAD1 = "=";
+                                var ret1 = "";
+                                var leftchar1 = 0;
+                                var leftbits1 = 0;
+                                for(var i1 = 0; i1 < data1.length; i1++){
+                                    leftchar1 = leftchar1 << 8 | data1[i1];
+                                    leftbits1 += 8;
+                                    while(leftbits1 >= 6){
+                                        var curr1 = leftchar1 >> leftbits1 - 6 & 63;
+                                        leftbits1 -= 6;
+                                        ret1 += BASE1[curr1];
                                     }
                                 }
-                                if (leftbits == 2) {
-                                    ret += BASE[(leftchar & 3) << 4];
-                                    ret += PAD + PAD;
-                                } else if (leftbits == 4) {
-                                    ret += BASE[(leftchar & 15) << 2];
-                                    ret += PAD;
+                                if (leftbits1 == 2) {
+                                    ret1 += BASE1[(leftchar1 & 3) << 4];
+                                    ret1 += PAD1 + PAD1;
+                                } else if (leftbits1 == 4) {
+                                    ret1 += BASE1[(leftchar1 & 15) << 2];
+                                    ret1 += PAD1;
                                 }
-                                return ret;
+                                return ret1;
                             }
-                            audio.src = "data:audio/x-" + name.substr(-3) + ";base64," + encode64(byteArray);
-                            finish(audio);
+                            audio1.src = "data:audio/x-" + name1.substr(-3) + ";base64," + encode641(byteArray1);
+                            finish1(audio1);
                         };
-                        audio.src = url;
+                        audio1.src = url1;
                         safeSetTimeout(function() {
-                            finish(audio);
+                            finish1(audio1);
                         }, 1e4);
-                    } else return fail();
+                    } else return fail1();
                 };
-                Module["preloadPlugins"].push(audioPlugin);
-                function pointerLockChange() {
+                Module["preloadPlugins"].push(audioPlugin1);
+                function pointerLockChange1() {
                     Browser.pointerLock = document["pointerLockElement"] === Module["canvas"] || document["mozPointerLockElement"] === Module["canvas"] || document["webkitPointerLockElement"] === Module["canvas"] || document["msPointerLockElement"] === Module["canvas"];
                 }
-                var canvas = Module["canvas"];
-                if (canvas) {
-                    canvas.requestPointerLock = canvas["requestPointerLock"] || canvas["mozRequestPointerLock"] || canvas["webkitRequestPointerLock"] || canvas["msRequestPointerLock"] || function() {};
-                    canvas.exitPointerLock = document["exitPointerLock"] || document["mozExitPointerLock"] || document["webkitExitPointerLock"] || document["msExitPointerLock"] || function() {};
-                    canvas.exitPointerLock = canvas.exitPointerLock.bind(document);
-                    document.addEventListener("pointerlockchange", pointerLockChange, false);
-                    document.addEventListener("mozpointerlockchange", pointerLockChange, false);
-                    document.addEventListener("webkitpointerlockchange", pointerLockChange, false);
-                    document.addEventListener("mspointerlockchange", pointerLockChange, false);
-                    if (Module["elementPointerLock"]) canvas.addEventListener("click", function(ev) {
+                var canvas1 = Module["canvas"];
+                if (canvas1) {
+                    canvas1.requestPointerLock = canvas1["requestPointerLock"] || canvas1["mozRequestPointerLock"] || canvas1["webkitRequestPointerLock"] || canvas1["msRequestPointerLock"] || function() {};
+                    canvas1.exitPointerLock = document["exitPointerLock"] || document["mozExitPointerLock"] || document["webkitExitPointerLock"] || document["msExitPointerLock"] || function() {};
+                    canvas1.exitPointerLock = canvas1.exitPointerLock.bind(document);
+                    document.addEventListener("pointerlockchange", pointerLockChange1, false);
+                    document.addEventListener("mozpointerlockchange", pointerLockChange1, false);
+                    document.addEventListener("webkitpointerlockchange", pointerLockChange1, false);
+                    document.addEventListener("mspointerlockchange", pointerLockChange1, false);
+                    if (Module["elementPointerLock"]) canvas1.addEventListener("click", function(ev1) {
                         if (!Browser.pointerLock && Module["canvas"].requestPointerLock) {
                             Module["canvas"].requestPointerLock();
-                            ev.preventDefault();
+                            ev1.preventDefault();
                         }
                     }, false);
                 }
             },
-            handledByPreloadPlugin: function(byteArray, fullname, finish, onerror) {
+            handledByPreloadPlugin: function(byteArray1, fullname1, finish1, onerror1) {
                 Browser.init();
-                var handled = false;
-                Module["preloadPlugins"].forEach(function(plugin) {
-                    if (handled) return;
-                    if (plugin["canHandle"](fullname)) {
-                        plugin["handle"](byteArray, fullname, finish, onerror);
-                        handled = true;
+                var handled1 = false;
+                Module["preloadPlugins"].forEach(function(plugin1) {
+                    if (handled1) return;
+                    if (plugin1["canHandle"](fullname1)) {
+                        plugin1["handle"](byteArray1, fullname1, finish1, onerror1);
+                        handled1 = true;
                     }
                 });
-                return handled;
+                return handled1;
             },
-            createContext: function(canvas, useWebGL, setInModule, webGLContextAttributes) {
-                if (useWebGL && Module.ctx && canvas == Module.canvas) return Module.ctx;
-                var ctx;
-                var contextHandle;
-                if (useWebGL) {
-                    var contextAttributes = {
+            createContext: function(canvas1, useWebGL1, setInModule1, webGLContextAttributes1) {
+                if (useWebGL1 && Module.ctx && canvas1 == Module.canvas) return Module.ctx;
+                var ctx1;
+                var contextHandle1;
+                if (useWebGL1) {
+                    var contextAttributes1 = {
                         antialias: false,
                         alpha: false,
                         majorVersion: typeof WebGL2RenderingContext != "undefined" ? 2 : 1
                     };
-                    if (webGLContextAttributes) for(var attribute in webGLContextAttributes)contextAttributes[attribute] = webGLContextAttributes[attribute];
+                    if (webGLContextAttributes1) for(var attribute1 in webGLContextAttributes1)contextAttributes1[attribute1] = webGLContextAttributes1[attribute1];
                     if (typeof GL != "undefined") {
-                        contextHandle = GL.createContext(canvas, contextAttributes);
-                        if (contextHandle) ctx = GL.getContext(contextHandle).GLctx;
+                        contextHandle1 = GL.createContext(canvas1, contextAttributes1);
+                        if (contextHandle1) ctx1 = GL.getContext(contextHandle1).GLctx;
                     }
-                } else ctx = canvas.getContext("2d");
-                if (!ctx) return null;
-                if (setInModule) {
-                    if (!useWebGL) assert(typeof GLctx == "undefined", "cannot set in module if GLctx is used, but we are a non-GL context that would replace it");
-                    Module.ctx = ctx;
-                    if (useWebGL) GL.makeContextCurrent(contextHandle);
-                    Module.useWebGL = useWebGL;
-                    Browser.moduleContextCreatedCallbacks.forEach(function(callback) {
-                        callback();
+                } else ctx1 = canvas1.getContext("2d");
+                if (!ctx1) return null;
+                if (setInModule1) {
+                    if (!useWebGL1) assert(typeof GLctx == "undefined", "cannot set in module if GLctx is used, but we are a non-GL context that would replace it");
+                    Module.ctx = ctx1;
+                    if (useWebGL1) GL.makeContextCurrent(contextHandle1);
+                    Module.useWebGL = useWebGL1;
+                    Browser.moduleContextCreatedCallbacks.forEach(function(callback1) {
+                        callback1();
                     });
                     Browser.init();
                 }
-                return ctx;
+                return ctx1;
             },
-            destroyContext: function(canvas, useWebGL, setInModule) {},
+            destroyContext: function(canvas1, useWebGL1, setInModule1) {},
             fullscreenHandlersInstalled: false,
             lockPointer: undefined,
             resizeCanvas: undefined,
-            requestFullscreen: function(lockPointer, resizeCanvas) {
-                Browser.lockPointer = lockPointer;
-                Browser.resizeCanvas = resizeCanvas;
+            requestFullscreen: function(lockPointer1, resizeCanvas1) {
+                Browser.lockPointer = lockPointer1;
+                Browser.resizeCanvas = resizeCanvas1;
                 if (typeof Browser.lockPointer == "undefined") Browser.lockPointer = true;
                 if (typeof Browser.resizeCanvas == "undefined") Browser.resizeCanvas = false;
-                var canvas = Module["canvas"];
-                function fullscreenChange() {
+                var canvas1 = Module["canvas"];
+                function fullscreenChange1() {
                     Browser.isFullscreen = false;
-                    var canvasContainer = canvas.parentNode;
-                    if ((document["fullscreenElement"] || document["mozFullScreenElement"] || document["msFullscreenElement"] || document["webkitFullscreenElement"] || document["webkitCurrentFullScreenElement"]) === canvasContainer) {
-                        canvas.exitFullscreen = Browser.exitFullscreen;
-                        if (Browser.lockPointer) canvas.requestPointerLock();
+                    var canvasContainer1 = canvas1.parentNode;
+                    if ((document["fullscreenElement"] || document["mozFullScreenElement"] || document["msFullscreenElement"] || document["webkitFullscreenElement"] || document["webkitCurrentFullScreenElement"]) === canvasContainer1) {
+                        canvas1.exitFullscreen = Browser.exitFullscreen;
+                        if (Browser.lockPointer) canvas1.requestPointerLock();
                         Browser.isFullscreen = true;
                         if (Browser.resizeCanvas) Browser.setFullscreenCanvasSize();
-                        else Browser.updateCanvasDimensions(canvas);
+                        else Browser.updateCanvasDimensions(canvas1);
                     } else {
-                        canvasContainer.parentNode.insertBefore(canvas, canvasContainer);
-                        canvasContainer.parentNode.removeChild(canvasContainer);
+                        canvasContainer1.parentNode.insertBefore(canvas1, canvasContainer1);
+                        canvasContainer1.parentNode.removeChild(canvasContainer1);
                         if (Browser.resizeCanvas) Browser.setWindowedCanvasSize();
-                        else Browser.updateCanvasDimensions(canvas);
+                        else Browser.updateCanvasDimensions(canvas1);
                     }
                     if (Module["onFullScreen"]) Module["onFullScreen"](Browser.isFullscreen);
                     if (Module["onFullscreen"]) Module["onFullscreen"](Browser.isFullscreen);
                 }
                 if (!Browser.fullscreenHandlersInstalled) {
                     Browser.fullscreenHandlersInstalled = true;
-                    document.addEventListener("fullscreenchange", fullscreenChange, false);
-                    document.addEventListener("mozfullscreenchange", fullscreenChange, false);
-                    document.addEventListener("webkitfullscreenchange", fullscreenChange, false);
-                    document.addEventListener("MSFullscreenChange", fullscreenChange, false);
+                    document.addEventListener("fullscreenchange", fullscreenChange1, false);
+                    document.addEventListener("mozfullscreenchange", fullscreenChange1, false);
+                    document.addEventListener("webkitfullscreenchange", fullscreenChange1, false);
+                    document.addEventListener("MSFullscreenChange", fullscreenChange1, false);
                 }
-                var canvasContainer = document.createElement("div");
-                canvas.parentNode.insertBefore(canvasContainer, canvas);
-                canvasContainer.appendChild(canvas);
-                canvasContainer.requestFullscreen = canvasContainer["requestFullscreen"] || canvasContainer["mozRequestFullScreen"] || canvasContainer["msRequestFullscreen"] || (canvasContainer["webkitRequestFullscreen"] ? function() {
-                    canvasContainer["webkitRequestFullscreen"](Element["ALLOW_KEYBOARD_INPUT"]);
-                } : null) || (canvasContainer["webkitRequestFullScreen"] ? function() {
-                    canvasContainer["webkitRequestFullScreen"](Element["ALLOW_KEYBOARD_INPUT"]);
+                var canvasContainer1 = document.createElement("div");
+                canvas1.parentNode.insertBefore(canvasContainer1, canvas1);
+                canvasContainer1.appendChild(canvas1);
+                canvasContainer1.requestFullscreen = canvasContainer1["requestFullscreen"] || canvasContainer1["mozRequestFullScreen"] || canvasContainer1["msRequestFullscreen"] || (canvasContainer1["webkitRequestFullscreen"] ? function() {
+                    canvasContainer1["webkitRequestFullscreen"](Element["ALLOW_KEYBOARD_INPUT"]);
+                } : null) || (canvasContainer1["webkitRequestFullScreen"] ? function() {
+                    canvasContainer1["webkitRequestFullScreen"](Element["ALLOW_KEYBOARD_INPUT"]);
                 } : null);
-                canvasContainer.requestFullscreen();
+                canvasContainer1.requestFullscreen();
             },
             exitFullscreen: function() {
                 if (!Browser.isFullscreen) return false;
-                var CFS = document["exitFullscreen"] || document["cancelFullScreen"] || document["mozCancelFullScreen"] || document["msExitFullscreen"] || document["webkitCancelFullScreen"] || function() {};
-                CFS.apply(document, []);
+                var CFS1 = document["exitFullscreen"] || document["cancelFullScreen"] || document["mozCancelFullScreen"] || document["msExitFullscreen"] || document["webkitCancelFullScreen"] || function() {};
+                CFS1.apply(document, []);
                 return true;
             },
             nextRAF: 0,
-            fakeRequestAnimationFrame: function(func) {
-                var now = Date.now();
-                if (Browser.nextRAF === 0) Browser.nextRAF = now + 1e3 / 60;
-                else while(now + 2 >= Browser.nextRAF)Browser.nextRAF += 1e3 / 60;
-                var delay = Math.max(Browser.nextRAF - now, 0);
-                setTimeout(func, delay);
+            fakeRequestAnimationFrame: function(func1) {
+                var now1 = Date.now();
+                if (Browser.nextRAF === 0) Browser.nextRAF = now1 + 1e3 / 60;
+                else while(now1 + 2 >= Browser.nextRAF)Browser.nextRAF += 1e3 / 60;
+                var delay1 = Math.max(Browser.nextRAF - now1, 0);
+                setTimeout(func1, delay1);
             },
-            requestAnimationFrame: function(func) {
+            requestAnimationFrame: function(func1) {
                 if (typeof requestAnimationFrame == "function") {
-                    requestAnimationFrame(func);
+                    requestAnimationFrame(func1);
                     return;
                 }
-                var RAF = Browser.fakeRequestAnimationFrame;
-                RAF(func);
+                var RAF1 = Browser.fakeRequestAnimationFrame;
+                RAF1(func1);
             },
-            safeSetTimeout: function(func) {
-                return safeSetTimeout(func);
+            safeSetTimeout: function(func1) {
+                return safeSetTimeout(func1);
             },
-            safeRequestAnimationFrame: function(func) {
+            safeRequestAnimationFrame: function(func1) {
                 runtimeKeepalivePush();
                 return Browser.requestAnimationFrame(function() {
                     runtimeKeepalivePop();
-                    callUserCallback(func);
+                    callUserCallback(func1);
                 });
             },
-            getMimetype: function(name) {
+            getMimetype: function(name1) {
                 return ({
                     "jpg": "image/jpeg",
                     "jpeg": "image/jpeg",
@@ -4612,47 +4612,47 @@ var Godot = (()=>{
                     "ogg": "audio/ogg",
                     "wav": "audio/wav",
                     "mp3": "audio/mpeg"
-                })[name.substr(name.lastIndexOf(".") + 1)];
+                })[name1.substr(name1.lastIndexOf(".") + 1)];
             },
-            getUserMedia: function(func) {
+            getUserMedia: function(func1) {
                 if (!window.getUserMedia) window.getUserMedia = navigator["getUserMedia"] || navigator["mozGetUserMedia"];
-                window.getUserMedia(func);
+                window.getUserMedia(func1);
             },
-            getMovementX: function(event) {
-                return event["movementX"] || event["mozMovementX"] || event["webkitMovementX"] || 0;
+            getMovementX: function(event1) {
+                return event1["movementX"] || event1["mozMovementX"] || event1["webkitMovementX"] || 0;
             },
-            getMovementY: function(event) {
-                return event["movementY"] || event["mozMovementY"] || event["webkitMovementY"] || 0;
+            getMovementY: function(event1) {
+                return event1["movementY"] || event1["mozMovementY"] || event1["webkitMovementY"] || 0;
             },
-            getMouseWheelDelta: function(event) {
-                var delta = 0;
-                switch(event.type){
+            getMouseWheelDelta: function(event1) {
+                var delta1 = 0;
+                switch(event1.type){
                     case "DOMMouseScroll":
-                        delta = event.detail / 3;
+                        delta1 = event1.detail / 3;
                         break;
                     case "mousewheel":
-                        delta = event.wheelDelta / 120;
+                        delta1 = event1.wheelDelta / 120;
                         break;
                     case "wheel":
-                        delta = event.deltaY;
-                        switch(event.deltaMode){
+                        delta1 = event1.deltaY;
+                        switch(event1.deltaMode){
                             case 0:
-                                delta /= 100;
+                                delta1 /= 100;
                                 break;
                             case 1:
-                                delta /= 3;
+                                delta1 /= 3;
                                 break;
                             case 2:
-                                delta *= 80;
+                                delta1 *= 80;
                                 break;
                             default:
-                                throw "unrecognized mouse wheel delta mode: " + event.deltaMode;
+                                throw "unrecognized mouse wheel delta mode: " + event1.deltaMode;
                         }
                         break;
                     default:
-                        throw "unrecognized mouse wheel event: " + event.type;
+                        throw "unrecognized mouse wheel event: " + event1.type;
                 }
-                return delta;
+                return delta1;
             },
             mouseX: 0,
             mouseY: 0,
@@ -4660,12 +4660,12 @@ var Godot = (()=>{
             mouseMovementY: 0,
             touches: {},
             lastTouches: {},
-            calculateMouseEvent: function(event) {
+            calculateMouseEvent: function(event1) {
                 if (Browser.pointerLock) {
-                    if (event.type != "mousemove" && "mozMovementX" in event) Browser.mouseMovementX = Browser.mouseMovementY = 0;
+                    if (event1.type != "mousemove" && "mozMovementX" in event1) Browser.mouseMovementX = Browser.mouseMovementY = 0;
                     else {
-                        Browser.mouseMovementX = Browser.getMovementX(event);
-                        Browser.mouseMovementY = Browser.getMovementY(event);
+                        Browser.mouseMovementX = Browser.getMovementX(event1);
+                        Browser.mouseMovementY = Browser.getMovementY(event1);
                     }
                     if (typeof SDL != "undefined") {
                         Browser.mouseX = SDL.mouseX + Browser.mouseMovementX;
@@ -4675,111 +4675,111 @@ var Godot = (()=>{
                         Browser.mouseY += Browser.mouseMovementY;
                     }
                 } else {
-                    var rect = Module["canvas"].getBoundingClientRect();
-                    var cw = Module["canvas"].width;
-                    var ch = Module["canvas"].height;
-                    var scrollX = typeof window.scrollX != "undefined" ? window.scrollX : window.pageXOffset;
-                    var scrollY = typeof window.scrollY != "undefined" ? window.scrollY : window.pageYOffset;
-                    if (event.type === "touchstart" || event.type === "touchend" || event.type === "touchmove") {
-                        var touch = event.touch;
-                        if (touch === undefined) return;
-                        var adjustedX = touch.pageX - (scrollX + rect.left);
-                        var adjustedY = touch.pageY - (scrollY + rect.top);
-                        adjustedX = adjustedX * (cw / rect.width);
-                        adjustedY = adjustedY * (ch / rect.height);
-                        var coords = {
-                            x: adjustedX,
-                            y: adjustedY
+                    var rect1 = Module["canvas"].getBoundingClientRect();
+                    var cw1 = Module["canvas"].width;
+                    var ch1 = Module["canvas"].height;
+                    var scrollX1 = typeof window.scrollX != "undefined" ? window.scrollX : window.pageXOffset;
+                    var scrollY1 = typeof window.scrollY != "undefined" ? window.scrollY : window.pageYOffset;
+                    if (event1.type === "touchstart" || event1.type === "touchend" || event1.type === "touchmove") {
+                        var touch1 = event1.touch;
+                        if (touch1 === undefined) return;
+                        var adjustedX1 = touch1.pageX - (scrollX1 + rect1.left);
+                        var adjustedY1 = touch1.pageY - (scrollY1 + rect1.top);
+                        adjustedX1 = adjustedX1 * (cw1 / rect1.width);
+                        adjustedY1 = adjustedY1 * (ch1 / rect1.height);
+                        var coords1 = {
+                            x: adjustedX1,
+                            y: adjustedY1
                         };
-                        if (event.type === "touchstart") {
-                            Browser.lastTouches[touch.identifier] = coords;
-                            Browser.touches[touch.identifier] = coords;
-                        } else if (event.type === "touchend" || event.type === "touchmove") {
-                            var last = Browser.touches[touch.identifier];
-                            if (!last) last = coords;
-                            Browser.lastTouches[touch.identifier] = last;
-                            Browser.touches[touch.identifier] = coords;
+                        if (event1.type === "touchstart") {
+                            Browser.lastTouches[touch1.identifier] = coords1;
+                            Browser.touches[touch1.identifier] = coords1;
+                        } else if (event1.type === "touchend" || event1.type === "touchmove") {
+                            var last1 = Browser.touches[touch1.identifier];
+                            if (!last1) last1 = coords1;
+                            Browser.lastTouches[touch1.identifier] = last1;
+                            Browser.touches[touch1.identifier] = coords1;
                         }
                         return;
                     }
-                    var x = event.pageX - (scrollX + rect.left);
-                    var y = event.pageY - (scrollY + rect.top);
-                    x = x * (cw / rect.width);
-                    y = y * (ch / rect.height);
-                    Browser.mouseMovementX = x - Browser.mouseX;
-                    Browser.mouseMovementY = y - Browser.mouseY;
-                    Browser.mouseX = x;
-                    Browser.mouseY = y;
+                    var x10 = event1.pageX - (scrollX1 + rect1.left);
+                    var y1 = event1.pageY - (scrollY1 + rect1.top);
+                    x10 = x10 * (cw1 / rect1.width);
+                    y1 = y1 * (ch1 / rect1.height);
+                    Browser.mouseMovementX = x10 - Browser.mouseX;
+                    Browser.mouseMovementY = y1 - Browser.mouseY;
+                    Browser.mouseX = x10;
+                    Browser.mouseY = y1;
                 }
             },
             resizeListeners: [],
             updateResizeListeners: function() {
-                var canvas = Module["canvas"];
-                Browser.resizeListeners.forEach(function(listener) {
-                    listener(canvas.width, canvas.height);
+                var canvas1 = Module["canvas"];
+                Browser.resizeListeners.forEach(function(listener1) {
+                    listener1(canvas1.width, canvas1.height);
                 });
             },
-            setCanvasSize: function(width, height, noUpdates) {
-                var canvas = Module["canvas"];
-                Browser.updateCanvasDimensions(canvas, width, height);
-                if (!noUpdates) Browser.updateResizeListeners();
+            setCanvasSize: function(width1, height1, noUpdates1) {
+                var canvas1 = Module["canvas"];
+                Browser.updateCanvasDimensions(canvas1, width1, height1);
+                if (!noUpdates1) Browser.updateResizeListeners();
             },
             windowedWidth: 0,
             windowedHeight: 0,
             setFullscreenCanvasSize: function() {
                 if (typeof SDL != "undefined") {
-                    var flags = GROWABLE_HEAP_U32()[SDL.screen >> 2];
-                    flags = flags | 8388608;
-                    GROWABLE_HEAP_I32()[SDL.screen >> 2] = flags;
+                    var flags1 = GROWABLE_HEAP_U32()[SDL.screen >> 2];
+                    flags1 = flags1 | 8388608;
+                    GROWABLE_HEAP_I32()[SDL.screen >> 2] = flags1;
                 }
                 Browser.updateCanvasDimensions(Module["canvas"]);
                 Browser.updateResizeListeners();
             },
             setWindowedCanvasSize: function() {
                 if (typeof SDL != "undefined") {
-                    var flags = GROWABLE_HEAP_U32()[SDL.screen >> 2];
-                    flags = flags & -8388609;
-                    GROWABLE_HEAP_I32()[SDL.screen >> 2] = flags;
+                    var flags1 = GROWABLE_HEAP_U32()[SDL.screen >> 2];
+                    flags1 = flags1 & -8388609;
+                    GROWABLE_HEAP_I32()[SDL.screen >> 2] = flags1;
                 }
                 Browser.updateCanvasDimensions(Module["canvas"]);
                 Browser.updateResizeListeners();
             },
-            updateCanvasDimensions: function(canvas, wNative, hNative) {
-                if (wNative && hNative) {
-                    canvas.widthNative = wNative;
-                    canvas.heightNative = hNative;
+            updateCanvasDimensions: function(canvas1, wNative1, hNative1) {
+                if (wNative1 && hNative1) {
+                    canvas1.widthNative = wNative1;
+                    canvas1.heightNative = hNative1;
                 } else {
-                    wNative = canvas.widthNative;
-                    hNative = canvas.heightNative;
+                    wNative1 = canvas1.widthNative;
+                    hNative1 = canvas1.heightNative;
                 }
-                var w = wNative;
-                var h = hNative;
+                var w1 = wNative1;
+                var h1 = hNative1;
                 if (Module["forcedAspectRatio"] && Module["forcedAspectRatio"] > 0) {
-                    if (w / h < Module["forcedAspectRatio"]) w = Math.round(h * Module["forcedAspectRatio"]);
-                    else h = Math.round(w / Module["forcedAspectRatio"]);
+                    if (w1 / h1 < Module["forcedAspectRatio"]) w1 = Math.round(h1 * Module["forcedAspectRatio"]);
+                    else h1 = Math.round(w1 / Module["forcedAspectRatio"]);
                 }
-                if ((document["fullscreenElement"] || document["mozFullScreenElement"] || document["msFullscreenElement"] || document["webkitFullscreenElement"] || document["webkitCurrentFullScreenElement"]) === canvas.parentNode && typeof screen != "undefined") {
-                    var factor = Math.min(screen.width / w, screen.height / h);
-                    w = Math.round(w * factor);
-                    h = Math.round(h * factor);
+                if ((document["fullscreenElement"] || document["mozFullScreenElement"] || document["msFullscreenElement"] || document["webkitFullscreenElement"] || document["webkitCurrentFullScreenElement"]) === canvas1.parentNode && typeof screen != "undefined") {
+                    var factor1 = Math.min(screen.width / w1, screen.height / h1);
+                    w1 = Math.round(w1 * factor1);
+                    h1 = Math.round(h1 * factor1);
                 }
                 if (Browser.resizeCanvas) {
-                    if (canvas.width != w) canvas.width = w;
-                    if (canvas.height != h) canvas.height = h;
-                    if (typeof canvas.style != "undefined") {
-                        canvas.style.removeProperty("width");
-                        canvas.style.removeProperty("height");
+                    if (canvas1.width != w1) canvas1.width = w1;
+                    if (canvas1.height != h1) canvas1.height = h1;
+                    if (typeof canvas1.style != "undefined") {
+                        canvas1.style.removeProperty("width");
+                        canvas1.style.removeProperty("height");
                     }
                 } else {
-                    if (canvas.width != wNative) canvas.width = wNative;
-                    if (canvas.height != hNative) canvas.height = hNative;
-                    if (typeof canvas.style != "undefined") {
-                        if (w != wNative || h != hNative) {
-                            canvas.style.setProperty("width", w + "px", "important");
-                            canvas.style.setProperty("height", h + "px", "important");
+                    if (canvas1.width != wNative1) canvas1.width = wNative1;
+                    if (canvas1.height != hNative1) canvas1.height = hNative1;
+                    if (typeof canvas1.style != "undefined") {
+                        if (w1 != wNative1 || h1 != hNative1) {
+                            canvas1.style.setProperty("width", w1 + "px", "important");
+                            canvas1.style.setProperty("height", h1 + "px", "important");
                         } else {
-                            canvas.style.removeProperty("width");
-                            canvas.style.removeProperty("height");
+                            canvas1.style.removeProperty("width");
+                            canvas1.style.removeProperty("height");
                         }
                     }
                 }
@@ -4793,65 +4793,65 @@ var Godot = (()=>{
             if (ENVIRONMENT_IS_WORKER) return;
             warnOnce("Blocking on the main thread is very dangerous, see https://emscripten.org/docs/porting/pthreads.html#blocking-on-the-main-browser-thread");
         }
-        function _emscripten_console_error(str) {
-            console.error(UTF8ToString(str));
+        function _emscripten_console_error(str1) {
+            console.error(UTF8ToString(str1));
         }
-        function _emscripten_force_exit(status) {
-            if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(33, 1, status);
+        function _emscripten_force_exit(status1) {
+            if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(33, 1, status1);
             noExitRuntime = false;
             runtimeKeepaliveCounter = 0;
-            exit(status);
+            exit(status1);
         }
-        function __webgl_enable_ANGLE_instanced_arrays(ctx) {
-            var ext = ctx.getExtension("ANGLE_instanced_arrays");
-            if (ext) {
-                ctx["vertexAttribDivisor"] = function(index, divisor) {
-                    ext["vertexAttribDivisorANGLE"](index, divisor);
+        function __webgl_enable_ANGLE_instanced_arrays(ctx1) {
+            var ext1 = ctx1.getExtension("ANGLE_instanced_arrays");
+            if (ext1) {
+                ctx1["vertexAttribDivisor"] = function(index1, divisor1) {
+                    ext1["vertexAttribDivisorANGLE"](index1, divisor1);
                 };
-                ctx["drawArraysInstanced"] = function(mode, first, count, primcount) {
-                    ext["drawArraysInstancedANGLE"](mode, first, count, primcount);
+                ctx1["drawArraysInstanced"] = function(mode1, first1, count1, primcount1) {
+                    ext1["drawArraysInstancedANGLE"](mode1, first1, count1, primcount1);
                 };
-                ctx["drawElementsInstanced"] = function(mode, count, type, indices, primcount) {
-                    ext["drawElementsInstancedANGLE"](mode, count, type, indices, primcount);
+                ctx1["drawElementsInstanced"] = function(mode1, count1, type1, indices1, primcount1) {
+                    ext1["drawElementsInstancedANGLE"](mode1, count1, type1, indices1, primcount1);
                 };
                 return 1;
             }
         }
-        function __webgl_enable_OES_vertex_array_object(ctx) {
-            var ext = ctx.getExtension("OES_vertex_array_object");
-            if (ext) {
-                ctx["createVertexArray"] = function() {
-                    return ext["createVertexArrayOES"]();
+        function __webgl_enable_OES_vertex_array_object(ctx1) {
+            var ext1 = ctx1.getExtension("OES_vertex_array_object");
+            if (ext1) {
+                ctx1["createVertexArray"] = function() {
+                    return ext1["createVertexArrayOES"]();
                 };
-                ctx["deleteVertexArray"] = function(vao) {
-                    ext["deleteVertexArrayOES"](vao);
+                ctx1["deleteVertexArray"] = function(vao1) {
+                    ext1["deleteVertexArrayOES"](vao1);
                 };
-                ctx["bindVertexArray"] = function(vao) {
-                    ext["bindVertexArrayOES"](vao);
+                ctx1["bindVertexArray"] = function(vao1) {
+                    ext1["bindVertexArrayOES"](vao1);
                 };
-                ctx["isVertexArray"] = function(vao) {
-                    return ext["isVertexArrayOES"](vao);
-                };
-                return 1;
-            }
-        }
-        function __webgl_enable_WEBGL_draw_buffers(ctx) {
-            var ext = ctx.getExtension("WEBGL_draw_buffers");
-            if (ext) {
-                ctx["drawBuffers"] = function(n, bufs) {
-                    ext["drawBuffersWEBGL"](n, bufs);
+                ctx1["isVertexArray"] = function(vao1) {
+                    return ext1["isVertexArrayOES"](vao1);
                 };
                 return 1;
             }
         }
-        function __webgl_enable_WEBGL_draw_instanced_base_vertex_base_instance(ctx) {
-            return !!(ctx.dibvbi = ctx.getExtension("WEBGL_draw_instanced_base_vertex_base_instance"));
+        function __webgl_enable_WEBGL_draw_buffers(ctx1) {
+            var ext1 = ctx1.getExtension("WEBGL_draw_buffers");
+            if (ext1) {
+                ctx1["drawBuffers"] = function(n1, bufs1) {
+                    ext1["drawBuffersWEBGL"](n1, bufs1);
+                };
+                return 1;
+            }
         }
-        function __webgl_enable_WEBGL_multi_draw_instanced_base_vertex_base_instance(ctx) {
-            return !!(ctx.mdibvbi = ctx.getExtension("WEBGL_multi_draw_instanced_base_vertex_base_instance"));
+        function __webgl_enable_WEBGL_draw_instanced_base_vertex_base_instance(ctx1) {
+            return !!(ctx1.dibvbi = ctx1.getExtension("WEBGL_draw_instanced_base_vertex_base_instance"));
         }
-        function __webgl_enable_WEBGL_multi_draw(ctx) {
-            return !!(ctx.multiDrawWebgl = ctx.getExtension("WEBGL_multi_draw"));
+        function __webgl_enable_WEBGL_multi_draw_instanced_base_vertex_base_instance(ctx1) {
+            return !!(ctx1.mdibvbi = ctx1.getExtension("WEBGL_multi_draw_instanced_base_vertex_base_instance"));
+        }
+        function __webgl_enable_WEBGL_multi_draw(ctx1) {
+            return !!(ctx1.multiDrawWebgl = ctx1.getExtension("WEBGL_multi_draw"));
         }
         var GL = {
             counter: 1,
@@ -4871,72 +4871,72 @@ var Godot = (()=>{
             stringCache: {},
             stringiCache: {},
             unpackAlignment: 4,
-            recordError: function recordError(errorCode) {
-                if (!GL.lastError) GL.lastError = errorCode;
+            recordError: function recordError1(errorCode1) {
+                if (!GL.lastError) GL.lastError = errorCode1;
             },
-            getNewId: function(table) {
-                var ret = GL.counter++;
-                for(var i = table.length; i < ret; i++)table[i] = null;
-                return ret;
+            getNewId: function(table1) {
+                var ret1 = GL.counter++;
+                for(var i1 = table1.length; i1 < ret1; i1++)table1[i1] = null;
+                return ret1;
             },
-            getSource: function(shader, count, string, length) {
-                var source = "";
-                for(var i = 0; i < count; ++i){
-                    var len = length ? GROWABLE_HEAP_I32()[length + i * 4 >> 2] : -1;
-                    source += UTF8ToString(GROWABLE_HEAP_I32()[string + i * 4 >> 2], len < 0 ? undefined : len);
+            getSource: function(shader1, count1, string1, length1) {
+                var source1 = "";
+                for(var i1 = 0; i1 < count1; ++i1){
+                    var len1 = length1 ? GROWABLE_HEAP_I32()[length1 + i1 * 4 >> 2] : -1;
+                    source1 += UTF8ToString(GROWABLE_HEAP_I32()[string1 + i1 * 4 >> 2], len1 < 0 ? undefined : len1);
                 }
-                return source;
+                return source1;
             },
-            createContext: function(canvas, webGLContextAttributes) {
-                if (webGLContextAttributes.renderViaOffscreenBackBuffer) webGLContextAttributes["preserveDrawingBuffer"] = true;
-                if (!canvas.getContextSafariWebGL2Fixed) {
-                    canvas.getContextSafariWebGL2Fixed = canvas.getContext;
-                    function fixedGetContext(ver, attrs) {
-                        var gl = canvas.getContextSafariWebGL2Fixed(ver, attrs);
-                        return ver == "webgl" == gl instanceof WebGLRenderingContext ? gl : null;
+            createContext: function(canvas1, webGLContextAttributes1) {
+                if (webGLContextAttributes1.renderViaOffscreenBackBuffer) webGLContextAttributes1["preserveDrawingBuffer"] = true;
+                if (!canvas1.getContextSafariWebGL2Fixed) {
+                    canvas1.getContextSafariWebGL2Fixed = canvas1.getContext;
+                    function fixedGetContext1(ver1, attrs1) {
+                        var gl1 = canvas1.getContextSafariWebGL2Fixed(ver1, attrs1);
+                        return ver1 == "webgl" == gl1 instanceof WebGLRenderingContext ? gl1 : null;
                     }
-                    canvas.getContext = fixedGetContext;
+                    canvas1.getContext = fixedGetContext1;
                 }
-                var ctx = webGLContextAttributes.majorVersion > 1 ? canvas.getContext("webgl2", webGLContextAttributes) : canvas.getContext("webgl", webGLContextAttributes);
-                if (!ctx) return 0;
-                var handle = GL.registerContext(ctx, webGLContextAttributes);
-                return handle;
+                var ctx1 = webGLContextAttributes1.majorVersion > 1 ? canvas1.getContext("webgl2", webGLContextAttributes1) : canvas1.getContext("webgl", webGLContextAttributes1);
+                if (!ctx1) return 0;
+                var handle1 = GL.registerContext(ctx1, webGLContextAttributes1);
+                return handle1;
             },
-            enableOffscreenFramebufferAttributes: function(webGLContextAttributes) {
-                webGLContextAttributes.renderViaOffscreenBackBuffer = true;
-                webGLContextAttributes.preserveDrawingBuffer = true;
+            enableOffscreenFramebufferAttributes: function(webGLContextAttributes1) {
+                webGLContextAttributes1.renderViaOffscreenBackBuffer = true;
+                webGLContextAttributes1.preserveDrawingBuffer = true;
             },
-            createOffscreenFramebuffer: function(context) {
-                var gl = context.GLctx;
-                var fbo = gl.createFramebuffer();
-                gl.bindFramebuffer(36160, fbo);
-                context.defaultFbo = fbo;
-                context.defaultFboForbidBlitFramebuffer = false;
-                if (gl.getContextAttributes().antialias) context.defaultFboForbidBlitFramebuffer = true;
+            createOffscreenFramebuffer: function(context1) {
+                var gl1 = context1.GLctx;
+                var fbo1 = gl1.createFramebuffer();
+                gl1.bindFramebuffer(36160, fbo1);
+                context1.defaultFbo = fbo1;
+                context1.defaultFboForbidBlitFramebuffer = false;
+                if (gl1.getContextAttributes().antialias) context1.defaultFboForbidBlitFramebuffer = true;
                 else {
-                    var firefoxMatch = navigator.userAgent.toLowerCase().match(/firefox\/(\d\d)/);
-                    if (firefoxMatch != null) {
-                        var firefoxVersion = firefoxMatch[1];
-                        context.defaultFboForbidBlitFramebuffer = firefoxVersion < 67;
+                    var firefoxMatch1 = navigator.userAgent.toLowerCase().match(/firefox\/(\d\d)/);
+                    if (firefoxMatch1 != null) {
+                        var firefoxVersion1 = firefoxMatch1[1];
+                        context1.defaultFboForbidBlitFramebuffer = firefoxVersion1 < 67;
                     }
                 }
-                context.defaultColorTarget = gl.createTexture();
-                context.defaultDepthTarget = gl.createRenderbuffer();
-                GL.resizeOffscreenFramebuffer(context);
-                gl.bindTexture(3553, context.defaultColorTarget);
-                gl.texParameteri(3553, 10241, 9728);
-                gl.texParameteri(3553, 10240, 9728);
-                gl.texParameteri(3553, 10242, 33071);
-                gl.texParameteri(3553, 10243, 33071);
-                gl.texImage2D(3553, 0, 6408, gl.canvas.width, gl.canvas.height, 0, 6408, 5121, null);
-                gl.framebufferTexture2D(36160, 36064, 3553, context.defaultColorTarget, 0);
-                gl.bindTexture(3553, null);
-                var depthTarget = gl.createRenderbuffer();
-                gl.bindRenderbuffer(36161, context.defaultDepthTarget);
-                gl.renderbufferStorage(36161, 33189, gl.canvas.width, gl.canvas.height);
-                gl.framebufferRenderbuffer(36160, 36096, 36161, context.defaultDepthTarget);
-                gl.bindRenderbuffer(36161, null);
-                var vertices = [
+                context1.defaultColorTarget = gl1.createTexture();
+                context1.defaultDepthTarget = gl1.createRenderbuffer();
+                GL.resizeOffscreenFramebuffer(context1);
+                gl1.bindTexture(3553, context1.defaultColorTarget);
+                gl1.texParameteri(3553, 10241, 9728);
+                gl1.texParameteri(3553, 10240, 9728);
+                gl1.texParameteri(3553, 10242, 33071);
+                gl1.texParameteri(3553, 10243, 33071);
+                gl1.texImage2D(3553, 0, 6408, gl1.canvas.width, gl1.canvas.height, 0, 6408, 5121, null);
+                gl1.framebufferTexture2D(36160, 36064, 3553, context1.defaultColorTarget, 0);
+                gl1.bindTexture(3553, null);
+                var depthTarget1 = gl1.createRenderbuffer();
+                gl1.bindRenderbuffer(36161, context1.defaultDepthTarget);
+                gl1.renderbufferStorage(36161, 33189, gl1.canvas.width, gl1.canvas.height);
+                gl1.framebufferRenderbuffer(36160, 36096, 36161, context1.defaultDepthTarget);
+                gl1.bindRenderbuffer(36161, null);
+                var vertices1 = [
                     -1,
                     -1,
                     -1,
@@ -4946,529 +4946,529 @@ var Godot = (()=>{
                     1,
                     1
                 ];
-                var vb = gl.createBuffer();
-                gl.bindBuffer(34962, vb);
-                gl.bufferData(34962, new Float32Array(vertices), 35044);
-                gl.bindBuffer(34962, null);
-                context.blitVB = vb;
-                var vsCode = "attribute vec2 pos;varying lowp vec2 tex;void main() { tex = pos * 0.5 + vec2(0.5,0.5); gl_Position = vec4(pos, 0.0, 1.0); }";
-                var vs = gl.createShader(35633);
-                gl.shaderSource(vs, vsCode);
-                gl.compileShader(vs);
-                var fsCode = "varying lowp vec2 tex;uniform sampler2D sampler;void main() { gl_FragColor = texture2D(sampler, tex); }";
-                var fs = gl.createShader(35632);
-                gl.shaderSource(fs, fsCode);
-                gl.compileShader(fs);
-                var blitProgram = gl.createProgram();
-                gl.attachShader(blitProgram, vs);
-                gl.attachShader(blitProgram, fs);
-                gl.linkProgram(blitProgram);
-                context.blitProgram = blitProgram;
-                context.blitPosLoc = gl.getAttribLocation(blitProgram, "pos");
-                gl.useProgram(blitProgram);
-                gl.uniform1i(gl.getUniformLocation(blitProgram, "sampler"), 0);
-                gl.useProgram(null);
-                context.defaultVao = undefined;
-                if (gl.createVertexArray) {
-                    context.defaultVao = gl.createVertexArray();
-                    gl.bindVertexArray(context.defaultVao);
-                    gl.enableVertexAttribArray(context.blitPosLoc);
-                    gl.bindVertexArray(null);
+                var vb1 = gl1.createBuffer();
+                gl1.bindBuffer(34962, vb1);
+                gl1.bufferData(34962, new Float32Array(vertices1), 35044);
+                gl1.bindBuffer(34962, null);
+                context1.blitVB = vb1;
+                var vsCode1 = "attribute vec2 pos;varying lowp vec2 tex;void main() { tex = pos * 0.5 + vec2(0.5,0.5); gl_Position = vec4(pos, 0.0, 1.0); }";
+                var vs1 = gl1.createShader(35633);
+                gl1.shaderSource(vs1, vsCode1);
+                gl1.compileShader(vs1);
+                var fsCode1 = "varying lowp vec2 tex;uniform sampler2D sampler;void main() { gl_FragColor = texture2D(sampler, tex); }";
+                var fs1 = gl1.createShader(35632);
+                gl1.shaderSource(fs1, fsCode1);
+                gl1.compileShader(fs1);
+                var blitProgram1 = gl1.createProgram();
+                gl1.attachShader(blitProgram1, vs1);
+                gl1.attachShader(blitProgram1, fs1);
+                gl1.linkProgram(blitProgram1);
+                context1.blitProgram = blitProgram1;
+                context1.blitPosLoc = gl1.getAttribLocation(blitProgram1, "pos");
+                gl1.useProgram(blitProgram1);
+                gl1.uniform1i(gl1.getUniformLocation(blitProgram1, "sampler"), 0);
+                gl1.useProgram(null);
+                context1.defaultVao = undefined;
+                if (gl1.createVertexArray) {
+                    context1.defaultVao = gl1.createVertexArray();
+                    gl1.bindVertexArray(context1.defaultVao);
+                    gl1.enableVertexAttribArray(context1.blitPosLoc);
+                    gl1.bindVertexArray(null);
                 }
             },
-            resizeOffscreenFramebuffer: function(context) {
-                var gl = context.GLctx;
-                if (context.defaultColorTarget) {
-                    var prevTextureBinding = gl.getParameter(32873);
-                    gl.bindTexture(3553, context.defaultColorTarget);
-                    gl.texImage2D(3553, 0, 6408, gl.drawingBufferWidth, gl.drawingBufferHeight, 0, 6408, 5121, null);
-                    gl.bindTexture(3553, prevTextureBinding);
+            resizeOffscreenFramebuffer: function(context1) {
+                var gl1 = context1.GLctx;
+                if (context1.defaultColorTarget) {
+                    var prevTextureBinding1 = gl1.getParameter(32873);
+                    gl1.bindTexture(3553, context1.defaultColorTarget);
+                    gl1.texImage2D(3553, 0, 6408, gl1.drawingBufferWidth, gl1.drawingBufferHeight, 0, 6408, 5121, null);
+                    gl1.bindTexture(3553, prevTextureBinding1);
                 }
-                if (context.defaultDepthTarget) {
-                    var prevRenderBufferBinding = gl.getParameter(36007);
-                    gl.bindRenderbuffer(36161, context.defaultDepthTarget);
-                    gl.renderbufferStorage(36161, 33189, gl.drawingBufferWidth, gl.drawingBufferHeight);
-                    gl.bindRenderbuffer(36161, prevRenderBufferBinding);
+                if (context1.defaultDepthTarget) {
+                    var prevRenderBufferBinding1 = gl1.getParameter(36007);
+                    gl1.bindRenderbuffer(36161, context1.defaultDepthTarget);
+                    gl1.renderbufferStorage(36161, 33189, gl1.drawingBufferWidth, gl1.drawingBufferHeight);
+                    gl1.bindRenderbuffer(36161, prevRenderBufferBinding1);
                 }
             },
-            blitOffscreenFramebuffer: function(context) {
-                var gl = context.GLctx;
-                var prevScissorTest = gl.getParameter(3089);
-                if (prevScissorTest) gl.disable(3089);
-                var prevFbo = gl.getParameter(36006);
-                if (gl.blitFramebuffer && !context.defaultFboForbidBlitFramebuffer) {
-                    gl.bindFramebuffer(36008, context.defaultFbo);
-                    gl.bindFramebuffer(36009, null);
-                    gl.blitFramebuffer(0, 0, gl.canvas.width, gl.canvas.height, 0, 0, gl.canvas.width, gl.canvas.height, 16384, 9728);
+            blitOffscreenFramebuffer: function(context1) {
+                var gl1 = context1.GLctx;
+                var prevScissorTest1 = gl1.getParameter(3089);
+                if (prevScissorTest1) gl1.disable(3089);
+                var prevFbo1 = gl1.getParameter(36006);
+                if (gl1.blitFramebuffer && !context1.defaultFboForbidBlitFramebuffer) {
+                    gl1.bindFramebuffer(36008, context1.defaultFbo);
+                    gl1.bindFramebuffer(36009, null);
+                    gl1.blitFramebuffer(0, 0, gl1.canvas.width, gl1.canvas.height, 0, 0, gl1.canvas.width, gl1.canvas.height, 16384, 9728);
                 } else {
-                    gl.bindFramebuffer(36160, null);
-                    var prevProgram = gl.getParameter(35725);
-                    gl.useProgram(context.blitProgram);
-                    var prevVB = gl.getParameter(34964);
-                    gl.bindBuffer(34962, context.blitVB);
-                    var prevActiveTexture = gl.getParameter(34016);
-                    gl.activeTexture(33984);
-                    var prevTextureBinding = gl.getParameter(32873);
-                    gl.bindTexture(3553, context.defaultColorTarget);
-                    var prevBlend = gl.getParameter(3042);
-                    if (prevBlend) gl.disable(3042);
-                    var prevCullFace = gl.getParameter(2884);
-                    if (prevCullFace) gl.disable(2884);
-                    var prevDepthTest = gl.getParameter(2929);
-                    if (prevDepthTest) gl.disable(2929);
-                    var prevStencilTest = gl.getParameter(2960);
-                    if (prevStencilTest) gl.disable(2960);
-                    function draw() {
-                        gl.vertexAttribPointer(context.blitPosLoc, 2, 5126, false, 0, 0);
-                        gl.drawArrays(5, 0, 4);
+                    gl1.bindFramebuffer(36160, null);
+                    var prevProgram1 = gl1.getParameter(35725);
+                    gl1.useProgram(context1.blitProgram);
+                    var prevVB1 = gl1.getParameter(34964);
+                    gl1.bindBuffer(34962, context1.blitVB);
+                    var prevActiveTexture1 = gl1.getParameter(34016);
+                    gl1.activeTexture(33984);
+                    var prevTextureBinding1 = gl1.getParameter(32873);
+                    gl1.bindTexture(3553, context1.defaultColorTarget);
+                    var prevBlend1 = gl1.getParameter(3042);
+                    if (prevBlend1) gl1.disable(3042);
+                    var prevCullFace1 = gl1.getParameter(2884);
+                    if (prevCullFace1) gl1.disable(2884);
+                    var prevDepthTest1 = gl1.getParameter(2929);
+                    if (prevDepthTest1) gl1.disable(2929);
+                    var prevStencilTest1 = gl1.getParameter(2960);
+                    if (prevStencilTest1) gl1.disable(2960);
+                    function draw1() {
+                        gl1.vertexAttribPointer(context1.blitPosLoc, 2, 5126, false, 0, 0);
+                        gl1.drawArrays(5, 0, 4);
                     }
-                    if (context.defaultVao) {
-                        var prevVAO = gl.getParameter(34229);
-                        gl.bindVertexArray(context.defaultVao);
-                        draw();
-                        gl.bindVertexArray(prevVAO);
+                    if (context1.defaultVao) {
+                        var prevVAO1 = gl1.getParameter(34229);
+                        gl1.bindVertexArray(context1.defaultVao);
+                        draw1();
+                        gl1.bindVertexArray(prevVAO1);
                     } else {
-                        var prevVertexAttribPointer = {
-                            buffer: gl.getVertexAttrib(context.blitPosLoc, 34975),
-                            size: gl.getVertexAttrib(context.blitPosLoc, 34339),
-                            stride: gl.getVertexAttrib(context.blitPosLoc, 34340),
-                            type: gl.getVertexAttrib(context.blitPosLoc, 34341),
-                            normalized: gl.getVertexAttrib(context.blitPosLoc, 34922),
-                            pointer: gl.getVertexAttribOffset(context.blitPosLoc, 34373)
+                        var prevVertexAttribPointer1 = {
+                            buffer: gl1.getVertexAttrib(context1.blitPosLoc, 34975),
+                            size: gl1.getVertexAttrib(context1.blitPosLoc, 34339),
+                            stride: gl1.getVertexAttrib(context1.blitPosLoc, 34340),
+                            type: gl1.getVertexAttrib(context1.blitPosLoc, 34341),
+                            normalized: gl1.getVertexAttrib(context1.blitPosLoc, 34922),
+                            pointer: gl1.getVertexAttribOffset(context1.blitPosLoc, 34373)
                         };
-                        var maxVertexAttribs = gl.getParameter(34921);
-                        var prevVertexAttribEnables = [];
-                        for(var i = 0; i < maxVertexAttribs; ++i){
-                            var prevEnabled = gl.getVertexAttrib(i, 34338);
-                            var wantEnabled = i == context.blitPosLoc;
-                            if (prevEnabled && !wantEnabled) gl.disableVertexAttribArray(i);
-                            if (!prevEnabled && wantEnabled) gl.enableVertexAttribArray(i);
-                            prevVertexAttribEnables[i] = prevEnabled;
+                        var maxVertexAttribs1 = gl1.getParameter(34921);
+                        var prevVertexAttribEnables1 = [];
+                        for(var i1 = 0; i1 < maxVertexAttribs1; ++i1){
+                            var prevEnabled1 = gl1.getVertexAttrib(i1, 34338);
+                            var wantEnabled1 = i1 == context1.blitPosLoc;
+                            if (prevEnabled1 && !wantEnabled1) gl1.disableVertexAttribArray(i1);
+                            if (!prevEnabled1 && wantEnabled1) gl1.enableVertexAttribArray(i1);
+                            prevVertexAttribEnables1[i1] = prevEnabled1;
                         }
-                        draw();
-                        for(var i = 0; i < maxVertexAttribs; ++i){
-                            var prevEnabled = prevVertexAttribEnables[i];
-                            var nowEnabled = i == context.blitPosLoc;
-                            if (prevEnabled && !nowEnabled) gl.enableVertexAttribArray(i);
-                            if (!prevEnabled && nowEnabled) gl.disableVertexAttribArray(i);
+                        draw1();
+                        for(var i1 = 0; i1 < maxVertexAttribs1; ++i1){
+                            var prevEnabled1 = prevVertexAttribEnables1[i1];
+                            var nowEnabled1 = i1 == context1.blitPosLoc;
+                            if (prevEnabled1 && !nowEnabled1) gl1.enableVertexAttribArray(i1);
+                            if (!prevEnabled1 && nowEnabled1) gl1.disableVertexAttribArray(i1);
                         }
-                        gl.bindBuffer(34962, prevVertexAttribPointer.buffer);
-                        gl.vertexAttribPointer(context.blitPosLoc, prevVertexAttribPointer.size, prevVertexAttribPointer.type, prevVertexAttribPointer.normalized, prevVertexAttribPointer.stride, prevVertexAttribPointer.offset);
+                        gl1.bindBuffer(34962, prevVertexAttribPointer1.buffer);
+                        gl1.vertexAttribPointer(context1.blitPosLoc, prevVertexAttribPointer1.size, prevVertexAttribPointer1.type, prevVertexAttribPointer1.normalized, prevVertexAttribPointer1.stride, prevVertexAttribPointer1.offset);
                     }
-                    if (prevStencilTest) gl.enable(2960);
-                    if (prevDepthTest) gl.enable(2929);
-                    if (prevCullFace) gl.enable(2884);
-                    if (prevBlend) gl.enable(3042);
-                    gl.bindTexture(3553, prevTextureBinding);
-                    gl.activeTexture(prevActiveTexture);
-                    gl.bindBuffer(34962, prevVB);
-                    gl.useProgram(prevProgram);
+                    if (prevStencilTest1) gl1.enable(2960);
+                    if (prevDepthTest1) gl1.enable(2929);
+                    if (prevCullFace1) gl1.enable(2884);
+                    if (prevBlend1) gl1.enable(3042);
+                    gl1.bindTexture(3553, prevTextureBinding1);
+                    gl1.activeTexture(prevActiveTexture1);
+                    gl1.bindBuffer(34962, prevVB1);
+                    gl1.useProgram(prevProgram1);
                 }
-                gl.bindFramebuffer(36160, prevFbo);
-                if (prevScissorTest) gl.enable(3089);
+                gl1.bindFramebuffer(36160, prevFbo1);
+                if (prevScissorTest1) gl1.enable(3089);
             },
-            registerContext: function(ctx, webGLContextAttributes) {
-                var handle = _malloc(8);
-                GROWABLE_HEAP_I32()[handle + 4 >> 2] = _pthread_self();
-                var context = {
-                    handle: handle,
-                    attributes: webGLContextAttributes,
-                    version: webGLContextAttributes.majorVersion,
-                    GLctx: ctx
+            registerContext: function(ctx1, webGLContextAttributes1) {
+                var handle1 = _malloc(8);
+                GROWABLE_HEAP_I32()[handle1 + 4 >> 2] = _pthread_self();
+                var context1 = {
+                    handle: handle1,
+                    attributes: webGLContextAttributes1,
+                    version: webGLContextAttributes1.majorVersion,
+                    GLctx: ctx1
                 };
-                if (ctx.canvas) ctx.canvas.GLctxObject = context;
-                GL.contexts[handle] = context;
-                if (typeof webGLContextAttributes.enableExtensionsByDefault == "undefined" || webGLContextAttributes.enableExtensionsByDefault) GL.initExtensions(context);
-                if (webGLContextAttributes.renderViaOffscreenBackBuffer) GL.createOffscreenFramebuffer(context);
-                return handle;
+                if (ctx1.canvas) ctx1.canvas.GLctxObject = context1;
+                GL.contexts[handle1] = context1;
+                if (typeof webGLContextAttributes1.enableExtensionsByDefault == "undefined" || webGLContextAttributes1.enableExtensionsByDefault) GL.initExtensions(context1);
+                if (webGLContextAttributes1.renderViaOffscreenBackBuffer) GL.createOffscreenFramebuffer(context1);
+                return handle1;
             },
-            makeContextCurrent: function(contextHandle) {
-                GL.currentContext = GL.contexts[contextHandle];
+            makeContextCurrent: function(contextHandle1) {
+                GL.currentContext = GL.contexts[contextHandle1];
                 Module.ctx = GLctx = GL.currentContext && GL.currentContext.GLctx;
-                return !(contextHandle && !GLctx);
+                return !(contextHandle1 && !GLctx);
             },
-            getContext: function(contextHandle) {
-                return GL.contexts[contextHandle];
+            getContext: function(contextHandle1) {
+                return GL.contexts[contextHandle1];
             },
-            deleteContext: function(contextHandle) {
-                if (GL.currentContext === GL.contexts[contextHandle]) GL.currentContext = null;
-                if (typeof JSEvents == "object") JSEvents.removeAllHandlersOnTarget(GL.contexts[contextHandle].GLctx.canvas);
-                if (GL.contexts[contextHandle] && GL.contexts[contextHandle].GLctx.canvas) GL.contexts[contextHandle].GLctx.canvas.GLctxObject = undefined;
-                _free(GL.contexts[contextHandle].handle);
-                GL.contexts[contextHandle] = null;
+            deleteContext: function(contextHandle1) {
+                if (GL.currentContext === GL.contexts[contextHandle1]) GL.currentContext = null;
+                if (typeof JSEvents == "object") JSEvents.removeAllHandlersOnTarget(GL.contexts[contextHandle1].GLctx.canvas);
+                if (GL.contexts[contextHandle1] && GL.contexts[contextHandle1].GLctx.canvas) GL.contexts[contextHandle1].GLctx.canvas.GLctxObject = undefined;
+                _free(GL.contexts[contextHandle1].handle);
+                GL.contexts[contextHandle1] = null;
             },
-            initExtensions: function(context) {
-                if (!context) context = GL.currentContext;
-                if (context.initExtensionsDone) return;
-                context.initExtensionsDone = true;
-                var GLctx = context.GLctx;
-                __webgl_enable_ANGLE_instanced_arrays(GLctx);
-                __webgl_enable_OES_vertex_array_object(GLctx);
-                __webgl_enable_WEBGL_draw_buffers(GLctx);
-                __webgl_enable_WEBGL_draw_instanced_base_vertex_base_instance(GLctx);
-                __webgl_enable_WEBGL_multi_draw_instanced_base_vertex_base_instance(GLctx);
-                if (context.version >= 2) GLctx.disjointTimerQueryExt = GLctx.getExtension("EXT_disjoint_timer_query_webgl2");
-                if (context.version < 2 || !GLctx.disjointTimerQueryExt) GLctx.disjointTimerQueryExt = GLctx.getExtension("EXT_disjoint_timer_query");
-                __webgl_enable_WEBGL_multi_draw(GLctx);
-                var exts = GLctx.getSupportedExtensions() || [];
-                exts.forEach(function(ext) {
-                    if (!ext.includes("lose_context") && !ext.includes("debug")) GLctx.getExtension(ext);
+            initExtensions: function(context1) {
+                if (!context1) context1 = GL.currentContext;
+                if (context1.initExtensionsDone) return;
+                context1.initExtensionsDone = true;
+                var GLctx1 = context1.GLctx;
+                __webgl_enable_ANGLE_instanced_arrays(GLctx1);
+                __webgl_enable_OES_vertex_array_object(GLctx1);
+                __webgl_enable_WEBGL_draw_buffers(GLctx1);
+                __webgl_enable_WEBGL_draw_instanced_base_vertex_base_instance(GLctx1);
+                __webgl_enable_WEBGL_multi_draw_instanced_base_vertex_base_instance(GLctx1);
+                if (context1.version >= 2) GLctx1.disjointTimerQueryExt = GLctx1.getExtension("EXT_disjoint_timer_query_webgl2");
+                if (context1.version < 2 || !GLctx1.disjointTimerQueryExt) GLctx1.disjointTimerQueryExt = GLctx1.getExtension("EXT_disjoint_timer_query");
+                __webgl_enable_WEBGL_multi_draw(GLctx1);
+                var exts1 = GLctx1.getSupportedExtensions() || [];
+                exts1.forEach(function(ext1) {
+                    if (!ext1.includes("lose_context") && !ext1.includes("debug")) GLctx1.getExtension(ext1);
                 });
             }
         };
-        function _emscripten_glActiveTexture(x0) {
-            GLctx["activeTexture"](x0);
+        function _emscripten_glActiveTexture(x01) {
+            GLctx["activeTexture"](x01);
         }
-        function _emscripten_glAttachShader(program, shader) {
-            GLctx.attachShader(GL.programs[program], GL.shaders[shader]);
+        function _emscripten_glAttachShader(program1, shader1) {
+            GLctx.attachShader(GL.programs[program1], GL.shaders[shader1]);
         }
-        function _emscripten_glBeginQuery(target, id) {
-            GLctx["beginQuery"](target, GL.queries[id]);
+        function _emscripten_glBeginQuery(target1, id1) {
+            GLctx["beginQuery"](target1, GL.queries[id1]);
         }
-        function _emscripten_glBeginQueryEXT(target, id) {
-            GLctx.disjointTimerQueryExt["beginQueryEXT"](target, GL.queries[id]);
+        function _emscripten_glBeginQueryEXT(target1, id1) {
+            GLctx.disjointTimerQueryExt["beginQueryEXT"](target1, GL.queries[id1]);
         }
-        function _emscripten_glBeginTransformFeedback(x0) {
-            GLctx["beginTransformFeedback"](x0);
+        function _emscripten_glBeginTransformFeedback(x01) {
+            GLctx["beginTransformFeedback"](x01);
         }
-        function _emscripten_glBindAttribLocation(program, index, name) {
-            GLctx.bindAttribLocation(GL.programs[program], index, UTF8ToString(name));
+        function _emscripten_glBindAttribLocation(program1, index1, name1) {
+            GLctx.bindAttribLocation(GL.programs[program1], index1, UTF8ToString(name1));
         }
-        function _emscripten_glBindBuffer(target, buffer) {
-            if (target == 35051) GLctx.currentPixelPackBufferBinding = buffer;
-            else if (target == 35052) GLctx.currentPixelUnpackBufferBinding = buffer;
-            GLctx.bindBuffer(target, GL.buffers[buffer]);
+        function _emscripten_glBindBuffer(target1, buffer1) {
+            if (target1 == 35051) GLctx.currentPixelPackBufferBinding = buffer1;
+            else if (target1 == 35052) GLctx.currentPixelUnpackBufferBinding = buffer1;
+            GLctx.bindBuffer(target1, GL.buffers[buffer1]);
         }
-        function _emscripten_glBindBufferBase(target, index, buffer) {
-            GLctx["bindBufferBase"](target, index, GL.buffers[buffer]);
+        function _emscripten_glBindBufferBase(target1, index1, buffer1) {
+            GLctx["bindBufferBase"](target1, index1, GL.buffers[buffer1]);
         }
-        function _emscripten_glBindBufferRange(target, index, buffer, offset, ptrsize) {
-            GLctx["bindBufferRange"](target, index, GL.buffers[buffer], offset, ptrsize);
+        function _emscripten_glBindBufferRange(target1, index1, buffer1, offset1, ptrsize1) {
+            GLctx["bindBufferRange"](target1, index1, GL.buffers[buffer1], offset1, ptrsize1);
         }
-        function _emscripten_glBindFramebuffer(target, framebuffer) {
-            GLctx.bindFramebuffer(target, framebuffer ? GL.framebuffers[framebuffer] : GL.currentContext.defaultFbo);
+        function _emscripten_glBindFramebuffer(target1, framebuffer1) {
+            GLctx.bindFramebuffer(target1, framebuffer1 ? GL.framebuffers[framebuffer1] : GL.currentContext.defaultFbo);
         }
-        function _emscripten_glBindRenderbuffer(target, renderbuffer) {
-            GLctx.bindRenderbuffer(target, GL.renderbuffers[renderbuffer]);
+        function _emscripten_glBindRenderbuffer(target1, renderbuffer1) {
+            GLctx.bindRenderbuffer(target1, GL.renderbuffers[renderbuffer1]);
         }
-        function _emscripten_glBindSampler(unit, sampler) {
-            GLctx["bindSampler"](unit, GL.samplers[sampler]);
+        function _emscripten_glBindSampler(unit1, sampler1) {
+            GLctx["bindSampler"](unit1, GL.samplers[sampler1]);
         }
-        function _emscripten_glBindTexture(target, texture) {
-            GLctx.bindTexture(target, GL.textures[texture]);
+        function _emscripten_glBindTexture(target1, texture1) {
+            GLctx.bindTexture(target1, GL.textures[texture1]);
         }
-        function _emscripten_glBindTransformFeedback(target, id) {
-            GLctx["bindTransformFeedback"](target, GL.transformFeedbacks[id]);
+        function _emscripten_glBindTransformFeedback(target1, id1) {
+            GLctx["bindTransformFeedback"](target1, GL.transformFeedbacks[id1]);
         }
-        function _emscripten_glBindVertexArray(vao) {
-            GLctx["bindVertexArray"](GL.vaos[vao]);
+        function _emscripten_glBindVertexArray(vao1) {
+            GLctx["bindVertexArray"](GL.vaos[vao1]);
         }
-        function _emscripten_glBlendColor(x0, x1, x2, x3) {
-            GLctx["blendColor"](x0, x1, x2, x3);
+        function _emscripten_glBlendColor(x01, x11, x21, x31) {
+            GLctx["blendColor"](x01, x11, x21, x31);
         }
-        function _emscripten_glBlendEquation(x0) {
-            GLctx["blendEquation"](x0);
+        function _emscripten_glBlendEquation(x01) {
+            GLctx["blendEquation"](x01);
         }
-        function _emscripten_glBlendEquationSeparate(x0, x1) {
-            GLctx["blendEquationSeparate"](x0, x1);
+        function _emscripten_glBlendEquationSeparate(x01, x11) {
+            GLctx["blendEquationSeparate"](x01, x11);
         }
-        function _emscripten_glBlendFunc(x0, x1) {
-            GLctx["blendFunc"](x0, x1);
+        function _emscripten_glBlendFunc(x01, x11) {
+            GLctx["blendFunc"](x01, x11);
         }
-        function _emscripten_glBlendFuncSeparate(x0, x1, x2, x3) {
-            GLctx["blendFuncSeparate"](x0, x1, x2, x3);
+        function _emscripten_glBlendFuncSeparate(x01, x11, x21, x31) {
+            GLctx["blendFuncSeparate"](x01, x11, x21, x31);
         }
-        function _emscripten_glBlitFramebuffer(x0, x1, x2, x3, x4, x5, x6, x7, x8, x9) {
-            GLctx["blitFramebuffer"](x0, x1, x2, x3, x4, x5, x6, x7, x8, x9);
+        function _emscripten_glBlitFramebuffer(x01, x11, x21, x31, x41, x51, x61, x71, x81, x91) {
+            GLctx["blitFramebuffer"](x01, x11, x21, x31, x41, x51, x61, x71, x81, x91);
         }
-        function _emscripten_glBufferData(target, size, data, usage) {
+        function _emscripten_glBufferData(target1, size1, data1, usage1) {
             if (GL.currentContext.version >= 2) {
-                if (data && size) GLctx.bufferData(target, GROWABLE_HEAP_U8(), usage, data, size);
-                else GLctx.bufferData(target, size, usage);
-            } else GLctx.bufferData(target, data ? GROWABLE_HEAP_U8().subarray(data, data + size) : size, usage);
+                if (data1 && size1) GLctx.bufferData(target1, GROWABLE_HEAP_U8(), usage1, data1, size1);
+                else GLctx.bufferData(target1, size1, usage1);
+            } else GLctx.bufferData(target1, data1 ? GROWABLE_HEAP_U8().subarray(data1, data1 + size1) : size1, usage1);
         }
-        function _emscripten_glBufferSubData(target, offset, size, data) {
+        function _emscripten_glBufferSubData(target1, offset1, size1, data1) {
             if (GL.currentContext.version >= 2) {
-                size && GLctx.bufferSubData(target, offset, GROWABLE_HEAP_U8(), data, size);
+                size1 && GLctx.bufferSubData(target1, offset1, GROWABLE_HEAP_U8(), data1, size1);
                 return;
             }
-            GLctx.bufferSubData(target, offset, GROWABLE_HEAP_U8().subarray(data, data + size));
+            GLctx.bufferSubData(target1, offset1, GROWABLE_HEAP_U8().subarray(data1, data1 + size1));
         }
-        function _emscripten_glCheckFramebufferStatus(x0) {
-            return GLctx["checkFramebufferStatus"](x0);
+        function _emscripten_glCheckFramebufferStatus(x01) {
+            return GLctx["checkFramebufferStatus"](x01);
         }
-        function _emscripten_glClear(x0) {
-            GLctx["clear"](x0);
+        function _emscripten_glClear(x01) {
+            GLctx["clear"](x01);
         }
-        function _emscripten_glClearBufferfi(x0, x1, x2, x3) {
-            GLctx["clearBufferfi"](x0, x1, x2, x3);
+        function _emscripten_glClearBufferfi(x01, x11, x21, x31) {
+            GLctx["clearBufferfi"](x01, x11, x21, x31);
         }
-        function _emscripten_glClearBufferfv(buffer, drawbuffer, value) {
-            GLctx["clearBufferfv"](buffer, drawbuffer, GROWABLE_HEAP_F32(), value >> 2);
+        function _emscripten_glClearBufferfv(buffer1, drawbuffer1, value1) {
+            GLctx["clearBufferfv"](buffer1, drawbuffer1, GROWABLE_HEAP_F32(), value1 >> 2);
         }
-        function _emscripten_glClearBufferiv(buffer, drawbuffer, value) {
-            GLctx["clearBufferiv"](buffer, drawbuffer, GROWABLE_HEAP_I32(), value >> 2);
+        function _emscripten_glClearBufferiv(buffer1, drawbuffer1, value1) {
+            GLctx["clearBufferiv"](buffer1, drawbuffer1, GROWABLE_HEAP_I32(), value1 >> 2);
         }
-        function _emscripten_glClearBufferuiv(buffer, drawbuffer, value) {
-            GLctx["clearBufferuiv"](buffer, drawbuffer, GROWABLE_HEAP_U32(), value >> 2);
+        function _emscripten_glClearBufferuiv(buffer1, drawbuffer1, value1) {
+            GLctx["clearBufferuiv"](buffer1, drawbuffer1, GROWABLE_HEAP_U32(), value1 >> 2);
         }
-        function _emscripten_glClearColor(x0, x1, x2, x3) {
-            GLctx["clearColor"](x0, x1, x2, x3);
+        function _emscripten_glClearColor(x01, x11, x21, x31) {
+            GLctx["clearColor"](x01, x11, x21, x31);
         }
-        function _emscripten_glClearDepthf(x0) {
-            GLctx["clearDepth"](x0);
+        function _emscripten_glClearDepthf(x01) {
+            GLctx["clearDepth"](x01);
         }
-        function _emscripten_glClearStencil(x0) {
-            GLctx["clearStencil"](x0);
+        function _emscripten_glClearStencil(x01) {
+            GLctx["clearStencil"](x01);
         }
-        function convertI32PairToI53(lo, hi) {
-            return (lo >>> 0) + hi * 4294967296;
+        function convertI32PairToI53(lo1, hi1) {
+            return (lo1 >>> 0) + hi1 * 4294967296;
         }
-        function _emscripten_glClientWaitSync(sync, flags, timeoutLo, timeoutHi) {
-            return GLctx.clientWaitSync(GL.syncs[sync], flags, convertI32PairToI53(timeoutLo, timeoutHi));
+        function _emscripten_glClientWaitSync(sync1, flags1, timeoutLo1, timeoutHi1) {
+            return GLctx.clientWaitSync(GL.syncs[sync1], flags1, convertI32PairToI53(timeoutLo1, timeoutHi1));
         }
-        function _emscripten_glColorMask(red, green, blue, alpha) {
-            GLctx.colorMask(!!red, !!green, !!blue, !!alpha);
+        function _emscripten_glColorMask(red1, green1, blue1, alpha1) {
+            GLctx.colorMask(!!red1, !!green1, !!blue1, !!alpha1);
         }
-        function _emscripten_glCompileShader(shader) {
-            GLctx.compileShader(GL.shaders[shader]);
+        function _emscripten_glCompileShader(shader1) {
+            GLctx.compileShader(GL.shaders[shader1]);
         }
-        function _emscripten_glCompressedTexImage2D(target, level, internalFormat, width, height, border, imageSize, data) {
+        function _emscripten_glCompressedTexImage2D(target1, level1, internalFormat1, width1, height1, border1, imageSize1, data1) {
             if (GL.currentContext.version >= 2) {
-                if (GLctx.currentPixelUnpackBufferBinding || !imageSize) GLctx["compressedTexImage2D"](target, level, internalFormat, width, height, border, imageSize, data);
-                else GLctx["compressedTexImage2D"](target, level, internalFormat, width, height, border, GROWABLE_HEAP_U8(), data, imageSize);
+                if (GLctx.currentPixelUnpackBufferBinding || !imageSize1) GLctx["compressedTexImage2D"](target1, level1, internalFormat1, width1, height1, border1, imageSize1, data1);
+                else GLctx["compressedTexImage2D"](target1, level1, internalFormat1, width1, height1, border1, GROWABLE_HEAP_U8(), data1, imageSize1);
                 return;
             }
-            GLctx["compressedTexImage2D"](target, level, internalFormat, width, height, border, data ? GROWABLE_HEAP_U8().subarray(data, data + imageSize) : null);
+            GLctx["compressedTexImage2D"](target1, level1, internalFormat1, width1, height1, border1, data1 ? GROWABLE_HEAP_U8().subarray(data1, data1 + imageSize1) : null);
         }
-        function _emscripten_glCompressedTexImage3D(target, level, internalFormat, width, height, depth, border, imageSize, data) {
-            if (GLctx.currentPixelUnpackBufferBinding) GLctx["compressedTexImage3D"](target, level, internalFormat, width, height, depth, border, imageSize, data);
-            else GLctx["compressedTexImage3D"](target, level, internalFormat, width, height, depth, border, GROWABLE_HEAP_U8(), data, imageSize);
+        function _emscripten_glCompressedTexImage3D(target1, level1, internalFormat1, width1, height1, depth1, border1, imageSize1, data1) {
+            if (GLctx.currentPixelUnpackBufferBinding) GLctx["compressedTexImage3D"](target1, level1, internalFormat1, width1, height1, depth1, border1, imageSize1, data1);
+            else GLctx["compressedTexImage3D"](target1, level1, internalFormat1, width1, height1, depth1, border1, GROWABLE_HEAP_U8(), data1, imageSize1);
         }
-        function _emscripten_glCompressedTexSubImage2D(target, level, xoffset, yoffset, width, height, format, imageSize, data) {
+        function _emscripten_glCompressedTexSubImage2D(target1, level1, xoffset1, yoffset1, width1, height1, format1, imageSize1, data1) {
             if (GL.currentContext.version >= 2) {
-                if (GLctx.currentPixelUnpackBufferBinding || !imageSize) GLctx["compressedTexSubImage2D"](target, level, xoffset, yoffset, width, height, format, imageSize, data);
-                else GLctx["compressedTexSubImage2D"](target, level, xoffset, yoffset, width, height, format, GROWABLE_HEAP_U8(), data, imageSize);
+                if (GLctx.currentPixelUnpackBufferBinding || !imageSize1) GLctx["compressedTexSubImage2D"](target1, level1, xoffset1, yoffset1, width1, height1, format1, imageSize1, data1);
+                else GLctx["compressedTexSubImage2D"](target1, level1, xoffset1, yoffset1, width1, height1, format1, GROWABLE_HEAP_U8(), data1, imageSize1);
                 return;
             }
-            GLctx["compressedTexSubImage2D"](target, level, xoffset, yoffset, width, height, format, data ? GROWABLE_HEAP_U8().subarray(data, data + imageSize) : null);
+            GLctx["compressedTexSubImage2D"](target1, level1, xoffset1, yoffset1, width1, height1, format1, data1 ? GROWABLE_HEAP_U8().subarray(data1, data1 + imageSize1) : null);
         }
-        function _emscripten_glCompressedTexSubImage3D(target, level, xoffset, yoffset, zoffset, width, height, depth, format, imageSize, data) {
-            if (GLctx.currentPixelUnpackBufferBinding) GLctx["compressedTexSubImage3D"](target, level, xoffset, yoffset, zoffset, width, height, depth, format, imageSize, data);
-            else GLctx["compressedTexSubImage3D"](target, level, xoffset, yoffset, zoffset, width, height, depth, format, GROWABLE_HEAP_U8(), data, imageSize);
+        function _emscripten_glCompressedTexSubImage3D(target1, level1, xoffset1, yoffset1, zoffset1, width1, height1, depth1, format1, imageSize1, data1) {
+            if (GLctx.currentPixelUnpackBufferBinding) GLctx["compressedTexSubImage3D"](target1, level1, xoffset1, yoffset1, zoffset1, width1, height1, depth1, format1, imageSize1, data1);
+            else GLctx["compressedTexSubImage3D"](target1, level1, xoffset1, yoffset1, zoffset1, width1, height1, depth1, format1, GROWABLE_HEAP_U8(), data1, imageSize1);
         }
-        function _emscripten_glCopyBufferSubData(x0, x1, x2, x3, x4) {
-            GLctx["copyBufferSubData"](x0, x1, x2, x3, x4);
+        function _emscripten_glCopyBufferSubData(x01, x11, x21, x31, x41) {
+            GLctx["copyBufferSubData"](x01, x11, x21, x31, x41);
         }
-        function _emscripten_glCopyTexImage2D(x0, x1, x2, x3, x4, x5, x6, x7) {
-            GLctx["copyTexImage2D"](x0, x1, x2, x3, x4, x5, x6, x7);
+        function _emscripten_glCopyTexImage2D(x01, x11, x21, x31, x41, x51, x61, x71) {
+            GLctx["copyTexImage2D"](x01, x11, x21, x31, x41, x51, x61, x71);
         }
-        function _emscripten_glCopyTexSubImage2D(x0, x1, x2, x3, x4, x5, x6, x7) {
-            GLctx["copyTexSubImage2D"](x0, x1, x2, x3, x4, x5, x6, x7);
+        function _emscripten_glCopyTexSubImage2D(x01, x11, x21, x31, x41, x51, x61, x71) {
+            GLctx["copyTexSubImage2D"](x01, x11, x21, x31, x41, x51, x61, x71);
         }
-        function _emscripten_glCopyTexSubImage3D(x0, x1, x2, x3, x4, x5, x6, x7, x8) {
-            GLctx["copyTexSubImage3D"](x0, x1, x2, x3, x4, x5, x6, x7, x8);
+        function _emscripten_glCopyTexSubImage3D(x01, x11, x21, x31, x41, x51, x61, x71, x81) {
+            GLctx["copyTexSubImage3D"](x01, x11, x21, x31, x41, x51, x61, x71, x81);
         }
         function _emscripten_glCreateProgram() {
-            var id = GL.getNewId(GL.programs);
-            var program = GLctx.createProgram();
-            program.name = id;
-            program.maxUniformLength = program.maxAttributeLength = program.maxUniformBlockNameLength = 0;
-            program.uniformIdCounter = 1;
-            GL.programs[id] = program;
-            return id;
+            var id1 = GL.getNewId(GL.programs);
+            var program1 = GLctx.createProgram();
+            program1.name = id1;
+            program1.maxUniformLength = program1.maxAttributeLength = program1.maxUniformBlockNameLength = 0;
+            program1.uniformIdCounter = 1;
+            GL.programs[id1] = program1;
+            return id1;
         }
-        function _emscripten_glCreateShader(shaderType) {
-            var id = GL.getNewId(GL.shaders);
-            GL.shaders[id] = GLctx.createShader(shaderType);
-            return id;
+        function _emscripten_glCreateShader(shaderType1) {
+            var id1 = GL.getNewId(GL.shaders);
+            GL.shaders[id1] = GLctx.createShader(shaderType1);
+            return id1;
         }
-        function _emscripten_glCullFace(x0) {
-            GLctx["cullFace"](x0);
+        function _emscripten_glCullFace(x01) {
+            GLctx["cullFace"](x01);
         }
-        function _emscripten_glDeleteBuffers(n, buffers) {
-            for(var i = 0; i < n; i++){
-                var id = GROWABLE_HEAP_I32()[buffers + i * 4 >> 2];
-                var buffer = GL.buffers[id];
-                if (!buffer) continue;
-                GLctx.deleteBuffer(buffer);
-                buffer.name = 0;
-                GL.buffers[id] = null;
-                if (id == GLctx.currentPixelPackBufferBinding) GLctx.currentPixelPackBufferBinding = 0;
-                if (id == GLctx.currentPixelUnpackBufferBinding) GLctx.currentPixelUnpackBufferBinding = 0;
+        function _emscripten_glDeleteBuffers(n1, buffers1) {
+            for(var i1 = 0; i1 < n1; i1++){
+                var id1 = GROWABLE_HEAP_I32()[buffers1 + i1 * 4 >> 2];
+                var buffer1 = GL.buffers[id1];
+                if (!buffer1) continue;
+                GLctx.deleteBuffer(buffer1);
+                buffer1.name = 0;
+                GL.buffers[id1] = null;
+                if (id1 == GLctx.currentPixelPackBufferBinding) GLctx.currentPixelPackBufferBinding = 0;
+                if (id1 == GLctx.currentPixelUnpackBufferBinding) GLctx.currentPixelUnpackBufferBinding = 0;
             }
         }
-        function _emscripten_glDeleteFramebuffers(n, framebuffers) {
-            for(var i = 0; i < n; ++i){
-                var id = GROWABLE_HEAP_I32()[framebuffers + i * 4 >> 2];
-                var framebuffer = GL.framebuffers[id];
-                if (!framebuffer) continue;
-                GLctx.deleteFramebuffer(framebuffer);
-                framebuffer.name = 0;
-                GL.framebuffers[id] = null;
+        function _emscripten_glDeleteFramebuffers(n1, framebuffers1) {
+            for(var i1 = 0; i1 < n1; ++i1){
+                var id1 = GROWABLE_HEAP_I32()[framebuffers1 + i1 * 4 >> 2];
+                var framebuffer1 = GL.framebuffers[id1];
+                if (!framebuffer1) continue;
+                GLctx.deleteFramebuffer(framebuffer1);
+                framebuffer1.name = 0;
+                GL.framebuffers[id1] = null;
             }
         }
-        function _emscripten_glDeleteProgram(id) {
-            if (!id) return;
-            var program = GL.programs[id];
-            if (!program) {
+        function _emscripten_glDeleteProgram(id1) {
+            if (!id1) return;
+            var program1 = GL.programs[id1];
+            if (!program1) {
                 GL.recordError(1281);
                 return;
             }
-            GLctx.deleteProgram(program);
-            program.name = 0;
-            GL.programs[id] = null;
+            GLctx.deleteProgram(program1);
+            program1.name = 0;
+            GL.programs[id1] = null;
         }
-        function _emscripten_glDeleteQueries(n, ids) {
-            for(var i = 0; i < n; i++){
-                var id = GROWABLE_HEAP_I32()[ids + i * 4 >> 2];
-                var query = GL.queries[id];
-                if (!query) continue;
-                GLctx["deleteQuery"](query);
-                GL.queries[id] = null;
+        function _emscripten_glDeleteQueries(n1, ids1) {
+            for(var i1 = 0; i1 < n1; i1++){
+                var id1 = GROWABLE_HEAP_I32()[ids1 + i1 * 4 >> 2];
+                var query1 = GL.queries[id1];
+                if (!query1) continue;
+                GLctx["deleteQuery"](query1);
+                GL.queries[id1] = null;
             }
         }
-        function _emscripten_glDeleteQueriesEXT(n, ids) {
-            for(var i = 0; i < n; i++){
-                var id = GROWABLE_HEAP_I32()[ids + i * 4 >> 2];
-                var query = GL.queries[id];
-                if (!query) continue;
-                GLctx.disjointTimerQueryExt["deleteQueryEXT"](query);
-                GL.queries[id] = null;
+        function _emscripten_glDeleteQueriesEXT(n1, ids1) {
+            for(var i1 = 0; i1 < n1; i1++){
+                var id1 = GROWABLE_HEAP_I32()[ids1 + i1 * 4 >> 2];
+                var query1 = GL.queries[id1];
+                if (!query1) continue;
+                GLctx.disjointTimerQueryExt["deleteQueryEXT"](query1);
+                GL.queries[id1] = null;
             }
         }
-        function _emscripten_glDeleteRenderbuffers(n, renderbuffers) {
-            for(var i = 0; i < n; i++){
-                var id = GROWABLE_HEAP_I32()[renderbuffers + i * 4 >> 2];
-                var renderbuffer = GL.renderbuffers[id];
-                if (!renderbuffer) continue;
-                GLctx.deleteRenderbuffer(renderbuffer);
-                renderbuffer.name = 0;
-                GL.renderbuffers[id] = null;
+        function _emscripten_glDeleteRenderbuffers(n1, renderbuffers1) {
+            for(var i1 = 0; i1 < n1; i1++){
+                var id1 = GROWABLE_HEAP_I32()[renderbuffers1 + i1 * 4 >> 2];
+                var renderbuffer1 = GL.renderbuffers[id1];
+                if (!renderbuffer1) continue;
+                GLctx.deleteRenderbuffer(renderbuffer1);
+                renderbuffer1.name = 0;
+                GL.renderbuffers[id1] = null;
             }
         }
-        function _emscripten_glDeleteSamplers(n, samplers) {
-            for(var i = 0; i < n; i++){
-                var id = GROWABLE_HEAP_I32()[samplers + i * 4 >> 2];
-                var sampler = GL.samplers[id];
-                if (!sampler) continue;
-                GLctx["deleteSampler"](sampler);
-                sampler.name = 0;
-                GL.samplers[id] = null;
+        function _emscripten_glDeleteSamplers(n1, samplers1) {
+            for(var i1 = 0; i1 < n1; i1++){
+                var id1 = GROWABLE_HEAP_I32()[samplers1 + i1 * 4 >> 2];
+                var sampler1 = GL.samplers[id1];
+                if (!sampler1) continue;
+                GLctx["deleteSampler"](sampler1);
+                sampler1.name = 0;
+                GL.samplers[id1] = null;
             }
         }
-        function _emscripten_glDeleteShader(id) {
-            if (!id) return;
-            var shader = GL.shaders[id];
-            if (!shader) {
+        function _emscripten_glDeleteShader(id1) {
+            if (!id1) return;
+            var shader1 = GL.shaders[id1];
+            if (!shader1) {
                 GL.recordError(1281);
                 return;
             }
-            GLctx.deleteShader(shader);
-            GL.shaders[id] = null;
+            GLctx.deleteShader(shader1);
+            GL.shaders[id1] = null;
         }
-        function _emscripten_glDeleteSync(id) {
-            if (!id) return;
-            var sync = GL.syncs[id];
-            if (!sync) {
+        function _emscripten_glDeleteSync(id1) {
+            if (!id1) return;
+            var sync1 = GL.syncs[id1];
+            if (!sync1) {
                 GL.recordError(1281);
                 return;
             }
-            GLctx.deleteSync(sync);
-            sync.name = 0;
-            GL.syncs[id] = null;
+            GLctx.deleteSync(sync1);
+            sync1.name = 0;
+            GL.syncs[id1] = null;
         }
-        function _emscripten_glDeleteTextures(n, textures) {
-            for(var i = 0; i < n; i++){
-                var id = GROWABLE_HEAP_I32()[textures + i * 4 >> 2];
-                var texture = GL.textures[id];
-                if (!texture) continue;
-                GLctx.deleteTexture(texture);
-                texture.name = 0;
-                GL.textures[id] = null;
+        function _emscripten_glDeleteTextures(n1, textures1) {
+            for(var i1 = 0; i1 < n1; i1++){
+                var id1 = GROWABLE_HEAP_I32()[textures1 + i1 * 4 >> 2];
+                var texture1 = GL.textures[id1];
+                if (!texture1) continue;
+                GLctx.deleteTexture(texture1);
+                texture1.name = 0;
+                GL.textures[id1] = null;
             }
         }
-        function _emscripten_glDeleteTransformFeedbacks(n, ids) {
-            for(var i = 0; i < n; i++){
-                var id = GROWABLE_HEAP_I32()[ids + i * 4 >> 2];
-                var transformFeedback = GL.transformFeedbacks[id];
-                if (!transformFeedback) continue;
-                GLctx["deleteTransformFeedback"](transformFeedback);
-                transformFeedback.name = 0;
-                GL.transformFeedbacks[id] = null;
+        function _emscripten_glDeleteTransformFeedbacks(n1, ids1) {
+            for(var i1 = 0; i1 < n1; i1++){
+                var id1 = GROWABLE_HEAP_I32()[ids1 + i1 * 4 >> 2];
+                var transformFeedback1 = GL.transformFeedbacks[id1];
+                if (!transformFeedback1) continue;
+                GLctx["deleteTransformFeedback"](transformFeedback1);
+                transformFeedback1.name = 0;
+                GL.transformFeedbacks[id1] = null;
             }
         }
-        function _emscripten_glDeleteVertexArrays(n, vaos) {
-            for(var i = 0; i < n; i++){
-                var id = GROWABLE_HEAP_I32()[vaos + i * 4 >> 2];
-                GLctx["deleteVertexArray"](GL.vaos[id]);
-                GL.vaos[id] = null;
+        function _emscripten_glDeleteVertexArrays(n1, vaos1) {
+            for(var i1 = 0; i1 < n1; i1++){
+                var id1 = GROWABLE_HEAP_I32()[vaos1 + i1 * 4 >> 2];
+                GLctx["deleteVertexArray"](GL.vaos[id1]);
+                GL.vaos[id1] = null;
             }
         }
-        function _emscripten_glDepthFunc(x0) {
-            GLctx["depthFunc"](x0);
+        function _emscripten_glDepthFunc(x01) {
+            GLctx["depthFunc"](x01);
         }
-        function _emscripten_glDepthMask(flag) {
-            GLctx.depthMask(!!flag);
+        function _emscripten_glDepthMask(flag1) {
+            GLctx.depthMask(!!flag1);
         }
-        function _emscripten_glDepthRangef(x0, x1) {
-            GLctx["depthRange"](x0, x1);
+        function _emscripten_glDepthRangef(x01, x11) {
+            GLctx["depthRange"](x01, x11);
         }
-        function _emscripten_glDetachShader(program, shader) {
-            GLctx.detachShader(GL.programs[program], GL.shaders[shader]);
+        function _emscripten_glDetachShader(program1, shader1) {
+            GLctx.detachShader(GL.programs[program1], GL.shaders[shader1]);
         }
-        function _emscripten_glDisable(x0) {
-            GLctx["disable"](x0);
+        function _emscripten_glDisable(x01) {
+            GLctx["disable"](x01);
         }
-        function _emscripten_glDisableVertexAttribArray(index) {
-            GLctx.disableVertexAttribArray(index);
+        function _emscripten_glDisableVertexAttribArray(index1) {
+            GLctx.disableVertexAttribArray(index1);
         }
-        function _emscripten_glDrawArrays(mode, first, count) {
-            GLctx.drawArrays(mode, first, count);
+        function _emscripten_glDrawArrays(mode1, first1, count1) {
+            GLctx.drawArrays(mode1, first1, count1);
         }
-        function _emscripten_glDrawArraysInstanced(mode, first, count, primcount) {
-            GLctx["drawArraysInstanced"](mode, first, count, primcount);
+        function _emscripten_glDrawArraysInstanced(mode1, first1, count1, primcount1) {
+            GLctx["drawArraysInstanced"](mode1, first1, count1, primcount1);
         }
         var tempFixedLengthArray = [];
-        function _emscripten_glDrawBuffers(n, bufs) {
-            var bufArray = tempFixedLengthArray[n];
-            for(var i = 0; i < n; i++)bufArray[i] = GROWABLE_HEAP_I32()[bufs + i * 4 >> 2];
-            GLctx["drawBuffers"](bufArray);
+        function _emscripten_glDrawBuffers(n1, bufs1) {
+            var bufArray1 = tempFixedLengthArray[n1];
+            for(var i1 = 0; i1 < n1; i1++)bufArray1[i1] = GROWABLE_HEAP_I32()[bufs1 + i1 * 4 >> 2];
+            GLctx["drawBuffers"](bufArray1);
         }
-        function _emscripten_glDrawElements(mode, count, type, indices) {
-            GLctx.drawElements(mode, count, type, indices);
+        function _emscripten_glDrawElements(mode1, count1, type1, indices1) {
+            GLctx.drawElements(mode1, count1, type1, indices1);
         }
-        function _emscripten_glDrawElementsInstanced(mode, count, type, indices, primcount) {
-            GLctx["drawElementsInstanced"](mode, count, type, indices, primcount);
+        function _emscripten_glDrawElementsInstanced(mode1, count1, type1, indices1, primcount1) {
+            GLctx["drawElementsInstanced"](mode1, count1, type1, indices1, primcount1);
         }
-        function _glDrawElements(mode, count, type, indices) {
-            GLctx.drawElements(mode, count, type, indices);
+        function _glDrawElements(mode1, count1, type1, indices1) {
+            GLctx.drawElements(mode1, count1, type1, indices1);
         }
-        function _emscripten_glDrawRangeElements(mode, start, end, count, type, indices) {
-            _glDrawElements(mode, count, type, indices);
+        function _emscripten_glDrawRangeElements(mode1, start1, end1, count1, type1, indices1) {
+            _glDrawElements(mode1, count1, type1, indices1);
         }
-        function _emscripten_glEnable(x0) {
-            GLctx["enable"](x0);
+        function _emscripten_glEnable(x01) {
+            GLctx["enable"](x01);
         }
-        function _emscripten_glEnableVertexAttribArray(index) {
-            GLctx.enableVertexAttribArray(index);
+        function _emscripten_glEnableVertexAttribArray(index1) {
+            GLctx.enableVertexAttribArray(index1);
         }
-        function _emscripten_glEndQuery(x0) {
-            GLctx["endQuery"](x0);
+        function _emscripten_glEndQuery(x01) {
+            GLctx["endQuery"](x01);
         }
-        function _emscripten_glEndQueryEXT(target) {
-            GLctx.disjointTimerQueryExt["endQueryEXT"](target);
+        function _emscripten_glEndQueryEXT(target1) {
+            GLctx.disjointTimerQueryExt["endQueryEXT"](target1);
         }
         function _emscripten_glEndTransformFeedback() {
             GLctx["endTransformFeedback"]();
         }
-        function _emscripten_glFenceSync(condition, flags) {
-            var sync = GLctx.fenceSync(condition, flags);
-            if (sync) {
-                var id = GL.getNewId(GL.syncs);
-                sync.name = id;
-                GL.syncs[id] = sync;
-                return id;
+        function _emscripten_glFenceSync(condition1, flags1) {
+            var sync1 = GLctx.fenceSync(condition1, flags1);
+            if (sync1) {
+                var id1 = GL.getNewId(GL.syncs);
+                sync1.name = id1;
+                GL.syncs[id1] = sync1;
+                return id1;
             } else return 0;
         }
         function _emscripten_glFinish() {
@@ -5477,173 +5477,173 @@ var Godot = (()=>{
         function _emscripten_glFlush() {
             GLctx["flush"]();
         }
-        function _emscripten_glFramebufferRenderbuffer(target, attachment, renderbuffertarget, renderbuffer) {
-            GLctx.framebufferRenderbuffer(target, attachment, renderbuffertarget, GL.renderbuffers[renderbuffer]);
+        function _emscripten_glFramebufferRenderbuffer(target1, attachment1, renderbuffertarget1, renderbuffer1) {
+            GLctx.framebufferRenderbuffer(target1, attachment1, renderbuffertarget1, GL.renderbuffers[renderbuffer1]);
         }
-        function _emscripten_glFramebufferTexture2D(target, attachment, textarget, texture, level) {
-            GLctx.framebufferTexture2D(target, attachment, textarget, GL.textures[texture], level);
+        function _emscripten_glFramebufferTexture2D(target1, attachment1, textarget1, texture1, level1) {
+            GLctx.framebufferTexture2D(target1, attachment1, textarget1, GL.textures[texture1], level1);
         }
-        function _emscripten_glFramebufferTextureLayer(target, attachment, texture, level, layer) {
-            GLctx.framebufferTextureLayer(target, attachment, GL.textures[texture], level, layer);
+        function _emscripten_glFramebufferTextureLayer(target1, attachment1, texture1, level1, layer1) {
+            GLctx.framebufferTextureLayer(target1, attachment1, GL.textures[texture1], level1, layer1);
         }
-        function _emscripten_glFrontFace(x0) {
-            GLctx["frontFace"](x0);
+        function _emscripten_glFrontFace(x01) {
+            GLctx["frontFace"](x01);
         }
-        function __glGenObject(n, buffers, createFunction, objectTable) {
-            for(var i = 0; i < n; i++){
-                var buffer = GLctx[createFunction]();
-                var id = buffer && GL.getNewId(objectTable);
-                if (buffer) {
-                    buffer.name = id;
-                    objectTable[id] = buffer;
+        function __glGenObject(n1, buffers1, createFunction1, objectTable1) {
+            for(var i1 = 0; i1 < n1; i1++){
+                var buffer1 = GLctx[createFunction1]();
+                var id1 = buffer1 && GL.getNewId(objectTable1);
+                if (buffer1) {
+                    buffer1.name = id1;
+                    objectTable1[id1] = buffer1;
                 } else GL.recordError(1282);
-                GROWABLE_HEAP_I32()[buffers + i * 4 >> 2] = id;
+                GROWABLE_HEAP_I32()[buffers1 + i1 * 4 >> 2] = id1;
             }
         }
-        function _emscripten_glGenBuffers(n, buffers) {
-            __glGenObject(n, buffers, "createBuffer", GL.buffers);
+        function _emscripten_glGenBuffers(n1, buffers1) {
+            __glGenObject(n1, buffers1, "createBuffer", GL.buffers);
         }
-        function _emscripten_glGenFramebuffers(n, ids) {
-            __glGenObject(n, ids, "createFramebuffer", GL.framebuffers);
+        function _emscripten_glGenFramebuffers(n1, ids1) {
+            __glGenObject(n1, ids1, "createFramebuffer", GL.framebuffers);
         }
-        function _emscripten_glGenQueries(n, ids) {
-            __glGenObject(n, ids, "createQuery", GL.queries);
+        function _emscripten_glGenQueries(n1, ids1) {
+            __glGenObject(n1, ids1, "createQuery", GL.queries);
         }
-        function _emscripten_glGenQueriesEXT(n, ids) {
-            for(var i = 0; i < n; i++){
-                var query = GLctx.disjointTimerQueryExt["createQueryEXT"]();
-                if (!query) {
+        function _emscripten_glGenQueriesEXT(n1, ids1) {
+            for(var i1 = 0; i1 < n1; i1++){
+                var query1 = GLctx.disjointTimerQueryExt["createQueryEXT"]();
+                if (!query1) {
                     GL.recordError(1282);
-                    while(i < n)GROWABLE_HEAP_I32()[ids + (i++) * 4 >> 2] = 0;
+                    while(i1 < n1)GROWABLE_HEAP_I32()[ids1 + i1++ * 4 >> 2] = 0;
                     return;
                 }
-                var id = GL.getNewId(GL.queries);
-                query.name = id;
-                GL.queries[id] = query;
-                GROWABLE_HEAP_I32()[ids + i * 4 >> 2] = id;
+                var id1 = GL.getNewId(GL.queries);
+                query1.name = id1;
+                GL.queries[id1] = query1;
+                GROWABLE_HEAP_I32()[ids1 + i1 * 4 >> 2] = id1;
             }
         }
-        function _emscripten_glGenRenderbuffers(n, renderbuffers) {
-            __glGenObject(n, renderbuffers, "createRenderbuffer", GL.renderbuffers);
+        function _emscripten_glGenRenderbuffers(n1, renderbuffers1) {
+            __glGenObject(n1, renderbuffers1, "createRenderbuffer", GL.renderbuffers);
         }
-        function _emscripten_glGenSamplers(n, samplers) {
-            __glGenObject(n, samplers, "createSampler", GL.samplers);
+        function _emscripten_glGenSamplers(n1, samplers1) {
+            __glGenObject(n1, samplers1, "createSampler", GL.samplers);
         }
-        function _emscripten_glGenTextures(n, textures) {
-            __glGenObject(n, textures, "createTexture", GL.textures);
+        function _emscripten_glGenTextures(n1, textures1) {
+            __glGenObject(n1, textures1, "createTexture", GL.textures);
         }
-        function _emscripten_glGenTransformFeedbacks(n, ids) {
-            __glGenObject(n, ids, "createTransformFeedback", GL.transformFeedbacks);
+        function _emscripten_glGenTransformFeedbacks(n1, ids1) {
+            __glGenObject(n1, ids1, "createTransformFeedback", GL.transformFeedbacks);
         }
-        function _emscripten_glGenVertexArrays(n, arrays) {
-            __glGenObject(n, arrays, "createVertexArray", GL.vaos);
+        function _emscripten_glGenVertexArrays(n1, arrays1) {
+            __glGenObject(n1, arrays1, "createVertexArray", GL.vaos);
         }
-        function _emscripten_glGenerateMipmap(x0) {
-            GLctx["generateMipmap"](x0);
+        function _emscripten_glGenerateMipmap(x01) {
+            GLctx["generateMipmap"](x01);
         }
-        function __glGetActiveAttribOrUniform(funcName, program, index, bufSize, length, size, type, name) {
-            program = GL.programs[program];
-            var info = GLctx[funcName](program, index);
-            if (info) {
-                var numBytesWrittenExclNull = name && stringToUTF8(info.name, name, bufSize);
-                if (length) GROWABLE_HEAP_I32()[length >> 2] = numBytesWrittenExclNull;
-                if (size) GROWABLE_HEAP_I32()[size >> 2] = info.size;
-                if (type) GROWABLE_HEAP_I32()[type >> 2] = info.type;
+        function __glGetActiveAttribOrUniform(funcName1, program1, index1, bufSize1, length1, size1, type1, name1) {
+            program1 = GL.programs[program1];
+            var info1 = GLctx[funcName1](program1, index1);
+            if (info1) {
+                var numBytesWrittenExclNull1 = name1 && stringToUTF8(info1.name, name1, bufSize1);
+                if (length1) GROWABLE_HEAP_I32()[length1 >> 2] = numBytesWrittenExclNull1;
+                if (size1) GROWABLE_HEAP_I32()[size1 >> 2] = info1.size;
+                if (type1) GROWABLE_HEAP_I32()[type1 >> 2] = info1.type;
             }
         }
-        function _emscripten_glGetActiveAttrib(program, index, bufSize, length, size, type, name) {
-            __glGetActiveAttribOrUniform("getActiveAttrib", program, index, bufSize, length, size, type, name);
+        function _emscripten_glGetActiveAttrib(program1, index1, bufSize1, length1, size1, type1, name1) {
+            __glGetActiveAttribOrUniform("getActiveAttrib", program1, index1, bufSize1, length1, size1, type1, name1);
         }
-        function _emscripten_glGetActiveUniform(program, index, bufSize, length, size, type, name) {
-            __glGetActiveAttribOrUniform("getActiveUniform", program, index, bufSize, length, size, type, name);
+        function _emscripten_glGetActiveUniform(program1, index1, bufSize1, length1, size1, type1, name1) {
+            __glGetActiveAttribOrUniform("getActiveUniform", program1, index1, bufSize1, length1, size1, type1, name1);
         }
-        function _emscripten_glGetActiveUniformBlockName(program, uniformBlockIndex, bufSize, length, uniformBlockName) {
-            program = GL.programs[program];
-            var result = GLctx["getActiveUniformBlockName"](program, uniformBlockIndex);
-            if (!result) return;
-            if (uniformBlockName && bufSize > 0) {
-                var numBytesWrittenExclNull = stringToUTF8(result, uniformBlockName, bufSize);
-                if (length) GROWABLE_HEAP_I32()[length >> 2] = numBytesWrittenExclNull;
-            } else if (length) GROWABLE_HEAP_I32()[length >> 2] = 0;
+        function _emscripten_glGetActiveUniformBlockName(program1, uniformBlockIndex1, bufSize1, length1, uniformBlockName1) {
+            program1 = GL.programs[program1];
+            var result1 = GLctx["getActiveUniformBlockName"](program1, uniformBlockIndex1);
+            if (!result1) return;
+            if (uniformBlockName1 && bufSize1 > 0) {
+                var numBytesWrittenExclNull1 = stringToUTF8(result1, uniformBlockName1, bufSize1);
+                if (length1) GROWABLE_HEAP_I32()[length1 >> 2] = numBytesWrittenExclNull1;
+            } else if (length1) GROWABLE_HEAP_I32()[length1 >> 2] = 0;
         }
-        function _emscripten_glGetActiveUniformBlockiv(program, uniformBlockIndex, pname, params) {
-            if (!params) {
+        function _emscripten_glGetActiveUniformBlockiv(program1, uniformBlockIndex1, pname1, params1) {
+            if (!params1) {
                 GL.recordError(1281);
                 return;
             }
-            program = GL.programs[program];
-            if (pname == 35393) {
-                var name = GLctx["getActiveUniformBlockName"](program, uniformBlockIndex);
-                GROWABLE_HEAP_I32()[params >> 2] = name.length + 1;
+            program1 = GL.programs[program1];
+            if (pname1 == 35393) {
+                var name1 = GLctx["getActiveUniformBlockName"](program1, uniformBlockIndex1);
+                GROWABLE_HEAP_I32()[params1 >> 2] = name1.length + 1;
                 return;
             }
-            var result = GLctx["getActiveUniformBlockParameter"](program, uniformBlockIndex, pname);
-            if (result === null) return;
-            if (pname == 35395) for(var i = 0; i < result.length; i++)GROWABLE_HEAP_I32()[params + i * 4 >> 2] = result[i];
-            else GROWABLE_HEAP_I32()[params >> 2] = result;
+            var result1 = GLctx["getActiveUniformBlockParameter"](program1, uniformBlockIndex1, pname1);
+            if (result1 === null) return;
+            if (pname1 == 35395) for(var i1 = 0; i1 < result1.length; i1++)GROWABLE_HEAP_I32()[params1 + i1 * 4 >> 2] = result1[i1];
+            else GROWABLE_HEAP_I32()[params1 >> 2] = result1;
         }
-        function _emscripten_glGetActiveUniformsiv(program, uniformCount, uniformIndices, pname, params) {
-            if (!params) {
+        function _emscripten_glGetActiveUniformsiv(program1, uniformCount1, uniformIndices1, pname1, params1) {
+            if (!params1) {
                 GL.recordError(1281);
                 return;
             }
-            if (uniformCount > 0 && uniformIndices == 0) {
+            if (uniformCount1 > 0 && uniformIndices1 == 0) {
                 GL.recordError(1281);
                 return;
             }
-            program = GL.programs[program];
-            var ids = [];
-            for(var i = 0; i < uniformCount; i++)ids.push(GROWABLE_HEAP_I32()[uniformIndices + i * 4 >> 2]);
-            var result = GLctx["getActiveUniforms"](program, ids, pname);
-            if (!result) return;
-            var len = result.length;
-            for(var i = 0; i < len; i++)GROWABLE_HEAP_I32()[params + i * 4 >> 2] = result[i];
+            program1 = GL.programs[program1];
+            var ids1 = [];
+            for(var i1 = 0; i1 < uniformCount1; i1++)ids1.push(GROWABLE_HEAP_I32()[uniformIndices1 + i1 * 4 >> 2]);
+            var result1 = GLctx["getActiveUniforms"](program1, ids1, pname1);
+            if (!result1) return;
+            var len1 = result1.length;
+            for(var i1 = 0; i1 < len1; i1++)GROWABLE_HEAP_I32()[params1 + i1 * 4 >> 2] = result1[i1];
         }
-        function _emscripten_glGetAttachedShaders(program, maxCount, count, shaders) {
-            var result = GLctx.getAttachedShaders(GL.programs[program]);
-            var len = result.length;
-            if (len > maxCount) len = maxCount;
-            GROWABLE_HEAP_I32()[count >> 2] = len;
-            for(var i = 0; i < len; ++i){
-                var id = GL.shaders.indexOf(result[i]);
-                GROWABLE_HEAP_I32()[shaders + i * 4 >> 2] = id;
+        function _emscripten_glGetAttachedShaders(program1, maxCount1, count1, shaders1) {
+            var result1 = GLctx.getAttachedShaders(GL.programs[program1]);
+            var len1 = result1.length;
+            if (len1 > maxCount1) len1 = maxCount1;
+            GROWABLE_HEAP_I32()[count1 >> 2] = len1;
+            for(var i1 = 0; i1 < len1; ++i1){
+                var id1 = GL.shaders.indexOf(result1[i1]);
+                GROWABLE_HEAP_I32()[shaders1 + i1 * 4 >> 2] = id1;
             }
         }
-        function _emscripten_glGetAttribLocation(program, name) {
-            return GLctx.getAttribLocation(GL.programs[program], UTF8ToString(name));
+        function _emscripten_glGetAttribLocation(program1, name1) {
+            return GLctx.getAttribLocation(GL.programs[program1], UTF8ToString(name1));
         }
-        function writeI53ToI64(ptr, num) {
-            GROWABLE_HEAP_U32()[ptr >> 2] = num;
-            GROWABLE_HEAP_U32()[ptr + 4 >> 2] = (num - GROWABLE_HEAP_U32()[ptr >> 2]) / 4294967296;
+        function writeI53ToI64(ptr1, num1) {
+            GROWABLE_HEAP_U32()[ptr1 >> 2] = num1;
+            GROWABLE_HEAP_U32()[ptr1 + 4 >> 2] = (num1 - GROWABLE_HEAP_U32()[ptr1 >> 2]) / 4294967296;
         }
-        function emscriptenWebGLGet(name_, p, type) {
-            if (!p) {
+        function emscriptenWebGLGet(name_1, p1, type1) {
+            if (!p1) {
                 GL.recordError(1281);
                 return;
             }
-            var ret = undefined;
-            switch(name_){
+            var ret1 = undefined;
+            switch(name_1){
                 case 36346:
-                    ret = 1;
+                    ret1 = 1;
                     break;
                 case 36344:
-                    if (type != 0 && type != 1) GL.recordError(1280);
+                    if (type1 != 0 && type1 != 1) GL.recordError(1280);
                     return;
                 case 34814:
                 case 36345:
-                    ret = 0;
+                    ret1 = 0;
                     break;
                 case 34466:
-                    var formats = GLctx.getParameter(34467);
-                    ret = formats ? formats.length : 0;
+                    var formats1 = GLctx.getParameter(34467);
+                    ret1 = formats1 ? formats1.length : 0;
                     break;
                 case 33309:
                     if (GL.currentContext.version < 2) {
                         GL.recordError(1282);
                         return;
                     }
-                    var exts = GLctx.getSupportedExtensions() || [];
-                    ret = 2 * exts.length;
+                    var exts1 = GLctx.getSupportedExtensions() || [];
+                    ret1 = 2 * exts1.length;
                     break;
                 case 33307:
                 case 33308:
@@ -5651,23 +5651,23 @@ var Godot = (()=>{
                         GL.recordError(1280);
                         return;
                     }
-                    ret = name_ == 33307 ? 3 : 0;
+                    ret1 = name_1 == 33307 ? 3 : 0;
                     break;
             }
-            if (ret === undefined) {
-                var result = GLctx.getParameter(name_);
-                switch(typeof result){
+            if (ret1 === undefined) {
+                var result1 = GLctx.getParameter(name_1);
+                switch(typeof result1){
                     case "number":
-                        ret = result;
+                        ret1 = result1;
                         break;
                     case "boolean":
-                        ret = result ? 1 : 0;
+                        ret1 = result1 ? 1 : 0;
                         break;
                     case "string":
                         GL.recordError(1280);
                         return;
                     case "object":
-                        if (result === null) switch(name_){
+                        if (result1 === null) switch(name_1){
                             case 34964:
                             case 35725:
                             case 34965:
@@ -5687,112 +5687,112 @@ var Godot = (()=>{
                             case 35983:
                             case 35368:
                             case 34068:
-                                ret = 0;
+                                ret1 = 0;
                                 break;
                             default:
                                 GL.recordError(1280);
                                 return;
                         }
-                        else if (result instanceof Float32Array || result instanceof Uint32Array || result instanceof Int32Array || result instanceof Array) {
-                            for(var i = 0; i < result.length; ++i)switch(type){
+                        else if (result1 instanceof Float32Array || result1 instanceof Uint32Array || result1 instanceof Int32Array || result1 instanceof Array) {
+                            for(var i1 = 0; i1 < result1.length; ++i1)switch(type1){
                                 case 0:
-                                    GROWABLE_HEAP_I32()[p + i * 4 >> 2] = result[i];
+                                    GROWABLE_HEAP_I32()[p1 + i1 * 4 >> 2] = result1[i1];
                                     break;
                                 case 2:
-                                    GROWABLE_HEAP_F32()[p + i * 4 >> 2] = result[i];
+                                    GROWABLE_HEAP_F32()[p1 + i1 * 4 >> 2] = result1[i1];
                                     break;
                                 case 4:
-                                    GROWABLE_HEAP_I8()[p + i >> 0] = result[i] ? 1 : 0;
+                                    GROWABLE_HEAP_I8()[p1 + i1 >> 0] = result1[i1] ? 1 : 0;
                                     break;
                             }
                             return;
                         } else try {
-                            ret = result.name | 0;
-                        } catch (e) {
+                            ret1 = result1.name | 0;
+                        } catch (e1) {
                             GL.recordError(1280);
-                            err("GL_INVALID_ENUM in glGet" + type + "v: Unknown object returned from WebGL getParameter(" + name_ + ")! (error: " + e + ")");
+                            err("GL_INVALID_ENUM in glGet" + type1 + "v: Unknown object returned from WebGL getParameter(" + name_1 + ")! (error: " + e1 + ")");
                             return;
                         }
                         break;
                     default:
                         GL.recordError(1280);
-                        err("GL_INVALID_ENUM in glGet" + type + "v: Native code calling glGet" + type + "v(" + name_ + ") and it returns " + result + " of type " + typeof result + "!");
+                        err("GL_INVALID_ENUM in glGet" + type1 + "v: Native code calling glGet" + type1 + "v(" + name_1 + ") and it returns " + result1 + " of type " + typeof result1 + "!");
                         return;
                 }
             }
-            switch(type){
+            switch(type1){
                 case 1:
-                    writeI53ToI64(p, ret);
+                    writeI53ToI64(p1, ret1);
                     break;
                 case 0:
-                    GROWABLE_HEAP_I32()[p >> 2] = ret;
+                    GROWABLE_HEAP_I32()[p1 >> 2] = ret1;
                     break;
                 case 2:
-                    GROWABLE_HEAP_F32()[p >> 2] = ret;
+                    GROWABLE_HEAP_F32()[p1 >> 2] = ret1;
                     break;
                 case 4:
-                    GROWABLE_HEAP_I8()[p >> 0] = ret ? 1 : 0;
+                    GROWABLE_HEAP_I8()[p1 >> 0] = ret1 ? 1 : 0;
                     break;
             }
         }
-        function _emscripten_glGetBooleanv(name_, p) {
-            emscriptenWebGLGet(name_, p, 4);
+        function _emscripten_glGetBooleanv(name_1, p1) {
+            emscriptenWebGLGet(name_1, p1, 4);
         }
-        function _emscripten_glGetBufferParameteri64v(target, value, data) {
-            if (!data) {
+        function _emscripten_glGetBufferParameteri64v(target1, value1, data1) {
+            if (!data1) {
                 GL.recordError(1281);
                 return;
             }
-            writeI53ToI64(data, GLctx.getBufferParameter(target, value));
+            writeI53ToI64(data1, GLctx.getBufferParameter(target1, value1));
         }
-        function _emscripten_glGetBufferParameteriv(target, value, data) {
-            if (!data) {
+        function _emscripten_glGetBufferParameteriv(target1, value1, data1) {
+            if (!data1) {
                 GL.recordError(1281);
                 return;
             }
-            GROWABLE_HEAP_I32()[data >> 2] = GLctx.getBufferParameter(target, value);
+            GROWABLE_HEAP_I32()[data1 >> 2] = GLctx.getBufferParameter(target1, value1);
         }
         function _emscripten_glGetError() {
-            var error = GLctx.getError() || GL.lastError;
+            var error1 = GLctx.getError() || GL.lastError;
             GL.lastError = 0;
-            return error;
+            return error1;
         }
-        function _emscripten_glGetFloatv(name_, p) {
-            emscriptenWebGLGet(name_, p, 2);
+        function _emscripten_glGetFloatv(name_1, p1) {
+            emscriptenWebGLGet(name_1, p1, 2);
         }
-        function _emscripten_glGetFragDataLocation(program, name) {
-            return GLctx["getFragDataLocation"](GL.programs[program], UTF8ToString(name));
+        function _emscripten_glGetFragDataLocation(program1, name1) {
+            return GLctx["getFragDataLocation"](GL.programs[program1], UTF8ToString(name1));
         }
-        function _emscripten_glGetFramebufferAttachmentParameteriv(target, attachment, pname, params) {
-            var result = GLctx.getFramebufferAttachmentParameter(target, attachment, pname);
-            if (result instanceof WebGLRenderbuffer || result instanceof WebGLTexture) result = result.name | 0;
-            GROWABLE_HEAP_I32()[params >> 2] = result;
+        function _emscripten_glGetFramebufferAttachmentParameteriv(target1, attachment1, pname1, params1) {
+            var result1 = GLctx.getFramebufferAttachmentParameter(target1, attachment1, pname1);
+            if (result1 instanceof WebGLRenderbuffer || result1 instanceof WebGLTexture) result1 = result1.name | 0;
+            GROWABLE_HEAP_I32()[params1 >> 2] = result1;
         }
-        function emscriptenWebGLGetIndexed(target, index, data, type) {
-            if (!data) {
+        function emscriptenWebGLGetIndexed(target1, index1, data1, type1) {
+            if (!data1) {
                 GL.recordError(1281);
                 return;
             }
-            var result = GLctx["getIndexedParameter"](target, index);
-            var ret;
-            switch(typeof result){
+            var result1 = GLctx["getIndexedParameter"](target1, index1);
+            var ret1;
+            switch(typeof result1){
                 case "boolean":
-                    ret = result ? 1 : 0;
+                    ret1 = result1 ? 1 : 0;
                     break;
                 case "number":
-                    ret = result;
+                    ret1 = result1;
                     break;
                 case "object":
-                    if (result === null) switch(target){
+                    if (result1 === null) switch(target1){
                         case 35983:
                         case 35368:
-                            ret = 0;
+                            ret1 = 0;
                             break;
                         default:
                             GL.recordError(1280);
                             return;
                     }
-                    else if (result instanceof WebGLBuffer) ret = result.name | 0;
+                    else if (result1 instanceof WebGLBuffer) ret1 = result1.name | 0;
                     else {
                         GL.recordError(1280);
                         return;
@@ -5802,607 +5802,607 @@ var Godot = (()=>{
                     GL.recordError(1280);
                     return;
             }
-            switch(type){
+            switch(type1){
                 case 1:
-                    writeI53ToI64(data, ret);
+                    writeI53ToI64(data1, ret1);
                     break;
                 case 0:
-                    GROWABLE_HEAP_I32()[data >> 2] = ret;
+                    GROWABLE_HEAP_I32()[data1 >> 2] = ret1;
                     break;
                 case 2:
-                    GROWABLE_HEAP_F32()[data >> 2] = ret;
+                    GROWABLE_HEAP_F32()[data1 >> 2] = ret1;
                     break;
                 case 4:
-                    GROWABLE_HEAP_I8()[data >> 0] = ret ? 1 : 0;
+                    GROWABLE_HEAP_I8()[data1 >> 0] = ret1 ? 1 : 0;
                     break;
                 default:
-                    throw "internal emscriptenWebGLGetIndexed() error, bad type: " + type;
+                    throw "internal emscriptenWebGLGetIndexed() error, bad type: " + type1;
             }
         }
-        function _emscripten_glGetInteger64i_v(target, index, data) {
-            emscriptenWebGLGetIndexed(target, index, data, 1);
+        function _emscripten_glGetInteger64i_v(target1, index1, data1) {
+            emscriptenWebGLGetIndexed(target1, index1, data1, 1);
         }
-        function _emscripten_glGetInteger64v(name_, p) {
-            emscriptenWebGLGet(name_, p, 1);
+        function _emscripten_glGetInteger64v(name_1, p1) {
+            emscriptenWebGLGet(name_1, p1, 1);
         }
-        function _emscripten_glGetIntegeri_v(target, index, data) {
-            emscriptenWebGLGetIndexed(target, index, data, 0);
+        function _emscripten_glGetIntegeri_v(target1, index1, data1) {
+            emscriptenWebGLGetIndexed(target1, index1, data1, 0);
         }
-        function _emscripten_glGetIntegerv(name_, p) {
-            emscriptenWebGLGet(name_, p, 0);
+        function _emscripten_glGetIntegerv(name_1, p1) {
+            emscriptenWebGLGet(name_1, p1, 0);
         }
-        function _emscripten_glGetInternalformativ(target, internalformat, pname, bufSize, params) {
-            if (bufSize < 0) {
+        function _emscripten_glGetInternalformativ(target1, internalformat1, pname1, bufSize1, params1) {
+            if (bufSize1 < 0) {
                 GL.recordError(1281);
                 return;
             }
-            if (!params) {
+            if (!params1) {
                 GL.recordError(1281);
                 return;
             }
-            var ret = GLctx["getInternalformatParameter"](target, internalformat, pname);
-            if (ret === null) return;
-            for(var i = 0; i < ret.length && i < bufSize; ++i)GROWABLE_HEAP_I32()[params + i * 4 >> 2] = ret[i];
+            var ret1 = GLctx["getInternalformatParameter"](target1, internalformat1, pname1);
+            if (ret1 === null) return;
+            for(var i1 = 0; i1 < ret1.length && i1 < bufSize1; ++i1)GROWABLE_HEAP_I32()[params1 + i1 * 4 >> 2] = ret1[i1];
         }
-        function _emscripten_glGetProgramBinary(program, bufSize, length, binaryFormat, binary) {
+        function _emscripten_glGetProgramBinary(program1, bufSize1, length1, binaryFormat1, binary1) {
             GL.recordError(1282);
         }
-        function _emscripten_glGetProgramInfoLog(program, maxLength, length, infoLog) {
-            var log = GLctx.getProgramInfoLog(GL.programs[program]);
-            if (log === null) log = "(unknown error)";
-            var numBytesWrittenExclNull = maxLength > 0 && infoLog ? stringToUTF8(log, infoLog, maxLength) : 0;
-            if (length) GROWABLE_HEAP_I32()[length >> 2] = numBytesWrittenExclNull;
+        function _emscripten_glGetProgramInfoLog(program1, maxLength1, length1, infoLog1) {
+            var log1 = GLctx.getProgramInfoLog(GL.programs[program1]);
+            if (log1 === null) log1 = "(unknown error)";
+            var numBytesWrittenExclNull1 = maxLength1 > 0 && infoLog1 ? stringToUTF8(log1, infoLog1, maxLength1) : 0;
+            if (length1) GROWABLE_HEAP_I32()[length1 >> 2] = numBytesWrittenExclNull1;
         }
-        function _emscripten_glGetProgramiv(program, pname, p) {
-            if (!p) {
+        function _emscripten_glGetProgramiv(program1, pname1, p1) {
+            if (!p1) {
                 GL.recordError(1281);
                 return;
             }
-            if (program >= GL.counter) {
+            if (program1 >= GL.counter) {
                 GL.recordError(1281);
                 return;
             }
-            program = GL.programs[program];
-            if (pname == 35716) {
-                var log = GLctx.getProgramInfoLog(program);
-                if (log === null) log = "(unknown error)";
-                GROWABLE_HEAP_I32()[p >> 2] = log.length + 1;
-            } else if (pname == 35719) {
-                if (!program.maxUniformLength) for(var i = 0; i < GLctx.getProgramParameter(program, 35718); ++i)program.maxUniformLength = Math.max(program.maxUniformLength, GLctx.getActiveUniform(program, i).name.length + 1);
-                GROWABLE_HEAP_I32()[p >> 2] = program.maxUniformLength;
-            } else if (pname == 35722) {
-                if (!program.maxAttributeLength) for(var i = 0; i < GLctx.getProgramParameter(program, 35721); ++i)program.maxAttributeLength = Math.max(program.maxAttributeLength, GLctx.getActiveAttrib(program, i).name.length + 1);
-                GROWABLE_HEAP_I32()[p >> 2] = program.maxAttributeLength;
-            } else if (pname == 35381) {
-                if (!program.maxUniformBlockNameLength) for(var i = 0; i < GLctx.getProgramParameter(program, 35382); ++i)program.maxUniformBlockNameLength = Math.max(program.maxUniformBlockNameLength, GLctx.getActiveUniformBlockName(program, i).length + 1);
-                GROWABLE_HEAP_I32()[p >> 2] = program.maxUniformBlockNameLength;
-            } else GROWABLE_HEAP_I32()[p >> 2] = GLctx.getProgramParameter(program, pname);
+            program1 = GL.programs[program1];
+            if (pname1 == 35716) {
+                var log1 = GLctx.getProgramInfoLog(program1);
+                if (log1 === null) log1 = "(unknown error)";
+                GROWABLE_HEAP_I32()[p1 >> 2] = log1.length + 1;
+            } else if (pname1 == 35719) {
+                if (!program1.maxUniformLength) for(var i1 = 0; i1 < GLctx.getProgramParameter(program1, 35718); ++i1)program1.maxUniformLength = Math.max(program1.maxUniformLength, GLctx.getActiveUniform(program1, i1).name.length + 1);
+                GROWABLE_HEAP_I32()[p1 >> 2] = program1.maxUniformLength;
+            } else if (pname1 == 35722) {
+                if (!program1.maxAttributeLength) for(var i1 = 0; i1 < GLctx.getProgramParameter(program1, 35721); ++i1)program1.maxAttributeLength = Math.max(program1.maxAttributeLength, GLctx.getActiveAttrib(program1, i1).name.length + 1);
+                GROWABLE_HEAP_I32()[p1 >> 2] = program1.maxAttributeLength;
+            } else if (pname1 == 35381) {
+                if (!program1.maxUniformBlockNameLength) for(var i1 = 0; i1 < GLctx.getProgramParameter(program1, 35382); ++i1)program1.maxUniformBlockNameLength = Math.max(program1.maxUniformBlockNameLength, GLctx.getActiveUniformBlockName(program1, i1).length + 1);
+                GROWABLE_HEAP_I32()[p1 >> 2] = program1.maxUniformBlockNameLength;
+            } else GROWABLE_HEAP_I32()[p1 >> 2] = GLctx.getProgramParameter(program1, pname1);
         }
-        function _emscripten_glGetQueryObjecti64vEXT(id, pname, params) {
-            if (!params) {
+        function _emscripten_glGetQueryObjecti64vEXT(id1, pname1, params1) {
+            if (!params1) {
                 GL.recordError(1281);
                 return;
             }
-            var query = GL.queries[id];
-            var param;
-            if (GL.currentContext.version < 2) param = GLctx.disjointTimerQueryExt["getQueryObjectEXT"](query, pname);
-            else param = GLctx["getQueryParameter"](query, pname);
-            var ret;
-            if (typeof param == "boolean") ret = param ? 1 : 0;
-            else ret = param;
-            writeI53ToI64(params, ret);
+            var query1 = GL.queries[id1];
+            var param1;
+            if (GL.currentContext.version < 2) param1 = GLctx.disjointTimerQueryExt["getQueryObjectEXT"](query1, pname1);
+            else param1 = GLctx["getQueryParameter"](query1, pname1);
+            var ret1;
+            if (typeof param1 == "boolean") ret1 = param1 ? 1 : 0;
+            else ret1 = param1;
+            writeI53ToI64(params1, ret1);
         }
-        function _emscripten_glGetQueryObjectivEXT(id, pname, params) {
-            if (!params) {
+        function _emscripten_glGetQueryObjectivEXT(id1, pname1, params1) {
+            if (!params1) {
                 GL.recordError(1281);
                 return;
             }
-            var query = GL.queries[id];
-            var param = GLctx.disjointTimerQueryExt["getQueryObjectEXT"](query, pname);
-            var ret;
-            if (typeof param == "boolean") ret = param ? 1 : 0;
-            else ret = param;
-            GROWABLE_HEAP_I32()[params >> 2] = ret;
+            var query1 = GL.queries[id1];
+            var param1 = GLctx.disjointTimerQueryExt["getQueryObjectEXT"](query1, pname1);
+            var ret1;
+            if (typeof param1 == "boolean") ret1 = param1 ? 1 : 0;
+            else ret1 = param1;
+            GROWABLE_HEAP_I32()[params1 >> 2] = ret1;
         }
-        function _emscripten_glGetQueryObjectui64vEXT(id, pname, params) {
-            if (!params) {
+        function _emscripten_glGetQueryObjectui64vEXT(id1, pname1, params1) {
+            if (!params1) {
                 GL.recordError(1281);
                 return;
             }
-            var query = GL.queries[id];
-            var param;
-            if (GL.currentContext.version < 2) param = GLctx.disjointTimerQueryExt["getQueryObjectEXT"](query, pname);
-            else param = GLctx["getQueryParameter"](query, pname);
-            var ret;
-            if (typeof param == "boolean") ret = param ? 1 : 0;
-            else ret = param;
-            writeI53ToI64(params, ret);
+            var query1 = GL.queries[id1];
+            var param1;
+            if (GL.currentContext.version < 2) param1 = GLctx.disjointTimerQueryExt["getQueryObjectEXT"](query1, pname1);
+            else param1 = GLctx["getQueryParameter"](query1, pname1);
+            var ret1;
+            if (typeof param1 == "boolean") ret1 = param1 ? 1 : 0;
+            else ret1 = param1;
+            writeI53ToI64(params1, ret1);
         }
-        function _emscripten_glGetQueryObjectuiv(id, pname, params) {
-            if (!params) {
+        function _emscripten_glGetQueryObjectuiv(id1, pname1, params1) {
+            if (!params1) {
                 GL.recordError(1281);
                 return;
             }
-            var query = GL.queries[id];
-            var param = GLctx["getQueryParameter"](query, pname);
-            var ret;
-            if (typeof param == "boolean") ret = param ? 1 : 0;
-            else ret = param;
-            GROWABLE_HEAP_I32()[params >> 2] = ret;
+            var query1 = GL.queries[id1];
+            var param1 = GLctx["getQueryParameter"](query1, pname1);
+            var ret1;
+            if (typeof param1 == "boolean") ret1 = param1 ? 1 : 0;
+            else ret1 = param1;
+            GROWABLE_HEAP_I32()[params1 >> 2] = ret1;
         }
-        function _emscripten_glGetQueryObjectuivEXT(id, pname, params) {
-            if (!params) {
+        function _emscripten_glGetQueryObjectuivEXT(id1, pname1, params1) {
+            if (!params1) {
                 GL.recordError(1281);
                 return;
             }
-            var query = GL.queries[id];
-            var param = GLctx.disjointTimerQueryExt["getQueryObjectEXT"](query, pname);
-            var ret;
-            if (typeof param == "boolean") ret = param ? 1 : 0;
-            else ret = param;
-            GROWABLE_HEAP_I32()[params >> 2] = ret;
+            var query1 = GL.queries[id1];
+            var param1 = GLctx.disjointTimerQueryExt["getQueryObjectEXT"](query1, pname1);
+            var ret1;
+            if (typeof param1 == "boolean") ret1 = param1 ? 1 : 0;
+            else ret1 = param1;
+            GROWABLE_HEAP_I32()[params1 >> 2] = ret1;
         }
-        function _emscripten_glGetQueryiv(target, pname, params) {
-            if (!params) {
+        function _emscripten_glGetQueryiv(target1, pname1, params1) {
+            if (!params1) {
                 GL.recordError(1281);
                 return;
             }
-            GROWABLE_HEAP_I32()[params >> 2] = GLctx["getQuery"](target, pname);
+            GROWABLE_HEAP_I32()[params1 >> 2] = GLctx["getQuery"](target1, pname1);
         }
-        function _emscripten_glGetQueryivEXT(target, pname, params) {
-            if (!params) {
+        function _emscripten_glGetQueryivEXT(target1, pname1, params1) {
+            if (!params1) {
                 GL.recordError(1281);
                 return;
             }
-            GROWABLE_HEAP_I32()[params >> 2] = GLctx.disjointTimerQueryExt["getQueryEXT"](target, pname);
+            GROWABLE_HEAP_I32()[params1 >> 2] = GLctx.disjointTimerQueryExt["getQueryEXT"](target1, pname1);
         }
-        function _emscripten_glGetRenderbufferParameteriv(target, pname, params) {
-            if (!params) {
+        function _emscripten_glGetRenderbufferParameteriv(target1, pname1, params1) {
+            if (!params1) {
                 GL.recordError(1281);
                 return;
             }
-            GROWABLE_HEAP_I32()[params >> 2] = GLctx.getRenderbufferParameter(target, pname);
+            GROWABLE_HEAP_I32()[params1 >> 2] = GLctx.getRenderbufferParameter(target1, pname1);
         }
-        function _emscripten_glGetSamplerParameterfv(sampler, pname, params) {
-            if (!params) {
+        function _emscripten_glGetSamplerParameterfv(sampler1, pname1, params1) {
+            if (!params1) {
                 GL.recordError(1281);
                 return;
             }
-            GROWABLE_HEAP_F32()[params >> 2] = GLctx["getSamplerParameter"](GL.samplers[sampler], pname);
+            GROWABLE_HEAP_F32()[params1 >> 2] = GLctx["getSamplerParameter"](GL.samplers[sampler1], pname1);
         }
-        function _emscripten_glGetSamplerParameteriv(sampler, pname, params) {
-            if (!params) {
+        function _emscripten_glGetSamplerParameteriv(sampler1, pname1, params1) {
+            if (!params1) {
                 GL.recordError(1281);
                 return;
             }
-            GROWABLE_HEAP_I32()[params >> 2] = GLctx["getSamplerParameter"](GL.samplers[sampler], pname);
+            GROWABLE_HEAP_I32()[params1 >> 2] = GLctx["getSamplerParameter"](GL.samplers[sampler1], pname1);
         }
-        function _emscripten_glGetShaderInfoLog(shader, maxLength, length, infoLog) {
-            var log = GLctx.getShaderInfoLog(GL.shaders[shader]);
-            if (log === null) log = "(unknown error)";
-            var numBytesWrittenExclNull = maxLength > 0 && infoLog ? stringToUTF8(log, infoLog, maxLength) : 0;
-            if (length) GROWABLE_HEAP_I32()[length >> 2] = numBytesWrittenExclNull;
+        function _emscripten_glGetShaderInfoLog(shader1, maxLength1, length1, infoLog1) {
+            var log1 = GLctx.getShaderInfoLog(GL.shaders[shader1]);
+            if (log1 === null) log1 = "(unknown error)";
+            var numBytesWrittenExclNull1 = maxLength1 > 0 && infoLog1 ? stringToUTF8(log1, infoLog1, maxLength1) : 0;
+            if (length1) GROWABLE_HEAP_I32()[length1 >> 2] = numBytesWrittenExclNull1;
         }
-        function _emscripten_glGetShaderPrecisionFormat(shaderType, precisionType, range, precision) {
-            var result = GLctx.getShaderPrecisionFormat(shaderType, precisionType);
-            GROWABLE_HEAP_I32()[range >> 2] = result.rangeMin;
-            GROWABLE_HEAP_I32()[range + 4 >> 2] = result.rangeMax;
-            GROWABLE_HEAP_I32()[precision >> 2] = result.precision;
+        function _emscripten_glGetShaderPrecisionFormat(shaderType1, precisionType1, range1, precision1) {
+            var result1 = GLctx.getShaderPrecisionFormat(shaderType1, precisionType1);
+            GROWABLE_HEAP_I32()[range1 >> 2] = result1.rangeMin;
+            GROWABLE_HEAP_I32()[range1 + 4 >> 2] = result1.rangeMax;
+            GROWABLE_HEAP_I32()[precision1 >> 2] = result1.precision;
         }
-        function _emscripten_glGetShaderSource(shader, bufSize, length, source) {
-            var result = GLctx.getShaderSource(GL.shaders[shader]);
-            if (!result) return;
-            var numBytesWrittenExclNull = bufSize > 0 && source ? stringToUTF8(result, source, bufSize) : 0;
-            if (length) GROWABLE_HEAP_I32()[length >> 2] = numBytesWrittenExclNull;
+        function _emscripten_glGetShaderSource(shader1, bufSize1, length1, source1) {
+            var result1 = GLctx.getShaderSource(GL.shaders[shader1]);
+            if (!result1) return;
+            var numBytesWrittenExclNull1 = bufSize1 > 0 && source1 ? stringToUTF8(result1, source1, bufSize1) : 0;
+            if (length1) GROWABLE_HEAP_I32()[length1 >> 2] = numBytesWrittenExclNull1;
         }
-        function _emscripten_glGetShaderiv(shader, pname, p) {
-            if (!p) {
+        function _emscripten_glGetShaderiv(shader1, pname1, p1) {
+            if (!p1) {
                 GL.recordError(1281);
                 return;
             }
-            if (pname == 35716) {
-                var log = GLctx.getShaderInfoLog(GL.shaders[shader]);
-                if (log === null) log = "(unknown error)";
-                var logLength = log ? log.length + 1 : 0;
-                GROWABLE_HEAP_I32()[p >> 2] = logLength;
-            } else if (pname == 35720) {
-                var source = GLctx.getShaderSource(GL.shaders[shader]);
-                var sourceLength = source ? source.length + 1 : 0;
-                GROWABLE_HEAP_I32()[p >> 2] = sourceLength;
-            } else GROWABLE_HEAP_I32()[p >> 2] = GLctx.getShaderParameter(GL.shaders[shader], pname);
+            if (pname1 == 35716) {
+                var log1 = GLctx.getShaderInfoLog(GL.shaders[shader1]);
+                if (log1 === null) log1 = "(unknown error)";
+                var logLength1 = log1 ? log1.length + 1 : 0;
+                GROWABLE_HEAP_I32()[p1 >> 2] = logLength1;
+            } else if (pname1 == 35720) {
+                var source1 = GLctx.getShaderSource(GL.shaders[shader1]);
+                var sourceLength1 = source1 ? source1.length + 1 : 0;
+                GROWABLE_HEAP_I32()[p1 >> 2] = sourceLength1;
+            } else GROWABLE_HEAP_I32()[p1 >> 2] = GLctx.getShaderParameter(GL.shaders[shader1], pname1);
         }
-        function stringToNewUTF8(jsString) {
-            var length = lengthBytesUTF8(jsString) + 1;
-            var cString = _malloc(length);
-            stringToUTF8(jsString, cString, length);
-            return cString;
+        function stringToNewUTF8(jsString1) {
+            var length1 = lengthBytesUTF8(jsString1) + 1;
+            var cString1 = _malloc(length1);
+            stringToUTF8(jsString1, cString1, length1);
+            return cString1;
         }
-        function _emscripten_glGetString(name_) {
-            var ret = GL.stringCache[name_];
-            if (!ret) {
-                switch(name_){
+        function _emscripten_glGetString(name_1) {
+            var ret1 = GL.stringCache[name_1];
+            if (!ret1) {
+                switch(name_1){
                     case 7939:
-                        var exts = GLctx.getSupportedExtensions() || [];
-                        exts = exts.concat(exts.map(function(e) {
-                            return "GL_" + e;
+                        var exts1 = GLctx.getSupportedExtensions() || [];
+                        exts1 = exts1.concat(exts1.map(function(e1) {
+                            return "GL_" + e1;
                         }));
-                        ret = stringToNewUTF8(exts.join(" "));
+                        ret1 = stringToNewUTF8(exts1.join(" "));
                         break;
                     case 7936:
                     case 7937:
                     case 37445:
                     case 37446:
-                        var s = GLctx.getParameter(name_);
-                        if (!s) GL.recordError(1280);
-                        ret = s && stringToNewUTF8(s);
+                        var s1 = GLctx.getParameter(name_1);
+                        if (!s1) GL.recordError(1280);
+                        ret1 = s1 && stringToNewUTF8(s1);
                         break;
                     case 7938:
-                        var glVersion = GLctx.getParameter(7938);
-                        if (GL.currentContext.version >= 2) glVersion = "OpenGL ES 3.0 (" + glVersion + ")";
-                        else glVersion = "OpenGL ES 2.0 (" + glVersion + ")";
-                        ret = stringToNewUTF8(glVersion);
+                        var glVersion1 = GLctx.getParameter(7938);
+                        if (GL.currentContext.version >= 2) glVersion1 = "OpenGL ES 3.0 (" + glVersion1 + ")";
+                        else glVersion1 = "OpenGL ES 2.0 (" + glVersion1 + ")";
+                        ret1 = stringToNewUTF8(glVersion1);
                         break;
                     case 35724:
-                        var glslVersion = GLctx.getParameter(35724);
-                        var ver_re = /^WebGL GLSL ES ([0-9]\.[0-9][0-9]?)(?:$| .*)/;
-                        var ver_num = glslVersion.match(ver_re);
-                        if (ver_num !== null) {
-                            if (ver_num[1].length == 3) ver_num[1] = ver_num[1] + "0";
-                            glslVersion = "OpenGL ES GLSL ES " + ver_num[1] + " (" + glslVersion + ")";
+                        var glslVersion1 = GLctx.getParameter(35724);
+                        var ver_re1 = /^WebGL GLSL ES ([0-9]\.[0-9][0-9]?)(?:$| .*)/;
+                        var ver_num1 = glslVersion1.match(ver_re1);
+                        if (ver_num1 !== null) {
+                            if (ver_num1[1].length == 3) ver_num1[1] = ver_num1[1] + "0";
+                            glslVersion1 = "OpenGL ES GLSL ES " + ver_num1[1] + " (" + glslVersion1 + ")";
                         }
-                        ret = stringToNewUTF8(glslVersion);
+                        ret1 = stringToNewUTF8(glslVersion1);
                         break;
                     default:
                         GL.recordError(1280);
                 }
-                GL.stringCache[name_] = ret;
+                GL.stringCache[name_1] = ret1;
             }
-            return ret;
+            return ret1;
         }
-        function _emscripten_glGetStringi(name, index) {
+        function _emscripten_glGetStringi(name1, index1) {
             if (GL.currentContext.version < 2) {
                 GL.recordError(1282);
                 return 0;
             }
-            var stringiCache = GL.stringiCache[name];
-            if (stringiCache) {
-                if (index < 0 || index >= stringiCache.length) {
+            var stringiCache1 = GL.stringiCache[name1];
+            if (stringiCache1) {
+                if (index1 < 0 || index1 >= stringiCache1.length) {
                     GL.recordError(1281);
                     return 0;
                 }
-                return stringiCache[index];
+                return stringiCache1[index1];
             }
-            switch(name){
+            switch(name1){
                 case 7939:
-                    var exts = GLctx.getSupportedExtensions() || [];
-                    exts = exts.concat(exts.map(function(e) {
-                        return "GL_" + e;
+                    var exts1 = GLctx.getSupportedExtensions() || [];
+                    exts1 = exts1.concat(exts1.map(function(e1) {
+                        return "GL_" + e1;
                     }));
-                    exts = exts.map(function(e) {
-                        return stringToNewUTF8(e);
+                    exts1 = exts1.map(function(e1) {
+                        return stringToNewUTF8(e1);
                     });
-                    stringiCache = GL.stringiCache[name] = exts;
-                    if (index < 0 || index >= stringiCache.length) {
+                    stringiCache1 = GL.stringiCache[name1] = exts1;
+                    if (index1 < 0 || index1 >= stringiCache1.length) {
                         GL.recordError(1281);
                         return 0;
                     }
-                    return stringiCache[index];
+                    return stringiCache1[index1];
                 default:
                     GL.recordError(1280);
                     return 0;
             }
         }
-        function _emscripten_glGetSynciv(sync, pname, bufSize, length, values) {
-            if (bufSize < 0) {
+        function _emscripten_glGetSynciv(sync1, pname1, bufSize1, length1, values1) {
+            if (bufSize1 < 0) {
                 GL.recordError(1281);
                 return;
             }
-            if (!values) {
+            if (!values1) {
                 GL.recordError(1281);
                 return;
             }
-            var ret = GLctx.getSyncParameter(GL.syncs[sync], pname);
-            if (ret !== null) {
-                GROWABLE_HEAP_I32()[values >> 2] = ret;
-                if (length) GROWABLE_HEAP_I32()[length >> 2] = 1;
+            var ret1 = GLctx.getSyncParameter(GL.syncs[sync1], pname1);
+            if (ret1 !== null) {
+                GROWABLE_HEAP_I32()[values1 >> 2] = ret1;
+                if (length1) GROWABLE_HEAP_I32()[length1 >> 2] = 1;
             }
         }
-        function _emscripten_glGetTexParameterfv(target, pname, params) {
-            if (!params) {
+        function _emscripten_glGetTexParameterfv(target1, pname1, params1) {
+            if (!params1) {
                 GL.recordError(1281);
                 return;
             }
-            GROWABLE_HEAP_F32()[params >> 2] = GLctx.getTexParameter(target, pname);
+            GROWABLE_HEAP_F32()[params1 >> 2] = GLctx.getTexParameter(target1, pname1);
         }
-        function _emscripten_glGetTexParameteriv(target, pname, params) {
-            if (!params) {
+        function _emscripten_glGetTexParameteriv(target1, pname1, params1) {
+            if (!params1) {
                 GL.recordError(1281);
                 return;
             }
-            GROWABLE_HEAP_I32()[params >> 2] = GLctx.getTexParameter(target, pname);
+            GROWABLE_HEAP_I32()[params1 >> 2] = GLctx.getTexParameter(target1, pname1);
         }
-        function _emscripten_glGetTransformFeedbackVarying(program, index, bufSize, length, size, type, name) {
-            program = GL.programs[program];
-            var info = GLctx["getTransformFeedbackVarying"](program, index);
-            if (!info) return;
-            if (name && bufSize > 0) {
-                var numBytesWrittenExclNull = stringToUTF8(info.name, name, bufSize);
-                if (length) GROWABLE_HEAP_I32()[length >> 2] = numBytesWrittenExclNull;
-            } else if (length) GROWABLE_HEAP_I32()[length >> 2] = 0;
-            if (size) GROWABLE_HEAP_I32()[size >> 2] = info.size;
-            if (type) GROWABLE_HEAP_I32()[type >> 2] = info.type;
+        function _emscripten_glGetTransformFeedbackVarying(program1, index1, bufSize1, length1, size1, type1, name1) {
+            program1 = GL.programs[program1];
+            var info1 = GLctx["getTransformFeedbackVarying"](program1, index1);
+            if (!info1) return;
+            if (name1 && bufSize1 > 0) {
+                var numBytesWrittenExclNull1 = stringToUTF8(info1.name, name1, bufSize1);
+                if (length1) GROWABLE_HEAP_I32()[length1 >> 2] = numBytesWrittenExclNull1;
+            } else if (length1) GROWABLE_HEAP_I32()[length1 >> 2] = 0;
+            if (size1) GROWABLE_HEAP_I32()[size1 >> 2] = info1.size;
+            if (type1) GROWABLE_HEAP_I32()[type1 >> 2] = info1.type;
         }
-        function _emscripten_glGetUniformBlockIndex(program, uniformBlockName) {
-            return GLctx["getUniformBlockIndex"](GL.programs[program], UTF8ToString(uniformBlockName));
+        function _emscripten_glGetUniformBlockIndex(program1, uniformBlockName1) {
+            return GLctx["getUniformBlockIndex"](GL.programs[program1], UTF8ToString(uniformBlockName1));
         }
-        function _emscripten_glGetUniformIndices(program, uniformCount, uniformNames, uniformIndices) {
-            if (!uniformIndices) {
+        function _emscripten_glGetUniformIndices(program1, uniformCount1, uniformNames1, uniformIndices1) {
+            if (!uniformIndices1) {
                 GL.recordError(1281);
                 return;
             }
-            if (uniformCount > 0 && (uniformNames == 0 || uniformIndices == 0)) {
+            if (uniformCount1 > 0 && (uniformNames1 == 0 || uniformIndices1 == 0)) {
                 GL.recordError(1281);
                 return;
             }
-            program = GL.programs[program];
-            var names = [];
-            for(var i = 0; i < uniformCount; i++)names.push(UTF8ToString(GROWABLE_HEAP_I32()[uniformNames + i * 4 >> 2]));
-            var result = GLctx["getUniformIndices"](program, names);
-            if (!result) return;
-            var len = result.length;
-            for(var i = 0; i < len; i++)GROWABLE_HEAP_I32()[uniformIndices + i * 4 >> 2] = result[i];
+            program1 = GL.programs[program1];
+            var names1 = [];
+            for(var i1 = 0; i1 < uniformCount1; i1++)names1.push(UTF8ToString(GROWABLE_HEAP_I32()[uniformNames1 + i1 * 4 >> 2]));
+            var result1 = GLctx["getUniformIndices"](program1, names1);
+            if (!result1) return;
+            var len1 = result1.length;
+            for(var i1 = 0; i1 < len1; i1++)GROWABLE_HEAP_I32()[uniformIndices1 + i1 * 4 >> 2] = result1[i1];
         }
-        function webglGetLeftBracePos(name) {
-            return name.slice(-1) == "]" && name.lastIndexOf("[");
+        function webglGetLeftBracePos(name1) {
+            return name1.slice(-1) == "]" && name1.lastIndexOf("[");
         }
-        function webglPrepareUniformLocationsBeforeFirstUse(program) {
-            var uniformLocsById = program.uniformLocsById, uniformSizeAndIdsByName = program.uniformSizeAndIdsByName, i, j;
-            if (!uniformLocsById) {
-                program.uniformLocsById = uniformLocsById = {};
-                program.uniformArrayNamesById = {};
-                for(i = 0; i < GLctx.getProgramParameter(program, 35718); ++i){
-                    var u = GLctx.getActiveUniform(program, i);
-                    var nm = u.name;
-                    var sz = u.size;
-                    var lb = webglGetLeftBracePos(nm);
-                    var arrayName = lb > 0 ? nm.slice(0, lb) : nm;
-                    var id = program.uniformIdCounter;
-                    program.uniformIdCounter += sz;
-                    uniformSizeAndIdsByName[arrayName] = [
-                        sz,
-                        id
+        function webglPrepareUniformLocationsBeforeFirstUse(program1) {
+            var uniformLocsById1 = program1.uniformLocsById, uniformSizeAndIdsByName1 = program1.uniformSizeAndIdsByName, i1, j1;
+            if (!uniformLocsById1) {
+                program1.uniformLocsById = uniformLocsById1 = {};
+                program1.uniformArrayNamesById = {};
+                for(i1 = 0; i1 < GLctx.getProgramParameter(program1, 35718); ++i1){
+                    var u3 = GLctx.getActiveUniform(program1, i1);
+                    var nm1 = u3.name;
+                    var sz1 = u3.size;
+                    var lb1 = webglGetLeftBracePos(nm1);
+                    var arrayName1 = lb1 > 0 ? nm1.slice(0, lb1) : nm1;
+                    var id1 = program1.uniformIdCounter;
+                    program1.uniformIdCounter += sz1;
+                    uniformSizeAndIdsByName1[arrayName1] = [
+                        sz1,
+                        id1
                     ];
-                    for(j = 0; j < sz; ++j){
-                        uniformLocsById[id] = j;
-                        program.uniformArrayNamesById[id++] = arrayName;
+                    for(j1 = 0; j1 < sz1; ++j1){
+                        uniformLocsById1[id1] = j1;
+                        program1.uniformArrayNamesById[id1++] = arrayName1;
                     }
                 }
             }
         }
-        function _emscripten_glGetUniformLocation(program, name) {
-            name = UTF8ToString(name);
-            if (program = GL.programs[program]) {
-                webglPrepareUniformLocationsBeforeFirstUse(program);
-                var uniformLocsById = program.uniformLocsById;
-                var arrayIndex = 0;
-                var uniformBaseName = name;
-                var leftBrace = webglGetLeftBracePos(name);
-                if (leftBrace > 0) {
-                    arrayIndex = jstoi_q(name.slice(leftBrace + 1)) >>> 0;
-                    uniformBaseName = name.slice(0, leftBrace);
+        function _emscripten_glGetUniformLocation(program1, name1) {
+            name1 = UTF8ToString(name1);
+            if (program1 = GL.programs[program1]) {
+                webglPrepareUniformLocationsBeforeFirstUse(program1);
+                var uniformLocsById1 = program1.uniformLocsById;
+                var arrayIndex1 = 0;
+                var uniformBaseName1 = name1;
+                var leftBrace1 = webglGetLeftBracePos(name1);
+                if (leftBrace1 > 0) {
+                    arrayIndex1 = jstoi_q(name1.slice(leftBrace1 + 1)) >>> 0;
+                    uniformBaseName1 = name1.slice(0, leftBrace1);
                 }
-                var sizeAndId = program.uniformSizeAndIdsByName[uniformBaseName];
-                if (sizeAndId && arrayIndex < sizeAndId[0]) {
-                    arrayIndex += sizeAndId[1];
-                    if (uniformLocsById[arrayIndex] = uniformLocsById[arrayIndex] || GLctx.getUniformLocation(program, name)) return arrayIndex;
+                var sizeAndId1 = program1.uniformSizeAndIdsByName[uniformBaseName1];
+                if (sizeAndId1 && arrayIndex1 < sizeAndId1[0]) {
+                    arrayIndex1 += sizeAndId1[1];
+                    if (uniformLocsById1[arrayIndex1] = uniformLocsById1[arrayIndex1] || GLctx.getUniformLocation(program1, name1)) return arrayIndex1;
                 }
             } else GL.recordError(1281);
             return -1;
         }
-        function webglGetUniformLocation(location) {
-            var p = GLctx.currentProgram;
-            if (p) {
-                var webglLoc = p.uniformLocsById[location];
-                if (typeof webglLoc == "number") p.uniformLocsById[location] = webglLoc = GLctx.getUniformLocation(p, p.uniformArrayNamesById[location] + (webglLoc > 0 ? "[" + webglLoc + "]" : ""));
-                return webglLoc;
+        function webglGetUniformLocation(location1) {
+            var p1 = GLctx.currentProgram;
+            if (p1) {
+                var webglLoc1 = p1.uniformLocsById[location1];
+                if (typeof webglLoc1 == "number") p1.uniformLocsById[location1] = webglLoc1 = GLctx.getUniformLocation(p1, p1.uniformArrayNamesById[location1] + (webglLoc1 > 0 ? "[" + webglLoc1 + "]" : ""));
+                return webglLoc1;
             } else GL.recordError(1282);
         }
-        function emscriptenWebGLGetUniform(program, location, params, type) {
-            if (!params) {
+        function emscriptenWebGLGetUniform(program1, location1, params1, type1) {
+            if (!params1) {
                 GL.recordError(1281);
                 return;
             }
-            program = GL.programs[program];
-            webglPrepareUniformLocationsBeforeFirstUse(program);
-            var data = GLctx.getUniform(program, webglGetUniformLocation(location));
-            if (typeof data == "number" || typeof data == "boolean") switch(type){
+            program1 = GL.programs[program1];
+            webglPrepareUniformLocationsBeforeFirstUse(program1);
+            var data1 = GLctx.getUniform(program1, webglGetUniformLocation(location1));
+            if (typeof data1 == "number" || typeof data1 == "boolean") switch(type1){
                 case 0:
-                    GROWABLE_HEAP_I32()[params >> 2] = data;
+                    GROWABLE_HEAP_I32()[params1 >> 2] = data1;
                     break;
                 case 2:
-                    GROWABLE_HEAP_F32()[params >> 2] = data;
+                    GROWABLE_HEAP_F32()[params1 >> 2] = data1;
                     break;
             }
-            else for(var i = 0; i < data.length; i++)switch(type){
+            else for(var i1 = 0; i1 < data1.length; i1++)switch(type1){
                 case 0:
-                    GROWABLE_HEAP_I32()[params + i * 4 >> 2] = data[i];
+                    GROWABLE_HEAP_I32()[params1 + i1 * 4 >> 2] = data1[i1];
                     break;
                 case 2:
-                    GROWABLE_HEAP_F32()[params + i * 4 >> 2] = data[i];
+                    GROWABLE_HEAP_F32()[params1 + i1 * 4 >> 2] = data1[i1];
                     break;
             }
         }
-        function _emscripten_glGetUniformfv(program, location, params) {
-            emscriptenWebGLGetUniform(program, location, params, 2);
+        function _emscripten_glGetUniformfv(program1, location1, params1) {
+            emscriptenWebGLGetUniform(program1, location1, params1, 2);
         }
-        function _emscripten_glGetUniformiv(program, location, params) {
-            emscriptenWebGLGetUniform(program, location, params, 0);
+        function _emscripten_glGetUniformiv(program1, location1, params1) {
+            emscriptenWebGLGetUniform(program1, location1, params1, 0);
         }
-        function _emscripten_glGetUniformuiv(program, location, params) {
-            emscriptenWebGLGetUniform(program, location, params, 0);
+        function _emscripten_glGetUniformuiv(program1, location1, params1) {
+            emscriptenWebGLGetUniform(program1, location1, params1, 0);
         }
-        function emscriptenWebGLGetVertexAttrib(index, pname, params, type) {
-            if (!params) {
+        function emscriptenWebGLGetVertexAttrib(index1, pname1, params1, type1) {
+            if (!params1) {
                 GL.recordError(1281);
                 return;
             }
-            var data = GLctx.getVertexAttrib(index, pname);
-            if (pname == 34975) GROWABLE_HEAP_I32()[params >> 2] = data && data["name"];
-            else if (typeof data == "number" || typeof data == "boolean") switch(type){
+            var data1 = GLctx.getVertexAttrib(index1, pname1);
+            if (pname1 == 34975) GROWABLE_HEAP_I32()[params1 >> 2] = data1 && data1["name"];
+            else if (typeof data1 == "number" || typeof data1 == "boolean") switch(type1){
                 case 0:
-                    GROWABLE_HEAP_I32()[params >> 2] = data;
+                    GROWABLE_HEAP_I32()[params1 >> 2] = data1;
                     break;
                 case 2:
-                    GROWABLE_HEAP_F32()[params >> 2] = data;
+                    GROWABLE_HEAP_F32()[params1 >> 2] = data1;
                     break;
                 case 5:
-                    GROWABLE_HEAP_I32()[params >> 2] = Math.fround(data);
+                    GROWABLE_HEAP_I32()[params1 >> 2] = Math.fround(data1);
                     break;
             }
-            else for(var i = 0; i < data.length; i++)switch(type){
+            else for(var i1 = 0; i1 < data1.length; i1++)switch(type1){
                 case 0:
-                    GROWABLE_HEAP_I32()[params + i * 4 >> 2] = data[i];
+                    GROWABLE_HEAP_I32()[params1 + i1 * 4 >> 2] = data1[i1];
                     break;
                 case 2:
-                    GROWABLE_HEAP_F32()[params + i * 4 >> 2] = data[i];
+                    GROWABLE_HEAP_F32()[params1 + i1 * 4 >> 2] = data1[i1];
                     break;
                 case 5:
-                    GROWABLE_HEAP_I32()[params + i * 4 >> 2] = Math.fround(data[i]);
+                    GROWABLE_HEAP_I32()[params1 + i1 * 4 >> 2] = Math.fround(data1[i1]);
                     break;
             }
         }
-        function _emscripten_glGetVertexAttribIiv(index, pname, params) {
-            emscriptenWebGLGetVertexAttrib(index, pname, params, 0);
+        function _emscripten_glGetVertexAttribIiv(index1, pname1, params1) {
+            emscriptenWebGLGetVertexAttrib(index1, pname1, params1, 0);
         }
-        function _emscripten_glGetVertexAttribIuiv(index, pname, params) {
-            emscriptenWebGLGetVertexAttrib(index, pname, params, 0);
+        function _emscripten_glGetVertexAttribIuiv(index1, pname1, params1) {
+            emscriptenWebGLGetVertexAttrib(index1, pname1, params1, 0);
         }
-        function _emscripten_glGetVertexAttribPointerv(index, pname, pointer) {
-            if (!pointer) {
+        function _emscripten_glGetVertexAttribPointerv(index1, pname1, pointer1) {
+            if (!pointer1) {
                 GL.recordError(1281);
                 return;
             }
-            GROWABLE_HEAP_I32()[pointer >> 2] = GLctx.getVertexAttribOffset(index, pname);
+            GROWABLE_HEAP_I32()[pointer1 >> 2] = GLctx.getVertexAttribOffset(index1, pname1);
         }
-        function _emscripten_glGetVertexAttribfv(index, pname, params) {
-            emscriptenWebGLGetVertexAttrib(index, pname, params, 2);
+        function _emscripten_glGetVertexAttribfv(index1, pname1, params1) {
+            emscriptenWebGLGetVertexAttrib(index1, pname1, params1, 2);
         }
-        function _emscripten_glGetVertexAttribiv(index, pname, params) {
-            emscriptenWebGLGetVertexAttrib(index, pname, params, 5);
+        function _emscripten_glGetVertexAttribiv(index1, pname1, params1) {
+            emscriptenWebGLGetVertexAttrib(index1, pname1, params1, 5);
         }
-        function _emscripten_glHint(x0, x1) {
-            GLctx["hint"](x0, x1);
+        function _emscripten_glHint(x01, x11) {
+            GLctx["hint"](x01, x11);
         }
-        function _emscripten_glInvalidateFramebuffer(target, numAttachments, attachments) {
-            var list = tempFixedLengthArray[numAttachments];
-            for(var i = 0; i < numAttachments; i++)list[i] = GROWABLE_HEAP_I32()[attachments + i * 4 >> 2];
-            GLctx["invalidateFramebuffer"](target, list);
+        function _emscripten_glInvalidateFramebuffer(target1, numAttachments1, attachments1) {
+            var list1 = tempFixedLengthArray[numAttachments1];
+            for(var i1 = 0; i1 < numAttachments1; i1++)list1[i1] = GROWABLE_HEAP_I32()[attachments1 + i1 * 4 >> 2];
+            GLctx["invalidateFramebuffer"](target1, list1);
         }
-        function _emscripten_glInvalidateSubFramebuffer(target, numAttachments, attachments, x, y, width, height) {
-            var list = tempFixedLengthArray[numAttachments];
-            for(var i = 0; i < numAttachments; i++)list[i] = GROWABLE_HEAP_I32()[attachments + i * 4 >> 2];
-            GLctx["invalidateSubFramebuffer"](target, list, x, y, width, height);
+        function _emscripten_glInvalidateSubFramebuffer(target1, numAttachments1, attachments1, x10, y1, width1, height1) {
+            var list1 = tempFixedLengthArray[numAttachments1];
+            for(var i1 = 0; i1 < numAttachments1; i1++)list1[i1] = GROWABLE_HEAP_I32()[attachments1 + i1 * 4 >> 2];
+            GLctx["invalidateSubFramebuffer"](target1, list1, x10, y1, width1, height1);
         }
-        function _emscripten_glIsBuffer(buffer) {
-            var b = GL.buffers[buffer];
-            if (!b) return 0;
-            return GLctx.isBuffer(b);
+        function _emscripten_glIsBuffer(buffer1) {
+            var b1 = GL.buffers[buffer1];
+            if (!b1) return 0;
+            return GLctx.isBuffer(b1);
         }
-        function _emscripten_glIsEnabled(x0) {
-            return GLctx["isEnabled"](x0);
+        function _emscripten_glIsEnabled(x01) {
+            return GLctx["isEnabled"](x01);
         }
-        function _emscripten_glIsFramebuffer(framebuffer) {
-            var fb = GL.framebuffers[framebuffer];
-            if (!fb) return 0;
-            return GLctx.isFramebuffer(fb);
+        function _emscripten_glIsFramebuffer(framebuffer1) {
+            var fb1 = GL.framebuffers[framebuffer1];
+            if (!fb1) return 0;
+            return GLctx.isFramebuffer(fb1);
         }
-        function _emscripten_glIsProgram(program) {
-            program = GL.programs[program];
-            if (!program) return 0;
-            return GLctx.isProgram(program);
+        function _emscripten_glIsProgram(program1) {
+            program1 = GL.programs[program1];
+            if (!program1) return 0;
+            return GLctx.isProgram(program1);
         }
-        function _emscripten_glIsQuery(id) {
-            var query = GL.queries[id];
-            if (!query) return 0;
-            return GLctx["isQuery"](query);
+        function _emscripten_glIsQuery(id1) {
+            var query1 = GL.queries[id1];
+            if (!query1) return 0;
+            return GLctx["isQuery"](query1);
         }
-        function _emscripten_glIsQueryEXT(id) {
-            var query = GL.queries[id];
-            if (!query) return 0;
-            return GLctx.disjointTimerQueryExt["isQueryEXT"](query);
+        function _emscripten_glIsQueryEXT(id1) {
+            var query1 = GL.queries[id1];
+            if (!query1) return 0;
+            return GLctx.disjointTimerQueryExt["isQueryEXT"](query1);
         }
-        function _emscripten_glIsRenderbuffer(renderbuffer) {
-            var rb = GL.renderbuffers[renderbuffer];
-            if (!rb) return 0;
-            return GLctx.isRenderbuffer(rb);
+        function _emscripten_glIsRenderbuffer(renderbuffer1) {
+            var rb1 = GL.renderbuffers[renderbuffer1];
+            if (!rb1) return 0;
+            return GLctx.isRenderbuffer(rb1);
         }
-        function _emscripten_glIsSampler(id) {
-            var sampler = GL.samplers[id];
-            if (!sampler) return 0;
-            return GLctx["isSampler"](sampler);
+        function _emscripten_glIsSampler(id1) {
+            var sampler1 = GL.samplers[id1];
+            if (!sampler1) return 0;
+            return GLctx["isSampler"](sampler1);
         }
-        function _emscripten_glIsShader(shader) {
-            var s = GL.shaders[shader];
-            if (!s) return 0;
-            return GLctx.isShader(s);
+        function _emscripten_glIsShader(shader1) {
+            var s1 = GL.shaders[shader1];
+            if (!s1) return 0;
+            return GLctx.isShader(s1);
         }
-        function _emscripten_glIsSync(sync) {
-            return GLctx.isSync(GL.syncs[sync]);
+        function _emscripten_glIsSync(sync1) {
+            return GLctx.isSync(GL.syncs[sync1]);
         }
-        function _emscripten_glIsTexture(id) {
-            var texture = GL.textures[id];
-            if (!texture) return 0;
-            return GLctx.isTexture(texture);
+        function _emscripten_glIsTexture(id1) {
+            var texture1 = GL.textures[id1];
+            if (!texture1) return 0;
+            return GLctx.isTexture(texture1);
         }
-        function _emscripten_glIsTransformFeedback(id) {
-            return GLctx["isTransformFeedback"](GL.transformFeedbacks[id]);
+        function _emscripten_glIsTransformFeedback(id1) {
+            return GLctx["isTransformFeedback"](GL.transformFeedbacks[id1]);
         }
-        function _emscripten_glIsVertexArray(array) {
-            var vao = GL.vaos[array];
-            if (!vao) return 0;
-            return GLctx["isVertexArray"](vao);
+        function _emscripten_glIsVertexArray(array1) {
+            var vao1 = GL.vaos[array1];
+            if (!vao1) return 0;
+            return GLctx["isVertexArray"](vao1);
         }
-        function _emscripten_glLineWidth(x0) {
-            GLctx["lineWidth"](x0);
+        function _emscripten_glLineWidth(x01) {
+            GLctx["lineWidth"](x01);
         }
-        function _emscripten_glLinkProgram(program) {
-            program = GL.programs[program];
-            GLctx.linkProgram(program);
-            program.uniformLocsById = 0;
-            program.uniformSizeAndIdsByName = {};
+        function _emscripten_glLinkProgram(program1) {
+            program1 = GL.programs[program1];
+            GLctx.linkProgram(program1);
+            program1.uniformLocsById = 0;
+            program1.uniformSizeAndIdsByName = {};
         }
         function _emscripten_glPauseTransformFeedback() {
             GLctx["pauseTransformFeedback"]();
         }
-        function _emscripten_glPixelStorei(pname, param) {
-            if (pname == 3317) GL.unpackAlignment = param;
-            GLctx.pixelStorei(pname, param);
+        function _emscripten_glPixelStorei(pname1, param1) {
+            if (pname1 == 3317) GL.unpackAlignment = param1;
+            GLctx.pixelStorei(pname1, param1);
         }
-        function _emscripten_glPolygonOffset(x0, x1) {
-            GLctx["polygonOffset"](x0, x1);
+        function _emscripten_glPolygonOffset(x01, x11) {
+            GLctx["polygonOffset"](x01, x11);
         }
-        function _emscripten_glProgramBinary(program, binaryFormat, binary, length) {
+        function _emscripten_glProgramBinary(program1, binaryFormat1, binary1, length1) {
             GL.recordError(1280);
         }
-        function _emscripten_glProgramParameteri(program, pname, value) {
+        function _emscripten_glProgramParameteri(program1, pname1, value1) {
             GL.recordError(1280);
         }
-        function _emscripten_glQueryCounterEXT(id, target) {
-            GLctx.disjointTimerQueryExt["queryCounterEXT"](GL.queries[id], target);
+        function _emscripten_glQueryCounterEXT(id1, target1) {
+            GLctx.disjointTimerQueryExt["queryCounterEXT"](GL.queries[id1], target1);
         }
-        function _emscripten_glReadBuffer(x0) {
-            GLctx["readBuffer"](x0);
+        function _emscripten_glReadBuffer(x01) {
+            GLctx["readBuffer"](x01);
         }
-        function computeUnpackAlignedImageSize(width, height, sizePerPixel, alignment) {
-            function roundedToNextMultipleOf(x, y) {
-                return x + y - 1 & -y;
+        function computeUnpackAlignedImageSize(width1, height1, sizePerPixel1, alignment1) {
+            function roundedToNextMultipleOf1(x10, y1) {
+                return x10 + y1 - 1 & -y1;
             }
-            var plainRowSize = width * sizePerPixel;
-            var alignedRowSize = roundedToNextMultipleOf(plainRowSize, alignment);
-            return height * alignedRowSize;
+            var plainRowSize1 = width1 * sizePerPixel1;
+            var alignedRowSize1 = roundedToNextMultipleOf1(plainRowSize1, alignment1);
+            return height1 * alignedRowSize1;
         }
-        function __colorChannelsInGlTextureFormat(format) {
-            var colorChannels = {
+        function __colorChannelsInGlTextureFormat(format1) {
+            var colorChannels1 = {
                 5: 3,
                 6: 4,
                 8: 2,
@@ -6413,536 +6413,536 @@ var Godot = (()=>{
                 29846: 3,
                 29847: 4
             };
-            return colorChannels[format - 6402] || 1;
+            return colorChannels1[format1 - 6402] || 1;
         }
-        function heapObjectForWebGLType(type) {
-            type -= 5120;
-            if (type == 0) return GROWABLE_HEAP_I8();
-            if (type == 1) return GROWABLE_HEAP_U8();
-            if (type == 2) return GROWABLE_HEAP_I16();
-            if (type == 4) return GROWABLE_HEAP_I32();
-            if (type == 6) return GROWABLE_HEAP_F32();
-            if (type == 5 || type == 28922 || type == 28520 || type == 30779 || type == 30782) return GROWABLE_HEAP_U32();
+        function heapObjectForWebGLType(type1) {
+            type1 -= 5120;
+            if (type1 == 0) return GROWABLE_HEAP_I8();
+            if (type1 == 1) return GROWABLE_HEAP_U8();
+            if (type1 == 2) return GROWABLE_HEAP_I16();
+            if (type1 == 4) return GROWABLE_HEAP_I32();
+            if (type1 == 6) return GROWABLE_HEAP_F32();
+            if (type1 == 5 || type1 == 28922 || type1 == 28520 || type1 == 30779 || type1 == 30782) return GROWABLE_HEAP_U32();
             return GROWABLE_HEAP_U16();
         }
-        function heapAccessShiftForWebGLHeap(heap) {
-            return 31 - Math.clz32(heap.BYTES_PER_ELEMENT);
+        function heapAccessShiftForWebGLHeap(heap1) {
+            return 31 - Math.clz32(heap1.BYTES_PER_ELEMENT);
         }
-        function emscriptenWebGLGetTexPixelData(type, format, width, height, pixels, internalFormat) {
-            var heap = heapObjectForWebGLType(type);
-            var shift = heapAccessShiftForWebGLHeap(heap);
-            var byteSize = 1 << shift;
-            var sizePerPixel = __colorChannelsInGlTextureFormat(format) * byteSize;
-            var bytes = computeUnpackAlignedImageSize(width, height, sizePerPixel, GL.unpackAlignment);
-            return heap.subarray(pixels >> shift, pixels + bytes >> shift);
+        function emscriptenWebGLGetTexPixelData(type1, format1, width1, height1, pixels1, internalFormat1) {
+            var heap1 = heapObjectForWebGLType(type1);
+            var shift1 = heapAccessShiftForWebGLHeap(heap1);
+            var byteSize1 = 1 << shift1;
+            var sizePerPixel1 = __colorChannelsInGlTextureFormat(format1) * byteSize1;
+            var bytes1 = computeUnpackAlignedImageSize(width1, height1, sizePerPixel1, GL.unpackAlignment);
+            return heap1.subarray(pixels1 >> shift1, pixels1 + bytes1 >> shift1);
         }
-        function _emscripten_glReadPixels(x, y, width, height, format, type, pixels) {
+        function _emscripten_glReadPixels(x10, y1, width1, height1, format1, type1, pixels1) {
             if (GL.currentContext.version >= 2) {
-                if (GLctx.currentPixelPackBufferBinding) GLctx.readPixels(x, y, width, height, format, type, pixels);
+                if (GLctx.currentPixelPackBufferBinding) GLctx.readPixels(x10, y1, width1, height1, format1, type1, pixels1);
                 else {
-                    var heap = heapObjectForWebGLType(type);
-                    GLctx.readPixels(x, y, width, height, format, type, heap, pixels >> heapAccessShiftForWebGLHeap(heap));
+                    var heap1 = heapObjectForWebGLType(type1);
+                    GLctx.readPixels(x10, y1, width1, height1, format1, type1, heap1, pixels1 >> heapAccessShiftForWebGLHeap(heap1));
                 }
                 return;
             }
-            var pixelData = emscriptenWebGLGetTexPixelData(type, format, width, height, pixels, format);
-            if (!pixelData) {
+            var pixelData1 = emscriptenWebGLGetTexPixelData(type1, format1, width1, height1, pixels1, format1);
+            if (!pixelData1) {
                 GL.recordError(1280);
                 return;
             }
-            GLctx.readPixels(x, y, width, height, format, type, pixelData);
+            GLctx.readPixels(x10, y1, width1, height1, format1, type1, pixelData1);
         }
         function _emscripten_glReleaseShaderCompiler() {}
-        function _emscripten_glRenderbufferStorage(x0, x1, x2, x3) {
-            GLctx["renderbufferStorage"](x0, x1, x2, x3);
+        function _emscripten_glRenderbufferStorage(x01, x11, x21, x31) {
+            GLctx["renderbufferStorage"](x01, x11, x21, x31);
         }
-        function _emscripten_glRenderbufferStorageMultisample(x0, x1, x2, x3, x4) {
-            GLctx["renderbufferStorageMultisample"](x0, x1, x2, x3, x4);
+        function _emscripten_glRenderbufferStorageMultisample(x01, x11, x21, x31, x41) {
+            GLctx["renderbufferStorageMultisample"](x01, x11, x21, x31, x41);
         }
         function _emscripten_glResumeTransformFeedback() {
             GLctx["resumeTransformFeedback"]();
         }
-        function _emscripten_glSampleCoverage(value, invert) {
-            GLctx.sampleCoverage(value, !!invert);
+        function _emscripten_glSampleCoverage(value1, invert1) {
+            GLctx.sampleCoverage(value1, !!invert1);
         }
-        function _emscripten_glSamplerParameterf(sampler, pname, param) {
-            GLctx["samplerParameterf"](GL.samplers[sampler], pname, param);
+        function _emscripten_glSamplerParameterf(sampler1, pname1, param1) {
+            GLctx["samplerParameterf"](GL.samplers[sampler1], pname1, param1);
         }
-        function _emscripten_glSamplerParameterfv(sampler, pname, params) {
-            var param = GROWABLE_HEAP_F32()[params >> 2];
-            GLctx["samplerParameterf"](GL.samplers[sampler], pname, param);
+        function _emscripten_glSamplerParameterfv(sampler1, pname1, params1) {
+            var param1 = GROWABLE_HEAP_F32()[params1 >> 2];
+            GLctx["samplerParameterf"](GL.samplers[sampler1], pname1, param1);
         }
-        function _emscripten_glSamplerParameteri(sampler, pname, param) {
-            GLctx["samplerParameteri"](GL.samplers[sampler], pname, param);
+        function _emscripten_glSamplerParameteri(sampler1, pname1, param1) {
+            GLctx["samplerParameteri"](GL.samplers[sampler1], pname1, param1);
         }
-        function _emscripten_glSamplerParameteriv(sampler, pname, params) {
-            var param = GROWABLE_HEAP_I32()[params >> 2];
-            GLctx["samplerParameteri"](GL.samplers[sampler], pname, param);
+        function _emscripten_glSamplerParameteriv(sampler1, pname1, params1) {
+            var param1 = GROWABLE_HEAP_I32()[params1 >> 2];
+            GLctx["samplerParameteri"](GL.samplers[sampler1], pname1, param1);
         }
-        function _emscripten_glScissor(x0, x1, x2, x3) {
-            GLctx["scissor"](x0, x1, x2, x3);
+        function _emscripten_glScissor(x01, x11, x21, x31) {
+            GLctx["scissor"](x01, x11, x21, x31);
         }
         function _emscripten_glShaderBinary() {
             GL.recordError(1280);
         }
-        function _emscripten_glShaderSource(shader, count, string, length) {
-            var source = GL.getSource(shader, count, string, length);
-            GLctx.shaderSource(GL.shaders[shader], source);
+        function _emscripten_glShaderSource(shader1, count1, string1, length1) {
+            var source1 = GL.getSource(shader1, count1, string1, length1);
+            GLctx.shaderSource(GL.shaders[shader1], source1);
         }
-        function _emscripten_glStencilFunc(x0, x1, x2) {
-            GLctx["stencilFunc"](x0, x1, x2);
+        function _emscripten_glStencilFunc(x01, x11, x21) {
+            GLctx["stencilFunc"](x01, x11, x21);
         }
-        function _emscripten_glStencilFuncSeparate(x0, x1, x2, x3) {
-            GLctx["stencilFuncSeparate"](x0, x1, x2, x3);
+        function _emscripten_glStencilFuncSeparate(x01, x11, x21, x31) {
+            GLctx["stencilFuncSeparate"](x01, x11, x21, x31);
         }
-        function _emscripten_glStencilMask(x0) {
-            GLctx["stencilMask"](x0);
+        function _emscripten_glStencilMask(x01) {
+            GLctx["stencilMask"](x01);
         }
-        function _emscripten_glStencilMaskSeparate(x0, x1) {
-            GLctx["stencilMaskSeparate"](x0, x1);
+        function _emscripten_glStencilMaskSeparate(x01, x11) {
+            GLctx["stencilMaskSeparate"](x01, x11);
         }
-        function _emscripten_glStencilOp(x0, x1, x2) {
-            GLctx["stencilOp"](x0, x1, x2);
+        function _emscripten_glStencilOp(x01, x11, x21) {
+            GLctx["stencilOp"](x01, x11, x21);
         }
-        function _emscripten_glStencilOpSeparate(x0, x1, x2, x3) {
-            GLctx["stencilOpSeparate"](x0, x1, x2, x3);
+        function _emscripten_glStencilOpSeparate(x01, x11, x21, x31) {
+            GLctx["stencilOpSeparate"](x01, x11, x21, x31);
         }
-        function _emscripten_glTexImage2D(target, level, internalFormat, width, height, border, format, type, pixels) {
+        function _emscripten_glTexImage2D(target1, level1, internalFormat1, width1, height1, border1, format1, type1, pixels1) {
             if (GL.currentContext.version >= 2) {
-                if (GLctx.currentPixelUnpackBufferBinding) GLctx.texImage2D(target, level, internalFormat, width, height, border, format, type, pixels);
-                else if (pixels) {
-                    var heap = heapObjectForWebGLType(type);
-                    GLctx.texImage2D(target, level, internalFormat, width, height, border, format, type, heap, pixels >> heapAccessShiftForWebGLHeap(heap));
-                } else GLctx.texImage2D(target, level, internalFormat, width, height, border, format, type, null);
+                if (GLctx.currentPixelUnpackBufferBinding) GLctx.texImage2D(target1, level1, internalFormat1, width1, height1, border1, format1, type1, pixels1);
+                else if (pixels1) {
+                    var heap1 = heapObjectForWebGLType(type1);
+                    GLctx.texImage2D(target1, level1, internalFormat1, width1, height1, border1, format1, type1, heap1, pixels1 >> heapAccessShiftForWebGLHeap(heap1));
+                } else GLctx.texImage2D(target1, level1, internalFormat1, width1, height1, border1, format1, type1, null);
                 return;
             }
-            GLctx.texImage2D(target, level, internalFormat, width, height, border, format, type, pixels ? emscriptenWebGLGetTexPixelData(type, format, width, height, pixels, internalFormat) : null);
+            GLctx.texImage2D(target1, level1, internalFormat1, width1, height1, border1, format1, type1, pixels1 ? emscriptenWebGLGetTexPixelData(type1, format1, width1, height1, pixels1, internalFormat1) : null);
         }
-        function _emscripten_glTexImage3D(target, level, internalFormat, width, height, depth, border, format, type, pixels) {
-            if (GLctx.currentPixelUnpackBufferBinding) GLctx["texImage3D"](target, level, internalFormat, width, height, depth, border, format, type, pixels);
-            else if (pixels) {
-                var heap = heapObjectForWebGLType(type);
-                GLctx["texImage3D"](target, level, internalFormat, width, height, depth, border, format, type, heap, pixels >> heapAccessShiftForWebGLHeap(heap));
-            } else GLctx["texImage3D"](target, level, internalFormat, width, height, depth, border, format, type, null);
+        function _emscripten_glTexImage3D(target1, level1, internalFormat1, width1, height1, depth1, border1, format1, type1, pixels1) {
+            if (GLctx.currentPixelUnpackBufferBinding) GLctx["texImage3D"](target1, level1, internalFormat1, width1, height1, depth1, border1, format1, type1, pixels1);
+            else if (pixels1) {
+                var heap1 = heapObjectForWebGLType(type1);
+                GLctx["texImage3D"](target1, level1, internalFormat1, width1, height1, depth1, border1, format1, type1, heap1, pixels1 >> heapAccessShiftForWebGLHeap(heap1));
+            } else GLctx["texImage3D"](target1, level1, internalFormat1, width1, height1, depth1, border1, format1, type1, null);
         }
-        function _emscripten_glTexParameterf(x0, x1, x2) {
-            GLctx["texParameterf"](x0, x1, x2);
+        function _emscripten_glTexParameterf(x01, x11, x21) {
+            GLctx["texParameterf"](x01, x11, x21);
         }
-        function _emscripten_glTexParameterfv(target, pname, params) {
-            var param = GROWABLE_HEAP_F32()[params >> 2];
-            GLctx.texParameterf(target, pname, param);
+        function _emscripten_glTexParameterfv(target1, pname1, params1) {
+            var param1 = GROWABLE_HEAP_F32()[params1 >> 2];
+            GLctx.texParameterf(target1, pname1, param1);
         }
-        function _emscripten_glTexParameteri(x0, x1, x2) {
-            GLctx["texParameteri"](x0, x1, x2);
+        function _emscripten_glTexParameteri(x01, x11, x21) {
+            GLctx["texParameteri"](x01, x11, x21);
         }
-        function _emscripten_glTexParameteriv(target, pname, params) {
-            var param = GROWABLE_HEAP_I32()[params >> 2];
-            GLctx.texParameteri(target, pname, param);
+        function _emscripten_glTexParameteriv(target1, pname1, params1) {
+            var param1 = GROWABLE_HEAP_I32()[params1 >> 2];
+            GLctx.texParameteri(target1, pname1, param1);
         }
-        function _emscripten_glTexStorage2D(x0, x1, x2, x3, x4) {
-            GLctx["texStorage2D"](x0, x1, x2, x3, x4);
+        function _emscripten_glTexStorage2D(x01, x11, x21, x31, x41) {
+            GLctx["texStorage2D"](x01, x11, x21, x31, x41);
         }
-        function _emscripten_glTexStorage3D(x0, x1, x2, x3, x4, x5) {
-            GLctx["texStorage3D"](x0, x1, x2, x3, x4, x5);
+        function _emscripten_glTexStorage3D(x01, x11, x21, x31, x41, x51) {
+            GLctx["texStorage3D"](x01, x11, x21, x31, x41, x51);
         }
-        function _emscripten_glTexSubImage2D(target, level, xoffset, yoffset, width, height, format, type, pixels) {
+        function _emscripten_glTexSubImage2D(target1, level1, xoffset1, yoffset1, width1, height1, format1, type1, pixels1) {
             if (GL.currentContext.version >= 2) {
-                if (GLctx.currentPixelUnpackBufferBinding) GLctx.texSubImage2D(target, level, xoffset, yoffset, width, height, format, type, pixels);
-                else if (pixels) {
-                    var heap = heapObjectForWebGLType(type);
-                    GLctx.texSubImage2D(target, level, xoffset, yoffset, width, height, format, type, heap, pixels >> heapAccessShiftForWebGLHeap(heap));
-                } else GLctx.texSubImage2D(target, level, xoffset, yoffset, width, height, format, type, null);
+                if (GLctx.currentPixelUnpackBufferBinding) GLctx.texSubImage2D(target1, level1, xoffset1, yoffset1, width1, height1, format1, type1, pixels1);
+                else if (pixels1) {
+                    var heap1 = heapObjectForWebGLType(type1);
+                    GLctx.texSubImage2D(target1, level1, xoffset1, yoffset1, width1, height1, format1, type1, heap1, pixels1 >> heapAccessShiftForWebGLHeap(heap1));
+                } else GLctx.texSubImage2D(target1, level1, xoffset1, yoffset1, width1, height1, format1, type1, null);
                 return;
             }
-            var pixelData = null;
-            if (pixels) pixelData = emscriptenWebGLGetTexPixelData(type, format, width, height, pixels, 0);
-            GLctx.texSubImage2D(target, level, xoffset, yoffset, width, height, format, type, pixelData);
+            var pixelData1 = null;
+            if (pixels1) pixelData1 = emscriptenWebGLGetTexPixelData(type1, format1, width1, height1, pixels1, 0);
+            GLctx.texSubImage2D(target1, level1, xoffset1, yoffset1, width1, height1, format1, type1, pixelData1);
         }
-        function _emscripten_glTexSubImage3D(target, level, xoffset, yoffset, zoffset, width, height, depth, format, type, pixels) {
-            if (GLctx.currentPixelUnpackBufferBinding) GLctx["texSubImage3D"](target, level, xoffset, yoffset, zoffset, width, height, depth, format, type, pixels);
-            else if (pixels) {
-                var heap = heapObjectForWebGLType(type);
-                GLctx["texSubImage3D"](target, level, xoffset, yoffset, zoffset, width, height, depth, format, type, heap, pixels >> heapAccessShiftForWebGLHeap(heap));
-            } else GLctx["texSubImage3D"](target, level, xoffset, yoffset, zoffset, width, height, depth, format, type, null);
+        function _emscripten_glTexSubImage3D(target1, level1, xoffset1, yoffset1, zoffset1, width1, height1, depth1, format1, type1, pixels1) {
+            if (GLctx.currentPixelUnpackBufferBinding) GLctx["texSubImage3D"](target1, level1, xoffset1, yoffset1, zoffset1, width1, height1, depth1, format1, type1, pixels1);
+            else if (pixels1) {
+                var heap1 = heapObjectForWebGLType(type1);
+                GLctx["texSubImage3D"](target1, level1, xoffset1, yoffset1, zoffset1, width1, height1, depth1, format1, type1, heap1, pixels1 >> heapAccessShiftForWebGLHeap(heap1));
+            } else GLctx["texSubImage3D"](target1, level1, xoffset1, yoffset1, zoffset1, width1, height1, depth1, format1, type1, null);
         }
-        function _emscripten_glTransformFeedbackVaryings(program, count, varyings, bufferMode) {
-            program = GL.programs[program];
-            var vars = [];
-            for(var i = 0; i < count; i++)vars.push(UTF8ToString(GROWABLE_HEAP_I32()[varyings + i * 4 >> 2]));
-            GLctx["transformFeedbackVaryings"](program, vars, bufferMode);
+        function _emscripten_glTransformFeedbackVaryings(program1, count1, varyings1, bufferMode1) {
+            program1 = GL.programs[program1];
+            var vars1 = [];
+            for(var i1 = 0; i1 < count1; i1++)vars1.push(UTF8ToString(GROWABLE_HEAP_I32()[varyings1 + i1 * 4 >> 2]));
+            GLctx["transformFeedbackVaryings"](program1, vars1, bufferMode1);
         }
-        function _emscripten_glUniform1f(location, v0) {
-            GLctx.uniform1f(webglGetUniformLocation(location), v0);
+        function _emscripten_glUniform1f(location1, v01) {
+            GLctx.uniform1f(webglGetUniformLocation(location1), v01);
         }
         var miniTempWebGLFloatBuffers = [];
-        function _emscripten_glUniform1fv(location, count, value) {
+        function _emscripten_glUniform1fv(location1, count1, value1) {
             if (GL.currentContext.version >= 2) {
-                count && GLctx.uniform1fv(webglGetUniformLocation(location), GROWABLE_HEAP_F32(), value >> 2, count);
+                count1 && GLctx.uniform1fv(webglGetUniformLocation(location1), GROWABLE_HEAP_F32(), value1 >> 2, count1);
                 return;
             }
-            if (count <= 288) {
-                var view = miniTempWebGLFloatBuffers[count - 1];
-                for(var i = 0; i < count; ++i)view[i] = GROWABLE_HEAP_F32()[value + 4 * i >> 2];
-            } else var view = GROWABLE_HEAP_F32().subarray(value >> 2, value + count * 4 >> 2);
-            GLctx.uniform1fv(webglGetUniformLocation(location), view);
+            if (count1 <= 288) {
+                var view1 = miniTempWebGLFloatBuffers[count1 - 1];
+                for(var i1 = 0; i1 < count1; ++i1)view1[i1] = GROWABLE_HEAP_F32()[value1 + 4 * i1 >> 2];
+            } else var view1 = GROWABLE_HEAP_F32().subarray(value1 >> 2, value1 + count1 * 4 >> 2);
+            GLctx.uniform1fv(webglGetUniformLocation(location1), view1);
         }
-        function _emscripten_glUniform1i(location, v0) {
-            GLctx.uniform1i(webglGetUniformLocation(location), v0);
+        function _emscripten_glUniform1i(location1, v01) {
+            GLctx.uniform1i(webglGetUniformLocation(location1), v01);
         }
         var __miniTempWebGLIntBuffers = [];
-        function _emscripten_glUniform1iv(location, count, value) {
+        function _emscripten_glUniform1iv(location1, count1, value1) {
             if (GL.currentContext.version >= 2) {
-                count && GLctx.uniform1iv(webglGetUniformLocation(location), GROWABLE_HEAP_I32(), value >> 2, count);
+                count1 && GLctx.uniform1iv(webglGetUniformLocation(location1), GROWABLE_HEAP_I32(), value1 >> 2, count1);
                 return;
             }
-            if (count <= 288) {
-                var view = __miniTempWebGLIntBuffers[count - 1];
-                for(var i = 0; i < count; ++i)view[i] = GROWABLE_HEAP_I32()[value + 4 * i >> 2];
-            } else var view = GROWABLE_HEAP_I32().subarray(value >> 2, value + count * 4 >> 2);
-            GLctx.uniform1iv(webglGetUniformLocation(location), view);
+            if (count1 <= 288) {
+                var view1 = __miniTempWebGLIntBuffers[count1 - 1];
+                for(var i1 = 0; i1 < count1; ++i1)view1[i1] = GROWABLE_HEAP_I32()[value1 + 4 * i1 >> 2];
+            } else var view1 = GROWABLE_HEAP_I32().subarray(value1 >> 2, value1 + count1 * 4 >> 2);
+            GLctx.uniform1iv(webglGetUniformLocation(location1), view1);
         }
-        function _emscripten_glUniform1ui(location, v0) {
-            GLctx.uniform1ui(webglGetUniformLocation(location), v0);
+        function _emscripten_glUniform1ui(location1, v01) {
+            GLctx.uniform1ui(webglGetUniformLocation(location1), v01);
         }
-        function _emscripten_glUniform1uiv(location, count, value) {
-            count && GLctx.uniform1uiv(webglGetUniformLocation(location), GROWABLE_HEAP_U32(), value >> 2, count);
+        function _emscripten_glUniform1uiv(location1, count1, value1) {
+            count1 && GLctx.uniform1uiv(webglGetUniformLocation(location1), GROWABLE_HEAP_U32(), value1 >> 2, count1);
         }
-        function _emscripten_glUniform2f(location, v0, v1) {
-            GLctx.uniform2f(webglGetUniformLocation(location), v0, v1);
+        function _emscripten_glUniform2f(location1, v01, v11) {
+            GLctx.uniform2f(webglGetUniformLocation(location1), v01, v11);
         }
-        function _emscripten_glUniform2fv(location, count, value) {
+        function _emscripten_glUniform2fv(location1, count1, value1) {
             if (GL.currentContext.version >= 2) {
-                count && GLctx.uniform2fv(webglGetUniformLocation(location), GROWABLE_HEAP_F32(), value >> 2, count * 2);
+                count1 && GLctx.uniform2fv(webglGetUniformLocation(location1), GROWABLE_HEAP_F32(), value1 >> 2, count1 * 2);
                 return;
             }
-            if (count <= 144) {
-                var view = miniTempWebGLFloatBuffers[2 * count - 1];
-                for(var i = 0; i < 2 * count; i += 2){
-                    view[i] = GROWABLE_HEAP_F32()[value + 4 * i >> 2];
-                    view[i + 1] = GROWABLE_HEAP_F32()[value + (4 * i + 4) >> 2];
+            if (count1 <= 144) {
+                var view1 = miniTempWebGLFloatBuffers[2 * count1 - 1];
+                for(var i1 = 0; i1 < 2 * count1; i1 += 2){
+                    view1[i1] = GROWABLE_HEAP_F32()[value1 + 4 * i1 >> 2];
+                    view1[i1 + 1] = GROWABLE_HEAP_F32()[value1 + (4 * i1 + 4) >> 2];
                 }
-            } else var view = GROWABLE_HEAP_F32().subarray(value >> 2, value + count * 8 >> 2);
-            GLctx.uniform2fv(webglGetUniformLocation(location), view);
+            } else var view1 = GROWABLE_HEAP_F32().subarray(value1 >> 2, value1 + count1 * 8 >> 2);
+            GLctx.uniform2fv(webglGetUniformLocation(location1), view1);
         }
-        function _emscripten_glUniform2i(location, v0, v1) {
-            GLctx.uniform2i(webglGetUniformLocation(location), v0, v1);
+        function _emscripten_glUniform2i(location1, v01, v11) {
+            GLctx.uniform2i(webglGetUniformLocation(location1), v01, v11);
         }
-        function _emscripten_glUniform2iv(location, count, value) {
+        function _emscripten_glUniform2iv(location1, count1, value1) {
             if (GL.currentContext.version >= 2) {
-                count && GLctx.uniform2iv(webglGetUniformLocation(location), GROWABLE_HEAP_I32(), value >> 2, count * 2);
+                count1 && GLctx.uniform2iv(webglGetUniformLocation(location1), GROWABLE_HEAP_I32(), value1 >> 2, count1 * 2);
                 return;
             }
-            if (count <= 144) {
-                var view = __miniTempWebGLIntBuffers[2 * count - 1];
-                for(var i = 0; i < 2 * count; i += 2){
-                    view[i] = GROWABLE_HEAP_I32()[value + 4 * i >> 2];
-                    view[i + 1] = GROWABLE_HEAP_I32()[value + (4 * i + 4) >> 2];
+            if (count1 <= 144) {
+                var view1 = __miniTempWebGLIntBuffers[2 * count1 - 1];
+                for(var i1 = 0; i1 < 2 * count1; i1 += 2){
+                    view1[i1] = GROWABLE_HEAP_I32()[value1 + 4 * i1 >> 2];
+                    view1[i1 + 1] = GROWABLE_HEAP_I32()[value1 + (4 * i1 + 4) >> 2];
                 }
-            } else var view = GROWABLE_HEAP_I32().subarray(value >> 2, value + count * 8 >> 2);
-            GLctx.uniform2iv(webglGetUniformLocation(location), view);
+            } else var view1 = GROWABLE_HEAP_I32().subarray(value1 >> 2, value1 + count1 * 8 >> 2);
+            GLctx.uniform2iv(webglGetUniformLocation(location1), view1);
         }
-        function _emscripten_glUniform2ui(location, v0, v1) {
-            GLctx.uniform2ui(webglGetUniformLocation(location), v0, v1);
+        function _emscripten_glUniform2ui(location1, v01, v11) {
+            GLctx.uniform2ui(webglGetUniformLocation(location1), v01, v11);
         }
-        function _emscripten_glUniform2uiv(location, count, value) {
-            count && GLctx.uniform2uiv(webglGetUniformLocation(location), GROWABLE_HEAP_U32(), value >> 2, count * 2);
+        function _emscripten_glUniform2uiv(location1, count1, value1) {
+            count1 && GLctx.uniform2uiv(webglGetUniformLocation(location1), GROWABLE_HEAP_U32(), value1 >> 2, count1 * 2);
         }
-        function _emscripten_glUniform3f(location, v0, v1, v2) {
-            GLctx.uniform3f(webglGetUniformLocation(location), v0, v1, v2);
+        function _emscripten_glUniform3f(location1, v01, v11, v21) {
+            GLctx.uniform3f(webglGetUniformLocation(location1), v01, v11, v21);
         }
-        function _emscripten_glUniform3fv(location, count, value) {
+        function _emscripten_glUniform3fv(location1, count1, value1) {
             if (GL.currentContext.version >= 2) {
-                count && GLctx.uniform3fv(webglGetUniformLocation(location), GROWABLE_HEAP_F32(), value >> 2, count * 3);
+                count1 && GLctx.uniform3fv(webglGetUniformLocation(location1), GROWABLE_HEAP_F32(), value1 >> 2, count1 * 3);
                 return;
             }
-            if (count <= 96) {
-                var view = miniTempWebGLFloatBuffers[3 * count - 1];
-                for(var i = 0; i < 3 * count; i += 3){
-                    view[i] = GROWABLE_HEAP_F32()[value + 4 * i >> 2];
-                    view[i + 1] = GROWABLE_HEAP_F32()[value + (4 * i + 4) >> 2];
-                    view[i + 2] = GROWABLE_HEAP_F32()[value + (4 * i + 8) >> 2];
+            if (count1 <= 96) {
+                var view1 = miniTempWebGLFloatBuffers[3 * count1 - 1];
+                for(var i1 = 0; i1 < 3 * count1; i1 += 3){
+                    view1[i1] = GROWABLE_HEAP_F32()[value1 + 4 * i1 >> 2];
+                    view1[i1 + 1] = GROWABLE_HEAP_F32()[value1 + (4 * i1 + 4) >> 2];
+                    view1[i1 + 2] = GROWABLE_HEAP_F32()[value1 + (4 * i1 + 8) >> 2];
                 }
-            } else var view = GROWABLE_HEAP_F32().subarray(value >> 2, value + count * 12 >> 2);
-            GLctx.uniform3fv(webglGetUniformLocation(location), view);
+            } else var view1 = GROWABLE_HEAP_F32().subarray(value1 >> 2, value1 + count1 * 12 >> 2);
+            GLctx.uniform3fv(webglGetUniformLocation(location1), view1);
         }
-        function _emscripten_glUniform3i(location, v0, v1, v2) {
-            GLctx.uniform3i(webglGetUniformLocation(location), v0, v1, v2);
+        function _emscripten_glUniform3i(location1, v01, v11, v21) {
+            GLctx.uniform3i(webglGetUniformLocation(location1), v01, v11, v21);
         }
-        function _emscripten_glUniform3iv(location, count, value) {
+        function _emscripten_glUniform3iv(location1, count1, value1) {
             if (GL.currentContext.version >= 2) {
-                count && GLctx.uniform3iv(webglGetUniformLocation(location), GROWABLE_HEAP_I32(), value >> 2, count * 3);
+                count1 && GLctx.uniform3iv(webglGetUniformLocation(location1), GROWABLE_HEAP_I32(), value1 >> 2, count1 * 3);
                 return;
             }
-            if (count <= 96) {
-                var view = __miniTempWebGLIntBuffers[3 * count - 1];
-                for(var i = 0; i < 3 * count; i += 3){
-                    view[i] = GROWABLE_HEAP_I32()[value + 4 * i >> 2];
-                    view[i + 1] = GROWABLE_HEAP_I32()[value + (4 * i + 4) >> 2];
-                    view[i + 2] = GROWABLE_HEAP_I32()[value + (4 * i + 8) >> 2];
+            if (count1 <= 96) {
+                var view1 = __miniTempWebGLIntBuffers[3 * count1 - 1];
+                for(var i1 = 0; i1 < 3 * count1; i1 += 3){
+                    view1[i1] = GROWABLE_HEAP_I32()[value1 + 4 * i1 >> 2];
+                    view1[i1 + 1] = GROWABLE_HEAP_I32()[value1 + (4 * i1 + 4) >> 2];
+                    view1[i1 + 2] = GROWABLE_HEAP_I32()[value1 + (4 * i1 + 8) >> 2];
                 }
-            } else var view = GROWABLE_HEAP_I32().subarray(value >> 2, value + count * 12 >> 2);
-            GLctx.uniform3iv(webglGetUniformLocation(location), view);
+            } else var view1 = GROWABLE_HEAP_I32().subarray(value1 >> 2, value1 + count1 * 12 >> 2);
+            GLctx.uniform3iv(webglGetUniformLocation(location1), view1);
         }
-        function _emscripten_glUniform3ui(location, v0, v1, v2) {
-            GLctx.uniform3ui(webglGetUniformLocation(location), v0, v1, v2);
+        function _emscripten_glUniform3ui(location1, v01, v11, v21) {
+            GLctx.uniform3ui(webglGetUniformLocation(location1), v01, v11, v21);
         }
-        function _emscripten_glUniform3uiv(location, count, value) {
-            count && GLctx.uniform3uiv(webglGetUniformLocation(location), GROWABLE_HEAP_U32(), value >> 2, count * 3);
+        function _emscripten_glUniform3uiv(location1, count1, value1) {
+            count1 && GLctx.uniform3uiv(webglGetUniformLocation(location1), GROWABLE_HEAP_U32(), value1 >> 2, count1 * 3);
         }
-        function _emscripten_glUniform4f(location, v0, v1, v2, v3) {
-            GLctx.uniform4f(webglGetUniformLocation(location), v0, v1, v2, v3);
+        function _emscripten_glUniform4f(location1, v01, v11, v21, v31) {
+            GLctx.uniform4f(webglGetUniformLocation(location1), v01, v11, v21, v31);
         }
-        function _emscripten_glUniform4fv(location, count, value) {
+        function _emscripten_glUniform4fv(location1, count1, value1) {
             if (GL.currentContext.version >= 2) {
-                count && GLctx.uniform4fv(webglGetUniformLocation(location), GROWABLE_HEAP_F32(), value >> 2, count * 4);
+                count1 && GLctx.uniform4fv(webglGetUniformLocation(location1), GROWABLE_HEAP_F32(), value1 >> 2, count1 * 4);
                 return;
             }
-            if (count <= 72) {
-                var view = miniTempWebGLFloatBuffers[4 * count - 1];
-                var heap = GROWABLE_HEAP_F32();
-                value >>= 2;
-                for(var i = 0; i < 4 * count; i += 4){
-                    var dst = value + i;
-                    view[i] = heap[dst];
-                    view[i + 1] = heap[dst + 1];
-                    view[i + 2] = heap[dst + 2];
-                    view[i + 3] = heap[dst + 3];
+            if (count1 <= 72) {
+                var view1 = miniTempWebGLFloatBuffers[4 * count1 - 1];
+                var heap1 = GROWABLE_HEAP_F32();
+                value1 >>= 2;
+                for(var i1 = 0; i1 < 4 * count1; i1 += 4){
+                    var dst1 = value1 + i1;
+                    view1[i1] = heap1[dst1];
+                    view1[i1 + 1] = heap1[dst1 + 1];
+                    view1[i1 + 2] = heap1[dst1 + 2];
+                    view1[i1 + 3] = heap1[dst1 + 3];
                 }
-            } else var view = GROWABLE_HEAP_F32().subarray(value >> 2, value + count * 16 >> 2);
-            GLctx.uniform4fv(webglGetUniformLocation(location), view);
+            } else var view1 = GROWABLE_HEAP_F32().subarray(value1 >> 2, value1 + count1 * 16 >> 2);
+            GLctx.uniform4fv(webglGetUniformLocation(location1), view1);
         }
-        function _emscripten_glUniform4i(location, v0, v1, v2, v3) {
-            GLctx.uniform4i(webglGetUniformLocation(location), v0, v1, v2, v3);
+        function _emscripten_glUniform4i(location1, v01, v11, v21, v31) {
+            GLctx.uniform4i(webglGetUniformLocation(location1), v01, v11, v21, v31);
         }
-        function _emscripten_glUniform4iv(location, count, value) {
+        function _emscripten_glUniform4iv(location1, count1, value1) {
             if (GL.currentContext.version >= 2) {
-                count && GLctx.uniform4iv(webglGetUniformLocation(location), GROWABLE_HEAP_I32(), value >> 2, count * 4);
+                count1 && GLctx.uniform4iv(webglGetUniformLocation(location1), GROWABLE_HEAP_I32(), value1 >> 2, count1 * 4);
                 return;
             }
-            if (count <= 72) {
-                var view = __miniTempWebGLIntBuffers[4 * count - 1];
-                for(var i = 0; i < 4 * count; i += 4){
-                    view[i] = GROWABLE_HEAP_I32()[value + 4 * i >> 2];
-                    view[i + 1] = GROWABLE_HEAP_I32()[value + (4 * i + 4) >> 2];
-                    view[i + 2] = GROWABLE_HEAP_I32()[value + (4 * i + 8) >> 2];
-                    view[i + 3] = GROWABLE_HEAP_I32()[value + (4 * i + 12) >> 2];
+            if (count1 <= 72) {
+                var view1 = __miniTempWebGLIntBuffers[4 * count1 - 1];
+                for(var i1 = 0; i1 < 4 * count1; i1 += 4){
+                    view1[i1] = GROWABLE_HEAP_I32()[value1 + 4 * i1 >> 2];
+                    view1[i1 + 1] = GROWABLE_HEAP_I32()[value1 + (4 * i1 + 4) >> 2];
+                    view1[i1 + 2] = GROWABLE_HEAP_I32()[value1 + (4 * i1 + 8) >> 2];
+                    view1[i1 + 3] = GROWABLE_HEAP_I32()[value1 + (4 * i1 + 12) >> 2];
                 }
-            } else var view = GROWABLE_HEAP_I32().subarray(value >> 2, value + count * 16 >> 2);
-            GLctx.uniform4iv(webglGetUniformLocation(location), view);
+            } else var view1 = GROWABLE_HEAP_I32().subarray(value1 >> 2, value1 + count1 * 16 >> 2);
+            GLctx.uniform4iv(webglGetUniformLocation(location1), view1);
         }
-        function _emscripten_glUniform4ui(location, v0, v1, v2, v3) {
-            GLctx.uniform4ui(webglGetUniformLocation(location), v0, v1, v2, v3);
+        function _emscripten_glUniform4ui(location1, v01, v11, v21, v31) {
+            GLctx.uniform4ui(webglGetUniformLocation(location1), v01, v11, v21, v31);
         }
-        function _emscripten_glUniform4uiv(location, count, value) {
-            count && GLctx.uniform4uiv(webglGetUniformLocation(location), GROWABLE_HEAP_U32(), value >> 2, count * 4);
+        function _emscripten_glUniform4uiv(location1, count1, value1) {
+            count1 && GLctx.uniform4uiv(webglGetUniformLocation(location1), GROWABLE_HEAP_U32(), value1 >> 2, count1 * 4);
         }
-        function _emscripten_glUniformBlockBinding(program, uniformBlockIndex, uniformBlockBinding) {
-            program = GL.programs[program];
-            GLctx["uniformBlockBinding"](program, uniformBlockIndex, uniformBlockBinding);
+        function _emscripten_glUniformBlockBinding(program1, uniformBlockIndex1, uniformBlockBinding1) {
+            program1 = GL.programs[program1];
+            GLctx["uniformBlockBinding"](program1, uniformBlockIndex1, uniformBlockBinding1);
         }
-        function _emscripten_glUniformMatrix2fv(location, count, transpose, value) {
+        function _emscripten_glUniformMatrix2fv(location1, count1, transpose1, value1) {
             if (GL.currentContext.version >= 2) {
-                count && GLctx.uniformMatrix2fv(webglGetUniformLocation(location), !!transpose, GROWABLE_HEAP_F32(), value >> 2, count * 4);
+                count1 && GLctx.uniformMatrix2fv(webglGetUniformLocation(location1), !!transpose1, GROWABLE_HEAP_F32(), value1 >> 2, count1 * 4);
                 return;
             }
-            if (count <= 72) {
-                var view = miniTempWebGLFloatBuffers[4 * count - 1];
-                for(var i = 0; i < 4 * count; i += 4){
-                    view[i] = GROWABLE_HEAP_F32()[value + 4 * i >> 2];
-                    view[i + 1] = GROWABLE_HEAP_F32()[value + (4 * i + 4) >> 2];
-                    view[i + 2] = GROWABLE_HEAP_F32()[value + (4 * i + 8) >> 2];
-                    view[i + 3] = GROWABLE_HEAP_F32()[value + (4 * i + 12) >> 2];
+            if (count1 <= 72) {
+                var view1 = miniTempWebGLFloatBuffers[4 * count1 - 1];
+                for(var i1 = 0; i1 < 4 * count1; i1 += 4){
+                    view1[i1] = GROWABLE_HEAP_F32()[value1 + 4 * i1 >> 2];
+                    view1[i1 + 1] = GROWABLE_HEAP_F32()[value1 + (4 * i1 + 4) >> 2];
+                    view1[i1 + 2] = GROWABLE_HEAP_F32()[value1 + (4 * i1 + 8) >> 2];
+                    view1[i1 + 3] = GROWABLE_HEAP_F32()[value1 + (4 * i1 + 12) >> 2];
                 }
-            } else var view = GROWABLE_HEAP_F32().subarray(value >> 2, value + count * 16 >> 2);
-            GLctx.uniformMatrix2fv(webglGetUniformLocation(location), !!transpose, view);
+            } else var view1 = GROWABLE_HEAP_F32().subarray(value1 >> 2, value1 + count1 * 16 >> 2);
+            GLctx.uniformMatrix2fv(webglGetUniformLocation(location1), !!transpose1, view1);
         }
-        function _emscripten_glUniformMatrix2x3fv(location, count, transpose, value) {
-            count && GLctx.uniformMatrix2x3fv(webglGetUniformLocation(location), !!transpose, GROWABLE_HEAP_F32(), value >> 2, count * 6);
+        function _emscripten_glUniformMatrix2x3fv(location1, count1, transpose1, value1) {
+            count1 && GLctx.uniformMatrix2x3fv(webglGetUniformLocation(location1), !!transpose1, GROWABLE_HEAP_F32(), value1 >> 2, count1 * 6);
         }
-        function _emscripten_glUniformMatrix2x4fv(location, count, transpose, value) {
-            count && GLctx.uniformMatrix2x4fv(webglGetUniformLocation(location), !!transpose, GROWABLE_HEAP_F32(), value >> 2, count * 8);
+        function _emscripten_glUniformMatrix2x4fv(location1, count1, transpose1, value1) {
+            count1 && GLctx.uniformMatrix2x4fv(webglGetUniformLocation(location1), !!transpose1, GROWABLE_HEAP_F32(), value1 >> 2, count1 * 8);
         }
-        function _emscripten_glUniformMatrix3fv(location, count, transpose, value) {
+        function _emscripten_glUniformMatrix3fv(location1, count1, transpose1, value1) {
             if (GL.currentContext.version >= 2) {
-                count && GLctx.uniformMatrix3fv(webglGetUniformLocation(location), !!transpose, GROWABLE_HEAP_F32(), value >> 2, count * 9);
+                count1 && GLctx.uniformMatrix3fv(webglGetUniformLocation(location1), !!transpose1, GROWABLE_HEAP_F32(), value1 >> 2, count1 * 9);
                 return;
             }
-            if (count <= 32) {
-                var view = miniTempWebGLFloatBuffers[9 * count - 1];
-                for(var i = 0; i < 9 * count; i += 9){
-                    view[i] = GROWABLE_HEAP_F32()[value + 4 * i >> 2];
-                    view[i + 1] = GROWABLE_HEAP_F32()[value + (4 * i + 4) >> 2];
-                    view[i + 2] = GROWABLE_HEAP_F32()[value + (4 * i + 8) >> 2];
-                    view[i + 3] = GROWABLE_HEAP_F32()[value + (4 * i + 12) >> 2];
-                    view[i + 4] = GROWABLE_HEAP_F32()[value + (4 * i + 16) >> 2];
-                    view[i + 5] = GROWABLE_HEAP_F32()[value + (4 * i + 20) >> 2];
-                    view[i + 6] = GROWABLE_HEAP_F32()[value + (4 * i + 24) >> 2];
-                    view[i + 7] = GROWABLE_HEAP_F32()[value + (4 * i + 28) >> 2];
-                    view[i + 8] = GROWABLE_HEAP_F32()[value + (4 * i + 32) >> 2];
+            if (count1 <= 32) {
+                var view1 = miniTempWebGLFloatBuffers[9 * count1 - 1];
+                for(var i1 = 0; i1 < 9 * count1; i1 += 9){
+                    view1[i1] = GROWABLE_HEAP_F32()[value1 + 4 * i1 >> 2];
+                    view1[i1 + 1] = GROWABLE_HEAP_F32()[value1 + (4 * i1 + 4) >> 2];
+                    view1[i1 + 2] = GROWABLE_HEAP_F32()[value1 + (4 * i1 + 8) >> 2];
+                    view1[i1 + 3] = GROWABLE_HEAP_F32()[value1 + (4 * i1 + 12) >> 2];
+                    view1[i1 + 4] = GROWABLE_HEAP_F32()[value1 + (4 * i1 + 16) >> 2];
+                    view1[i1 + 5] = GROWABLE_HEAP_F32()[value1 + (4 * i1 + 20) >> 2];
+                    view1[i1 + 6] = GROWABLE_HEAP_F32()[value1 + (4 * i1 + 24) >> 2];
+                    view1[i1 + 7] = GROWABLE_HEAP_F32()[value1 + (4 * i1 + 28) >> 2];
+                    view1[i1 + 8] = GROWABLE_HEAP_F32()[value1 + (4 * i1 + 32) >> 2];
                 }
-            } else var view = GROWABLE_HEAP_F32().subarray(value >> 2, value + count * 36 >> 2);
-            GLctx.uniformMatrix3fv(webglGetUniformLocation(location), !!transpose, view);
+            } else var view1 = GROWABLE_HEAP_F32().subarray(value1 >> 2, value1 + count1 * 36 >> 2);
+            GLctx.uniformMatrix3fv(webglGetUniformLocation(location1), !!transpose1, view1);
         }
-        function _emscripten_glUniformMatrix3x2fv(location, count, transpose, value) {
-            count && GLctx.uniformMatrix3x2fv(webglGetUniformLocation(location), !!transpose, GROWABLE_HEAP_F32(), value >> 2, count * 6);
+        function _emscripten_glUniformMatrix3x2fv(location1, count1, transpose1, value1) {
+            count1 && GLctx.uniformMatrix3x2fv(webglGetUniformLocation(location1), !!transpose1, GROWABLE_HEAP_F32(), value1 >> 2, count1 * 6);
         }
-        function _emscripten_glUniformMatrix3x4fv(location, count, transpose, value) {
-            count && GLctx.uniformMatrix3x4fv(webglGetUniformLocation(location), !!transpose, GROWABLE_HEAP_F32(), value >> 2, count * 12);
+        function _emscripten_glUniformMatrix3x4fv(location1, count1, transpose1, value1) {
+            count1 && GLctx.uniformMatrix3x4fv(webglGetUniformLocation(location1), !!transpose1, GROWABLE_HEAP_F32(), value1 >> 2, count1 * 12);
         }
-        function _emscripten_glUniformMatrix4fv(location, count, transpose, value) {
+        function _emscripten_glUniformMatrix4fv(location1, count1, transpose1, value1) {
             if (GL.currentContext.version >= 2) {
-                count && GLctx.uniformMatrix4fv(webglGetUniformLocation(location), !!transpose, GROWABLE_HEAP_F32(), value >> 2, count * 16);
+                count1 && GLctx.uniformMatrix4fv(webglGetUniformLocation(location1), !!transpose1, GROWABLE_HEAP_F32(), value1 >> 2, count1 * 16);
                 return;
             }
-            if (count <= 18) {
-                var view = miniTempWebGLFloatBuffers[16 * count - 1];
-                var heap = GROWABLE_HEAP_F32();
-                value >>= 2;
-                for(var i = 0; i < 16 * count; i += 16){
-                    var dst = value + i;
-                    view[i] = heap[dst];
-                    view[i + 1] = heap[dst + 1];
-                    view[i + 2] = heap[dst + 2];
-                    view[i + 3] = heap[dst + 3];
-                    view[i + 4] = heap[dst + 4];
-                    view[i + 5] = heap[dst + 5];
-                    view[i + 6] = heap[dst + 6];
-                    view[i + 7] = heap[dst + 7];
-                    view[i + 8] = heap[dst + 8];
-                    view[i + 9] = heap[dst + 9];
-                    view[i + 10] = heap[dst + 10];
-                    view[i + 11] = heap[dst + 11];
-                    view[i + 12] = heap[dst + 12];
-                    view[i + 13] = heap[dst + 13];
-                    view[i + 14] = heap[dst + 14];
-                    view[i + 15] = heap[dst + 15];
+            if (count1 <= 18) {
+                var view1 = miniTempWebGLFloatBuffers[16 * count1 - 1];
+                var heap1 = GROWABLE_HEAP_F32();
+                value1 >>= 2;
+                for(var i1 = 0; i1 < 16 * count1; i1 += 16){
+                    var dst1 = value1 + i1;
+                    view1[i1] = heap1[dst1];
+                    view1[i1 + 1] = heap1[dst1 + 1];
+                    view1[i1 + 2] = heap1[dst1 + 2];
+                    view1[i1 + 3] = heap1[dst1 + 3];
+                    view1[i1 + 4] = heap1[dst1 + 4];
+                    view1[i1 + 5] = heap1[dst1 + 5];
+                    view1[i1 + 6] = heap1[dst1 + 6];
+                    view1[i1 + 7] = heap1[dst1 + 7];
+                    view1[i1 + 8] = heap1[dst1 + 8];
+                    view1[i1 + 9] = heap1[dst1 + 9];
+                    view1[i1 + 10] = heap1[dst1 + 10];
+                    view1[i1 + 11] = heap1[dst1 + 11];
+                    view1[i1 + 12] = heap1[dst1 + 12];
+                    view1[i1 + 13] = heap1[dst1 + 13];
+                    view1[i1 + 14] = heap1[dst1 + 14];
+                    view1[i1 + 15] = heap1[dst1 + 15];
                 }
-            } else var view = GROWABLE_HEAP_F32().subarray(value >> 2, value + count * 64 >> 2);
-            GLctx.uniformMatrix4fv(webglGetUniformLocation(location), !!transpose, view);
+            } else var view1 = GROWABLE_HEAP_F32().subarray(value1 >> 2, value1 + count1 * 64 >> 2);
+            GLctx.uniformMatrix4fv(webglGetUniformLocation(location1), !!transpose1, view1);
         }
-        function _emscripten_glUniformMatrix4x2fv(location, count, transpose, value) {
-            count && GLctx.uniformMatrix4x2fv(webglGetUniformLocation(location), !!transpose, GROWABLE_HEAP_F32(), value >> 2, count * 8);
+        function _emscripten_glUniformMatrix4x2fv(location1, count1, transpose1, value1) {
+            count1 && GLctx.uniformMatrix4x2fv(webglGetUniformLocation(location1), !!transpose1, GROWABLE_HEAP_F32(), value1 >> 2, count1 * 8);
         }
-        function _emscripten_glUniformMatrix4x3fv(location, count, transpose, value) {
-            count && GLctx.uniformMatrix4x3fv(webglGetUniformLocation(location), !!transpose, GROWABLE_HEAP_F32(), value >> 2, count * 12);
+        function _emscripten_glUniformMatrix4x3fv(location1, count1, transpose1, value1) {
+            count1 && GLctx.uniformMatrix4x3fv(webglGetUniformLocation(location1), !!transpose1, GROWABLE_HEAP_F32(), value1 >> 2, count1 * 12);
         }
-        function _emscripten_glUseProgram(program) {
-            program = GL.programs[program];
-            GLctx.useProgram(program);
-            GLctx.currentProgram = program;
+        function _emscripten_glUseProgram(program1) {
+            program1 = GL.programs[program1];
+            GLctx.useProgram(program1);
+            GLctx.currentProgram = program1;
         }
-        function _emscripten_glValidateProgram(program) {
-            GLctx.validateProgram(GL.programs[program]);
+        function _emscripten_glValidateProgram(program1) {
+            GLctx.validateProgram(GL.programs[program1]);
         }
-        function _emscripten_glVertexAttrib1f(x0, x1) {
-            GLctx["vertexAttrib1f"](x0, x1);
+        function _emscripten_glVertexAttrib1f(x01, x11) {
+            GLctx["vertexAttrib1f"](x01, x11);
         }
-        function _emscripten_glVertexAttrib1fv(index, v) {
-            GLctx.vertexAttrib1f(index, GROWABLE_HEAP_F32()[v >> 2]);
+        function _emscripten_glVertexAttrib1fv(index1, v4) {
+            GLctx.vertexAttrib1f(index1, GROWABLE_HEAP_F32()[v4 >> 2]);
         }
-        function _emscripten_glVertexAttrib2f(x0, x1, x2) {
-            GLctx["vertexAttrib2f"](x0, x1, x2);
+        function _emscripten_glVertexAttrib2f(x01, x11, x21) {
+            GLctx["vertexAttrib2f"](x01, x11, x21);
         }
-        function _emscripten_glVertexAttrib2fv(index, v) {
-            GLctx.vertexAttrib2f(index, GROWABLE_HEAP_F32()[v >> 2], GROWABLE_HEAP_F32()[v + 4 >> 2]);
+        function _emscripten_glVertexAttrib2fv(index1, v4) {
+            GLctx.vertexAttrib2f(index1, GROWABLE_HEAP_F32()[v4 >> 2], GROWABLE_HEAP_F32()[v4 + 4 >> 2]);
         }
-        function _emscripten_glVertexAttrib3f(x0, x1, x2, x3) {
-            GLctx["vertexAttrib3f"](x0, x1, x2, x3);
+        function _emscripten_glVertexAttrib3f(x01, x11, x21, x31) {
+            GLctx["vertexAttrib3f"](x01, x11, x21, x31);
         }
-        function _emscripten_glVertexAttrib3fv(index, v) {
-            GLctx.vertexAttrib3f(index, GROWABLE_HEAP_F32()[v >> 2], GROWABLE_HEAP_F32()[v + 4 >> 2], GROWABLE_HEAP_F32()[v + 8 >> 2]);
+        function _emscripten_glVertexAttrib3fv(index1, v4) {
+            GLctx.vertexAttrib3f(index1, GROWABLE_HEAP_F32()[v4 >> 2], GROWABLE_HEAP_F32()[v4 + 4 >> 2], GROWABLE_HEAP_F32()[v4 + 8 >> 2]);
         }
-        function _emscripten_glVertexAttrib4f(x0, x1, x2, x3, x4) {
-            GLctx["vertexAttrib4f"](x0, x1, x2, x3, x4);
+        function _emscripten_glVertexAttrib4f(x01, x11, x21, x31, x41) {
+            GLctx["vertexAttrib4f"](x01, x11, x21, x31, x41);
         }
-        function _emscripten_glVertexAttrib4fv(index, v) {
-            GLctx.vertexAttrib4f(index, GROWABLE_HEAP_F32()[v >> 2], GROWABLE_HEAP_F32()[v + 4 >> 2], GROWABLE_HEAP_F32()[v + 8 >> 2], GROWABLE_HEAP_F32()[v + 12 >> 2]);
+        function _emscripten_glVertexAttrib4fv(index1, v4) {
+            GLctx.vertexAttrib4f(index1, GROWABLE_HEAP_F32()[v4 >> 2], GROWABLE_HEAP_F32()[v4 + 4 >> 2], GROWABLE_HEAP_F32()[v4 + 8 >> 2], GROWABLE_HEAP_F32()[v4 + 12 >> 2]);
         }
-        function _emscripten_glVertexAttribDivisor(index, divisor) {
-            GLctx["vertexAttribDivisor"](index, divisor);
+        function _emscripten_glVertexAttribDivisor(index1, divisor1) {
+            GLctx["vertexAttribDivisor"](index1, divisor1);
         }
-        function _emscripten_glVertexAttribI4i(x0, x1, x2, x3, x4) {
-            GLctx["vertexAttribI4i"](x0, x1, x2, x3, x4);
+        function _emscripten_glVertexAttribI4i(x01, x11, x21, x31, x41) {
+            GLctx["vertexAttribI4i"](x01, x11, x21, x31, x41);
         }
-        function _emscripten_glVertexAttribI4iv(index, v) {
-            GLctx.vertexAttribI4i(index, GROWABLE_HEAP_I32()[v >> 2], GROWABLE_HEAP_I32()[v + 4 >> 2], GROWABLE_HEAP_I32()[v + 8 >> 2], GROWABLE_HEAP_I32()[v + 12 >> 2]);
+        function _emscripten_glVertexAttribI4iv(index1, v4) {
+            GLctx.vertexAttribI4i(index1, GROWABLE_HEAP_I32()[v4 >> 2], GROWABLE_HEAP_I32()[v4 + 4 >> 2], GROWABLE_HEAP_I32()[v4 + 8 >> 2], GROWABLE_HEAP_I32()[v4 + 12 >> 2]);
         }
-        function _emscripten_glVertexAttribI4ui(x0, x1, x2, x3, x4) {
-            GLctx["vertexAttribI4ui"](x0, x1, x2, x3, x4);
+        function _emscripten_glVertexAttribI4ui(x01, x11, x21, x31, x41) {
+            GLctx["vertexAttribI4ui"](x01, x11, x21, x31, x41);
         }
-        function _emscripten_glVertexAttribI4uiv(index, v) {
-            GLctx.vertexAttribI4ui(index, GROWABLE_HEAP_U32()[v >> 2], GROWABLE_HEAP_U32()[v + 4 >> 2], GROWABLE_HEAP_U32()[v + 8 >> 2], GROWABLE_HEAP_U32()[v + 12 >> 2]);
+        function _emscripten_glVertexAttribI4uiv(index1, v4) {
+            GLctx.vertexAttribI4ui(index1, GROWABLE_HEAP_U32()[v4 >> 2], GROWABLE_HEAP_U32()[v4 + 4 >> 2], GROWABLE_HEAP_U32()[v4 + 8 >> 2], GROWABLE_HEAP_U32()[v4 + 12 >> 2]);
         }
-        function _emscripten_glVertexAttribIPointer(index, size, type, stride, ptr) {
-            GLctx["vertexAttribIPointer"](index, size, type, stride, ptr);
+        function _emscripten_glVertexAttribIPointer(index1, size1, type1, stride1, ptr1) {
+            GLctx["vertexAttribIPointer"](index1, size1, type1, stride1, ptr1);
         }
-        function _emscripten_glVertexAttribPointer(index, size, type, normalized, stride, ptr) {
-            GLctx.vertexAttribPointer(index, size, type, !!normalized, stride, ptr);
+        function _emscripten_glVertexAttribPointer(index1, size1, type1, normalized1, stride1, ptr1) {
+            GLctx.vertexAttribPointer(index1, size1, type1, !!normalized1, stride1, ptr1);
         }
-        function _emscripten_glViewport(x0, x1, x2, x3) {
-            GLctx["viewport"](x0, x1, x2, x3);
+        function _emscripten_glViewport(x01, x11, x21, x31) {
+            GLctx["viewport"](x01, x11, x21, x31);
         }
-        function _emscripten_glWaitSync(sync, flags, timeoutLo, timeoutHi) {
-            GLctx.waitSync(GL.syncs[sync], flags, convertI32PairToI53(timeoutLo, timeoutHi));
+        function _emscripten_glWaitSync(sync1, flags1, timeoutLo1, timeoutHi1) {
+            GLctx.waitSync(GL.syncs[sync1], flags1, convertI32PairToI53(timeoutLo1, timeoutHi1));
         }
-        function _emscripten_memcpy_big(dest, src, num) {
-            GROWABLE_HEAP_U8().copyWithin(dest, src, src + num);
+        function _emscripten_memcpy_big(dest1, src1, num1) {
+            GROWABLE_HEAP_U8().copyWithin(dest1, src1, src1 + num1);
         }
         function _emscripten_num_logical_cores() {
             return navigator["hardwareConcurrency"];
         }
-        function _emscripten_proxy_to_main_thread_js(index, sync) {
-            var numCallArgs = arguments.length - 2;
-            var outerArgs = arguments;
+        function _emscripten_proxy_to_main_thread_js(index1, sync1) {
+            var numCallArgs1 = arguments.length - 2;
+            var outerArgs1 = arguments;
             return withStackSave(function() {
-                var serializedNumCallArgs = numCallArgs;
-                var args = stackAlloc(serializedNumCallArgs * 8);
-                var b = args >> 3;
-                for(var i = 0; i < numCallArgs; i++){
-                    var arg = outerArgs[2 + i];
-                    GROWABLE_HEAP_F64()[b + i] = arg;
+                var serializedNumCallArgs1 = numCallArgs1;
+                var args1 = stackAlloc(serializedNumCallArgs1 * 8);
+                var b1 = args1 >> 3;
+                for(var i1 = 0; i1 < numCallArgs1; i1++){
+                    var arg1 = outerArgs1[2 + i1];
+                    GROWABLE_HEAP_F64()[b1 + i1] = arg1;
                 }
-                return _emscripten_run_in_main_runtime_thread_js(index, serializedNumCallArgs, args, sync);
+                return _emscripten_run_in_main_runtime_thread_js(index1, serializedNumCallArgs1, args1, sync1);
             });
         }
         var _emscripten_receive_on_main_thread_js_callArgs = [];
-        function _emscripten_receive_on_main_thread_js(index, numCallArgs, args) {
-            _emscripten_receive_on_main_thread_js_callArgs.length = numCallArgs;
-            var b = args >> 3;
-            for(var i = 0; i < numCallArgs; i++)_emscripten_receive_on_main_thread_js_callArgs[i] = GROWABLE_HEAP_F64()[b + i];
-            var isEmAsmConst = index < 0;
-            var func = !isEmAsmConst ? proxiedFunctionTable[index] : ASM_CONSTS[-index - 1];
-            return func.apply(null, _emscripten_receive_on_main_thread_js_callArgs);
+        function _emscripten_receive_on_main_thread_js(index1, numCallArgs1, args1) {
+            _emscripten_receive_on_main_thread_js_callArgs.length = numCallArgs1;
+            var b1 = args1 >> 3;
+            for(var i1 = 0; i1 < numCallArgs1; i1++)_emscripten_receive_on_main_thread_js_callArgs[i1] = GROWABLE_HEAP_F64()[b1 + i1];
+            var isEmAsmConst1 = index1 < 0;
+            var func1 = !isEmAsmConst1 ? proxiedFunctionTable[index1] : ASM_CONSTS[-index1 - 1];
+            return func1.apply(null, _emscripten_receive_on_main_thread_js_callArgs);
         }
         function getHeapMax() {
             return 2147483648;
         }
-        function emscripten_realloc_buffer(size) {
+        function emscripten_realloc_buffer(size1) {
             try {
-                wasmMemory.grow(size - buffer.byteLength + 65535 >>> 16);
+                wasmMemory.grow(size1 - buffer.byteLength + 65535 >>> 16);
                 updateGlobalBufferAndViews(wasmMemory.buffer);
                 return 1;
-            } catch (e) {}
+            } catch (e1) {}
         }
-        function _emscripten_resize_heap(requestedSize) {
-            var oldSize = GROWABLE_HEAP_U8().length;
-            requestedSize = requestedSize >>> 0;
-            if (requestedSize <= oldSize) return false;
-            var maxHeapSize = getHeapMax();
-            if (requestedSize > maxHeapSize) return false;
-            let alignUp = (x, multiple)=>x + (multiple - x % multiple) % multiple;
-            for(var cutDown = 1; cutDown <= 4; cutDown *= 2){
-                var overGrownHeapSize = oldSize * (1 + .2 / cutDown);
-                overGrownHeapSize = Math.min(overGrownHeapSize, requestedSize + 100663296);
-                var newSize = Math.min(maxHeapSize, alignUp(Math.max(requestedSize, overGrownHeapSize), 65536));
-                var replacement = emscripten_realloc_buffer(newSize);
-                if (replacement) return true;
+        function _emscripten_resize_heap(requestedSize1) {
+            var oldSize1 = GROWABLE_HEAP_U8().length;
+            requestedSize1 = requestedSize1 >>> 0;
+            if (requestedSize1 <= oldSize1) return false;
+            var maxHeapSize1 = getHeapMax();
+            if (requestedSize1 > maxHeapSize1) return false;
+            let alignUp1 = (x10, multiple1)=>x10 + (multiple1 - x10 % multiple1) % multiple1;
+            for(var cutDown1 = 1; cutDown1 <= 4; cutDown1 *= 2){
+                var overGrownHeapSize1 = oldSize1 * (1 + .2 / cutDown1);
+                overGrownHeapSize1 = Math.min(overGrownHeapSize1, requestedSize1 + 100663296);
+                var newSize1 = Math.min(maxHeapSize1, alignUp1(Math.max(requestedSize1, overGrownHeapSize1), 65536));
+                var replacement1 = emscripten_realloc_buffer(newSize1);
+                if (replacement1) return true;
             }
             return false;
         }
-        function _emscripten_set_main_loop(func, fps, simulateInfiniteLoop) {
-            var browserIterationFunc = getWasmTableEntry(func);
-            setMainLoop(browserIterationFunc, fps, simulateInfiniteLoop);
+        function _emscripten_set_main_loop(func1, fps1, simulateInfiniteLoop1) {
+            var browserIterationFunc1 = getWasmTableEntry(func1);
+            setMainLoop(browserIterationFunc1, fps1, simulateInfiniteLoop1);
         }
         function _emscripten_supports_offscreencanvas() {
             return 0;
@@ -6950,10 +6950,10 @@ var Godot = (()=>{
         function _emscripten_unwind_to_js_event_loop() {
             throw "unwind";
         }
-        function _emscripten_webgl_destroy_context(contextHandle) {
-            if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(34, 1, contextHandle);
-            if (GL.currentContext == contextHandle) GL.currentContext = 0;
-            GL.deleteContext(contextHandle);
+        function _emscripten_webgl_destroy_context(contextHandle1) {
+            if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(34, 1, contextHandle1);
+            if (GL.currentContext == contextHandle1) GL.currentContext = 0;
+            GL.deleteContext(contextHandle1);
         }
         function _emscripten_webgl_do_commit_frame() {
             if (!GL.currentContext || !GL.currentContext.GLctx) return -3;
@@ -6964,14 +6964,14 @@ var Godot = (()=>{
             if (!GL.currentContext.attributes.explicitSwapControl) return -3;
             return 0;
         }
-        function _emscripten_webgl_create_context_proxied(target, attributes) {
-            if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(35, 1, target, attributes);
-            return _emscripten_webgl_do_create_context(target, attributes);
+        function _emscripten_webgl_create_context_proxied(target1, attributes1) {
+            if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(35, 1, target1, attributes1);
+            return _emscripten_webgl_do_create_context(target1, attributes1);
         }
         var JSEvents = {
             inEventHandler: 0,
             removeAllEventListeners: function() {
-                for(var i = JSEvents.eventHandlers.length - 1; i >= 0; --i)JSEvents._removeHandler(i);
+                for(var i1 = JSEvents.eventHandlers.length - 1; i1 >= 0; --i1)JSEvents._removeHandler(i1);
                 JSEvents.eventHandlers = [];
                 JSEvents.deferredCalls = [];
             },
@@ -6982,31 +6982,31 @@ var Godot = (()=>{
                 }
             },
             deferredCalls: [],
-            deferCall: function(targetFunction, precedence, argsList) {
-                function arraysHaveEqualContent(arrA, arrB) {
-                    if (arrA.length != arrB.length) return false;
-                    for(var i in arrA){
-                        if (arrA[i] != arrB[i]) return false;
+            deferCall: function(targetFunction1, precedence1, argsList1) {
+                function arraysHaveEqualContent1(arrA1, arrB1) {
+                    if (arrA1.length != arrB1.length) return false;
+                    for(var i1 in arrA1){
+                        if (arrA1[i1] != arrB1[i1]) return false;
                     }
                     return true;
                 }
-                for(var i in JSEvents.deferredCalls){
-                    var call = JSEvents.deferredCalls[i];
-                    if (call.targetFunction == targetFunction && arraysHaveEqualContent(call.argsList, argsList)) return;
+                for(var i1 in JSEvents.deferredCalls){
+                    var call1 = JSEvents.deferredCalls[i1];
+                    if (call1.targetFunction == targetFunction1 && arraysHaveEqualContent1(call1.argsList, argsList1)) return;
                 }
                 JSEvents.deferredCalls.push({
-                    targetFunction: targetFunction,
-                    precedence: precedence,
-                    argsList: argsList
+                    targetFunction: targetFunction1,
+                    precedence: precedence1,
+                    argsList: argsList1
                 });
-                JSEvents.deferredCalls.sort(function(x, y) {
-                    return x.precedence < y.precedence;
+                JSEvents.deferredCalls.sort(function(x10, y1) {
+                    return x10.precedence < y1.precedence;
                 });
             },
-            removeDeferredCalls: function(targetFunction) {
-                for(var i = 0; i < JSEvents.deferredCalls.length; ++i)if (JSEvents.deferredCalls[i].targetFunction == targetFunction) {
-                    JSEvents.deferredCalls.splice(i, 1);
-                    --i;
+            removeDeferredCalls: function(targetFunction1) {
+                for(var i1 = 0; i1 < JSEvents.deferredCalls.length; ++i1)if (JSEvents.deferredCalls[i1].targetFunction == targetFunction1) {
+                    JSEvents.deferredCalls.splice(i1, 1);
+                    --i1;
                 }
             },
             canPerformEventHandlerRequests: function() {
@@ -7014,64 +7014,64 @@ var Godot = (()=>{
             },
             runDeferredCalls: function() {
                 if (!JSEvents.canPerformEventHandlerRequests()) return;
-                for(var i = 0; i < JSEvents.deferredCalls.length; ++i){
-                    var call = JSEvents.deferredCalls[i];
-                    JSEvents.deferredCalls.splice(i, 1);
-                    --i;
-                    call.targetFunction.apply(null, call.argsList);
+                for(var i1 = 0; i1 < JSEvents.deferredCalls.length; ++i1){
+                    var call1 = JSEvents.deferredCalls[i1];
+                    JSEvents.deferredCalls.splice(i1, 1);
+                    --i1;
+                    call1.targetFunction.apply(null, call1.argsList);
                 }
             },
             eventHandlers: [],
-            removeAllHandlersOnTarget: function(target, eventTypeString) {
-                for(var i = 0; i < JSEvents.eventHandlers.length; ++i)if (JSEvents.eventHandlers[i].target == target && (!eventTypeString || eventTypeString == JSEvents.eventHandlers[i].eventTypeString)) JSEvents._removeHandler(i--);
+            removeAllHandlersOnTarget: function(target1, eventTypeString1) {
+                for(var i1 = 0; i1 < JSEvents.eventHandlers.length; ++i1)if (JSEvents.eventHandlers[i1].target == target1 && (!eventTypeString1 || eventTypeString1 == JSEvents.eventHandlers[i1].eventTypeString)) JSEvents._removeHandler(i1--);
             },
-            _removeHandler: function(i) {
-                var h = JSEvents.eventHandlers[i];
-                h.target.removeEventListener(h.eventTypeString, h.eventListenerFunc, h.useCapture);
-                JSEvents.eventHandlers.splice(i, 1);
+            _removeHandler: function(i1) {
+                var h1 = JSEvents.eventHandlers[i1];
+                h1.target.removeEventListener(h1.eventTypeString, h1.eventListenerFunc, h1.useCapture);
+                JSEvents.eventHandlers.splice(i1, 1);
             },
-            registerOrRemoveHandler: function(eventHandler) {
-                var jsEventHandler = function jsEventHandler(event) {
+            registerOrRemoveHandler: function(eventHandler1) {
+                var jsEventHandler1 = function jsEventHandler1(event1) {
                     ++JSEvents.inEventHandler;
-                    JSEvents.currentEventHandler = eventHandler;
+                    JSEvents.currentEventHandler = eventHandler1;
                     JSEvents.runDeferredCalls();
-                    eventHandler.handlerFunc(event);
+                    eventHandler1.handlerFunc(event1);
                     JSEvents.runDeferredCalls();
                     --JSEvents.inEventHandler;
                 };
-                if (eventHandler.callbackfunc) {
-                    eventHandler.eventListenerFunc = jsEventHandler;
-                    eventHandler.target.addEventListener(eventHandler.eventTypeString, jsEventHandler, eventHandler.useCapture);
-                    JSEvents.eventHandlers.push(eventHandler);
+                if (eventHandler1.callbackfunc) {
+                    eventHandler1.eventListenerFunc = jsEventHandler1;
+                    eventHandler1.target.addEventListener(eventHandler1.eventTypeString, jsEventHandler1, eventHandler1.useCapture);
+                    JSEvents.eventHandlers.push(eventHandler1);
                     JSEvents.registerRemoveEventListeners();
                 } else {
-                    for(var i = 0; i < JSEvents.eventHandlers.length; ++i)if (JSEvents.eventHandlers[i].target == eventHandler.target && JSEvents.eventHandlers[i].eventTypeString == eventHandler.eventTypeString) JSEvents._removeHandler(i--);
+                    for(var i1 = 0; i1 < JSEvents.eventHandlers.length; ++i1)if (JSEvents.eventHandlers[i1].target == eventHandler1.target && JSEvents.eventHandlers[i1].eventTypeString == eventHandler1.eventTypeString) JSEvents._removeHandler(i1--);
                 }
             },
-            queueEventHandlerOnThread_iiii: function(targetThread, eventHandlerFunc, eventTypeId, eventData, userData) {
+            queueEventHandlerOnThread_iiii: function(targetThread1, eventHandlerFunc1, eventTypeId1, eventData1, userData1) {
                 withStackSave(function() {
-                    var varargs = stackAlloc(12);
-                    GROWABLE_HEAP_I32()[varargs >> 2] = eventTypeId;
-                    GROWABLE_HEAP_I32()[varargs + 4 >> 2] = eventData;
-                    GROWABLE_HEAP_I32()[varargs + 8 >> 2] = userData;
-                    _emscripten_dispatch_to_thread_(targetThread, 637534208, eventHandlerFunc, eventData, varargs);
+                    var varargs1 = stackAlloc(12);
+                    GROWABLE_HEAP_I32()[varargs1 >> 2] = eventTypeId1;
+                    GROWABLE_HEAP_I32()[varargs1 + 4 >> 2] = eventData1;
+                    GROWABLE_HEAP_I32()[varargs1 + 8 >> 2] = userData1;
+                    _emscripten_dispatch_to_thread_(targetThread1, 637534208, eventHandlerFunc1, eventData1, varargs1);
                 });
             },
-            getTargetThreadForEventCallback: function(targetThread) {
-                switch(targetThread){
+            getTargetThreadForEventCallback: function(targetThread1) {
+                switch(targetThread1){
                     case 1:
                         return 0;
                     case 2:
                         return PThread.currentProxiedOperationCallerThread;
                     default:
-                        return targetThread;
+                        return targetThread1;
                 }
             },
-            getNodeNameForTarget: function(target) {
-                if (!target) return "";
-                if (target == window) return "#window";
-                if (target == screen) return "#screen";
-                return target && target.nodeName ? target.nodeName : "";
+            getNodeNameForTarget: function(target1) {
+                if (!target1) return "";
+                if (target1 == window) return "#window";
+                if (target1 == screen) return "#screen";
+                return target1 && target1.nodeName ? target1.nodeName : "";
             },
             fullscreenEnabled: function() {
                 return document.fullscreenEnabled || document.webkitFullscreenEnabled;
@@ -7082,66 +7082,66 @@ var Godot = (()=>{
             "low-power",
             "high-performance"
         ];
-        function maybeCStringToJsString(cString) {
-            return cString > 2 ? UTF8ToString(cString) : cString;
+        function maybeCStringToJsString(cString1) {
+            return cString1 > 2 ? UTF8ToString(cString1) : cString1;
         }
         var specialHTMLTargets = [
             0,
             typeof document != "undefined" ? document : 0,
             typeof window != "undefined" ? window : 0
         ];
-        function findEventTarget(target) {
-            target = maybeCStringToJsString(target);
-            var domElement = specialHTMLTargets[target] || (typeof document != "undefined" ? document.querySelector(target) : undefined);
-            return domElement;
+        function findEventTarget(target1) {
+            target1 = maybeCStringToJsString(target1);
+            var domElement1 = specialHTMLTargets[target1] || (typeof document != "undefined" ? document.querySelector(target1) : undefined);
+            return domElement1;
         }
-        function findCanvasEventTarget(target) {
-            return findEventTarget(target);
+        function findCanvasEventTarget(target1) {
+            return findEventTarget(target1);
         }
-        function _emscripten_webgl_do_create_context(target, attributes) {
-            var a = attributes >> 2;
-            var powerPreference = GROWABLE_HEAP_I32()[a + 6];
-            var contextAttributes = {
-                "alpha": !!GROWABLE_HEAP_I32()[a + 0],
-                "depth": !!GROWABLE_HEAP_I32()[a + 1],
-                "stencil": !!GROWABLE_HEAP_I32()[a + 2],
-                "antialias": !!GROWABLE_HEAP_I32()[a + 3],
-                "premultipliedAlpha": !!GROWABLE_HEAP_I32()[a + 4],
-                "preserveDrawingBuffer": !!GROWABLE_HEAP_I32()[a + 5],
-                "powerPreference": __emscripten_webgl_power_preferences[powerPreference],
-                "failIfMajorPerformanceCaveat": !!GROWABLE_HEAP_I32()[a + 7],
-                majorVersion: GROWABLE_HEAP_I32()[a + 8],
-                minorVersion: GROWABLE_HEAP_I32()[a + 9],
-                enableExtensionsByDefault: GROWABLE_HEAP_I32()[a + 10],
-                explicitSwapControl: GROWABLE_HEAP_I32()[a + 11],
-                proxyContextToMainThread: GROWABLE_HEAP_I32()[a + 12],
-                renderViaOffscreenBackBuffer: GROWABLE_HEAP_I32()[a + 13]
+        function _emscripten_webgl_do_create_context(target1, attributes1) {
+            var a8 = attributes1 >> 2;
+            var powerPreference1 = GROWABLE_HEAP_I32()[a8 + 6];
+            var contextAttributes1 = {
+                "alpha": !!GROWABLE_HEAP_I32()[a8 + 0],
+                "depth": !!GROWABLE_HEAP_I32()[a8 + 1],
+                "stencil": !!GROWABLE_HEAP_I32()[a8 + 2],
+                "antialias": !!GROWABLE_HEAP_I32()[a8 + 3],
+                "premultipliedAlpha": !!GROWABLE_HEAP_I32()[a8 + 4],
+                "preserveDrawingBuffer": !!GROWABLE_HEAP_I32()[a8 + 5],
+                "powerPreference": __emscripten_webgl_power_preferences[powerPreference1],
+                "failIfMajorPerformanceCaveat": !!GROWABLE_HEAP_I32()[a8 + 7],
+                majorVersion: GROWABLE_HEAP_I32()[a8 + 8],
+                minorVersion: GROWABLE_HEAP_I32()[a8 + 9],
+                enableExtensionsByDefault: GROWABLE_HEAP_I32()[a8 + 10],
+                explicitSwapControl: GROWABLE_HEAP_I32()[a8 + 11],
+                proxyContextToMainThread: GROWABLE_HEAP_I32()[a8 + 12],
+                renderViaOffscreenBackBuffer: GROWABLE_HEAP_I32()[a8 + 13]
             };
-            var canvas = findCanvasEventTarget(target);
+            var canvas1 = findCanvasEventTarget(target1);
             if (ENVIRONMENT_IS_PTHREAD) {
-                if (contextAttributes.proxyContextToMainThread === 2 || !canvas && contextAttributes.proxyContextToMainThread === 1) {
+                if (contextAttributes1.proxyContextToMainThread === 2 || !canvas1 && contextAttributes1.proxyContextToMainThread === 1) {
                     if (typeof OffscreenCanvas == "undefined") {
-                        GROWABLE_HEAP_I32()[attributes + 52 >> 2] = 1;
-                        GROWABLE_HEAP_I32()[attributes + 20 >> 2] = 1;
+                        GROWABLE_HEAP_I32()[attributes1 + 52 >> 2] = 1;
+                        GROWABLE_HEAP_I32()[attributes1 + 20 >> 2] = 1;
                     }
-                    return _emscripten_webgl_create_context_proxied(target, attributes);
+                    return _emscripten_webgl_create_context_proxied(target1, attributes1);
                 }
             }
-            if (!canvas) return 0;
-            if (contextAttributes.explicitSwapControl && !contextAttributes.renderViaOffscreenBackBuffer) contextAttributes.renderViaOffscreenBackBuffer = true;
-            var contextHandle = GL.createContext(canvas, contextAttributes);
-            return contextHandle;
+            if (!canvas1) return 0;
+            if (contextAttributes1.explicitSwapControl && !contextAttributes1.renderViaOffscreenBackBuffer) contextAttributes1.renderViaOffscreenBackBuffer = true;
+            var contextHandle1 = GL.createContext(canvas1, contextAttributes1);
+            return contextHandle1;
         }
-        function _emscripten_webgl_init_context_attributes(attributes) {
-            var a = attributes >> 2;
-            for(var i = 0; i < 14; ++i)GROWABLE_HEAP_I32()[a + i] = 0;
-            GROWABLE_HEAP_I32()[a + 0] = GROWABLE_HEAP_I32()[a + 1] = GROWABLE_HEAP_I32()[a + 3] = GROWABLE_HEAP_I32()[a + 4] = GROWABLE_HEAP_I32()[a + 8] = GROWABLE_HEAP_I32()[a + 10] = 1;
-            if (ENVIRONMENT_IS_WORKER) GROWABLE_HEAP_I32()[attributes + 48 >> 2] = 1;
+        function _emscripten_webgl_init_context_attributes(attributes1) {
+            var a8 = attributes1 >> 2;
+            for(var i1 = 0; i1 < 14; ++i1)GROWABLE_HEAP_I32()[a8 + i1] = 0;
+            GROWABLE_HEAP_I32()[a8 + 0] = GROWABLE_HEAP_I32()[a8 + 1] = GROWABLE_HEAP_I32()[a8 + 3] = GROWABLE_HEAP_I32()[a8 + 4] = GROWABLE_HEAP_I32()[a8 + 8] = GROWABLE_HEAP_I32()[a8 + 10] = 1;
+            if (ENVIRONMENT_IS_WORKER) GROWABLE_HEAP_I32()[attributes1 + 48 >> 2] = 1;
         }
-        function _emscripten_webgl_make_context_current_calling_thread(contextHandle) {
-            var success = GL.makeContextCurrent(contextHandle);
-            if (success) GL.currentContextIsProxied = false;
-            return success ? 0 : -5;
+        function _emscripten_webgl_make_context_current_calling_thread(contextHandle1) {
+            var success1 = GL.makeContextCurrent(contextHandle1);
+            if (success1) GL.currentContextIsProxied = false;
+            return success1 ? 0 : -5;
         }
         var ENV = {};
         function getExecutableName() {
@@ -7149,273 +7149,273 @@ var Godot = (()=>{
         }
         function getEnvStrings() {
             if (!getEnvStrings.strings) {
-                var lang = (typeof navigator == "object" && navigator.languages && navigator.languages[0] || "C").replace("-", "_") + ".UTF-8";
-                var env = {
+                var lang1 = (typeof navigator == "object" && navigator.languages && navigator.languages[0] || "C").replace("-", "_") + ".UTF-8";
+                var env1 = {
                     "USER": "web_user",
                     "LOGNAME": "web_user",
                     "PATH": "/",
                     "PWD": "/",
                     "HOME": "/home/web_user",
-                    "LANG": lang,
+                    "LANG": lang1,
                     "_": getExecutableName()
                 };
-                for(var x in ENV)if (ENV[x] === undefined) delete env[x];
-                else env[x] = ENV[x];
-                var strings = [];
-                for(var x in env)strings.push(x + "=" + env[x]);
-                getEnvStrings.strings = strings;
+                for(var x10 in ENV)if (ENV[x10] === undefined) delete env1[x10];
+                else env1[x10] = ENV[x10];
+                var strings1 = [];
+                for(var x10 in env1)strings1.push(x10 + "=" + env1[x10]);
+                getEnvStrings.strings = strings1;
             }
             return getEnvStrings.strings;
         }
-        function _environ_get(__environ, environ_buf) {
-            if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(36, 1, __environ, environ_buf);
-            var bufSize = 0;
-            getEnvStrings().forEach(function(string, i) {
-                var ptr = environ_buf + bufSize;
-                GROWABLE_HEAP_U32()[__environ + i * 4 >> 2] = ptr;
-                writeAsciiToMemory(string, ptr);
-                bufSize += string.length + 1;
+        function _environ_get(__environ1, environ_buf1) {
+            if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(36, 1, __environ1, environ_buf1);
+            var bufSize1 = 0;
+            getEnvStrings().forEach(function(string1, i1) {
+                var ptr1 = environ_buf1 + bufSize1;
+                GROWABLE_HEAP_U32()[__environ1 + i1 * 4 >> 2] = ptr1;
+                writeAsciiToMemory(string1, ptr1);
+                bufSize1 += string1.length + 1;
             });
             return 0;
         }
-        function _environ_sizes_get(penviron_count, penviron_buf_size) {
-            if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(37, 1, penviron_count, penviron_buf_size);
-            var strings = getEnvStrings();
-            GROWABLE_HEAP_U32()[penviron_count >> 2] = strings.length;
-            var bufSize = 0;
-            strings.forEach(function(string) {
-                bufSize += string.length + 1;
+        function _environ_sizes_get(penviron_count1, penviron_buf_size1) {
+            if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(37, 1, penviron_count1, penviron_buf_size1);
+            var strings1 = getEnvStrings();
+            GROWABLE_HEAP_U32()[penviron_count1 >> 2] = strings1.length;
+            var bufSize1 = 0;
+            strings1.forEach(function(string1) {
+                bufSize1 += string1.length + 1;
             });
-            GROWABLE_HEAP_U32()[penviron_buf_size >> 2] = bufSize;
+            GROWABLE_HEAP_U32()[penviron_buf_size1 >> 2] = bufSize1;
             return 0;
         }
-        function _fd_close(fd) {
-            if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(38, 1, fd);
+        function _fd_close(fd1) {
+            if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(38, 1, fd1);
             try {
-                var stream = SYSCALLS.getStreamFromFD(fd);
-                FS.close(stream);
+                var stream1 = SYSCALLS.getStreamFromFD(fd1);
+                FS.close(stream1);
                 return 0;
-            } catch (e) {
-                if (typeof FS == "undefined" || !(e instanceof FS.ErrnoError)) throw e;
-                return e.errno;
+            } catch (e1) {
+                if (typeof FS == "undefined" || !(e1 instanceof FS.ErrnoError)) throw e1;
+                return e1.errno;
             }
         }
-        function _fd_fdstat_get(fd, pbuf) {
-            if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(39, 1, fd, pbuf);
+        function _fd_fdstat_get(fd1, pbuf1) {
+            if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(39, 1, fd1, pbuf1);
             try {
-                var stream = SYSCALLS.getStreamFromFD(fd);
-                var type = stream.tty ? 2 : FS.isDir(stream.mode) ? 3 : FS.isLink(stream.mode) ? 7 : 4;
-                GROWABLE_HEAP_I8()[pbuf >> 0] = type;
+                var stream1 = SYSCALLS.getStreamFromFD(fd1);
+                var type1 = stream1.tty ? 2 : FS.isDir(stream1.mode) ? 3 : FS.isLink(stream1.mode) ? 7 : 4;
+                GROWABLE_HEAP_I8()[pbuf1 >> 0] = type1;
                 return 0;
-            } catch (e) {
-                if (typeof FS == "undefined" || !(e instanceof FS.ErrnoError)) throw e;
-                return e.errno;
+            } catch (e1) {
+                if (typeof FS == "undefined" || !(e1 instanceof FS.ErrnoError)) throw e1;
+                return e1.errno;
             }
         }
-        function doReadv(stream, iov, iovcnt, offset) {
-            var ret = 0;
-            for(var i = 0; i < iovcnt; i++){
-                var ptr = GROWABLE_HEAP_U32()[iov >> 2];
-                var len = GROWABLE_HEAP_U32()[iov + 4 >> 2];
-                iov += 8;
-                var curr = FS.read(stream, GROWABLE_HEAP_I8(), ptr, len, offset);
-                if (curr < 0) return -1;
-                ret += curr;
-                if (curr < len) break;
+        function doReadv(stream1, iov1, iovcnt1, offset1) {
+            var ret1 = 0;
+            for(var i1 = 0; i1 < iovcnt1; i1++){
+                var ptr1 = GROWABLE_HEAP_U32()[iov1 >> 2];
+                var len1 = GROWABLE_HEAP_U32()[iov1 + 4 >> 2];
+                iov1 += 8;
+                var curr1 = FS.read(stream1, GROWABLE_HEAP_I8(), ptr1, len1, offset1);
+                if (curr1 < 0) return -1;
+                ret1 += curr1;
+                if (curr1 < len1) break;
             }
-            return ret;
+            return ret1;
         }
-        function _fd_read(fd, iov, iovcnt, pnum) {
-            if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(40, 1, fd, iov, iovcnt, pnum);
+        function _fd_read(fd1, iov1, iovcnt1, pnum1) {
+            if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(40, 1, fd1, iov1, iovcnt1, pnum1);
             try {
-                var stream = SYSCALLS.getStreamFromFD(fd);
-                var num = doReadv(stream, iov, iovcnt);
-                GROWABLE_HEAP_I32()[pnum >> 2] = num;
+                var stream1 = SYSCALLS.getStreamFromFD(fd1);
+                var num1 = doReadv(stream1, iov1, iovcnt1);
+                GROWABLE_HEAP_I32()[pnum1 >> 2] = num1;
                 return 0;
-            } catch (e) {
-                if (typeof FS == "undefined" || !(e instanceof FS.ErrnoError)) throw e;
-                return e.errno;
+            } catch (e1) {
+                if (typeof FS == "undefined" || !(e1 instanceof FS.ErrnoError)) throw e1;
+                return e1.errno;
             }
         }
-        function convertI32PairToI53Checked(lo, hi) {
-            return hi + 2097152 >>> 0 < 4194305 - !!lo ? (lo >>> 0) + hi * 4294967296 : NaN;
+        function convertI32PairToI53Checked(lo1, hi1) {
+            return hi1 + 2097152 >>> 0 < 4194305 - !!lo1 ? (lo1 >>> 0) + hi1 * 4294967296 : NaN;
         }
-        function _fd_seek(fd, offset_low, offset_high, whence, newOffset) {
-            if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(41, 1, fd, offset_low, offset_high, whence, newOffset);
+        function _fd_seek(fd1, offset_low1, offset_high1, whence1, newOffset1) {
+            if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(41, 1, fd1, offset_low1, offset_high1, whence1, newOffset1);
             try {
-                var offset = convertI32PairToI53Checked(offset_low, offset_high);
-                if (isNaN(offset)) return 61;
-                var stream = SYSCALLS.getStreamFromFD(fd);
-                FS.llseek(stream, offset, whence);
+                var offset1 = convertI32PairToI53Checked(offset_low1, offset_high1);
+                if (isNaN(offset1)) return 61;
+                var stream1 = SYSCALLS.getStreamFromFD(fd1);
+                FS.llseek(stream1, offset1, whence1);
                 tempI64 = [
-                    stream.position >>> 0,
-                    (tempDouble = stream.position, +Math.abs(tempDouble) >= 1 ? tempDouble > 0 ? (Math.min(+Math.floor(tempDouble / 4294967296), 4294967295) | 0) >>> 0 : ~~+Math.ceil((tempDouble - +(~~tempDouble >>> 0)) / 4294967296) >>> 0 : 0)
-                ], GROWABLE_HEAP_I32()[newOffset >> 2] = tempI64[0], GROWABLE_HEAP_I32()[newOffset + 4 >> 2] = tempI64[1];
-                if (stream.getdents && offset === 0 && whence === 0) stream.getdents = null;
+                    stream1.position >>> 0,
+                    (tempDouble = stream1.position, +Math.abs(tempDouble) >= 1 ? tempDouble > 0 ? (Math.min(+Math.floor(tempDouble / 4294967296), 4294967295) | 0) >>> 0 : ~~+Math.ceil((tempDouble - +(~~tempDouble >>> 0)) / 4294967296) >>> 0 : 0)
+                ], GROWABLE_HEAP_I32()[newOffset1 >> 2] = tempI64[0], GROWABLE_HEAP_I32()[newOffset1 + 4 >> 2] = tempI64[1];
+                if (stream1.getdents && offset1 === 0 && whence1 === 0) stream1.getdents = null;
                 return 0;
-            } catch (e) {
-                if (typeof FS == "undefined" || !(e instanceof FS.ErrnoError)) throw e;
-                return e.errno;
+            } catch (e1) {
+                if (typeof FS == "undefined" || !(e1 instanceof FS.ErrnoError)) throw e1;
+                return e1.errno;
             }
         }
-        function doWritev(stream, iov, iovcnt, offset) {
-            var ret = 0;
-            for(var i = 0; i < iovcnt; i++){
-                var ptr = GROWABLE_HEAP_U32()[iov >> 2];
-                var len = GROWABLE_HEAP_U32()[iov + 4 >> 2];
-                iov += 8;
-                var curr = FS.write(stream, GROWABLE_HEAP_I8(), ptr, len, offset);
-                if (curr < 0) return -1;
-                ret += curr;
+        function doWritev(stream1, iov1, iovcnt1, offset1) {
+            var ret1 = 0;
+            for(var i1 = 0; i1 < iovcnt1; i1++){
+                var ptr1 = GROWABLE_HEAP_U32()[iov1 >> 2];
+                var len1 = GROWABLE_HEAP_U32()[iov1 + 4 >> 2];
+                iov1 += 8;
+                var curr1 = FS.write(stream1, GROWABLE_HEAP_I8(), ptr1, len1, offset1);
+                if (curr1 < 0) return -1;
+                ret1 += curr1;
             }
-            return ret;
+            return ret1;
         }
-        function _fd_write(fd, iov, iovcnt, pnum) {
-            if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(42, 1, fd, iov, iovcnt, pnum);
+        function _fd_write(fd1, iov1, iovcnt1, pnum1) {
+            if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(42, 1, fd1, iov1, iovcnt1, pnum1);
             try {
-                var stream = SYSCALLS.getStreamFromFD(fd);
-                var num = doWritev(stream, iov, iovcnt);
-                GROWABLE_HEAP_U32()[pnum >> 2] = num;
+                var stream1 = SYSCALLS.getStreamFromFD(fd1);
+                var num1 = doWritev(stream1, iov1, iovcnt1);
+                GROWABLE_HEAP_U32()[pnum1 >> 2] = num1;
                 return 0;
-            } catch (e) {
-                if (typeof FS == "undefined" || !(e instanceof FS.ErrnoError)) throw e;
-                return e.errno;
+            } catch (e1) {
+                if (typeof FS == "undefined" || !(e1 instanceof FS.ErrnoError)) throw e1;
+                return e1.errno;
             }
         }
         function _getTempRet0() {
             return getTempRet0();
         }
-        function _getaddrinfo(node, service, hint, out) {
-            if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(43, 1, node, service, hint, out);
-            var addr = 0;
-            var port = 0;
-            var flags = 0;
-            var family = 0;
-            var type = 0;
-            var proto = 0;
-            var ai;
-            function allocaddrinfo(family, type, proto, canon, addr, port) {
-                var sa, salen, ai;
-                var errno;
-                salen = family === 10 ? 28 : 16;
-                addr = family === 10 ? inetNtop6(addr) : inetNtop4(addr);
-                sa = _malloc(salen);
-                errno = writeSockaddr(sa, family, addr, port);
-                assert(!errno);
-                ai = _malloc(32);
-                GROWABLE_HEAP_I32()[ai + 4 >> 2] = family;
-                GROWABLE_HEAP_I32()[ai + 8 >> 2] = type;
-                GROWABLE_HEAP_I32()[ai + 12 >> 2] = proto;
-                GROWABLE_HEAP_I32()[ai + 24 >> 2] = canon;
-                GROWABLE_HEAP_U32()[ai + 20 >> 2] = sa;
-                if (family === 10) GROWABLE_HEAP_I32()[ai + 16 >> 2] = 28;
-                else GROWABLE_HEAP_I32()[ai + 16 >> 2] = 16;
-                GROWABLE_HEAP_I32()[ai + 28 >> 2] = 0;
-                return ai;
+        function _getaddrinfo(node1, service1, hint1, out1) {
+            if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(43, 1, node1, service1, hint1, out1);
+            var addr1 = 0;
+            var port1 = 0;
+            var flags1 = 0;
+            var family1 = 0;
+            var type1 = 0;
+            var proto1 = 0;
+            var ai1;
+            function allocaddrinfo1(family1, type1, proto1, canon1, addr1, port1) {
+                var sa1, salen1, ai1;
+                var errno1;
+                salen1 = family1 === 10 ? 28 : 16;
+                addr1 = family1 === 10 ? inetNtop6(addr1) : inetNtop4(addr1);
+                sa1 = _malloc(salen1);
+                errno1 = writeSockaddr(sa1, family1, addr1, port1);
+                assert(!errno1);
+                ai1 = _malloc(32);
+                GROWABLE_HEAP_I32()[ai1 + 4 >> 2] = family1;
+                GROWABLE_HEAP_I32()[ai1 + 8 >> 2] = type1;
+                GROWABLE_HEAP_I32()[ai1 + 12 >> 2] = proto1;
+                GROWABLE_HEAP_I32()[ai1 + 24 >> 2] = canon1;
+                GROWABLE_HEAP_U32()[ai1 + 20 >> 2] = sa1;
+                if (family1 === 10) GROWABLE_HEAP_I32()[ai1 + 16 >> 2] = 28;
+                else GROWABLE_HEAP_I32()[ai1 + 16 >> 2] = 16;
+                GROWABLE_HEAP_I32()[ai1 + 28 >> 2] = 0;
+                return ai1;
             }
-            if (hint) {
-                flags = GROWABLE_HEAP_I32()[hint >> 2];
-                family = GROWABLE_HEAP_I32()[hint + 4 >> 2];
-                type = GROWABLE_HEAP_I32()[hint + 8 >> 2];
-                proto = GROWABLE_HEAP_I32()[hint + 12 >> 2];
+            if (hint1) {
+                flags1 = GROWABLE_HEAP_I32()[hint1 >> 2];
+                family1 = GROWABLE_HEAP_I32()[hint1 + 4 >> 2];
+                type1 = GROWABLE_HEAP_I32()[hint1 + 8 >> 2];
+                proto1 = GROWABLE_HEAP_I32()[hint1 + 12 >> 2];
             }
-            if (type && !proto) proto = type === 2 ? 17 : 6;
-            if (!type && proto) type = proto === 17 ? 2 : 1;
-            if (proto === 0) proto = 6;
-            if (type === 0) type = 1;
-            if (!node && !service) return -2;
-            if (flags & -1088) return -1;
-            if (hint !== 0 && GROWABLE_HEAP_I32()[hint >> 2] & 2 && !node) return -1;
-            if (flags & 32) return -2;
-            if (type !== 0 && type !== 1 && type !== 2) return -7;
-            if (family !== 0 && family !== 2 && family !== 10) return -6;
-            if (service) {
-                service = UTF8ToString(service);
-                port = parseInt(service, 10);
-                if (isNaN(port)) {
-                    if (flags & 1024) return -2;
+            if (type1 && !proto1) proto1 = type1 === 2 ? 17 : 6;
+            if (!type1 && proto1) type1 = proto1 === 17 ? 2 : 1;
+            if (proto1 === 0) proto1 = 6;
+            if (type1 === 0) type1 = 1;
+            if (!node1 && !service1) return -2;
+            if (flags1 & -1088) return -1;
+            if (hint1 !== 0 && GROWABLE_HEAP_I32()[hint1 >> 2] & 2 && !node1) return -1;
+            if (flags1 & 32) return -2;
+            if (type1 !== 0 && type1 !== 1 && type1 !== 2) return -7;
+            if (family1 !== 0 && family1 !== 2 && family1 !== 10) return -6;
+            if (service1) {
+                service1 = UTF8ToString(service1);
+                port1 = parseInt(service1, 10);
+                if (isNaN(port1)) {
+                    if (flags1 & 1024) return -2;
                     return -8;
                 }
             }
-            if (!node) {
-                if (family === 0) family = 2;
-                if ((flags & 1) === 0) {
-                    if (family === 2) addr = _htonl(2130706433);
-                    else addr = [
+            if (!node1) {
+                if (family1 === 0) family1 = 2;
+                if ((flags1 & 1) === 0) {
+                    if (family1 === 2) addr1 = _htonl(2130706433);
+                    else addr1 = [
                         0,
                         0,
                         0,
                         1
                     ];
                 }
-                ai = allocaddrinfo(family, type, proto, null, addr, port);
-                GROWABLE_HEAP_U32()[out >> 2] = ai;
+                ai1 = allocaddrinfo1(family1, type1, proto1, null, addr1, port1);
+                GROWABLE_HEAP_U32()[out1 >> 2] = ai1;
                 return 0;
             }
-            node = UTF8ToString(node);
-            addr = inetPton4(node);
-            if (addr !== null) {
-                if (family === 0 || family === 2) family = 2;
-                else if (family === 10 && flags & 8) {
-                    addr = [
+            node1 = UTF8ToString(node1);
+            addr1 = inetPton4(node1);
+            if (addr1 !== null) {
+                if (family1 === 0 || family1 === 2) family1 = 2;
+                else if (family1 === 10 && flags1 & 8) {
+                    addr1 = [
                         0,
                         0,
                         _htonl(65535),
-                        addr
+                        addr1
                     ];
-                    family = 10;
+                    family1 = 10;
                 } else return -2;
             } else {
-                addr = inetPton6(node);
-                if (addr !== null) {
-                    if (family === 0 || family === 10) family = 10;
+                addr1 = inetPton6(node1);
+                if (addr1 !== null) {
+                    if (family1 === 0 || family1 === 10) family1 = 10;
                     else return -2;
                 }
             }
-            if (addr != null) {
-                ai = allocaddrinfo(family, type, proto, node, addr, port);
-                GROWABLE_HEAP_U32()[out >> 2] = ai;
+            if (addr1 != null) {
+                ai1 = allocaddrinfo1(family1, type1, proto1, node1, addr1, port1);
+                GROWABLE_HEAP_U32()[out1 >> 2] = ai1;
                 return 0;
             }
-            if (flags & 4) return -2;
-            node = DNS.lookup_name(node);
-            addr = inetPton4(node);
-            if (family === 0) family = 2;
-            else if (family === 10) addr = [
+            if (flags1 & 4) return -2;
+            node1 = DNS.lookup_name(node1);
+            addr1 = inetPton4(node1);
+            if (family1 === 0) family1 = 2;
+            else if (family1 === 10) addr1 = [
                 0,
                 0,
                 _htonl(65535),
-                addr
+                addr1
             ];
-            ai = allocaddrinfo(family, type, proto, null, addr, port);
-            GROWABLE_HEAP_U32()[out >> 2] = ai;
+            ai1 = allocaddrinfo1(family1, type1, proto1, null, addr1, port1);
+            GROWABLE_HEAP_U32()[out1 >> 2] = ai1;
             return 0;
         }
-        function _getnameinfo(sa, salen, node, nodelen, serv, servlen, flags) {
-            var info = readSockaddr(sa, salen);
-            if (info.errno) return -6;
-            var port = info.port;
-            var addr = info.addr;
-            var overflowed = false;
-            if (node && nodelen) {
-                var lookup;
-                if (flags & 1 || !(lookup = DNS.lookup_addr(addr))) {
-                    if (flags & 8) return -2;
-                } else addr = lookup;
-                var numBytesWrittenExclNull = stringToUTF8(addr, node, nodelen);
-                if (numBytesWrittenExclNull + 1 >= nodelen) overflowed = true;
+        function _getnameinfo(sa1, salen1, node1, nodelen1, serv1, servlen1, flags1) {
+            var info1 = readSockaddr(sa1, salen1);
+            if (info1.errno) return -6;
+            var port1 = info1.port;
+            var addr1 = info1.addr;
+            var overflowed1 = false;
+            if (node1 && nodelen1) {
+                var lookup1;
+                if (flags1 & 1 || !(lookup1 = DNS.lookup_addr(addr1))) {
+                    if (flags1 & 8) return -2;
+                } else addr1 = lookup1;
+                var numBytesWrittenExclNull1 = stringToUTF8(addr1, node1, nodelen1);
+                if (numBytesWrittenExclNull1 + 1 >= nodelen1) overflowed1 = true;
             }
-            if (serv && servlen) {
-                port = "" + port;
-                var numBytesWrittenExclNull = stringToUTF8(port, serv, servlen);
-                if (numBytesWrittenExclNull + 1 >= servlen) overflowed = true;
+            if (serv1 && servlen1) {
+                port1 = "" + port1;
+                var numBytesWrittenExclNull1 = stringToUTF8(port1, serv1, servlen1);
+                if (numBytesWrittenExclNull1 + 1 >= servlen1) overflowed1 = true;
             }
-            if (overflowed) return -12;
+            if (overflowed1) return -12;
             return 0;
         }
         var GodotRuntime = {
-            get_func: function(ptr) {
-                return wasmTable.get(ptr);
+            get_func: function(ptr1) {
+                return wasmTable.get(ptr1);
             },
             error: function() {
                 err.apply(null, Array.from(arguments));
@@ -7423,62 +7423,62 @@ var Godot = (()=>{
             print: function() {
                 out.apply(null, Array.from(arguments));
             },
-            malloc: function(p_size) {
-                return _malloc(p_size);
+            malloc: function(p_size1) {
+                return _malloc(p_size1);
             },
-            free: function(p_ptr) {
-                _free(p_ptr);
+            free: function(p_ptr1) {
+                _free(p_ptr1);
             },
-            getHeapValue: function(p_ptr, p_type) {
-                return getValue(p_ptr, p_type);
+            getHeapValue: function(p_ptr1, p_type1) {
+                return getValue(p_ptr1, p_type1);
             },
-            setHeapValue: function(p_ptr, p_value, p_type) {
-                setValue(p_ptr, p_value, p_type);
+            setHeapValue: function(p_ptr1, p_value1, p_type1) {
+                setValue(p_ptr1, p_value1, p_type1);
             },
-            heapSub: function(p_heap, p_ptr, p_len) {
-                const bytes = p_heap.BYTES_PER_ELEMENT;
-                return p_heap.subarray(p_ptr / bytes, p_ptr / bytes + p_len);
+            heapSub: function(p_heap1, p_ptr1, p_len1) {
+                const bytes1 = p_heap1.BYTES_PER_ELEMENT;
+                return p_heap1.subarray(p_ptr1 / bytes1, p_ptr1 / bytes1 + p_len1);
             },
-            heapSlice: function(p_heap, p_ptr, p_len) {
-                const bytes = p_heap.BYTES_PER_ELEMENT;
-                return p_heap.slice(p_ptr / bytes, p_ptr / bytes + p_len);
+            heapSlice: function(p_heap1, p_ptr1, p_len1) {
+                const bytes1 = p_heap1.BYTES_PER_ELEMENT;
+                return p_heap1.slice(p_ptr1 / bytes1, p_ptr1 / bytes1 + p_len1);
             },
-            heapCopy: function(p_dst, p_src, p_ptr) {
-                const bytes = p_src.BYTES_PER_ELEMENT;
-                return p_dst.set(p_src, p_ptr / bytes);
+            heapCopy: function(p_dst1, p_src1, p_ptr1) {
+                const bytes1 = p_src1.BYTES_PER_ELEMENT;
+                return p_dst1.set(p_src1, p_ptr1 / bytes1);
             },
-            parseString: function(p_ptr) {
-                return UTF8ToString(p_ptr);
+            parseString: function(p_ptr1) {
+                return UTF8ToString(p_ptr1);
             },
-            parseStringArray: function(p_ptr, p_size) {
-                const strings = [];
-                const ptrs = GodotRuntime.heapSub(GROWABLE_HEAP_I32(), p_ptr, p_size);
-                ptrs.forEach(function(ptr) {
-                    strings.push(GodotRuntime.parseString(ptr));
+            parseStringArray: function(p_ptr1, p_size1) {
+                const strings1 = [];
+                const ptrs1 = GodotRuntime.heapSub(GROWABLE_HEAP_I32(), p_ptr1, p_size1);
+                ptrs1.forEach(function(ptr1) {
+                    strings1.push(GodotRuntime.parseString(ptr1));
                 });
-                return strings;
+                return strings1;
             },
-            strlen: function(p_str) {
-                return lengthBytesUTF8(p_str);
+            strlen: function(p_str1) {
+                return lengthBytesUTF8(p_str1);
             },
-            allocString: function(p_str) {
-                const length = GodotRuntime.strlen(p_str) + 1;
-                const c_str = GodotRuntime.malloc(length);
-                stringToUTF8(p_str, c_str, length);
-                return c_str;
+            allocString: function(p_str1) {
+                const length1 = GodotRuntime.strlen(p_str1) + 1;
+                const c_str1 = GodotRuntime.malloc(length1);
+                stringToUTF8(p_str1, c_str1, length1);
+                return c_str1;
             },
-            allocStringArray: function(p_strings) {
-                const size = p_strings.length;
-                const c_ptr = GodotRuntime.malloc(size * 4);
-                for(let i = 0; i < size; i++)GROWABLE_HEAP_I32()[(c_ptr >> 2) + i] = GodotRuntime.allocString(p_strings[i]);
-                return c_ptr;
+            allocStringArray: function(p_strings1) {
+                const size1 = p_strings1.length;
+                const c_ptr1 = GodotRuntime.malloc(size1 * 4);
+                for(let i1 = 0; i1 < size1; i1++)GROWABLE_HEAP_I32()[(c_ptr1 >> 2) + i1] = GodotRuntime.allocString(p_strings1[i1]);
+                return c_ptr1;
             },
-            freeStringArray: function(p_ptr, p_len) {
-                for(let i = 0; i < p_len; i++)GodotRuntime.free(GROWABLE_HEAP_I32()[(p_ptr >> 2) + i]);
-                GodotRuntime.free(p_ptr);
+            freeStringArray: function(p_ptr1, p_len1) {
+                for(let i1 = 0; i1 < p_len1; i1++)GodotRuntime.free(GROWABLE_HEAP_I32()[(p_ptr1 >> 2) + i1]);
+                GodotRuntime.free(p_ptr1);
             },
-            stringToHeap: function(p_str, p_ptr, p_len) {
-                return stringToUTF8Array(p_str, GROWABLE_HEAP_I8(), p_ptr, p_len);
+            stringToHeap: function(p_str1, p_ptr1, p_len1) {
+                return stringToUTF8Array(p_str1, GROWABLE_HEAP_I8(), p_ptr1, p_len1);
             }
         };
         var GodotConfig = {
@@ -7489,18 +7489,18 @@ var Godot = (()=>{
             persistent_drops: false,
             on_execute: null,
             on_exit: null,
-            init_config: function(p_opts) {
-                GodotConfig.canvas_resize_policy = p_opts["canvasResizePolicy"];
-                GodotConfig.canvas = p_opts["canvas"];
-                GodotConfig.locale = p_opts["locale"] || GodotConfig.locale;
-                GodotConfig.virtual_keyboard = p_opts["virtualKeyboard"];
-                GodotConfig.persistent_drops = !!p_opts["persistentDrops"];
-                GodotConfig.on_execute = p_opts["onExecute"];
-                GodotConfig.on_exit = p_opts["onExit"];
-                if (p_opts["focusCanvas"]) GodotConfig.canvas.focus();
+            init_config: function(p_opts1) {
+                GodotConfig.canvas_resize_policy = p_opts1["canvasResizePolicy"];
+                GodotConfig.canvas = p_opts1["canvas"];
+                GodotConfig.locale = p_opts1["locale"] || GodotConfig.locale;
+                GodotConfig.virtual_keyboard = p_opts1["virtualKeyboard"];
+                GodotConfig.persistent_drops = !!p_opts1["persistentDrops"];
+                GodotConfig.on_execute = p_opts1["onExecute"];
+                GodotConfig.on_exit = p_opts1["onExit"];
+                if (p_opts1["focusCanvas"]) GodotConfig.canvas.focus();
             },
-            locate_file: function(file) {
-                return Module["locateFile"](file);
+            locate_file: function(file1) {
+                return Module["locateFile"](file1);
             },
             clear: function() {
                 GodotConfig.canvas = null;
@@ -7520,44 +7520,44 @@ var Godot = (()=>{
             is_persistent: function() {
                 return GodotFS._idbfs ? 1 : 0;
             },
-            init: function(persistentPaths) {
+            init: function(persistentPaths1) {
                 GodotFS._idbfs = false;
-                if (!Array.isArray(persistentPaths)) return Promise.reject(new Error("Persistent paths must be an array"));
-                if (!persistentPaths.length) return Promise.resolve();
-                GodotFS._mount_points = persistentPaths.slice();
-                function createRecursive(dir) {
+                if (!Array.isArray(persistentPaths1)) return Promise.reject(new Error("Persistent paths must be an array"));
+                if (!persistentPaths1.length) return Promise.resolve();
+                GodotFS._mount_points = persistentPaths1.slice();
+                function createRecursive1(dir1) {
                     try {
-                        FS.stat(dir);
-                    } catch (e) {
-                        if (e.errno !== ERRNO_CODES.ENOENT) throw e;
-                        FS.mkdirTree(dir);
+                        FS.stat(dir1);
+                    } catch (e1) {
+                        if (e1.errno !== ERRNO_CODES.ENOENT) throw e1;
+                        FS.mkdirTree(dir1);
                     }
                 }
-                GodotFS._mount_points.forEach(function(path) {
-                    createRecursive(path);
-                    FS.mount(IDBFS, {}, path);
+                GodotFS._mount_points.forEach(function(path1) {
+                    createRecursive1(path1);
+                    FS.mount(IDBFS, {}, path1);
                 });
-                return new Promise(function(resolve, reject) {
-                    FS.syncfs(true, function(err) {
-                        if (err) {
+                return new Promise(function(resolve1, reject1) {
+                    FS.syncfs(true, function(err1) {
+                        if (err1) {
                             GodotFS._mount_points = [];
                             GodotFS._idbfs = false;
-                            GodotRuntime.print(`IndexedDB not available: ${err.message}`);
+                            GodotRuntime.print(`IndexedDB not available: ${err1.message}`);
                         } else GodotFS._idbfs = true;
-                        resolve(err);
+                        resolve1(err1);
                     });
                 });
             },
             deinit: function() {
-                GodotFS._mount_points.forEach(function(path) {
+                GodotFS._mount_points.forEach(function(path1) {
                     try {
-                        FS.unmount(path);
-                    } catch (e) {
-                        GodotRuntime.print("Already unmounted", e);
+                        FS.unmount(path1);
+                    } catch (e1) {
+                        GodotRuntime.print("Already unmounted", e1);
                     }
-                    if (GodotFS._idbfs && IDBFS.dbs[path]) {
-                        IDBFS.dbs[path].close();
-                        delete IDBFS.dbs[path];
+                    if (GodotFS._idbfs && IDBFS.dbs[path1]) {
+                        IDBFS.dbs[path1].close();
+                        delete IDBFS.dbs[path1];
                     }
                 });
                 GodotFS._mount_points = [];
@@ -7570,52 +7570,52 @@ var Godot = (()=>{
                     return Promise.resolve();
                 }
                 GodotFS._syncing = true;
-                return new Promise(function(resolve, reject) {
-                    FS.syncfs(false, function(error) {
-                        if (error) GodotRuntime.error(`Failed to save IDB file system: ${error.message}`);
+                return new Promise(function(resolve1, reject1) {
+                    FS.syncfs(false, function(error1) {
+                        if (error1) GodotRuntime.error(`Failed to save IDB file system: ${error1.message}`);
                         GodotFS._syncing = false;
-                        resolve(error);
+                        resolve1(error1);
                     });
                 });
             },
-            copy_to_fs: function(path, buffer) {
-                const idx = path.lastIndexOf("/");
-                let dir = "/";
-                if (idx > 0) dir = path.slice(0, idx);
+            copy_to_fs: function(path1, buffer1) {
+                const idx1 = path1.lastIndexOf("/");
+                let dir1 = "/";
+                if (idx1 > 0) dir1 = path1.slice(0, idx1);
                 try {
-                    FS.stat(dir);
-                } catch (e) {
-                    if (e.errno !== ERRNO_CODES.ENOENT) throw e;
-                    FS.mkdirTree(dir);
+                    FS.stat(dir1);
+                } catch (e1) {
+                    if (e1.errno !== ERRNO_CODES.ENOENT) throw e1;
+                    FS.mkdirTree(dir1);
                 }
-                FS.writeFile(path, new Uint8Array(buffer));
+                FS.writeFile(path1, new Uint8Array(buffer1));
             }
         };
         var GodotOS = {
             request_quit: function() {},
             _async_cbs: [],
             _fs_sync_promise: null,
-            atexit: function(p_promise_cb) {
-                GodotOS._async_cbs.push(p_promise_cb);
+            atexit: function(p_promise_cb1) {
+                GodotOS._async_cbs.push(p_promise_cb1);
             },
-            cleanup: function(exit_code) {
-                const cb = GodotConfig.on_exit;
+            cleanup: function(exit_code1) {
+                const cb1 = GodotConfig.on_exit;
                 GodotFS.deinit();
                 GodotConfig.clear();
-                if (cb) cb(exit_code);
+                if (cb1) cb1(exit_code1);
             },
-            finish_async: function(callback) {
-                GodotOS._fs_sync_promise.then(function(err) {
-                    const promises = [];
-                    GodotOS._async_cbs.forEach(function(cb) {
-                        promises.push(new Promise(cb));
+            finish_async: function(callback1) {
+                GodotOS._fs_sync_promise.then(function(err1) {
+                    const promises1 = [];
+                    GodotOS._async_cbs.forEach(function(cb1) {
+                        promises1.push(new Promise(cb1));
                     });
-                    return Promise.all(promises);
+                    return Promise.all(promises1);
                 }).then(function() {
                     return GodotFS.sync();
-                }).then(function(err) {
+                }).then(function(err1) {
                     setTimeout(function() {
-                        callback();
+                        callback1();
                     }, 0);
                 });
             }
@@ -7625,50 +7625,50 @@ var Godot = (()=>{
             input: null,
             driver: null,
             interval: 0,
-            init: function(mix_rate, latency, onstatechange, onlatencyupdate) {
-                const opts = {};
-                if (mix_rate) opts["sampleRate"] = mix_rate;
-                const ctx = new (window.AudioContext || window.webkitAudioContext)(opts);
-                GodotAudio.ctx = ctx;
-                ctx.onstatechange = function() {
-                    let state = 0;
-                    switch(ctx.state){
+            init: function(mix_rate1, latency1, onstatechange1, onlatencyupdate1) {
+                const opts1 = {};
+                if (mix_rate1) opts1["sampleRate"] = mix_rate1;
+                const ctx1 = new (window.AudioContext || window.webkitAudioContext)(opts1);
+                GodotAudio.ctx = ctx1;
+                ctx1.onstatechange = function() {
+                    let state1 = 0;
+                    switch(ctx1.state){
                         case "suspended":
-                            state = 0;
+                            state1 = 0;
                             break;
                         case "running":
-                            state = 1;
+                            state1 = 1;
                             break;
                         case "closed":
-                            state = 2;
+                            state1 = 2;
                             break;
                     }
-                    onstatechange(state);
+                    onstatechange1(state1);
                 };
-                ctx.onstatechange();
+                ctx1.onstatechange();
                 GodotAudio.interval = setInterval(function() {
-                    let computed_latency = 0;
-                    if (ctx.baseLatency) computed_latency += GodotAudio.ctx.baseLatency;
-                    if (ctx.outputLatency) computed_latency += GodotAudio.ctx.outputLatency;
-                    onlatencyupdate(computed_latency);
+                    let computed_latency1 = 0;
+                    if (ctx1.baseLatency) computed_latency1 += GodotAudio.ctx.baseLatency;
+                    if (ctx1.outputLatency) computed_latency1 += GodotAudio.ctx.outputLatency;
+                    onlatencyupdate1(computed_latency1);
                 }, 1e3);
                 GodotOS.atexit(GodotAudio.close_async);
-                return ctx.destination.channelCount;
+                return ctx1.destination.channelCount;
             },
-            create_input: function(callback) {
+            create_input: function(callback1) {
                 if (GodotAudio.input) return 0;
-                function gotMediaInput(stream) {
+                function gotMediaInput1(stream1) {
                     try {
-                        GodotAudio.input = GodotAudio.ctx.createMediaStreamSource(stream);
-                        callback(GodotAudio.input);
-                    } catch (e) {
-                        GodotRuntime.error("Failed creaating input.", e);
+                        GodotAudio.input = GodotAudio.ctx.createMediaStreamSource(stream1);
+                        callback1(GodotAudio.input);
+                    } catch (e1) {
+                        GodotRuntime.error("Failed creaating input.", e1);
                     }
                 }
                 if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) navigator.mediaDevices.getUserMedia({
                     "audio": true
-                }).then(gotMediaInput, function(e) {
-                    GodotRuntime.error("Error getting user media.", e);
+                }).then(gotMediaInput1, function(e1) {
+                    GodotRuntime.error("Error getting user media.", e1);
                 });
                 else {
                     if (!navigator.getUserMedia) navigator.getUserMedia = navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
@@ -7678,17 +7678,17 @@ var Godot = (()=>{
                     }
                     navigator.getUserMedia({
                         "audio": true
-                    }, gotMediaInput, function(e) {
-                        GodotRuntime.print(e);
+                    }, gotMediaInput1, function(e1) {
+                        GodotRuntime.print(e1);
                     });
                 }
                 return 0;
             },
-            close_async: function(resolve, reject) {
-                const ctx = GodotAudio.ctx;
+            close_async: function(resolve1, reject1) {
+                const ctx1 = GodotAudio.ctx;
                 GodotAudio.ctx = null;
-                if (!ctx) {
-                    resolve();
+                if (!ctx1) {
+                    resolve1();
                     return;
                 }
                 if (GodotAudio.interval) {
@@ -7699,31 +7699,31 @@ var Godot = (()=>{
                     GodotAudio.input.disconnect();
                     GodotAudio.input = null;
                 }
-                let closed = Promise.resolve();
-                if (GodotAudio.driver) closed = GodotAudio.driver.close();
-                closed.then(function() {
-                    return ctx.close();
+                let closed1 = Promise.resolve();
+                if (GodotAudio.driver) closed1 = GodotAudio.driver.close();
+                closed1.then(function() {
+                    return ctx1.close();
                 }).then(function() {
-                    ctx.onstatechange = null;
-                    resolve();
-                }).catch(function(e) {
-                    ctx.onstatechange = null;
-                    GodotRuntime.error("Error closing AudioContext", e);
-                    resolve();
+                    ctx1.onstatechange = null;
+                    resolve1();
+                }).catch(function(e1) {
+                    ctx1.onstatechange = null;
+                    GodotRuntime.error("Error closing AudioContext", e1);
+                    resolve1();
                 });
             }
         };
         function _godot_audio_capture_start() {
             if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(44, 1);
-            return GodotAudio.create_input(function(input) {
-                input.connect(GodotAudio.driver.get_node());
+            return GodotAudio.create_input(function(input1) {
+                input1.connect(GodotAudio.driver.get_node());
             });
         }
         function _godot_audio_capture_stop() {
             if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(45, 1);
             if (GodotAudio.input) {
-                const tracks = GodotAudio.input["mediaStream"]["getTracks"]();
-                for(let i = 0; i < tracks.length; i++)tracks[i]["stop"]();
+                const tracks1 = GodotAudio.input["mediaStream"]["getTracks"]();
+                for(let i1 = 0; i1 < tracks1.length; i1++)tracks1[i1]["stop"]();
                 GodotAudio.input.disconnect();
                 GodotAudio.input = null;
             }
@@ -7731,13 +7731,13 @@ var Godot = (()=>{
         function _godot_audio_has_worklet() {
             return GodotAudio.ctx && GodotAudio.ctx.audioWorklet ? 1 : 0;
         }
-        function _godot_audio_init(p_mix_rate, p_latency, p_state_change, p_latency_update) {
-            const statechange = GodotRuntime.get_func(p_state_change);
-            const latencyupdate = GodotRuntime.get_func(p_latency_update);
-            const mix_rate = GodotRuntime.getHeapValue(p_mix_rate, "i32");
-            const channels = GodotAudio.init(mix_rate, p_latency, statechange, latencyupdate);
-            GodotRuntime.setHeapValue(p_mix_rate, GodotAudio.ctx.sampleRate, "i32");
-            return channels;
+        function _godot_audio_init(p_mix_rate1, p_latency1, p_state_change1, p_latency_update1) {
+            const statechange1 = GodotRuntime.get_func(p_state_change1);
+            const latencyupdate1 = GodotRuntime.get_func(p_latency_update1);
+            const mix_rate1 = GodotRuntime.getHeapValue(p_mix_rate1, "i32");
+            const channels1 = GodotAudio.init(mix_rate1, p_latency1, statechange1, latencyupdate1);
+            GodotRuntime.setHeapValue(p_mix_rate1, GodotAudio.ctx.sampleRate, "i32");
+            return channels1;
         }
         function _godot_audio_is_available() {
             if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(46, 1);
@@ -7751,106 +7751,106 @@ var Godot = (()=>{
             promise: null,
             worklet: null,
             ring_buffer: null,
-            create: function(channels) {
-                const path = GodotConfig.locate_file("godot.audio.worklet.js");
-                GodotAudioWorklet.promise = GodotAudio.ctx.audioWorklet.addModule(path).then(function() {
+            create: function(channels1) {
+                const path1 = GodotConfig.locate_file("godot.audio.worklet.js");
+                GodotAudioWorklet.promise = GodotAudio.ctx.audioWorklet.addModule(path1).then(function() {
                     GodotAudioWorklet.worklet = new AudioWorkletNode(GodotAudio.ctx, "godot-processor", {
                         "outputChannelCount": [
-                            channels
+                            channels1
                         ]
                     });
                     return Promise.resolve();
                 });
                 GodotAudio.driver = GodotAudioWorklet;
             },
-            start: function(in_buf, out_buf, state) {
+            start: function(in_buf1, out_buf1, state1) {
                 GodotAudioWorklet.promise.then(function() {
-                    const node = GodotAudioWorklet.worklet;
-                    node.connect(GodotAudio.ctx.destination);
-                    node.port.postMessage({
+                    const node1 = GodotAudioWorklet.worklet;
+                    node1.connect(GodotAudio.ctx.destination);
+                    node1.port.postMessage({
                         "cmd": "start",
                         "data": [
-                            state,
-                            in_buf,
-                            out_buf
+                            state1,
+                            in_buf1,
+                            out_buf1
                         ]
                     });
-                    node.port.onmessage = function(event) {
-                        GodotRuntime.error(event.data);
+                    node1.port.onmessage = function(event1) {
+                        GodotRuntime.error(event1.data);
                     };
                 });
             },
-            start_no_threads: function(p_out_buf, p_out_size, out_callback, p_in_buf, p_in_size, in_callback) {
-                function RingBuffer() {
-                    let wpos = 0;
-                    let rpos = 0;
-                    let pending_samples = 0;
-                    const wbuf = new Float32Array(p_out_size);
-                    function send(port) {
-                        if (pending_samples === 0) return;
-                        const buffer = GodotRuntime.heapSub(GROWABLE_HEAP_F32(), p_out_buf, p_out_size);
-                        const size = buffer.length;
-                        const tot_sent = pending_samples;
-                        out_callback(wpos, pending_samples);
-                        if (wpos + pending_samples >= size) {
-                            const high = size - wpos;
-                            wbuf.set(buffer.subarray(wpos, size));
-                            pending_samples -= high;
-                            wpos = 0;
+            start_no_threads: function(p_out_buf1, p_out_size1, out_callback1, p_in_buf1, p_in_size1, in_callback1) {
+                function RingBuffer1() {
+                    let wpos1 = 0;
+                    let rpos1 = 0;
+                    let pending_samples1 = 0;
+                    const wbuf1 = new Float32Array(p_out_size1);
+                    function send1(port1) {
+                        if (pending_samples1 === 0) return;
+                        const buffer1 = GodotRuntime.heapSub(GROWABLE_HEAP_F32(), p_out_buf1, p_out_size1);
+                        const size1 = buffer1.length;
+                        const tot_sent1 = pending_samples1;
+                        out_callback1(wpos1, pending_samples1);
+                        if (wpos1 + pending_samples1 >= size1) {
+                            const high1 = size1 - wpos1;
+                            wbuf1.set(buffer1.subarray(wpos1, size1));
+                            pending_samples1 -= high1;
+                            wpos1 = 0;
                         }
-                        if (pending_samples > 0) wbuf.set(buffer.subarray(wpos, wpos + pending_samples), tot_sent - pending_samples);
-                        port.postMessage({
+                        if (pending_samples1 > 0) wbuf1.set(buffer1.subarray(wpos1, wpos1 + pending_samples1), tot_sent1 - pending_samples1);
+                        port1.postMessage({
                             "cmd": "chunk",
-                            "data": wbuf.subarray(0, tot_sent)
+                            "data": wbuf1.subarray(0, tot_sent1)
                         });
-                        wpos += pending_samples;
-                        pending_samples = 0;
+                        wpos1 += pending_samples1;
+                        pending_samples1 = 0;
                     }
-                    this.receive = function(recv_buf) {
-                        const buffer = GodotRuntime.heapSub(GROWABLE_HEAP_F32(), p_in_buf, p_in_size);
-                        const from = rpos;
-                        let to_write = recv_buf.length;
-                        let high = 0;
-                        if (rpos + to_write >= p_in_size) {
-                            high = p_in_size - rpos;
-                            buffer.set(recv_buf.subarray(0, high), rpos);
-                            to_write -= high;
-                            rpos = 0;
+                    this.receive = function(recv_buf1) {
+                        const buffer1 = GodotRuntime.heapSub(GROWABLE_HEAP_F32(), p_in_buf1, p_in_size1);
+                        const from1 = rpos1;
+                        let to_write1 = recv_buf1.length;
+                        let high1 = 0;
+                        if (rpos1 + to_write1 >= p_in_size1) {
+                            high1 = p_in_size1 - rpos1;
+                            buffer1.set(recv_buf1.subarray(0, high1), rpos1);
+                            to_write1 -= high1;
+                            rpos1 = 0;
                         }
-                        if (to_write) buffer.set(recv_buf.subarray(high, to_write), rpos);
-                        in_callback(from, recv_buf.length);
-                        rpos += to_write;
+                        if (to_write1) buffer1.set(recv_buf1.subarray(high1, to_write1), rpos1);
+                        in_callback1(from1, recv_buf1.length);
+                        rpos1 += to_write1;
                     };
-                    this.consumed = function(size, port) {
-                        pending_samples += size;
-                        send(port);
+                    this.consumed = function(size1, port1) {
+                        pending_samples1 += size1;
+                        send1(port1);
                     };
                 }
-                GodotAudioWorklet.ring_buffer = new RingBuffer;
+                GodotAudioWorklet.ring_buffer = new RingBuffer1;
                 GodotAudioWorklet.promise.then(function() {
-                    const node = GodotAudioWorklet.worklet;
-                    const buffer = GodotRuntime.heapSlice(GROWABLE_HEAP_F32(), p_out_buf, p_out_size);
-                    node.connect(GodotAudio.ctx.destination);
-                    node.port.postMessage({
+                    const node1 = GodotAudioWorklet.worklet;
+                    const buffer1 = GodotRuntime.heapSlice(GROWABLE_HEAP_F32(), p_out_buf1, p_out_size1);
+                    node1.connect(GodotAudio.ctx.destination);
+                    node1.port.postMessage({
                         "cmd": "start_nothreads",
                         "data": [
-                            buffer,
-                            p_in_size
+                            buffer1,
+                            p_in_size1
                         ]
                     });
-                    node.port.onmessage = function(event) {
+                    node1.port.onmessage = function(event1) {
                         if (!GodotAudioWorklet.worklet) return;
-                        if (event.data["cmd"] === "read") {
-                            const read = event.data["data"];
-                            GodotAudioWorklet.ring_buffer.consumed(read, GodotAudioWorklet.worklet.port);
-                        } else if (event.data["cmd"] === "input") {
-                            const buf = event.data["data"];
-                            if (buf.length > p_in_size) {
+                        if (event1.data["cmd"] === "read") {
+                            const read1 = event1.data["data"];
+                            GodotAudioWorklet.ring_buffer.consumed(read1, GodotAudioWorklet.worklet.port);
+                        } else if (event1.data["cmd"] === "input") {
+                            const buf1 = event1.data["data"];
+                            if (buf1.length > p_in_size1) {
                                 GodotRuntime.error("Input chunk is too big");
                                 return;
                             }
-                            GodotAudioWorklet.ring_buffer.receive(buf);
-                        } else GodotRuntime.error(event.data);
+                            GodotAudioWorklet.ring_buffer.receive(buf1);
+                        } else GodotRuntime.error(event1.data);
                     };
                 });
             },
@@ -7858,7 +7858,7 @@ var Godot = (()=>{
                 return GodotAudioWorklet.worklet;
             },
             close: function() {
-                return new Promise(function(resolve, reject) {
+                return new Promise(function(resolve1, reject1) {
                     if (GodotAudioWorklet.promise === null) return;
                     GodotAudioWorklet.promise.then(function() {
                         GodotAudioWorklet.worklet.port.postMessage({
@@ -7868,70 +7868,70 @@ var Godot = (()=>{
                         GodotAudioWorklet.worklet.disconnect();
                         GodotAudioWorklet.worklet = null;
                         GodotAudioWorklet.promise = null;
-                        resolve();
-                    }).catch(function(err) {});
+                        resolve1();
+                    }).catch(function(err1) {});
                 });
             }
         };
-        function _godot_audio_worklet_create(channels) {
+        function _godot_audio_worklet_create(channels1) {
             try {
-                GodotAudioWorklet.create(channels);
-            } catch (e) {
-                GodotRuntime.error("Error starting AudioDriverWorklet", e);
+                GodotAudioWorklet.create(channels1);
+            } catch (e1) {
+                GodotRuntime.error("Error starting AudioDriverWorklet", e1);
                 return 1;
             }
             return 0;
         }
-        function _godot_audio_worklet_start(p_in_buf, p_in_size, p_out_buf, p_out_size, p_state) {
-            const out_buffer = GodotRuntime.heapSub(GROWABLE_HEAP_F32(), p_out_buf, p_out_size);
-            const in_buffer = GodotRuntime.heapSub(GROWABLE_HEAP_F32(), p_in_buf, p_in_size);
-            const state = GodotRuntime.heapSub(GROWABLE_HEAP_I32(), p_state, 4);
-            GodotAudioWorklet.start(in_buffer, out_buffer, state);
+        function _godot_audio_worklet_start(p_in_buf1, p_in_size1, p_out_buf1, p_out_size1, p_state1) {
+            const out_buffer1 = GodotRuntime.heapSub(GROWABLE_HEAP_F32(), p_out_buf1, p_out_size1);
+            const in_buffer1 = GodotRuntime.heapSub(GROWABLE_HEAP_F32(), p_in_buf1, p_in_size1);
+            const state1 = GodotRuntime.heapSub(GROWABLE_HEAP_I32(), p_state1, 4);
+            GodotAudioWorklet.start(in_buffer1, out_buffer1, state1);
         }
-        function _godot_audio_worklet_state_add(p_state, p_idx, p_value) {
-            return Atomics.add(GROWABLE_HEAP_I32(), (p_state >> 2) + p_idx, p_value);
+        function _godot_audio_worklet_state_add(p_state1, p_idx1, p_value1) {
+            return Atomics.add(GROWABLE_HEAP_I32(), (p_state1 >> 2) + p_idx1, p_value1);
         }
-        function _godot_audio_worklet_state_get(p_state, p_idx) {
-            return Atomics.load(GROWABLE_HEAP_I32(), (p_state >> 2) + p_idx);
+        function _godot_audio_worklet_state_get(p_state1, p_idx1) {
+            return Atomics.load(GROWABLE_HEAP_I32(), (p_state1 >> 2) + p_idx1);
         }
-        function _godot_audio_worklet_state_wait(p_state, p_idx, p_expected, p_timeout) {
-            Atomics.wait(GROWABLE_HEAP_I32(), (p_state >> 2) + p_idx, p_expected, p_timeout);
-            return Atomics.load(GROWABLE_HEAP_I32(), (p_state >> 2) + p_idx);
+        function _godot_audio_worklet_state_wait(p_state1, p_idx1, p_expected1, p_timeout1) {
+            Atomics.wait(GROWABLE_HEAP_I32(), (p_state1 >> 2) + p_idx1, p_expected1, p_timeout1);
+            return Atomics.load(GROWABLE_HEAP_I32(), (p_state1 >> 2) + p_idx1);
         }
-        function _godot_js_config_canvas_id_get(p_ptr, p_ptr_max) {
-            GodotRuntime.stringToHeap(`#${GodotConfig.canvas.id}`, p_ptr, p_ptr_max);
+        function _godot_js_config_canvas_id_get(p_ptr1, p_ptr_max1) {
+            GodotRuntime.stringToHeap(`#${GodotConfig.canvas.id}`, p_ptr1, p_ptr_max1);
         }
-        function _godot_js_config_locale_get(p_ptr, p_ptr_max) {
-            GodotRuntime.stringToHeap(GodotConfig.locale, p_ptr, p_ptr_max);
+        function _godot_js_config_locale_get(p_ptr1, p_ptr_max1) {
+            GodotRuntime.stringToHeap(GodotConfig.locale, p_ptr1, p_ptr_max1);
         }
         var GodotDisplayCursor = {
             shape: "auto",
             visible: true,
             cursors: {},
-            set_style: function(style) {
-                GodotConfig.canvas.style.cursor = style;
+            set_style: function(style1) {
+                GodotConfig.canvas.style.cursor = style1;
             },
-            set_shape: function(shape) {
-                GodotDisplayCursor.shape = shape;
-                let css = shape;
-                if (shape in GodotDisplayCursor.cursors) {
-                    const c = GodotDisplayCursor.cursors[shape];
-                    css = `url("${c.url}") ${c.x} ${c.y}, auto`;
+            set_shape: function(shape1) {
+                GodotDisplayCursor.shape = shape1;
+                let css1 = shape1;
+                if (shape1 in GodotDisplayCursor.cursors) {
+                    const c1 = GodotDisplayCursor.cursors[shape1];
+                    css1 = `url("${c1.url}") ${c1.x} ${c1.y}, auto`;
                 }
-                if (GodotDisplayCursor.visible) GodotDisplayCursor.set_style(css);
+                if (GodotDisplayCursor.visible) GodotDisplayCursor.set_style(css1);
             },
             clear: function() {
                 GodotDisplayCursor.set_style("");
                 GodotDisplayCursor.shape = "auto";
                 GodotDisplayCursor.visible = true;
-                Object.keys(GodotDisplayCursor.cursors).forEach(function(key) {
-                    URL.revokeObjectURL(GodotDisplayCursor.cursors[key]);
-                    delete GodotDisplayCursor.cursors[key];
+                Object.keys(GodotDisplayCursor.cursors).forEach(function(key1) {
+                    URL.revokeObjectURL(GodotDisplayCursor.cursors[key1]);
+                    delete GodotDisplayCursor.cursors[key1];
                 });
             },
             lockPointer: function() {
-                const canvas = GodotConfig.canvas;
-                if (canvas.requestPointerLock) canvas.requestPointerLock();
+                const canvas1 = GodotConfig.canvas;
+                if (canvas1.requestPointerLock) canvas1.requestPointerLock();
             },
             releasePointer: function() {
                 if (document.exitPointerLock) document.exitPointerLock();
@@ -7942,25 +7942,25 @@ var Godot = (()=>{
         };
         var GodotEventListeners = {
             handlers: [],
-            has: function(target, event, method, capture) {
-                return GodotEventListeners.handlers.findIndex(function(e) {
-                    return e.target === target && e.event === event && e.method === method && e.capture === capture;
+            has: function(target1, event1, method1, capture1) {
+                return GodotEventListeners.handlers.findIndex(function(e1) {
+                    return e1.target === target1 && e1.event === event1 && e1.method === method1 && e1.capture === capture1;
                 }) !== -1;
             },
-            add: function(target, event, method, capture) {
-                if (GodotEventListeners.has(target, event, method, capture)) return;
-                function Handler(p_target, p_event, p_method, p_capture) {
-                    this.target = p_target;
-                    this.event = p_event;
-                    this.method = p_method;
-                    this.capture = p_capture;
+            add: function(target1, event1, method1, capture1) {
+                if (GodotEventListeners.has(target1, event1, method1, capture1)) return;
+                function Handler1(p_target1, p_event1, p_method1, p_capture1) {
+                    this.target = p_target1;
+                    this.event = p_event1;
+                    this.method = p_method1;
+                    this.capture = p_capture1;
                 }
-                GodotEventListeners.handlers.push(new Handler(target, event, method, capture));
-                target.addEventListener(event, method, capture);
+                GodotEventListeners.handlers.push(new Handler1(target1, event1, method1, capture1));
+                target1.addEventListener(event1, method1, capture1);
             },
             clear: function() {
-                GodotEventListeners.handlers.forEach(function(h) {
-                    h.target.removeEventListener(h.event, h.method, h.capture);
+                GodotEventListeners.handlers.forEach(function(h1) {
+                    h1.target.removeEventListener(h1.event, h1.method, h1.capture);
                 });
                 GodotEventListeners.handlers.length = 0;
             }
@@ -7975,8 +7975,8 @@ var Godot = (()=>{
                 return GodotDisplayScreen.hidpi ? window.devicePixelRatio || 1 : 1;
             },
             isFullscreen: function() {
-                const elem = document.fullscreenElement || document.mozFullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement;
-                if (elem) return elem === GodotConfig.canvas;
+                const elem1 = document.fullscreenElement || document.mozFullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement;
+                if (elem1) return elem1 === GodotConfig.canvas;
                 return document.fullscreen || document.mozFullScreen || document.webkitIsFullscreen;
             },
             hasFullscreen: function() {
@@ -7984,11 +7984,11 @@ var Godot = (()=>{
             },
             requestFullscreen: function() {
                 if (!GodotDisplayScreen.hasFullscreen()) return 1;
-                const canvas = GodotConfig.canvas;
+                const canvas1 = GodotConfig.canvas;
                 try {
-                    const promise = (canvas.requestFullscreen || canvas.msRequestFullscreen || canvas.mozRequestFullScreen || canvas.mozRequestFullscreen || canvas.webkitRequestFullscreen).call(canvas);
-                    if (promise) promise.catch(function() {});
-                } catch (e) {
+                    const promise1 = (canvas1.requestFullscreen || canvas1.msRequestFullscreen || canvas1.mozRequestFullScreen || canvas1.mozRequestFullscreen || canvas1.webkitRequestFullscreen).call(canvas1);
+                    if (promise1) promise1.catch(function() {});
+                } catch (e1) {
                     return 1;
                 }
                 return 0;
@@ -7996,50 +7996,50 @@ var Godot = (()=>{
             exitFullscreen: function() {
                 if (!GodotDisplayScreen.isFullscreen()) return 0;
                 try {
-                    const promise = document.exitFullscreen();
-                    if (promise) promise.catch(function() {});
-                } catch (e) {
+                    const promise1 = document.exitFullscreen();
+                    if (promise1) promise1.catch(function() {});
+                } catch (e1) {
                     return 1;
                 }
                 return 0;
             },
             _updateGL: function() {
-                const gl_context_handle = _emscripten_webgl_get_current_context();
-                const gl = GL.getContext(gl_context_handle);
-                if (gl) GL.resizeOffscreenFramebuffer(gl);
+                const gl_context_handle1 = _emscripten_webgl_get_current_context();
+                const gl1 = GL.getContext(gl_context_handle1);
+                if (gl1) GL.resizeOffscreenFramebuffer(gl1);
             },
             updateSize: function() {
-                const isFullscreen = GodotDisplayScreen.isFullscreen();
-                const wantsFullWindow = GodotConfig.canvas_resize_policy === 2;
-                const noResize = GodotConfig.canvas_resize_policy === 0;
-                const wwidth = GodotDisplayScreen.desired_size[0];
-                const wheight = GodotDisplayScreen.desired_size[1];
-                const canvas = GodotConfig.canvas;
-                let width = wwidth;
-                let height = wheight;
-                if (noResize) {
-                    if (canvas.width !== width || canvas.height !== height) {
+                const isFullscreen1 = GodotDisplayScreen.isFullscreen();
+                const wantsFullWindow1 = GodotConfig.canvas_resize_policy === 2;
+                const noResize1 = GodotConfig.canvas_resize_policy === 0;
+                const wwidth1 = GodotDisplayScreen.desired_size[0];
+                const wheight1 = GodotDisplayScreen.desired_size[1];
+                const canvas1 = GodotConfig.canvas;
+                let width1 = wwidth1;
+                let height1 = wheight1;
+                if (noResize1) {
+                    if (canvas1.width !== width1 || canvas1.height !== height1) {
                         GodotDisplayScreen.desired_size = [
-                            canvas.width,
-                            canvas.height
+                            canvas1.width,
+                            canvas1.height
                         ];
                         GodotDisplayScreen._updateGL();
                         return 1;
                     }
                     return 0;
                 }
-                const scale = GodotDisplayScreen.getPixelRatio();
-                if (isFullscreen || wantsFullWindow) {
-                    width = window.innerWidth * scale;
-                    height = window.innerHeight * scale;
+                const scale1 = GodotDisplayScreen.getPixelRatio();
+                if (isFullscreen1 || wantsFullWindow1) {
+                    width1 = window.innerWidth * scale1;
+                    height1 = window.innerHeight * scale1;
                 }
-                const csw = `${width / scale}px`;
-                const csh = `${height / scale}px`;
-                if (canvas.style.width !== csw || canvas.style.height !== csh || canvas.width !== width || canvas.height !== height) {
-                    canvas.width = width;
-                    canvas.height = height;
-                    canvas.style.width = csw;
-                    canvas.style.height = csh;
+                const csw1 = `${width1 / scale1}px`;
+                const csh1 = `${height1 / scale1}px`;
+                if (canvas1.style.width !== csw1 || canvas1.style.height !== csh1 || canvas1.width !== width1 || canvas1.height !== height1) {
+                    canvas1.width = width1;
+                    canvas1.height = height1;
+                    canvas1.style.width = csw1;
+                    canvas1.style.height = csh1;
                     GodotDisplayScreen._updateGL();
                     return 1;
                 }
@@ -8052,73 +8052,73 @@ var Godot = (()=>{
             available: function() {
                 return GodotConfig.virtual_keyboard && "ontouchstart" in window;
             },
-            init: function(input_cb) {
-                function create(what) {
-                    const elem = document.createElement(what);
-                    elem.style.display = "none";
-                    elem.style.position = "absolute";
-                    elem.style.zIndex = "-1";
-                    elem.style.background = "transparent";
-                    elem.style.padding = "0px";
-                    elem.style.margin = "0px";
-                    elem.style.overflow = "hidden";
-                    elem.style.width = "0px";
-                    elem.style.height = "0px";
-                    elem.style.border = "0px";
-                    elem.style.outline = "none";
-                    elem.readonly = true;
-                    elem.disabled = true;
-                    GodotEventListeners.add(elem, "input", function(evt) {
-                        const c_str = GodotRuntime.allocString(elem.value);
-                        input_cb(c_str, elem.selectionEnd);
-                        GodotRuntime.free(c_str);
+            init: function(input_cb1) {
+                function create1(what1) {
+                    const elem1 = document.createElement(what1);
+                    elem1.style.display = "none";
+                    elem1.style.position = "absolute";
+                    elem1.style.zIndex = "-1";
+                    elem1.style.background = "transparent";
+                    elem1.style.padding = "0px";
+                    elem1.style.margin = "0px";
+                    elem1.style.overflow = "hidden";
+                    elem1.style.width = "0px";
+                    elem1.style.height = "0px";
+                    elem1.style.border = "0px";
+                    elem1.style.outline = "none";
+                    elem1.readonly = true;
+                    elem1.disabled = true;
+                    GodotEventListeners.add(elem1, "input", function(evt1) {
+                        const c_str1 = GodotRuntime.allocString(elem1.value);
+                        input_cb1(c_str1, elem1.selectionEnd);
+                        GodotRuntime.free(c_str1);
                     }, false);
-                    GodotEventListeners.add(elem, "blur", function(evt) {
-                        elem.style.display = "none";
-                        elem.readonly = true;
-                        elem.disabled = true;
+                    GodotEventListeners.add(elem1, "blur", function(evt1) {
+                        elem1.style.display = "none";
+                        elem1.readonly = true;
+                        elem1.disabled = true;
                     }, false);
-                    GodotConfig.canvas.insertAdjacentElement("beforebegin", elem);
-                    return elem;
+                    GodotConfig.canvas.insertAdjacentElement("beforebegin", elem1);
+                    return elem1;
                 }
-                GodotDisplayVK.textinput = create("input");
-                GodotDisplayVK.textarea = create("textarea");
+                GodotDisplayVK.textinput = create1("input");
+                GodotDisplayVK.textarea = create1("textarea");
                 GodotDisplayVK.updateSize();
             },
-            show: function(text, multiline, start, end) {
+            show: function(text1, multiline1, start1, end1) {
                 if (!GodotDisplayVK.textinput || !GodotDisplayVK.textarea) return;
                 if (GodotDisplayVK.textinput.style.display !== "" || GodotDisplayVK.textarea.style.display !== "") GodotDisplayVK.hide();
                 GodotDisplayVK.updateSize();
-                const elem = multiline ? GodotDisplayVK.textarea : GodotDisplayVK.textinput;
-                elem.readonly = false;
-                elem.disabled = false;
-                elem.value = text;
-                elem.style.display = "block";
-                elem.focus();
-                elem.setSelectionRange(start, end);
+                const elem1 = multiline1 ? GodotDisplayVK.textarea : GodotDisplayVK.textinput;
+                elem1.readonly = false;
+                elem1.disabled = false;
+                elem1.value = text1;
+                elem1.style.display = "block";
+                elem1.focus();
+                elem1.setSelectionRange(start1, end1);
             },
             hide: function() {
                 if (!GodotDisplayVK.textinput || !GodotDisplayVK.textarea) return;
                 [
                     GodotDisplayVK.textinput,
                     GodotDisplayVK.textarea
-                ].forEach(function(elem) {
-                    elem.blur();
-                    elem.style.display = "none";
-                    elem.value = "";
+                ].forEach(function(elem1) {
+                    elem1.blur();
+                    elem1.style.display = "none";
+                    elem1.value = "";
                 });
             },
             updateSize: function() {
                 if (!GodotDisplayVK.textinput || !GodotDisplayVK.textarea) return;
-                const rect = GodotConfig.canvas.getBoundingClientRect();
-                function update(elem) {
-                    elem.style.left = `${rect.left}px`;
-                    elem.style.top = `${rect.top}px`;
-                    elem.style.width = `${rect.width}px`;
-                    elem.style.height = `${rect.height}px`;
+                const rect1 = GodotConfig.canvas.getBoundingClientRect();
+                function update1(elem1) {
+                    elem1.style.left = `${rect1.left}px`;
+                    elem1.style.top = `${rect1.top}px`;
+                    elem1.style.width = `${rect1.width}px`;
+                    elem1.style.height = `${rect1.height}px`;
                 }
-                update(GodotDisplayVK.textinput);
-                update(GodotDisplayVK.textarea);
+                update1(GodotDisplayVK.textinput);
+                update1(GodotDisplayVK.textarea);
             },
             clear: function() {
                 if (GodotDisplayVK.textinput) {
@@ -8134,25 +8134,25 @@ var Godot = (()=>{
         var GodotDisplay = {
             window_icon: "",
             findDPI: function() {
-                function testDPI(dpi) {
-                    return window.matchMedia(`(max-resolution: ${dpi}dpi)`).matches;
+                function testDPI1(dpi1) {
+                    return window.matchMedia(`(max-resolution: ${dpi1}dpi)`).matches;
                 }
-                function bisect(low, high, func) {
-                    const mid = parseInt((high - low) / 2 + low, 10);
-                    if (high - low <= 1) return func(high) ? high : low;
-                    if (func(mid)) return bisect(low, mid, func);
-                    return bisect(mid, high, func);
+                function bisect1(low1, high1, func1) {
+                    const mid1 = parseInt((high1 - low1) / 2 + low1, 10);
+                    if (high1 - low1 <= 1) return func1(high1) ? high1 : low1;
+                    if (func1(mid1)) return bisect1(low1, mid1, func1);
+                    return bisect1(mid1, high1, func1);
                 }
                 try {
-                    const dpi = bisect(0, 800, testDPI);
-                    return dpi >= 96 ? dpi : 96;
-                } catch (e) {
+                    const dpi1 = bisect1(0, 800, testDPI1);
+                    return dpi1 >= 96 ? dpi1 : 96;
+                } catch (e1) {
                     return 96;
                 }
             }
         };
-        function _godot_js_display_alert(p_text) {
-            window.alert(GodotRuntime.parseString(p_text));
+        function _godot_js_display_alert(p_text1) {
+            window.alert(GodotRuntime.parseString(p_text1));
         }
         function _godot_js_display_canvas_focus() {
             GodotConfig.canvas.focus();
@@ -8160,21 +8160,21 @@ var Godot = (()=>{
         function _godot_js_display_canvas_is_focused() {
             return document.activeElement === GodotConfig.canvas;
         }
-        function _godot_js_display_clipboard_get(callback) {
-            const func = GodotRuntime.get_func(callback);
+        function _godot_js_display_clipboard_get(callback1) {
+            const func1 = GodotRuntime.get_func(callback1);
             try {
-                navigator.clipboard.readText().then(function(result) {
-                    const ptr = GodotRuntime.allocString(result);
-                    func(ptr);
-                    GodotRuntime.free(ptr);
-                }).catch(function(e) {});
-            } catch (e) {}
+                navigator.clipboard.readText().then(function(result1) {
+                    const ptr1 = GodotRuntime.allocString(result1);
+                    func1(ptr1);
+                    GodotRuntime.free(ptr1);
+                }).catch(function(e1) {});
+            } catch (e1) {}
         }
-        function _godot_js_display_clipboard_set(p_text) {
-            const text = GodotRuntime.parseString(p_text);
+        function _godot_js_display_clipboard_set(p_text1) {
+            const text1 = GodotRuntime.parseString(p_text1);
             if (!navigator.clipboard || !navigator.clipboard.writeText) return 1;
-            navigator.clipboard.writeText(text).catch(function(e) {
-                GodotRuntime.error("Setting OS clipboard is only possible from an input callback for the HTML5 plafrom. Exception:", e);
+            navigator.clipboard.writeText(text1).catch(function(e1) {
+                GodotRuntime.error("Setting OS clipboard is only possible from an input callback for the HTML5 plafrom. Exception:", e1);
             });
             return 0;
         }
@@ -8184,55 +8184,55 @@ var Godot = (()=>{
         function _godot_js_display_cursor_is_locked() {
             return GodotDisplayCursor.isPointerLocked() ? 1 : 0;
         }
-        function _godot_js_display_cursor_lock_set(p_lock) {
-            if (p_lock) GodotDisplayCursor.lockPointer();
+        function _godot_js_display_cursor_lock_set(p_lock1) {
+            if (p_lock1) GodotDisplayCursor.lockPointer();
             else GodotDisplayCursor.releasePointer();
         }
-        function _godot_js_display_cursor_set_custom_shape(p_shape, p_ptr, p_len, p_hotspot_x, p_hotspot_y) {
-            const shape = GodotRuntime.parseString(p_shape);
-            const old_shape = GodotDisplayCursor.cursors[shape];
-            if (p_len > 0) {
-                const png = new Blob([
-                    GodotRuntime.heapSlice(GROWABLE_HEAP_U8(), p_ptr, p_len)
+        function _godot_js_display_cursor_set_custom_shape(p_shape1, p_ptr1, p_len1, p_hotspot_x1, p_hotspot_y1) {
+            const shape1 = GodotRuntime.parseString(p_shape1);
+            const old_shape1 = GodotDisplayCursor.cursors[shape1];
+            if (p_len1 > 0) {
+                const png1 = new Blob([
+                    GodotRuntime.heapSlice(GROWABLE_HEAP_U8(), p_ptr1, p_len1)
                 ], {
                     type: "image/png"
                 });
-                const url = URL.createObjectURL(png);
-                GodotDisplayCursor.cursors[shape] = {
-                    url: url,
-                    x: p_hotspot_x,
-                    y: p_hotspot_y
+                const url1 = URL.createObjectURL(png1);
+                GodotDisplayCursor.cursors[shape1] = {
+                    url: url1,
+                    x: p_hotspot_x1,
+                    y: p_hotspot_y1
                 };
-            } else delete GodotDisplayCursor.cursors[shape];
-            if (shape === GodotDisplayCursor.shape) GodotDisplayCursor.set_shape(GodotDisplayCursor.shape);
-            if (old_shape) URL.revokeObjectURL(old_shape.url);
+            } else delete GodotDisplayCursor.cursors[shape1];
+            if (shape1 === GodotDisplayCursor.shape) GodotDisplayCursor.set_shape(GodotDisplayCursor.shape);
+            if (old_shape1) URL.revokeObjectURL(old_shape1.url);
         }
-        function _godot_js_display_cursor_set_shape(p_string) {
-            GodotDisplayCursor.set_shape(GodotRuntime.parseString(p_string));
+        function _godot_js_display_cursor_set_shape(p_string1) {
+            GodotDisplayCursor.set_shape(GodotRuntime.parseString(p_string1));
         }
-        function _godot_js_display_cursor_set_visible(p_visible) {
-            const visible = p_visible !== 0;
-            if (visible === GodotDisplayCursor.visible) return;
-            GodotDisplayCursor.visible = visible;
-            if (visible) GodotDisplayCursor.set_shape(GodotDisplayCursor.shape);
+        function _godot_js_display_cursor_set_visible(p_visible1) {
+            const visible1 = p_visible1 !== 0;
+            if (visible1 === GodotDisplayCursor.visible) return;
+            GodotDisplayCursor.visible = visible1;
+            if (visible1) GodotDisplayCursor.set_shape(GodotDisplayCursor.shape);
             else GodotDisplayCursor.set_style("none");
         }
-        function _godot_js_display_desired_size_set(width, height) {
+        function _godot_js_display_desired_size_set(width1, height1) {
             GodotDisplayScreen.desired_size = [
-                width,
-                height
+                width1,
+                height1
             ];
             GodotDisplayScreen.updateSize();
         }
-        function _godot_js_display_fullscreen_cb(callback) {
-            const canvas = GodotConfig.canvas;
-            const func = GodotRuntime.get_func(callback);
-            function change_cb(evt) {
-                if (evt.target === canvas) func(GodotDisplayScreen.isFullscreen());
+        function _godot_js_display_fullscreen_cb(callback1) {
+            const canvas1 = GodotConfig.canvas;
+            const func1 = GodotRuntime.get_func(callback1);
+            function change_cb1(evt1) {
+                if (evt1.target === canvas1) func1(GodotDisplayScreen.isFullscreen());
             }
-            GodotEventListeners.add(document, "fullscreenchange", change_cb, false);
-            GodotEventListeners.add(document, "mozfullscreenchange", change_cb, false);
-            GodotEventListeners.add(document, "webkitfullscreenchange", change_cb, false);
+            GodotEventListeners.add(document, "fullscreenchange", change_cb1, false);
+            GodotEventListeners.add(document, "mozfullscreenchange", change_cb1, false);
+            GodotEventListeners.add(document, "webkitfullscreenchange", change_cb1, false);
         }
         function _godot_js_display_fullscreen_exit() {
             return GodotDisplayScreen.exitFullscreen();
@@ -8240,46 +8240,46 @@ var Godot = (()=>{
         function _godot_js_display_fullscreen_request() {
             return GodotDisplayScreen.requestFullscreen();
         }
-        function _godot_js_display_glGetBufferSubData(target, offset, size, data) {
-            const gl_context_handle = _emscripten_webgl_get_current_context();
-            const gl = GL.getContext(gl_context_handle);
-            if (gl) gl.GLctx["getBufferSubData"](target, offset, GROWABLE_HEAP_U8(), data, size);
+        function _godot_js_display_glGetBufferSubData(target1, offset1, size1, data1) {
+            const gl_context_handle1 = _emscripten_webgl_get_current_context();
+            const gl1 = GL.getContext(gl_context_handle1);
+            if (gl1) gl1.GLctx["getBufferSubData"](target1, offset1, GROWABLE_HEAP_U8(), data1, size1);
         }
-        function _godot_js_display_has_webgl(p_version) {
-            if (p_version !== 1 && p_version !== 2) return false;
+        function _godot_js_display_has_webgl(p_version1) {
+            if (p_version1 !== 1 && p_version1 !== 2) return false;
             try {
-                return !!document.createElement("canvas").getContext(p_version === 2 ? "webgl2" : "webgl");
-            } catch (e) {}
+                return !!document.createElement("canvas").getContext(p_version1 === 2 ? "webgl2" : "webgl");
+            } catch (e1) {}
             return false;
         }
         function _godot_js_display_is_swap_ok_cancel() {
-            const win = [
+            const win1 = [
                 "Windows",
                 "Win64",
                 "Win32",
                 "WinCE"
             ];
-            const plat = navigator.platform || "";
-            if (win.indexOf(plat) !== -1) return 1;
+            const plat1 = navigator.platform || "";
+            if (win1.indexOf(plat1) !== -1) return 1;
             return 0;
         }
-        function _godot_js_display_notification_cb(callback, p_enter, p_exit, p_in, p_out) {
-            const canvas = GodotConfig.canvas;
-            const func = GodotRuntime.get_func(callback);
-            const notif = [
-                p_enter,
-                p_exit,
-                p_in,
-                p_out
+        function _godot_js_display_notification_cb(callback1, p_enter1, p_exit1, p_in1, p_out1) {
+            const canvas1 = GodotConfig.canvas;
+            const func1 = GodotRuntime.get_func(callback1);
+            const notif1 = [
+                p_enter1,
+                p_exit1,
+                p_in1,
+                p_out1
             ];
             [
                 "mouseover",
                 "mouseleave",
                 "focus",
                 "blur"
-            ].forEach(function(evt_name, idx) {
-                GodotEventListeners.add(canvas, evt_name, function() {
-                    func(notif[idx]);
+            ].forEach(function(evt_name1, idx1) {
+                GodotEventListeners.add(canvas1, evt_name1, function() {
+                    func1(notif1[idx1]);
                 }, true);
             });
         }
@@ -8289,47 +8289,47 @@ var Godot = (()=>{
         function _godot_js_display_screen_dpi_get() {
             return GodotDisplay.findDPI();
         }
-        function _godot_js_display_screen_size_get(width, height) {
-            const scale = GodotDisplayScreen.getPixelRatio();
-            GodotRuntime.setHeapValue(width, window.screen.width * scale, "i32");
-            GodotRuntime.setHeapValue(height, window.screen.height * scale, "i32");
+        function _godot_js_display_screen_size_get(width1, height1) {
+            const scale1 = GodotDisplayScreen.getPixelRatio();
+            GodotRuntime.setHeapValue(width1, window.screen.width * scale1, "i32");
+            GodotRuntime.setHeapValue(height1, window.screen.height * scale1, "i32");
         }
-        function _godot_js_display_setup_canvas(p_width, p_height, p_fullscreen, p_hidpi) {
-            const canvas = GodotConfig.canvas;
-            GodotEventListeners.add(canvas, "contextmenu", function(ev) {
-                ev.preventDefault();
+        function _godot_js_display_setup_canvas(p_width1, p_height1, p_fullscreen1, p_hidpi1) {
+            const canvas1 = GodotConfig.canvas;
+            GodotEventListeners.add(canvas1, "contextmenu", function(ev1) {
+                ev1.preventDefault();
             }, false);
-            GodotEventListeners.add(canvas, "webglcontextlost", function(ev) {
+            GodotEventListeners.add(canvas1, "webglcontextlost", function(ev1) {
                 alert("WebGL context lost, please reload the page");
-                ev.preventDefault();
+                ev1.preventDefault();
             }, false);
-            GodotDisplayScreen.hidpi = !!p_hidpi;
+            GodotDisplayScreen.hidpi = !!p_hidpi1;
             switch(GodotConfig.canvas_resize_policy){
                 case 0:
                     GodotDisplayScreen.desired_size = [
-                        canvas.width,
-                        canvas.height
+                        canvas1.width,
+                        canvas1.height
                     ];
                     break;
                 case 1:
                     GodotDisplayScreen.desired_size = [
-                        p_width,
-                        p_height
+                        p_width1,
+                        p_height1
                     ];
                     break;
                 default:
-                    canvas.style.position = "absolute";
-                    canvas.style.top = 0;
-                    canvas.style.left = 0;
+                    canvas1.style.position = "absolute";
+                    canvas1.style.top = 0;
+                    canvas1.style.left = 0;
                     break;
             }
             GodotDisplayScreen.updateSize();
-            if (p_fullscreen) GodotDisplayScreen.requestFullscreen();
+            if (p_fullscreen1) GodotDisplayScreen.requestFullscreen();
         }
         function _godot_js_display_size_update() {
-            const updated = GodotDisplayScreen.updateSize();
-            if (updated) GodotDisplayVK.updateSize();
-            return updated;
+            const updated1 = GodotDisplayScreen.updateSize();
+            if (updated1) GodotDisplayVK.updateSize();
+            return updated1;
         }
         function _godot_js_display_touchscreen_is_available() {
             return "ontouchstart" in window;
@@ -8337,49 +8337,49 @@ var Godot = (()=>{
         function _godot_js_display_vk_available() {
             return GodotDisplayVK.available();
         }
-        function _godot_js_display_vk_cb(p_input_cb) {
-            const input_cb = GodotRuntime.get_func(p_input_cb);
-            if (GodotDisplayVK.available()) GodotDisplayVK.init(input_cb);
+        function _godot_js_display_vk_cb(p_input_cb1) {
+            const input_cb1 = GodotRuntime.get_func(p_input_cb1);
+            if (GodotDisplayVK.available()) GodotDisplayVK.init(input_cb1);
         }
         function _godot_js_display_vk_hide() {
             GodotDisplayVK.hide();
         }
-        function _godot_js_display_vk_show(p_text, p_multiline, p_start, p_end) {
-            const text = GodotRuntime.parseString(p_text);
-            const start = p_start > 0 ? p_start : 0;
-            const end = p_end > 0 ? p_end : start;
-            GodotDisplayVK.show(text, p_multiline, start, end);
+        function _godot_js_display_vk_show(p_text1, p_multiline1, p_start1, p_end1) {
+            const text1 = GodotRuntime.parseString(p_text1);
+            const start1 = p_start1 > 0 ? p_start1 : 0;
+            const end1 = p_end1 > 0 ? p_end1 : start1;
+            GodotDisplayVK.show(text1, p_multiline1, start1, end1);
         }
-        function _godot_js_display_window_blur_cb(callback) {
-            const func = GodotRuntime.get_func(callback);
+        function _godot_js_display_window_blur_cb(callback1) {
+            const func1 = GodotRuntime.get_func(callback1);
             GodotEventListeners.add(window, "blur", function() {
-                func();
+                func1();
             }, false);
         }
-        function _godot_js_display_window_icon_set(p_ptr, p_len) {
-            let link = document.getElementById("-gd-engine-icon");
-            if (link === null) {
-                link = document.createElement("link");
-                link.rel = "icon";
-                link.id = "-gd-engine-icon";
-                document.head.appendChild(link);
+        function _godot_js_display_window_icon_set(p_ptr1, p_len1) {
+            let link1 = document.getElementById("-gd-engine-icon");
+            if (link1 === null) {
+                link1 = document.createElement("link");
+                link1.rel = "icon";
+                link1.id = "-gd-engine-icon";
+                document.head.appendChild(link1);
             }
-            const old_icon = GodotDisplay.window_icon;
-            const png = new Blob([
-                GodotRuntime.heapSlice(GROWABLE_HEAP_U8(), p_ptr, p_len)
+            const old_icon1 = GodotDisplay.window_icon;
+            const png1 = new Blob([
+                GodotRuntime.heapSlice(GROWABLE_HEAP_U8(), p_ptr1, p_len1)
             ], {
                 type: "image/png"
             });
-            GodotDisplay.window_icon = URL.createObjectURL(png);
-            link.href = GodotDisplay.window_icon;
-            if (old_icon) URL.revokeObjectURL(old_icon);
+            GodotDisplay.window_icon = URL.createObjectURL(png1);
+            link1.href = GodotDisplay.window_icon;
+            if (old_icon1) URL.revokeObjectURL(old_icon1);
         }
-        function _godot_js_display_window_size_get(p_width, p_height) {
-            GodotRuntime.setHeapValue(p_width, GodotConfig.canvas.width, "i32");
-            GodotRuntime.setHeapValue(p_height, GodotConfig.canvas.height, "i32");
+        function _godot_js_display_window_size_get(p_width1, p_height1) {
+            GodotRuntime.setHeapValue(p_width1, GodotConfig.canvas.width, "i32");
+            GodotRuntime.setHeapValue(p_height1, GodotConfig.canvas.height, "i32");
         }
-        function _godot_js_display_window_title_set(p_data) {
-            document.title = GodotRuntime.parseString(p_data);
+        function _godot_js_display_window_title_set(p_data1) {
+            document.title = GodotRuntime.parseString(p_data1);
         }
         function _godot_js_eval(p_js, p_use_global_ctx, p_union_ptr, p_byte_arr, p_byte_arr_write, p_callback) {
             const js_code = GodotRuntime.parseString(p_js);
@@ -8419,48 +8419,48 @@ var Godot = (()=>{
         var IDHandler = {
             _last_id: 0,
             _references: {},
-            get: function(p_id) {
-                return IDHandler._references[p_id];
+            get: function(p_id1) {
+                return IDHandler._references[p_id1];
             },
-            add: function(p_data) {
-                const id = ++IDHandler._last_id;
-                IDHandler._references[id] = p_data;
-                return id;
+            add: function(p_data1) {
+                const id1 = ++IDHandler._last_id;
+                IDHandler._references[id1] = p_data1;
+                return id1;
             },
-            remove: function(p_id) {
-                delete IDHandler._references[p_id];
+            remove: function(p_id1) {
+                delete IDHandler._references[p_id1];
             }
         };
         var GodotFetch = {
-            onread: function(id, result) {
-                const obj = IDHandler.get(id);
-                if (!obj) return;
-                if (result.value) obj.chunks.push(result.value);
-                obj.reading = false;
-                obj.done = result.done;
+            onread: function(id1, result1) {
+                const obj1 = IDHandler.get(id1);
+                if (!obj1) return;
+                if (result1.value) obj1.chunks.push(result1.value);
+                obj1.reading = false;
+                obj1.done = result1.done;
             },
-            onresponse: function(id, response) {
-                const obj = IDHandler.get(id);
-                if (!obj) return;
-                let chunked = false;
-                response.headers.forEach(function(value, header) {
-                    const v = value.toLowerCase().trim();
-                    const h = header.toLowerCase().trim();
-                    if (h === "transfer-encoding" && v === "chunked") chunked = true;
+            onresponse: function(id1, response1) {
+                const obj1 = IDHandler.get(id1);
+                if (!obj1) return;
+                let chunked1 = false;
+                response1.headers.forEach(function(value1, header1) {
+                    const v4 = value1.toLowerCase().trim();
+                    const h1 = header1.toLowerCase().trim();
+                    if (h1 === "transfer-encoding" && v4 === "chunked") chunked1 = true;
                 });
-                obj.status = response.status;
-                obj.response = response;
-                obj.reader = response.body.getReader();
-                obj.chunked = chunked;
+                obj1.status = response1.status;
+                obj1.response = response1;
+                obj1.reader = response1.body.getReader();
+                obj1.chunked = chunked1;
             },
-            onerror: function(id, err) {
-                GodotRuntime.error(err);
-                const obj = IDHandler.get(id);
-                if (!obj) return;
-                obj.error = err;
+            onerror: function(id1, err1) {
+                GodotRuntime.error(err1);
+                const obj1 = IDHandler.get(id1);
+                if (!obj1) return;
+                obj1.error = err1;
             },
-            create: function(method, url, headers, body) {
-                const obj = {
+            create: function(method1, url1, headers1, body1) {
+                const obj1 = {
                     request: null,
                     response: null,
                     reader: null,
@@ -8471,356 +8471,356 @@ var Godot = (()=>{
                     chunks: [],
                     bodySize: -1
                 };
-                const id = IDHandler.add(obj);
-                const init = {
-                    method: method,
-                    headers: headers,
-                    body: body
+                const id1 = IDHandler.add(obj1);
+                const init1 = {
+                    method: method1,
+                    headers: headers1,
+                    body: body1
                 };
-                obj.request = fetch(url, init);
-                obj.request.then(GodotFetch.onresponse.bind(null, id)).catch(GodotFetch.onerror.bind(null, id));
-                return id;
+                obj1.request = fetch(url1, init1);
+                obj1.request.then(GodotFetch.onresponse.bind(null, id1)).catch(GodotFetch.onerror.bind(null, id1));
+                return id1;
             },
-            free: function(id) {
-                const obj = IDHandler.get(id);
-                if (!obj) return;
-                IDHandler.remove(id);
-                if (!obj.request) return;
-                obj.request.then(function(response) {
-                    response.abort();
-                }).catch(function(e) {});
+            free: function(id1) {
+                const obj1 = IDHandler.get(id1);
+                if (!obj1) return;
+                IDHandler.remove(id1);
+                if (!obj1.request) return;
+                obj1.request.then(function(response1) {
+                    response1.abort();
+                }).catch(function(e1) {});
             },
-            read: function(id) {
-                const obj = IDHandler.get(id);
-                if (!obj) return;
-                if (obj.reader && !obj.reading) {
-                    if (obj.done) {
-                        obj.reader = null;
+            read: function(id1) {
+                const obj1 = IDHandler.get(id1);
+                if (!obj1) return;
+                if (obj1.reader && !obj1.reading) {
+                    if (obj1.done) {
+                        obj1.reader = null;
                         return;
                     }
-                    obj.reading = true;
-                    obj.reader.read().then(GodotFetch.onread.bind(null, id)).catch(GodotFetch.onerror.bind(null, id));
+                    obj1.reading = true;
+                    obj1.reader.read().then(GodotFetch.onread.bind(null, id1)).catch(GodotFetch.onerror.bind(null, id1));
                 }
             }
         };
-        function _godot_js_fetch_body_length_get(p_id) {
-            const obj = IDHandler.get(p_id);
-            if (!obj || !obj.response) return -1;
-            return obj.bodySize;
+        function _godot_js_fetch_body_length_get(p_id1) {
+            const obj1 = IDHandler.get(p_id1);
+            if (!obj1 || !obj1.response) return -1;
+            return obj1.bodySize;
         }
-        function _godot_js_fetch_create(p_method, p_url, p_headers, p_headers_size, p_body, p_body_size) {
-            const method = GodotRuntime.parseString(p_method);
-            const url = GodotRuntime.parseString(p_url);
-            const headers = GodotRuntime.parseStringArray(p_headers, p_headers_size);
-            const body = p_body_size ? GodotRuntime.heapSlice(GROWABLE_HEAP_I8(), p_body, p_body_size) : null;
-            return GodotFetch.create(method, url, headers.map(function(hv) {
-                const idx = hv.indexOf(":");
-                if (idx <= 0) return [];
+        function _godot_js_fetch_create(p_method1, p_url1, p_headers1, p_headers_size1, p_body1, p_body_size1) {
+            const method1 = GodotRuntime.parseString(p_method1);
+            const url1 = GodotRuntime.parseString(p_url1);
+            const headers1 = GodotRuntime.parseStringArray(p_headers1, p_headers_size1);
+            const body1 = p_body_size1 ? GodotRuntime.heapSlice(GROWABLE_HEAP_I8(), p_body1, p_body_size1) : null;
+            return GodotFetch.create(method1, url1, headers1.map(function(hv1) {
+                const idx1 = hv1.indexOf(":");
+                if (idx1 <= 0) return [];
                 return [
-                    hv.slice(0, idx).trim(),
-                    hv.slice(idx + 1).trim()
+                    hv1.slice(0, idx1).trim(),
+                    hv1.slice(idx1 + 1).trim()
                 ];
-            }).filter(function(v) {
-                return v.length === 2;
-            }), body);
+            }).filter(function(v4) {
+                return v4.length === 2;
+            }), body1);
         }
-        function _godot_js_fetch_free(id) {
-            GodotFetch.free(id);
+        function _godot_js_fetch_free(id1) {
+            GodotFetch.free(id1);
         }
-        function _godot_js_fetch_http_status_get(p_id) {
-            const obj = IDHandler.get(p_id);
-            if (!obj || !obj.response) return 0;
-            return obj.status;
+        function _godot_js_fetch_http_status_get(p_id1) {
+            const obj1 = IDHandler.get(p_id1);
+            if (!obj1 || !obj1.response) return 0;
+            return obj1.status;
         }
-        function _godot_js_fetch_is_chunked(p_id) {
-            const obj = IDHandler.get(p_id);
-            if (!obj || !obj.response) return -1;
-            return obj.chunked ? 1 : 0;
+        function _godot_js_fetch_is_chunked(p_id1) {
+            const obj1 = IDHandler.get(p_id1);
+            if (!obj1 || !obj1.response) return -1;
+            return obj1.chunked ? 1 : 0;
         }
-        function _godot_js_fetch_read_chunk(p_id, p_buf, p_buf_size) {
-            const obj = IDHandler.get(p_id);
-            if (!obj || !obj.response) return 0;
-            let to_read = p_buf_size;
-            const chunks = obj.chunks;
-            while(to_read && chunks.length){
-                const chunk = obj.chunks[0];
-                if (chunk.length > to_read) {
-                    GodotRuntime.heapCopy(GROWABLE_HEAP_I8(), chunk.slice(0, to_read), p_buf);
-                    chunks[0] = chunk.slice(to_read);
-                    to_read = 0;
+        function _godot_js_fetch_read_chunk(p_id1, p_buf1, p_buf_size1) {
+            const obj1 = IDHandler.get(p_id1);
+            if (!obj1 || !obj1.response) return 0;
+            let to_read1 = p_buf_size1;
+            const chunks1 = obj1.chunks;
+            while(to_read1 && chunks1.length){
+                const chunk1 = obj1.chunks[0];
+                if (chunk1.length > to_read1) {
+                    GodotRuntime.heapCopy(GROWABLE_HEAP_I8(), chunk1.slice(0, to_read1), p_buf1);
+                    chunks1[0] = chunk1.slice(to_read1);
+                    to_read1 = 0;
                 } else {
-                    GodotRuntime.heapCopy(GROWABLE_HEAP_I8(), chunk, p_buf);
-                    to_read -= chunk.length;
-                    chunks.pop();
+                    GodotRuntime.heapCopy(GROWABLE_HEAP_I8(), chunk1, p_buf1);
+                    to_read1 -= chunk1.length;
+                    chunks1.pop();
                 }
             }
-            if (!chunks.length) GodotFetch.read(p_id);
-            return p_buf_size - to_read;
+            if (!chunks1.length) GodotFetch.read(p_id1);
+            return p_buf_size1 - to_read1;
         }
-        function _godot_js_fetch_read_headers(p_id, p_parse_cb, p_ref) {
-            const obj = IDHandler.get(p_id);
-            if (!obj || !obj.response) return 1;
-            const cb = GodotRuntime.get_func(p_parse_cb);
-            const arr = [];
-            obj.response.headers.forEach(function(v, h) {
-                arr.push(`${h}:${v}`);
+        function _godot_js_fetch_read_headers(p_id1, p_parse_cb1, p_ref1) {
+            const obj1 = IDHandler.get(p_id1);
+            if (!obj1 || !obj1.response) return 1;
+            const cb1 = GodotRuntime.get_func(p_parse_cb1);
+            const arr1 = [];
+            obj1.response.headers.forEach(function(v4, h1) {
+                arr1.push(`${h1}:${v4}`);
             });
-            const c_ptr = GodotRuntime.allocStringArray(arr);
-            cb(arr.length, c_ptr, p_ref);
-            GodotRuntime.freeStringArray(c_ptr, arr.length);
+            const c_ptr1 = GodotRuntime.allocStringArray(arr1);
+            cb1(arr1.length, c_ptr1, p_ref1);
+            GodotRuntime.freeStringArray(c_ptr1, arr1.length);
             return 0;
         }
-        function _godot_js_fetch_state_get(p_id) {
-            const obj = IDHandler.get(p_id);
-            if (!obj) return -1;
-            if (obj.error) return -1;
-            if (!obj.response) return 0;
-            if (obj.reader) return 1;
-            if (obj.done) return 2;
+        function _godot_js_fetch_state_get(p_id1) {
+            const obj1 = IDHandler.get(p_id1);
+            if (!obj1) return -1;
+            if (obj1.error) return -1;
+            if (!obj1.response) return 0;
+            if (obj1.reader) return 1;
+            if (obj1.done) return 2;
             return -1;
         }
         var GodotInputGamepads = {
             samples: [],
             get_pads: function() {
                 try {
-                    const pads = navigator.getGamepads();
-                    if (pads) return pads;
+                    const pads1 = navigator.getGamepads();
+                    if (pads1) return pads1;
                     return [];
-                } catch (e) {
+                } catch (e1) {
                     return [];
                 }
             },
             get_samples: function() {
                 return GodotInputGamepads.samples;
             },
-            get_sample: function(index) {
-                const samples = GodotInputGamepads.samples;
-                return index < samples.length ? samples[index] : null;
+            get_sample: function(index1) {
+                const samples1 = GodotInputGamepads.samples;
+                return index1 < samples1.length ? samples1[index1] : null;
             },
             sample: function() {
-                const pads = GodotInputGamepads.get_pads();
-                const samples = [];
-                for(let i = 0; i < pads.length; i++){
-                    const pad = pads[i];
-                    if (!pad) {
-                        samples.push(null);
+                const pads1 = GodotInputGamepads.get_pads();
+                const samples1 = [];
+                for(let i1 = 0; i1 < pads1.length; i1++){
+                    const pad1 = pads1[i1];
+                    if (!pad1) {
+                        samples1.push(null);
                         continue;
                     }
-                    const s = {
-                        standard: pad.mapping === "standard",
+                    const s1 = {
+                        standard: pad1.mapping === "standard",
                         buttons: [],
                         axes: [],
-                        connected: pad.connected
+                        connected: pad1.connected
                     };
-                    for(let b = 0; b < pad.buttons.length; b++)s.buttons.push(pad.buttons[b].value);
-                    for(let a = 0; a < pad.axes.length; a++)s.axes.push(pad.axes[a]);
-                    samples.push(s);
+                    for(let b1 = 0; b1 < pad1.buttons.length; b1++)s1.buttons.push(pad1.buttons[b1].value);
+                    for(let a8 = 0; a8 < pad1.axes.length; a8++)s1.axes.push(pad1.axes[a8]);
+                    samples1.push(s1);
                 }
-                GodotInputGamepads.samples = samples;
+                GodotInputGamepads.samples = samples1;
             },
-            init: function(onchange) {
+            init: function(onchange1) {
                 GodotInputGamepads.samples = [];
-                function add(pad) {
-                    const guid = GodotInputGamepads.get_guid(pad);
-                    const c_id = GodotRuntime.allocString(pad.id);
-                    const c_guid = GodotRuntime.allocString(guid);
-                    onchange(pad.index, 1, c_id, c_guid);
-                    GodotRuntime.free(c_id);
-                    GodotRuntime.free(c_guid);
+                function add1(pad1) {
+                    const guid1 = GodotInputGamepads.get_guid(pad1);
+                    const c_id1 = GodotRuntime.allocString(pad1.id);
+                    const c_guid1 = GodotRuntime.allocString(guid1);
+                    onchange1(pad1.index, 1, c_id1, c_guid1);
+                    GodotRuntime.free(c_id1);
+                    GodotRuntime.free(c_guid1);
                 }
-                const pads = GodotInputGamepads.get_pads();
-                for(let i = 0; i < pads.length; i++)if (pads[i]) add(pads[i]);
-                GodotEventListeners.add(window, "gamepadconnected", function(evt) {
-                    if (evt.gamepad) add(evt.gamepad);
+                const pads1 = GodotInputGamepads.get_pads();
+                for(let i1 = 0; i1 < pads1.length; i1++)if (pads1[i1]) add1(pads1[i1]);
+                GodotEventListeners.add(window, "gamepadconnected", function(evt1) {
+                    if (evt1.gamepad) add1(evt1.gamepad);
                 }, false);
-                GodotEventListeners.add(window, "gamepaddisconnected", function(evt) {
-                    if (evt.gamepad) onchange(evt.gamepad.index, 0);
+                GodotEventListeners.add(window, "gamepaddisconnected", function(evt1) {
+                    if (evt1.gamepad) onchange1(evt1.gamepad.index, 0);
                 }, false);
             },
-            get_guid: function(pad) {
-                if (pad.mapping) return pad.mapping;
-                const ua = navigator.userAgent;
-                let os = "Unknown";
-                if (ua.indexOf("Android") >= 0) os = "Android";
-                else if (ua.indexOf("Linux") >= 0) os = "Linux";
-                else if (ua.indexOf("iPhone") >= 0) os = "iOS";
-                else if (ua.indexOf("Macintosh") >= 0) os = "MacOSX";
-                else if (ua.indexOf("Windows") >= 0) os = "Windows";
-                const id = pad.id;
-                const exp1 = /vendor: ([0-9a-f]{4}) product: ([0-9a-f]{4})/i;
-                const exp2 = /^([0-9a-f]+)-([0-9a-f]+)-/i;
-                let vendor = "";
-                let product = "";
-                if (exp1.test(id)) {
-                    const match = exp1.exec(id);
-                    vendor = match[1].padStart(4, "0");
-                    product = match[2].padStart(4, "0");
-                } else if (exp2.test(id)) {
-                    const match1 = exp2.exec(id);
-                    vendor = match1[1].padStart(4, "0");
-                    product = match1[2].padStart(4, "0");
+            get_guid: function(pad1) {
+                if (pad1.mapping) return pad1.mapping;
+                const ua1 = navigator.userAgent;
+                let os1 = "Unknown";
+                if (ua1.indexOf("Android") >= 0) os1 = "Android";
+                else if (ua1.indexOf("Linux") >= 0) os1 = "Linux";
+                else if (ua1.indexOf("iPhone") >= 0) os1 = "iOS";
+                else if (ua1.indexOf("Macintosh") >= 0) os1 = "MacOSX";
+                else if (ua1.indexOf("Windows") >= 0) os1 = "Windows";
+                const id1 = pad1.id;
+                const exp11 = /vendor: ([0-9a-f]{4}) product: ([0-9a-f]{4})/i;
+                const exp21 = /^([0-9a-f]+)-([0-9a-f]+)-/i;
+                let vendor1 = "";
+                let product1 = "";
+                if (exp11.test(id1)) {
+                    const match1 = exp11.exec(id1);
+                    vendor1 = match1[1].padStart(4, "0");
+                    product1 = match1[2].padStart(4, "0");
+                } else if (exp21.test(id1)) {
+                    const match1 = exp21.exec(id1);
+                    vendor1 = match1[1].padStart(4, "0");
+                    product1 = match1[2].padStart(4, "0");
                 }
-                if (!vendor || !product) return `${os}Unknown`;
-                return os + vendor + product;
+                if (!vendor1 || !product1) return `${os1}Unknown`;
+                return os1 + vendor1 + product1;
             }
         };
         var GodotInputDragDrop = {
             promises: [],
             pending_files: [],
-            add_entry: function(entry) {
-                if (entry.isDirectory) GodotInputDragDrop.add_dir(entry);
-                else if (entry.isFile) GodotInputDragDrop.add_file(entry);
-                else GodotRuntime.error("Unrecognized entry...", entry);
+            add_entry: function(entry1) {
+                if (entry1.isDirectory) GodotInputDragDrop.add_dir(entry1);
+                else if (entry1.isFile) GodotInputDragDrop.add_file(entry1);
+                else GodotRuntime.error("Unrecognized entry...", entry1);
             },
-            add_dir: function(entry) {
-                GodotInputDragDrop.promises.push(new Promise(function(resolve, reject) {
-                    const reader = entry.createReader();
-                    reader.readEntries(function(entries) {
-                        for(let i = 0; i < entries.length; i++)GodotInputDragDrop.add_entry(entries[i]);
-                        resolve();
+            add_dir: function(entry1) {
+                GodotInputDragDrop.promises.push(new Promise(function(resolve1, reject1) {
+                    const reader1 = entry1.createReader();
+                    reader1.readEntries(function(entries1) {
+                        for(let i1 = 0; i1 < entries1.length; i1++)GodotInputDragDrop.add_entry(entries1[i1]);
+                        resolve1();
                     });
                 }));
             },
-            add_file: function(entry) {
-                GodotInputDragDrop.promises.push(new Promise(function(resolve, reject) {
-                    entry.file(function(file) {
-                        const reader = new FileReader;
-                        reader.onload = function() {
-                            const f = {
-                                "path": file.relativePath || file.webkitRelativePath,
-                                "name": file.name,
-                                "type": file.type,
-                                "size": file.size,
-                                "data": reader.result
+            add_file: function(entry1) {
+                GodotInputDragDrop.promises.push(new Promise(function(resolve1, reject1) {
+                    entry1.file(function(file1) {
+                        const reader1 = new FileReader;
+                        reader1.onload = function() {
+                            const f1 = {
+                                "path": file1.relativePath || file1.webkitRelativePath,
+                                "name": file1.name,
+                                "type": file1.type,
+                                "size": file1.size,
+                                "data": reader1.result
                             };
-                            if (!f["path"]) f["path"] = f["name"];
-                            GodotInputDragDrop.pending_files.push(f);
-                            resolve();
+                            if (!f1["path"]) f1["path"] = f1["name"];
+                            GodotInputDragDrop.pending_files.push(f1);
+                            resolve1();
                         };
-                        reader.onerror = function() {
+                        reader1.onerror = function() {
                             GodotRuntime.print("Error reading file");
-                            reject();
+                            reject1();
                         };
-                        reader.readAsArrayBuffer(file);
-                    }, function(err) {
+                        reader1.readAsArrayBuffer(file1);
+                    }, function(err1) {
                         GodotRuntime.print("Error!");
-                        reject();
+                        reject1();
                     });
                 }));
             },
-            process: function(resolve, reject) {
+            process: function(resolve1, reject1) {
                 if (GodotInputDragDrop.promises.length === 0) {
-                    resolve();
+                    resolve1();
                     return;
                 }
                 GodotInputDragDrop.promises.pop().then(function() {
                     setTimeout(function() {
-                        GodotInputDragDrop.process(resolve, reject);
+                        GodotInputDragDrop.process(resolve1, reject1);
                     }, 0);
                 });
             },
-            _process_event: function(ev, callback) {
-                ev.preventDefault();
-                if (ev.dataTransfer.items) for(let i = 0; i < ev.dataTransfer.items.length; i++){
-                    const item = ev.dataTransfer.items[i];
-                    let entry = null;
-                    if ("getAsEntry" in item) entry = item.getAsEntry();
-                    else if ("webkitGetAsEntry" in item) entry = item.webkitGetAsEntry();
-                    if (entry) GodotInputDragDrop.add_entry(entry);
+            _process_event: function(ev1, callback1) {
+                ev1.preventDefault();
+                if (ev1.dataTransfer.items) for(let i1 = 0; i1 < ev1.dataTransfer.items.length; i1++){
+                    const item1 = ev1.dataTransfer.items[i1];
+                    let entry1 = null;
+                    if ("getAsEntry" in item1) entry1 = item1.getAsEntry();
+                    else if ("webkitGetAsEntry" in item1) entry1 = item1.webkitGetAsEntry();
+                    if (entry1) GodotInputDragDrop.add_entry(entry1);
                 }
                 else GodotRuntime.error("File upload not supported");
                 new Promise(GodotInputDragDrop.process).then(function() {
-                    const DROP = `/tmp/drop-${parseInt(Math.random() * 1073741824, 10)}/`;
-                    const drops = [];
-                    const files = [];
-                    FS.mkdir(DROP.slice(0, -1));
-                    GodotInputDragDrop.pending_files.forEach((elem)=>{
-                        const path = elem["path"];
-                        GodotFS.copy_to_fs(DROP + path, elem["data"]);
-                        let idx = path.indexOf("/");
-                        if (idx === -1) drops.push(DROP + path);
+                    const DROP1 = `/tmp/drop-${parseInt(Math.random() * 1073741824, 10)}/`;
+                    const drops1 = [];
+                    const files1 = [];
+                    FS.mkdir(DROP1.slice(0, -1));
+                    GodotInputDragDrop.pending_files.forEach((elem1)=>{
+                        const path1 = elem1["path"];
+                        GodotFS.copy_to_fs(DROP1 + path1, elem1["data"]);
+                        let idx1 = path1.indexOf("/");
+                        if (idx1 === -1) drops1.push(DROP1 + path1);
                         else {
-                            const sub = path.substr(0, idx);
-                            idx = sub.indexOf("/");
-                            if (idx < 0 && drops.indexOf(DROP + sub) === -1) drops.push(DROP + sub);
+                            const sub1 = path1.substr(0, idx1);
+                            idx1 = sub1.indexOf("/");
+                            if (idx1 < 0 && drops1.indexOf(DROP1 + sub1) === -1) drops1.push(DROP1 + sub1);
                         }
-                        files.push(DROP + path);
+                        files1.push(DROP1 + path1);
                     });
                     GodotInputDragDrop.promises = [];
                     GodotInputDragDrop.pending_files = [];
-                    callback(drops);
-                    if (GodotConfig.persistent_drops) GodotOS.atexit(function(resolve, reject) {
-                        GodotInputDragDrop.remove_drop(files, DROP);
-                        resolve();
+                    callback1(drops1);
+                    if (GodotConfig.persistent_drops) GodotOS.atexit(function(resolve1, reject1) {
+                        GodotInputDragDrop.remove_drop(files1, DROP1);
+                        resolve1();
                     });
-                    else GodotInputDragDrop.remove_drop(files, DROP);
+                    else GodotInputDragDrop.remove_drop(files1, DROP1);
                 });
             },
-            remove_drop: function(files, drop_path) {
-                const dirs = [
-                    drop_path.substr(0, drop_path.length - 1)
+            remove_drop: function(files1, drop_path1) {
+                const dirs1 = [
+                    drop_path1.substr(0, drop_path1.length - 1)
                 ];
-                files.forEach(function(file) {
-                    FS.unlink(file);
-                    let dir = file.replace(drop_path, "");
-                    let idx = dir.lastIndexOf("/");
-                    while(idx > 0){
-                        dir = dir.substr(0, idx);
-                        if (dirs.indexOf(drop_path + dir) === -1) dirs.push(drop_path + dir);
-                        idx = dir.lastIndexOf("/");
+                files1.forEach(function(file1) {
+                    FS.unlink(file1);
+                    let dir1 = file1.replace(drop_path1, "");
+                    let idx1 = dir1.lastIndexOf("/");
+                    while(idx1 > 0){
+                        dir1 = dir1.substr(0, idx1);
+                        if (dirs1.indexOf(drop_path1 + dir1) === -1) dirs1.push(drop_path1 + dir1);
+                        idx1 = dir1.lastIndexOf("/");
                     }
                 });
-                dirs.sort(function(a, b) {
-                    const al = (a.match(/\//g) || []).length;
-                    const bl = (b.match(/\//g) || []).length;
-                    if (al > bl) return -1;
-                    else if (al < bl) return 1;
+                dirs1.sort(function(a8, b1) {
+                    const al1 = (a8.match(/\//g) || []).length;
+                    const bl1 = (b1.match(/\//g) || []).length;
+                    if (al1 > bl1) return -1;
+                    else if (al1 < bl1) return 1;
                     return 0;
-                }).forEach(function(dir) {
-                    FS.rmdir(dir);
+                }).forEach(function(dir1) {
+                    FS.rmdir(dir1);
                 });
             },
-            handler: function(callback) {
-                return function(ev) {
-                    GodotInputDragDrop._process_event(ev, callback);
+            handler: function(callback1) {
+                return function(ev1) {
+                    GodotInputDragDrop._process_event(ev1, callback1);
                 };
             }
         };
         var GodotInput = {
-            getModifiers: function(evt) {
-                return evt.shiftKey + 0 + (evt.altKey + 0 << 1) + (evt.ctrlKey + 0 << 2) + (evt.metaKey + 0 << 3);
+            getModifiers: function(evt1) {
+                return evt1.shiftKey + 0 + (evt1.altKey + 0 << 1) + (evt1.ctrlKey + 0 << 2) + (evt1.metaKey + 0 << 3);
             },
-            computePosition: function(evt, rect) {
-                const canvas = GodotConfig.canvas;
-                const rw = canvas.width / rect.width;
-                const rh = canvas.height / rect.height;
-                const x = (evt.clientX - rect.x) * rw;
-                const y = (evt.clientY - rect.y) * rh;
+            computePosition: function(evt1, rect1) {
+                const canvas1 = GodotConfig.canvas;
+                const rw1 = canvas1.width / rect1.width;
+                const rh1 = canvas1.height / rect1.height;
+                const x10 = (evt1.clientX - rect1.x) * rw1;
+                const y1 = (evt1.clientY - rect1.y) * rh1;
                 return [
-                    x,
-                    y
+                    x10,
+                    y1
                 ];
             }
         };
-        function _godot_js_input_drop_files_cb(callback) {
-            const func = GodotRuntime.get_func(callback);
-            const dropFiles = function(files) {
-                const args = files || [];
-                if (!args.length) return;
-                const argc = args.length;
-                const argv = GodotRuntime.allocStringArray(args);
-                func(argv, argc);
-                GodotRuntime.freeStringArray(argv, argc);
+        function _godot_js_input_drop_files_cb(callback1) {
+            const func1 = GodotRuntime.get_func(callback1);
+            const dropFiles1 = function(files1) {
+                const args1 = files1 || [];
+                if (!args1.length) return;
+                const argc1 = args1.length;
+                const argv1 = GodotRuntime.allocStringArray(args1);
+                func1(argv1, argc1);
+                GodotRuntime.freeStringArray(argv1, argc1);
             };
-            const canvas = GodotConfig.canvas;
-            GodotEventListeners.add(canvas, "dragover", function(ev) {
-                ev.preventDefault();
+            const canvas1 = GodotConfig.canvas;
+            GodotEventListeners.add(canvas1, "dragover", function(ev1) {
+                ev1.preventDefault();
             }, false);
-            GodotEventListeners.add(canvas, "drop", GodotInputDragDrop.handler(dropFiles));
+            GodotEventListeners.add(canvas1, "drop", GodotInputDragDrop.handler(dropFiles1));
         }
-        function _godot_js_input_gamepad_cb(change_cb) {
-            const onchange = GodotRuntime.get_func(change_cb);
-            GodotInputGamepads.init(onchange);
+        function _godot_js_input_gamepad_cb(change_cb1) {
+            const onchange1 = GodotRuntime.get_func(change_cb1);
+            GodotInputGamepads.init(onchange1);
         }
         function _godot_js_input_gamepad_sample() {
             GodotInputGamepads.sample();
@@ -8829,292 +8829,292 @@ var Godot = (()=>{
         function _godot_js_input_gamepad_sample_count() {
             return GodotInputGamepads.get_samples().length;
         }
-        function _godot_js_input_gamepad_sample_get(p_index, r_btns, r_btns_num, r_axes, r_axes_num, r_standard) {
-            const sample = GodotInputGamepads.get_sample(p_index);
-            if (!sample || !sample.connected) return 1;
-            const btns = sample.buttons;
-            const btns_len = btns.length < 16 ? btns.length : 16;
-            for(let i = 0; i < btns_len; i++)GodotRuntime.setHeapValue(r_btns + (i << 2), btns[i], "float");
-            GodotRuntime.setHeapValue(r_btns_num, btns_len, "i32");
-            const axes = sample.axes;
-            const axes_len = axes.length < 10 ? axes.length : 10;
-            for(let i1 = 0; i1 < axes_len; i1++)GodotRuntime.setHeapValue(r_axes + (i1 << 2), axes[i1], "float");
-            GodotRuntime.setHeapValue(r_axes_num, axes_len, "i32");
-            const is_standard = sample.standard ? 1 : 0;
-            GodotRuntime.setHeapValue(r_standard, is_standard, "i32");
+        function _godot_js_input_gamepad_sample_get(p_index1, r_btns1, r_btns_num1, r_axes1, r_axes_num1, r_standard1) {
+            const sample1 = GodotInputGamepads.get_sample(p_index1);
+            if (!sample1 || !sample1.connected) return 1;
+            const btns1 = sample1.buttons;
+            const btns_len1 = btns1.length < 16 ? btns1.length : 16;
+            for(let i1 = 0; i1 < btns_len1; i1++)GodotRuntime.setHeapValue(r_btns1 + (i1 << 2), btns1[i1], "float");
+            GodotRuntime.setHeapValue(r_btns_num1, btns_len1, "i32");
+            const axes1 = sample1.axes;
+            const axes_len1 = axes1.length < 10 ? axes1.length : 10;
+            for(let i1 = 0; i1 < axes_len1; i1++)GodotRuntime.setHeapValue(r_axes1 + (i1 << 2), axes1[i1], "float");
+            GodotRuntime.setHeapValue(r_axes_num1, axes_len1, "i32");
+            const is_standard1 = sample1.standard ? 1 : 0;
+            GodotRuntime.setHeapValue(r_standard1, is_standard1, "i32");
             return 0;
         }
-        function _godot_js_input_key_cb(callback, code, key) {
-            const func = GodotRuntime.get_func(callback);
-            function key_cb(pressed, evt) {
-                const modifiers = GodotInput.getModifiers(evt);
-                GodotRuntime.stringToHeap(evt.code, code, 32);
-                GodotRuntime.stringToHeap(evt.key, key, 32);
-                func(pressed, evt.repeat, modifiers);
-                evt.preventDefault();
+        function _godot_js_input_key_cb(callback1, code1, key1) {
+            const func1 = GodotRuntime.get_func(callback1);
+            function key_cb1(pressed1, evt1) {
+                const modifiers1 = GodotInput.getModifiers(evt1);
+                GodotRuntime.stringToHeap(evt1.code, code1, 32);
+                GodotRuntime.stringToHeap(evt1.key, key1, 32);
+                func1(pressed1, evt1.repeat, modifiers1);
+                evt1.preventDefault();
             }
-            GodotEventListeners.add(GodotConfig.canvas, "keydown", key_cb.bind(null, 1), false);
-            GodotEventListeners.add(GodotConfig.canvas, "keyup", key_cb.bind(null, 0), false);
+            GodotEventListeners.add(GodotConfig.canvas, "keydown", key_cb1.bind(null, 1), false);
+            GodotEventListeners.add(GodotConfig.canvas, "keyup", key_cb1.bind(null, 0), false);
         }
-        function _godot_js_input_mouse_button_cb(callback) {
-            const func = GodotRuntime.get_func(callback);
-            const canvas = GodotConfig.canvas;
-            function button_cb(p_pressed, evt) {
-                const rect = canvas.getBoundingClientRect();
-                const pos = GodotInput.computePosition(evt, rect);
-                const modifiers = GodotInput.getModifiers(evt);
-                if (p_pressed) GodotConfig.canvas.focus();
-                if (func(p_pressed, evt.button, pos[0], pos[1], modifiers)) evt.preventDefault();
+        function _godot_js_input_mouse_button_cb(callback1) {
+            const func1 = GodotRuntime.get_func(callback1);
+            const canvas1 = GodotConfig.canvas;
+            function button_cb1(p_pressed1, evt1) {
+                const rect1 = canvas1.getBoundingClientRect();
+                const pos1 = GodotInput.computePosition(evt1, rect1);
+                const modifiers1 = GodotInput.getModifiers(evt1);
+                if (p_pressed1) GodotConfig.canvas.focus();
+                if (func1(p_pressed1, evt1.button, pos1[0], pos1[1], modifiers1)) evt1.preventDefault();
             }
-            GodotEventListeners.add(canvas, "mousedown", button_cb.bind(null, 1), false);
-            GodotEventListeners.add(window, "mouseup", button_cb.bind(null, 0), false);
+            GodotEventListeners.add(canvas1, "mousedown", button_cb1.bind(null, 1), false);
+            GodotEventListeners.add(window, "mouseup", button_cb1.bind(null, 0), false);
         }
-        function _godot_js_input_mouse_move_cb(callback) {
-            const func = GodotRuntime.get_func(callback);
-            const canvas = GodotConfig.canvas;
-            function move_cb(evt) {
-                const rect = canvas.getBoundingClientRect();
-                const pos = GodotInput.computePosition(evt, rect);
-                const rw = canvas.width / rect.width;
-                const rh = canvas.height / rect.height;
-                const rel_pos_x = evt.movementX * rw;
-                const rel_pos_y = evt.movementY * rh;
-                const modifiers = GodotInput.getModifiers(evt);
-                func(pos[0], pos[1], rel_pos_x, rel_pos_y, modifiers);
+        function _godot_js_input_mouse_move_cb(callback1) {
+            const func1 = GodotRuntime.get_func(callback1);
+            const canvas1 = GodotConfig.canvas;
+            function move_cb1(evt1) {
+                const rect1 = canvas1.getBoundingClientRect();
+                const pos1 = GodotInput.computePosition(evt1, rect1);
+                const rw1 = canvas1.width / rect1.width;
+                const rh1 = canvas1.height / rect1.height;
+                const rel_pos_x1 = evt1.movementX * rw1;
+                const rel_pos_y1 = evt1.movementY * rh1;
+                const modifiers1 = GodotInput.getModifiers(evt1);
+                func1(pos1[0], pos1[1], rel_pos_x1, rel_pos_y1, modifiers1);
             }
-            GodotEventListeners.add(window, "mousemove", move_cb, false);
+            GodotEventListeners.add(window, "mousemove", move_cb1, false);
         }
-        function _godot_js_input_mouse_wheel_cb(callback) {
-            const func = GodotRuntime.get_func(callback);
-            function wheel_cb(evt) {
-                if (func(evt["deltaX"] || 0, evt["deltaY"] || 0)) evt.preventDefault();
+        function _godot_js_input_mouse_wheel_cb(callback1) {
+            const func1 = GodotRuntime.get_func(callback1);
+            function wheel_cb1(evt1) {
+                if (func1(evt1["deltaX"] || 0, evt1["deltaY"] || 0)) evt1.preventDefault();
             }
-            GodotEventListeners.add(GodotConfig.canvas, "wheel", wheel_cb, false);
+            GodotEventListeners.add(GodotConfig.canvas, "wheel", wheel_cb1, false);
         }
-        function _godot_js_input_paste_cb(callback) {
-            const func = GodotRuntime.get_func(callback);
-            GodotEventListeners.add(window, "paste", function(evt) {
-                const text = evt.clipboardData.getData("text");
-                const ptr = GodotRuntime.allocString(text);
-                func(ptr);
-                GodotRuntime.free(ptr);
+        function _godot_js_input_paste_cb(callback1) {
+            const func1 = GodotRuntime.get_func(callback1);
+            GodotEventListeners.add(window, "paste", function(evt1) {
+                const text1 = evt1.clipboardData.getData("text");
+                const ptr1 = GodotRuntime.allocString(text1);
+                func1(ptr1);
+                GodotRuntime.free(ptr1);
             }, false);
         }
-        function _godot_js_input_touch_cb(callback, ids, coords) {
-            const func = GodotRuntime.get_func(callback);
-            const canvas = GodotConfig.canvas;
-            function touch_cb(type, evt) {
-                if (type === 0) GodotConfig.canvas.focus();
-                const rect = canvas.getBoundingClientRect();
-                const touches = evt.changedTouches;
-                for(let i = 0; i < touches.length; i++){
-                    const touch = touches[i];
-                    const pos = GodotInput.computePosition(touch, rect);
-                    GodotRuntime.setHeapValue(coords + i * 16, pos[0], "double");
-                    GodotRuntime.setHeapValue(coords + (i * 2 + 1) * 8, pos[1], "double");
-                    GodotRuntime.setHeapValue(ids + i * 4, touch.identifier, "i32");
+        function _godot_js_input_touch_cb(callback1, ids1, coords1) {
+            const func1 = GodotRuntime.get_func(callback1);
+            const canvas1 = GodotConfig.canvas;
+            function touch_cb1(type1, evt1) {
+                if (type1 === 0) GodotConfig.canvas.focus();
+                const rect1 = canvas1.getBoundingClientRect();
+                const touches1 = evt1.changedTouches;
+                for(let i1 = 0; i1 < touches1.length; i1++){
+                    const touch1 = touches1[i1];
+                    const pos1 = GodotInput.computePosition(touch1, rect1);
+                    GodotRuntime.setHeapValue(coords1 + i1 * 16, pos1[0], "double");
+                    GodotRuntime.setHeapValue(coords1 + (i1 * 2 + 1) * 8, pos1[1], "double");
+                    GodotRuntime.setHeapValue(ids1 + i1 * 4, touch1.identifier, "i32");
                 }
-                func(type, touches.length);
-                if (evt.cancelable) evt.preventDefault();
+                func1(type1, touches1.length);
+                if (evt1.cancelable) evt1.preventDefault();
             }
-            GodotEventListeners.add(canvas, "touchstart", touch_cb.bind(null, 0), false);
-            GodotEventListeners.add(canvas, "touchend", touch_cb.bind(null, 1), false);
-            GodotEventListeners.add(canvas, "touchcancel", touch_cb.bind(null, 1), false);
-            GodotEventListeners.add(canvas, "touchmove", touch_cb.bind(null, 2), false);
+            GodotEventListeners.add(canvas1, "touchstart", touch_cb1.bind(null, 0), false);
+            GodotEventListeners.add(canvas1, "touchend", touch_cb1.bind(null, 1), false);
+            GodotEventListeners.add(canvas1, "touchcancel", touch_cb1.bind(null, 1), false);
+            GodotEventListeners.add(canvas1, "touchmove", touch_cb1.bind(null, 2), false);
         }
-        function _godot_js_input_vibrate_handheld(p_duration_ms) {
+        function _godot_js_input_vibrate_handheld(p_duration_ms1) {
             if (typeof navigator.vibrate !== "function") GodotRuntime.print("This browser does not support vibration.");
-            else navigator.vibrate(p_duration_ms);
+            else navigator.vibrate(p_duration_ms1);
         }
-        function _godot_js_os_download_buffer(p_ptr, p_size, p_name, p_mime) {
-            const buf = GodotRuntime.heapSlice(GROWABLE_HEAP_I8(), p_ptr, p_size);
-            const name = GodotRuntime.parseString(p_name);
-            const mime = GodotRuntime.parseString(p_mime);
-            const blob = new Blob([
-                buf
+        function _godot_js_os_download_buffer(p_ptr1, p_size1, p_name1, p_mime1) {
+            const buf1 = GodotRuntime.heapSlice(GROWABLE_HEAP_I8(), p_ptr1, p_size1);
+            const name1 = GodotRuntime.parseString(p_name1);
+            const mime1 = GodotRuntime.parseString(p_mime1);
+            const blob1 = new Blob([
+                buf1
             ], {
-                type: mime
+                type: mime1
             });
-            const url = window.URL.createObjectURL(blob);
-            const a = document.createElement("a");
-            a.href = url;
-            a.download = name;
-            a.style.display = "none";
-            document.body.appendChild(a);
-            a.click();
-            a.remove();
-            window.URL.revokeObjectURL(url);
+            const url1 = window.URL.createObjectURL(blob1);
+            const a8 = document.createElement("a");
+            a8.href = url1;
+            a8.download = name1;
+            a8.style.display = "none";
+            document.body.appendChild(a8);
+            a8.click();
+            a8.remove();
+            window.URL.revokeObjectURL(url1);
         }
-        function _godot_js_os_execute(p_json) {
-            const json_args = GodotRuntime.parseString(p_json);
-            const args = JSON.parse(json_args);
+        function _godot_js_os_execute(p_json1) {
+            const json_args1 = GodotRuntime.parseString(p_json1);
+            const args1 = JSON.parse(json_args1);
             if (GodotConfig.on_execute) {
-                GodotConfig.on_execute(args);
+                GodotConfig.on_execute(args1);
                 return 0;
             }
             return 1;
         }
-        function _godot_js_os_finish_async(p_callback) {
-            const func = GodotRuntime.get_func(p_callback);
-            GodotOS.finish_async(func);
+        function _godot_js_os_finish_async(p_callback1) {
+            const func1 = GodotRuntime.get_func(p_callback1);
+            GodotOS.finish_async(func1);
         }
         function _godot_js_os_fs_is_persistent() {
             return GodotFS.is_persistent();
         }
-        function _godot_js_os_fs_sync(callback) {
-            const func = GodotRuntime.get_func(callback);
+        function _godot_js_os_fs_sync(callback1) {
+            const func1 = GodotRuntime.get_func(callback1);
             GodotOS._fs_sync_promise = GodotFS.sync();
-            GodotOS._fs_sync_promise.then(function(err) {
-                func();
+            GodotOS._fs_sync_promise.then(function(err1) {
+                func1();
             });
         }
         function _godot_js_os_hw_concurrency_get() {
             return navigator.hardwareConcurrency || 1;
         }
-        function _godot_js_os_request_quit_cb(p_callback) {
-            GodotOS.request_quit = GodotRuntime.get_func(p_callback);
+        function _godot_js_os_request_quit_cb(p_callback1) {
+            GodotOS.request_quit = GodotRuntime.get_func(p_callback1);
         }
-        function _godot_js_os_shell_open(p_uri) {
-            window.open(GodotRuntime.parseString(p_uri), "_blank");
+        function _godot_js_os_shell_open(p_uri1) {
+            window.open(GodotRuntime.parseString(p_uri1), "_blank");
         }
         var GodotPWA = {
             hasUpdate: false,
-            updateState: function(cb, reg) {
-                if (!reg) return;
-                if (!reg.active) return;
-                if (reg.waiting) {
+            updateState: function(cb1, reg1) {
+                if (!reg1) return;
+                if (!reg1.active) return;
+                if (reg1.waiting) {
                     GodotPWA.hasUpdate = true;
-                    cb();
+                    cb1();
                 }
-                GodotEventListeners.add(reg, "updatefound", function() {
-                    const installing = reg.installing;
-                    GodotEventListeners.add(installing, "statechange", function() {
-                        if (installing.state === "installed") {
+                GodotEventListeners.add(reg1, "updatefound", function() {
+                    const installing1 = reg1.installing;
+                    GodotEventListeners.add(installing1, "statechange", function() {
+                        if (installing1.state === "installed") {
                             GodotPWA.hasUpdate = true;
-                            cb();
+                            cb1();
                         }
                     });
                 });
             }
         };
-        function _godot_js_pwa_cb(p_update_cb) {
+        function _godot_js_pwa_cb(p_update_cb1) {
             if ("serviceWorker" in navigator) {
-                const cb = GodotRuntime.get_func(p_update_cb);
-                navigator.serviceWorker.getRegistration().then(GodotPWA.updateState.bind(null, cb));
+                const cb1 = GodotRuntime.get_func(p_update_cb1);
+                navigator.serviceWorker.getRegistration().then(GodotPWA.updateState.bind(null, cb1));
             }
         }
         function _godot_js_pwa_update() {
             if ("serviceWorker" in navigator && GodotPWA.hasUpdate) {
-                navigator.serviceWorker.getRegistration().then(function(reg) {
-                    if (!reg || !reg.waiting) return;
-                    reg.waiting.postMessage("update");
+                navigator.serviceWorker.getRegistration().then(function(reg1) {
+                    if (!reg1 || !reg1.waiting) return;
+                    reg1.waiting.postMessage("update");
                 });
                 return 0;
             }
             return 1;
         }
         var GodotRTCDataChannel = {
-            connect: function(p_id, p_on_open, p_on_message, p_on_error, p_on_close) {
-                const ref = IDHandler.get(p_id);
-                if (!ref) return;
-                ref.binaryType = "arraybuffer";
-                ref.onopen = function(event) {
-                    p_on_open();
+            connect: function(p_id1, p_on_open1, p_on_message1, p_on_error1, p_on_close1) {
+                const ref1 = IDHandler.get(p_id1);
+                if (!ref1) return;
+                ref1.binaryType = "arraybuffer";
+                ref1.onopen = function(event1) {
+                    p_on_open1();
                 };
-                ref.onclose = function(event) {
-                    p_on_close();
+                ref1.onclose = function(event1) {
+                    p_on_close1();
                 };
-                ref.onerror = function(event) {
-                    p_on_error();
+                ref1.onerror = function(event1) {
+                    p_on_error1();
                 };
-                ref.onmessage = function(event) {
-                    let buffer;
-                    let is_string = 0;
-                    if (event.data instanceof ArrayBuffer) buffer = new Uint8Array(event.data);
-                    else if (event.data instanceof Blob) {
+                ref1.onmessage = function(event1) {
+                    let buffer1;
+                    let is_string1 = 0;
+                    if (event1.data instanceof ArrayBuffer) buffer1 = new Uint8Array(event1.data);
+                    else if (event1.data instanceof Blob) {
                         GodotRuntime.error("Blob type not supported");
                         return;
-                    } else if (typeof event.data === "string") {
-                        is_string = 1;
-                        const enc = new TextEncoder("utf-8");
-                        buffer = new Uint8Array(enc.encode(event.data));
+                    } else if (typeof event1.data === "string") {
+                        is_string1 = 1;
+                        const enc1 = new TextEncoder("utf-8");
+                        buffer1 = new Uint8Array(enc1.encode(event1.data));
                     } else {
                         GodotRuntime.error("Unknown message type");
                         return;
                     }
-                    const len = buffer.length * buffer.BYTES_PER_ELEMENT;
-                    const out = GodotRuntime.malloc(len);
-                    GROWABLE_HEAP_U8().set(buffer, out);
-                    p_on_message(out, len, is_string);
-                    GodotRuntime.free(out);
+                    const len1 = buffer1.length * buffer1.BYTES_PER_ELEMENT;
+                    const out1 = GodotRuntime.malloc(len1);
+                    GROWABLE_HEAP_U8().set(buffer1, out1);
+                    p_on_message1(out1, len1, is_string1);
+                    GodotRuntime.free(out1);
                 };
             },
-            close: function(p_id) {
-                const ref = IDHandler.get(p_id);
-                if (!ref) return;
-                ref.onopen = null;
-                ref.onmessage = null;
-                ref.onerror = null;
-                ref.onclose = null;
-                ref.close();
+            close: function(p_id1) {
+                const ref1 = IDHandler.get(p_id1);
+                if (!ref1) return;
+                ref1.onopen = null;
+                ref1.onmessage = null;
+                ref1.onerror = null;
+                ref1.onclose = null;
+                ref1.close();
             },
-            get_prop: function(p_id, p_prop, p_def) {
-                const ref = IDHandler.get(p_id);
-                return ref && ref[p_prop] !== undefined ? ref[p_prop] : p_def;
+            get_prop: function(p_id1, p_prop1, p_def1) {
+                const ref1 = IDHandler.get(p_id1);
+                return ref1 && ref1[p_prop1] !== undefined ? ref1[p_prop1] : p_def1;
             }
         };
-        function _godot_js_rtc_datachannel_close(p_id) {
-            const ref = IDHandler.get(p_id);
-            if (!ref) return;
-            GodotRTCDataChannel.close(p_id);
+        function _godot_js_rtc_datachannel_close(p_id1) {
+            const ref1 = IDHandler.get(p_id1);
+            if (!ref1) return;
+            GodotRTCDataChannel.close(p_id1);
         }
-        function _godot_js_rtc_datachannel_connect(p_id, p_ref, p_on_open, p_on_message, p_on_error, p_on_close) {
-            const onopen = GodotRuntime.get_func(p_on_open).bind(null, p_ref);
-            const onmessage = GodotRuntime.get_func(p_on_message).bind(null, p_ref);
-            const onerror = GodotRuntime.get_func(p_on_error).bind(null, p_ref);
-            const onclose = GodotRuntime.get_func(p_on_close).bind(null, p_ref);
-            GodotRTCDataChannel.connect(p_id, onopen, onmessage, onerror, onclose);
+        function _godot_js_rtc_datachannel_connect(p_id1, p_ref1, p_on_open1, p_on_message1, p_on_error1, p_on_close1) {
+            const onopen1 = GodotRuntime.get_func(p_on_open1).bind(null, p_ref1);
+            const onmessage1 = GodotRuntime.get_func(p_on_message1).bind(null, p_ref1);
+            const onerror1 = GodotRuntime.get_func(p_on_error1).bind(null, p_ref1);
+            const onclose1 = GodotRuntime.get_func(p_on_close1).bind(null, p_ref1);
+            GodotRTCDataChannel.connect(p_id1, onopen1, onmessage1, onerror1, onclose1);
         }
-        function _godot_js_rtc_datachannel_destroy(p_id) {
-            GodotRTCDataChannel.close(p_id);
-            IDHandler.remove(p_id);
+        function _godot_js_rtc_datachannel_destroy(p_id1) {
+            GodotRTCDataChannel.close(p_id1);
+            IDHandler.remove(p_id1);
         }
-        function _godot_js_rtc_datachannel_get_buffered_amount(p_id) {
-            return GodotRTCDataChannel.get_prop(p_id, "bufferedAmount", 0);
+        function _godot_js_rtc_datachannel_get_buffered_amount(p_id1) {
+            return GodotRTCDataChannel.get_prop(p_id1, "bufferedAmount", 0);
         }
-        function _godot_js_rtc_datachannel_id_get(p_id) {
-            return GodotRTCDataChannel.get_prop(p_id, "id", 65535);
+        function _godot_js_rtc_datachannel_id_get(p_id1) {
+            return GodotRTCDataChannel.get_prop(p_id1, "id", 65535);
         }
-        function _godot_js_rtc_datachannel_is_negotiated(p_id) {
-            return GodotRTCDataChannel.get_prop(p_id, "negotiated", 65535);
+        function _godot_js_rtc_datachannel_is_negotiated(p_id1) {
+            return GodotRTCDataChannel.get_prop(p_id1, "negotiated", 65535);
         }
-        function _godot_js_rtc_datachannel_is_ordered(p_id) {
-            return GodotRTCDataChannel.get_prop(p_id, "ordered", true);
+        function _godot_js_rtc_datachannel_is_ordered(p_id1) {
+            return GodotRTCDataChannel.get_prop(p_id1, "ordered", true);
         }
-        function _godot_js_rtc_datachannel_label_get(p_id) {
-            const ref = IDHandler.get(p_id);
-            if (!ref || !ref.label) return 0;
-            return GodotRuntime.allocString(ref.label);
+        function _godot_js_rtc_datachannel_label_get(p_id1) {
+            const ref1 = IDHandler.get(p_id1);
+            if (!ref1 || !ref1.label) return 0;
+            return GodotRuntime.allocString(ref1.label);
         }
-        function _godot_js_rtc_datachannel_max_packet_lifetime_get(p_id) {
-            const ref = IDHandler.get(p_id);
-            if (!ref) return 65535;
-            if (ref["maxPacketLifeTime"] !== undefined) return ref["maxPacketLifeTime"];
-            else if (ref["maxRetransmitTime"] !== undefined) return ref["maxRetransmitTime"];
+        function _godot_js_rtc_datachannel_max_packet_lifetime_get(p_id1) {
+            const ref1 = IDHandler.get(p_id1);
+            if (!ref1) return 65535;
+            if (ref1["maxPacketLifeTime"] !== undefined) return ref1["maxPacketLifeTime"];
+            else if (ref1["maxRetransmitTime"] !== undefined) return ref1["maxRetransmitTime"];
             return 65535;
         }
-        function _godot_js_rtc_datachannel_max_retransmits_get(p_id) {
-            return GodotRTCDataChannel.get_prop(p_id, "maxRetransmits", 65535);
+        function _godot_js_rtc_datachannel_max_retransmits_get(p_id1) {
+            return GodotRTCDataChannel.get_prop(p_id1, "maxRetransmits", 65535);
         }
-        function _godot_js_rtc_datachannel_protocol_get(p_id) {
-            const ref = IDHandler.get(p_id);
-            if (!ref || !ref.protocol) return 0;
-            return GodotRuntime.allocString(ref.protocol);
+        function _godot_js_rtc_datachannel_protocol_get(p_id1) {
+            const ref1 = IDHandler.get(p_id1);
+            if (!ref1 || !ref1.protocol) return 0;
+            return GodotRuntime.allocString(ref1.protocol);
         }
-        function _godot_js_rtc_datachannel_ready_state_get(p_id) {
-            const ref = IDHandler.get(p_id);
-            if (!ref) return 3;
-            switch(ref.readyState){
+        function _godot_js_rtc_datachannel_ready_state_get(p_id1) {
+            const ref1 = IDHandler.get(p_id1);
+            if (!ref1) return 3;
+            switch(ref1.readyState){
                 case "connecting":
                     return 0;
                 case "open":
@@ -9126,481 +9126,481 @@ var Godot = (()=>{
                     return 3;
             }
         }
-        function _godot_js_rtc_datachannel_send(p_id, p_buffer, p_length, p_raw) {
-            const ref = IDHandler.get(p_id);
-            if (!ref) return 1;
-            const bytes_array = new Uint8Array(p_length);
-            for(let i = 0; i < p_length; i++)bytes_array[i] = GodotRuntime.getHeapValue(p_buffer + i, "i8");
-            if (p_raw) ref.send(bytes_array.buffer);
+        function _godot_js_rtc_datachannel_send(p_id1, p_buffer1, p_length1, p_raw1) {
+            const ref1 = IDHandler.get(p_id1);
+            if (!ref1) return 1;
+            const bytes_array1 = new Uint8Array(p_length1);
+            for(let i1 = 0; i1 < p_length1; i1++)bytes_array1[i1] = GodotRuntime.getHeapValue(p_buffer1 + i1, "i8");
+            if (p_raw1) ref1.send(bytes_array1.buffer);
             else {
-                const string = new TextDecoder("utf-8").decode(bytes_array);
-                ref.send(string);
+                const string1 = new TextDecoder("utf-8").decode(bytes_array1);
+                ref1.send(string1);
             }
             return 0;
         }
         var GodotRTCPeerConnection = {
-            onstatechange: function(p_id, p_conn, callback, event) {
-                const ref = IDHandler.get(p_id);
-                if (!ref) return;
-                let state;
-                switch(p_conn.iceConnectionState){
+            onstatechange: function(p_id1, p_conn1, callback1, event1) {
+                const ref1 = IDHandler.get(p_id1);
+                if (!ref1) return;
+                let state1;
+                switch(p_conn1.iceConnectionState){
                     case "new":
-                        state = 0;
+                        state1 = 0;
                         break;
                     case "checking":
-                        state = 1;
+                        state1 = 1;
                         break;
                     case "connected":
                     case "completed":
-                        state = 2;
+                        state1 = 2;
                         break;
                     case "disconnected":
-                        state = 3;
+                        state1 = 3;
                         break;
                     case "failed":
-                        state = 4;
+                        state1 = 4;
                         break;
                     case "closed":
                     default:
-                        state = 5;
+                        state1 = 5;
                         break;
                 }
-                callback(state);
+                callback1(state1);
             },
-            onicecandidate: function(p_id, callback, event) {
-                const ref = IDHandler.get(p_id);
-                if (!ref || !event.candidate) return;
-                const c = event.candidate;
-                const candidate_str = GodotRuntime.allocString(c.candidate);
-                const mid_str = GodotRuntime.allocString(c.sdpMid);
-                callback(mid_str, c.sdpMLineIndex, candidate_str);
-                GodotRuntime.free(candidate_str);
-                GodotRuntime.free(mid_str);
+            onicecandidate: function(p_id1, callback1, event1) {
+                const ref1 = IDHandler.get(p_id1);
+                if (!ref1 || !event1.candidate) return;
+                const c1 = event1.candidate;
+                const candidate_str1 = GodotRuntime.allocString(c1.candidate);
+                const mid_str1 = GodotRuntime.allocString(c1.sdpMid);
+                callback1(mid_str1, c1.sdpMLineIndex, candidate_str1);
+                GodotRuntime.free(candidate_str1);
+                GodotRuntime.free(mid_str1);
             },
-            ondatachannel: function(p_id, callback, event) {
-                const ref = IDHandler.get(p_id);
-                if (!ref) return;
-                const cid = IDHandler.add(event.channel);
-                callback(cid);
+            ondatachannel: function(p_id1, callback1, event1) {
+                const ref1 = IDHandler.get(p_id1);
+                if (!ref1) return;
+                const cid1 = IDHandler.add(event1.channel);
+                callback1(cid1);
             },
-            onsession: function(p_id, callback, session) {
-                const ref = IDHandler.get(p_id);
-                if (!ref) return;
-                const type_str = GodotRuntime.allocString(session.type);
-                const sdp_str = GodotRuntime.allocString(session.sdp);
-                callback(type_str, sdp_str);
-                GodotRuntime.free(type_str);
-                GodotRuntime.free(sdp_str);
+            onsession: function(p_id1, callback1, session1) {
+                const ref1 = IDHandler.get(p_id1);
+                if (!ref1) return;
+                const type_str1 = GodotRuntime.allocString(session1.type);
+                const sdp_str1 = GodotRuntime.allocString(session1.sdp);
+                callback1(type_str1, sdp_str1);
+                GodotRuntime.free(type_str1);
+                GodotRuntime.free(sdp_str1);
             },
-            onerror: function(p_id, callback, error) {
-                const ref = IDHandler.get(p_id);
-                if (!ref) return;
-                GodotRuntime.error(error);
-                callback();
+            onerror: function(p_id1, callback1, error1) {
+                const ref1 = IDHandler.get(p_id1);
+                if (!ref1) return;
+                GodotRuntime.error(error1);
+                callback1();
             }
         };
-        function _godot_js_rtc_pc_close(p_id) {
-            const ref = IDHandler.get(p_id);
-            if (!ref) return;
-            ref.close();
+        function _godot_js_rtc_pc_close(p_id1) {
+            const ref1 = IDHandler.get(p_id1);
+            if (!ref1) return;
+            ref1.close();
         }
-        function _godot_js_rtc_pc_create(p_config, p_ref, p_on_state_change, p_on_candidate, p_on_datachannel) {
-            const onstatechange = GodotRuntime.get_func(p_on_state_change).bind(null, p_ref);
-            const oncandidate = GodotRuntime.get_func(p_on_candidate).bind(null, p_ref);
-            const ondatachannel = GodotRuntime.get_func(p_on_datachannel).bind(null, p_ref);
-            const config = JSON.parse(GodotRuntime.parseString(p_config));
-            let conn = null;
+        function _godot_js_rtc_pc_create(p_config1, p_ref1, p_on_state_change1, p_on_candidate1, p_on_datachannel1) {
+            const onstatechange1 = GodotRuntime.get_func(p_on_state_change1).bind(null, p_ref1);
+            const oncandidate1 = GodotRuntime.get_func(p_on_candidate1).bind(null, p_ref1);
+            const ondatachannel1 = GodotRuntime.get_func(p_on_datachannel1).bind(null, p_ref1);
+            const config1 = JSON.parse(GodotRuntime.parseString(p_config1));
+            let conn1 = null;
             try {
-                conn = new RTCPeerConnection(config);
-            } catch (e) {
-                GodotRuntime.error(e);
+                conn1 = new RTCPeerConnection(config1);
+            } catch (e1) {
+                GodotRuntime.error(e1);
                 return 0;
             }
-            const base = GodotRTCPeerConnection;
-            const id = IDHandler.add(conn);
-            conn.oniceconnectionstatechange = base.onstatechange.bind(null, id, conn, onstatechange);
-            conn.onicecandidate = base.onicecandidate.bind(null, id, oncandidate);
-            conn.ondatachannel = base.ondatachannel.bind(null, id, ondatachannel);
-            return id;
+            const base1 = GodotRTCPeerConnection;
+            const id1 = IDHandler.add(conn1);
+            conn1.oniceconnectionstatechange = base1.onstatechange.bind(null, id1, conn1, onstatechange1);
+            conn1.onicecandidate = base1.onicecandidate.bind(null, id1, oncandidate1);
+            conn1.ondatachannel = base1.ondatachannel.bind(null, id1, ondatachannel1);
+            return id1;
         }
-        function _godot_js_rtc_pc_datachannel_create(p_id, p_label, p_config) {
+        function _godot_js_rtc_pc_datachannel_create(p_id1, p_label1, p_config1) {
             try {
-                const ref = IDHandler.get(p_id);
-                if (!ref) return 0;
-                const label = GodotRuntime.parseString(p_label);
-                const config = JSON.parse(GodotRuntime.parseString(p_config));
-                const channel = ref.createDataChannel(label, config);
-                return IDHandler.add(channel);
-            } catch (e) {
-                GodotRuntime.error(e);
+                const ref1 = IDHandler.get(p_id1);
+                if (!ref1) return 0;
+                const label1 = GodotRuntime.parseString(p_label1);
+                const config1 = JSON.parse(GodotRuntime.parseString(p_config1));
+                const channel1 = ref1.createDataChannel(label1, config1);
+                return IDHandler.add(channel1);
+            } catch (e1) {
+                GodotRuntime.error(e1);
                 return 0;
             }
         }
-        function _godot_js_rtc_pc_destroy(p_id) {
-            const ref = IDHandler.get(p_id);
-            if (!ref) return;
-            ref.oniceconnectionstatechange = null;
-            ref.onicecandidate = null;
-            ref.ondatachannel = null;
-            IDHandler.remove(p_id);
+        function _godot_js_rtc_pc_destroy(p_id1) {
+            const ref1 = IDHandler.get(p_id1);
+            if (!ref1) return;
+            ref1.oniceconnectionstatechange = null;
+            ref1.onicecandidate = null;
+            ref1.ondatachannel = null;
+            IDHandler.remove(p_id1);
         }
-        function _godot_js_rtc_pc_ice_candidate_add(p_id, p_mid_name, p_mline_idx, p_sdp) {
-            const ref = IDHandler.get(p_id);
-            if (!ref) return;
-            const sdpMidName = GodotRuntime.parseString(p_mid_name);
-            const sdpName = GodotRuntime.parseString(p_sdp);
-            ref.addIceCandidate(new RTCIceCandidate({
-                "candidate": sdpName,
-                "sdpMid": sdpMidName,
-                "sdpMlineIndex": p_mline_idx
+        function _godot_js_rtc_pc_ice_candidate_add(p_id1, p_mid_name1, p_mline_idx1, p_sdp1) {
+            const ref1 = IDHandler.get(p_id1);
+            if (!ref1) return;
+            const sdpMidName1 = GodotRuntime.parseString(p_mid_name1);
+            const sdpName1 = GodotRuntime.parseString(p_sdp1);
+            ref1.addIceCandidate(new RTCIceCandidate({
+                "candidate": sdpName1,
+                "sdpMid": sdpMidName1,
+                "sdpMlineIndex": p_mline_idx1
             }));
         }
-        function _godot_js_rtc_pc_local_description_set(p_id, p_type, p_sdp, p_obj, p_on_error) {
-            const ref = IDHandler.get(p_id);
-            if (!ref) return;
-            const type = GodotRuntime.parseString(p_type);
-            const sdp = GodotRuntime.parseString(p_sdp);
-            const onerror = GodotRuntime.get_func(p_on_error).bind(null, p_obj);
-            ref.setLocalDescription({
-                "sdp": sdp,
-                "type": type
-            }).catch(function(error) {
-                GodotRTCPeerConnection.onerror(p_id, onerror, error);
+        function _godot_js_rtc_pc_local_description_set(p_id1, p_type1, p_sdp1, p_obj1, p_on_error1) {
+            const ref1 = IDHandler.get(p_id1);
+            if (!ref1) return;
+            const type1 = GodotRuntime.parseString(p_type1);
+            const sdp1 = GodotRuntime.parseString(p_sdp1);
+            const onerror1 = GodotRuntime.get_func(p_on_error1).bind(null, p_obj1);
+            ref1.setLocalDescription({
+                "sdp": sdp1,
+                "type": type1
+            }).catch(function(error1) {
+                GodotRTCPeerConnection.onerror(p_id1, onerror1, error1);
             });
         }
-        function _godot_js_rtc_pc_offer_create(p_id, p_obj, p_on_session, p_on_error) {
-            const ref = IDHandler.get(p_id);
-            if (!ref) return;
-            const onsession = GodotRuntime.get_func(p_on_session).bind(null, p_obj);
-            const onerror = GodotRuntime.get_func(p_on_error).bind(null, p_obj);
-            ref.createOffer().then(function(session) {
-                GodotRTCPeerConnection.onsession(p_id, onsession, session);
-            }).catch(function(error) {
-                GodotRTCPeerConnection.onerror(p_id, onerror, error);
+        function _godot_js_rtc_pc_offer_create(p_id1, p_obj1, p_on_session1, p_on_error1) {
+            const ref1 = IDHandler.get(p_id1);
+            if (!ref1) return;
+            const onsession1 = GodotRuntime.get_func(p_on_session1).bind(null, p_obj1);
+            const onerror1 = GodotRuntime.get_func(p_on_error1).bind(null, p_obj1);
+            ref1.createOffer().then(function(session1) {
+                GodotRTCPeerConnection.onsession(p_id1, onsession1, session1);
+            }).catch(function(error1) {
+                GodotRTCPeerConnection.onerror(p_id1, onerror1, error1);
             });
         }
-        function _godot_js_rtc_pc_remote_description_set(p_id, p_type, p_sdp, p_obj, p_session_created, p_on_error) {
-            const ref = IDHandler.get(p_id);
-            if (!ref) return;
-            const type = GodotRuntime.parseString(p_type);
-            const sdp = GodotRuntime.parseString(p_sdp);
-            const onerror = GodotRuntime.get_func(p_on_error).bind(null, p_obj);
-            const onsession = GodotRuntime.get_func(p_session_created).bind(null, p_obj);
-            ref.setRemoteDescription({
-                "sdp": sdp,
-                "type": type
+        function _godot_js_rtc_pc_remote_description_set(p_id1, p_type1, p_sdp1, p_obj1, p_session_created1, p_on_error1) {
+            const ref1 = IDHandler.get(p_id1);
+            if (!ref1) return;
+            const type1 = GodotRuntime.parseString(p_type1);
+            const sdp1 = GodotRuntime.parseString(p_sdp1);
+            const onerror1 = GodotRuntime.get_func(p_on_error1).bind(null, p_obj1);
+            const onsession1 = GodotRuntime.get_func(p_session_created1).bind(null, p_obj1);
+            ref1.setRemoteDescription({
+                "sdp": sdp1,
+                "type": type1
             }).then(function() {
-                if (type !== "offer") return Promise.resolve();
-                return ref.createAnswer().then(function(session) {
-                    GodotRTCPeerConnection.onsession(p_id, onsession, session);
+                if (type1 !== "offer") return Promise.resolve();
+                return ref1.createAnswer().then(function(session1) {
+                    GodotRTCPeerConnection.onsession(p_id1, onsession1, session1);
                 });
-            }).catch(function(error) {
-                GodotRTCPeerConnection.onerror(p_id, onerror, error);
+            }).catch(function(error1) {
+                GodotRTCPeerConnection.onerror(p_id1, onerror1, error1);
             });
         }
         var GodotWebSocket = {
-            _onopen: function(p_id, callback, event) {
-                const ref = IDHandler.get(p_id);
-                if (!ref) return;
-                const c_str = GodotRuntime.allocString(ref.protocol);
-                callback(c_str);
-                GodotRuntime.free(c_str);
+            _onopen: function(p_id1, callback1, event1) {
+                const ref1 = IDHandler.get(p_id1);
+                if (!ref1) return;
+                const c_str1 = GodotRuntime.allocString(ref1.protocol);
+                callback1(c_str1);
+                GodotRuntime.free(c_str1);
             },
-            _onmessage: function(p_id, callback, event) {
-                const ref = IDHandler.get(p_id);
-                if (!ref) return;
-                let buffer;
-                let is_string = 0;
-                if (event.data instanceof ArrayBuffer) buffer = new Uint8Array(event.data);
-                else if (event.data instanceof Blob) {
+            _onmessage: function(p_id1, callback1, event1) {
+                const ref1 = IDHandler.get(p_id1);
+                if (!ref1) return;
+                let buffer1;
+                let is_string1 = 0;
+                if (event1.data instanceof ArrayBuffer) buffer1 = new Uint8Array(event1.data);
+                else if (event1.data instanceof Blob) {
                     GodotRuntime.error("Blob type not supported");
                     return;
-                } else if (typeof event.data === "string") {
-                    is_string = 1;
-                    const enc = new TextEncoder("utf-8");
-                    buffer = new Uint8Array(enc.encode(event.data));
+                } else if (typeof event1.data === "string") {
+                    is_string1 = 1;
+                    const enc1 = new TextEncoder("utf-8");
+                    buffer1 = new Uint8Array(enc1.encode(event1.data));
                 } else {
                     GodotRuntime.error("Unknown message type");
                     return;
                 }
-                const len = buffer.length * buffer.BYTES_PER_ELEMENT;
-                const out = GodotRuntime.malloc(len);
-                GROWABLE_HEAP_U8().set(buffer, out);
-                callback(out, len, is_string);
-                GodotRuntime.free(out);
+                const len1 = buffer1.length * buffer1.BYTES_PER_ELEMENT;
+                const out1 = GodotRuntime.malloc(len1);
+                GROWABLE_HEAP_U8().set(buffer1, out1);
+                callback1(out1, len1, is_string1);
+                GodotRuntime.free(out1);
             },
-            _onerror: function(p_id, callback, event) {
-                const ref = IDHandler.get(p_id);
-                if (!ref) return;
-                callback();
+            _onerror: function(p_id1, callback1, event1) {
+                const ref1 = IDHandler.get(p_id1);
+                if (!ref1) return;
+                callback1();
             },
-            _onclose: function(p_id, callback, event) {
-                const ref = IDHandler.get(p_id);
-                if (!ref) return;
-                const c_str = GodotRuntime.allocString(event.reason);
-                callback(event.code, c_str, event.wasClean ? 1 : 0);
-                GodotRuntime.free(c_str);
+            _onclose: function(p_id1, callback1, event1) {
+                const ref1 = IDHandler.get(p_id1);
+                if (!ref1) return;
+                const c_str1 = GodotRuntime.allocString(event1.reason);
+                callback1(event1.code, c_str1, event1.wasClean ? 1 : 0);
+                GodotRuntime.free(c_str1);
             },
-            send: function(p_id, p_data) {
-                const ref = IDHandler.get(p_id);
-                if (!ref || ref.readyState !== ref.OPEN) return 1;
-                ref.send(p_data);
+            send: function(p_id1, p_data1) {
+                const ref1 = IDHandler.get(p_id1);
+                if (!ref1 || ref1.readyState !== ref1.OPEN) return 1;
+                ref1.send(p_data1);
                 return 0;
             },
-            bufferedAmount: function(p_id) {
-                const ref = IDHandler.get(p_id);
-                if (!ref) return 0;
-                return ref.bufferedAmount;
+            bufferedAmount: function(p_id1) {
+                const ref1 = IDHandler.get(p_id1);
+                if (!ref1) return 0;
+                return ref1.bufferedAmount;
             },
-            create: function(socket, p_on_open, p_on_message, p_on_error, p_on_close) {
-                const id = IDHandler.add(socket);
-                socket.onopen = GodotWebSocket._onopen.bind(null, id, p_on_open);
-                socket.onmessage = GodotWebSocket._onmessage.bind(null, id, p_on_message);
-                socket.onerror = GodotWebSocket._onerror.bind(null, id, p_on_error);
-                socket.onclose = GodotWebSocket._onclose.bind(null, id, p_on_close);
-                return id;
+            create: function(socket1, p_on_open1, p_on_message1, p_on_error1, p_on_close1) {
+                const id1 = IDHandler.add(socket1);
+                socket1.onopen = GodotWebSocket._onopen.bind(null, id1, p_on_open1);
+                socket1.onmessage = GodotWebSocket._onmessage.bind(null, id1, p_on_message1);
+                socket1.onerror = GodotWebSocket._onerror.bind(null, id1, p_on_error1);
+                socket1.onclose = GodotWebSocket._onclose.bind(null, id1, p_on_close1);
+                return id1;
             },
-            close: function(p_id, p_code, p_reason) {
-                const ref = IDHandler.get(p_id);
-                if (ref && ref.readyState < ref.CLOSING) {
-                    const code = p_code;
-                    const reason = GodotRuntime.parseString(p_reason);
-                    ref.close(code, reason);
+            close: function(p_id1, p_code1, p_reason1) {
+                const ref1 = IDHandler.get(p_id1);
+                if (ref1 && ref1.readyState < ref1.CLOSING) {
+                    const code1 = p_code1;
+                    const reason1 = GodotRuntime.parseString(p_reason1);
+                    ref1.close(code1, reason1);
                 }
             },
-            destroy: function(p_id) {
-                const ref = IDHandler.get(p_id);
-                if (!ref) return;
-                GodotWebSocket.close(p_id, 3001, "destroyed");
-                IDHandler.remove(p_id);
-                ref.onopen = null;
-                ref.onmessage = null;
-                ref.onerror = null;
-                ref.onclose = null;
+            destroy: function(p_id1) {
+                const ref1 = IDHandler.get(p_id1);
+                if (!ref1) return;
+                GodotWebSocket.close(p_id1, 3001, "destroyed");
+                IDHandler.remove(p_id1);
+                ref1.onopen = null;
+                ref1.onmessage = null;
+                ref1.onerror = null;
+                ref1.onclose = null;
             }
         };
-        function _godot_js_websocket_buffered_amount(p_id) {
-            return GodotWebSocket.bufferedAmount(p_id);
+        function _godot_js_websocket_buffered_amount(p_id1) {
+            return GodotWebSocket.bufferedAmount(p_id1);
         }
-        function _godot_js_websocket_close(p_id, p_code, p_reason) {
-            const code = p_code;
-            const reason = GodotRuntime.parseString(p_reason);
-            GodotWebSocket.close(p_id, code, reason);
+        function _godot_js_websocket_close(p_id1, p_code1, p_reason1) {
+            const code1 = p_code1;
+            const reason1 = GodotRuntime.parseString(p_reason1);
+            GodotWebSocket.close(p_id1, code1, reason1);
         }
-        function _godot_js_websocket_create(p_ref, p_url, p_proto, p_on_open, p_on_message, p_on_error, p_on_close) {
-            const on_open = GodotRuntime.get_func(p_on_open).bind(null, p_ref);
-            const on_message = GodotRuntime.get_func(p_on_message).bind(null, p_ref);
-            const on_error = GodotRuntime.get_func(p_on_error).bind(null, p_ref);
-            const on_close = GodotRuntime.get_func(p_on_close).bind(null, p_ref);
-            const url = GodotRuntime.parseString(p_url);
-            const protos = GodotRuntime.parseString(p_proto);
-            let socket = null;
+        function _godot_js_websocket_create(p_ref1, p_url1, p_proto1, p_on_open1, p_on_message1, p_on_error1, p_on_close1) {
+            const on_open1 = GodotRuntime.get_func(p_on_open1).bind(null, p_ref1);
+            const on_message1 = GodotRuntime.get_func(p_on_message1).bind(null, p_ref1);
+            const on_error1 = GodotRuntime.get_func(p_on_error1).bind(null, p_ref1);
+            const on_close1 = GodotRuntime.get_func(p_on_close1).bind(null, p_ref1);
+            const url1 = GodotRuntime.parseString(p_url1);
+            const protos1 = GodotRuntime.parseString(p_proto1);
+            let socket1 = null;
             try {
-                if (protos) socket = new WebSocket(url, protos.split(","));
-                else socket = new WebSocket(url);
-            } catch (e) {
+                if (protos1) socket1 = new WebSocket(url1, protos1.split(","));
+                else socket1 = new WebSocket(url1);
+            } catch (e1) {
                 return 0;
             }
-            socket.binaryType = "arraybuffer";
-            return GodotWebSocket.create(socket, on_open, on_message, on_error, on_close);
+            socket1.binaryType = "arraybuffer";
+            return GodotWebSocket.create(socket1, on_open1, on_message1, on_error1, on_close1);
         }
-        function _godot_js_websocket_destroy(p_id) {
-            GodotWebSocket.destroy(p_id);
+        function _godot_js_websocket_destroy(p_id1) {
+            GodotWebSocket.destroy(p_id1);
         }
-        function _godot_js_websocket_send(p_id, p_buf, p_buf_len, p_raw) {
-            const bytes_array = new Uint8Array(p_buf_len);
-            let i = 0;
-            for(i = 0; i < p_buf_len; i++)bytes_array[i] = GodotRuntime.getHeapValue(p_buf + i, "i8");
-            let out = bytes_array.buffer;
-            if (!p_raw) out = new TextDecoder("utf-8").decode(bytes_array);
-            return GodotWebSocket.send(p_id, out);
+        function _godot_js_websocket_send(p_id1, p_buf1, p_buf_len1, p_raw1) {
+            const bytes_array1 = new Uint8Array(p_buf_len1);
+            let i1 = 0;
+            for(i1 = 0; i1 < p_buf_len1; i1++)bytes_array1[i1] = GodotRuntime.getHeapValue(p_buf1 + i1, "i8");
+            let out1 = bytes_array1.buffer;
+            if (!p_raw1) out1 = new TextDecoder("utf-8").decode(bytes_array1);
+            return GodotWebSocket.send(p_id1, out1);
         }
         var GodotJSWrapper = {
             proxies: null,
-            MyProxy: function(val) {
-                const id = IDHandler.add(this);
-                GodotJSWrapper.proxies.set(val, id);
-                let refs = 1;
+            MyProxy: function(val1) {
+                const id1 = IDHandler.add(this);
+                GodotJSWrapper.proxies.set(val1, id1);
+                let refs1 = 1;
                 this.ref = function() {
-                    refs++;
+                    refs1++;
                 };
                 this.unref = function() {
-                    refs--;
-                    if (refs === 0) {
-                        IDHandler.remove(id);
-                        GodotJSWrapper.proxies.delete(val);
+                    refs1--;
+                    if (refs1 === 0) {
+                        IDHandler.remove(id1);
+                        GodotJSWrapper.proxies.delete(val1);
                     }
                 };
                 this.get_val = function() {
-                    return val;
+                    return val1;
                 };
                 this.get_id = function() {
-                    return id;
+                    return id1;
                 };
             },
-            get_proxied: function(val) {
-                const id = GodotJSWrapper.proxies.get(val);
-                if (id === undefined) {
-                    const proxy = new GodotJSWrapper.MyProxy(val);
-                    return proxy.get_id();
+            get_proxied: function(val1) {
+                const id1 = GodotJSWrapper.proxies.get(val1);
+                if (id1 === undefined) {
+                    const proxy1 = new GodotJSWrapper.MyProxy(val1);
+                    return proxy1.get_id();
                 }
-                IDHandler.get(id).ref();
-                return id;
+                IDHandler.get(id1).ref();
+                return id1;
             },
-            get_proxied_value: function(id) {
-                const proxy = IDHandler.get(id);
-                if (proxy === undefined) return undefined;
-                return proxy.get_val();
+            get_proxied_value: function(id1) {
+                const proxy1 = IDHandler.get(id1);
+                if (proxy1 === undefined) return undefined;
+                return proxy1.get_val();
             },
-            variant2js: function(type, val) {
-                switch(type){
+            variant2js: function(type1, val1) {
+                switch(type1){
                     case 0:
                         return null;
                     case 1:
-                        return !!GodotRuntime.getHeapValue(val, "i64");
+                        return !!GodotRuntime.getHeapValue(val1, "i64");
                     case 2:
-                        return GodotRuntime.getHeapValue(val, "i64");
+                        return GodotRuntime.getHeapValue(val1, "i64");
                     case 3:
-                        return GodotRuntime.getHeapValue(val, "double");
+                        return GodotRuntime.getHeapValue(val1, "double");
                     case 4:
-                        return GodotRuntime.parseString(GodotRuntime.getHeapValue(val, "*"));
+                        return GodotRuntime.parseString(GodotRuntime.getHeapValue(val1, "*"));
                     case 17:
-                        return GodotJSWrapper.get_proxied_value(GodotRuntime.getHeapValue(val, "i64"));
+                        return GodotJSWrapper.get_proxied_value(GodotRuntime.getHeapValue(val1, "i64"));
                     default:
                         return undefined;
                 }
             },
-            js2variant: function(p_val, p_exchange) {
-                if (p_val === undefined || p_val === null) return 0;
-                const type = typeof p_val;
-                if (type === "boolean") {
-                    GodotRuntime.setHeapValue(p_exchange, p_val, "i64");
+            js2variant: function(p_val1, p_exchange1) {
+                if (p_val1 === undefined || p_val1 === null) return 0;
+                const type1 = typeof p_val1;
+                if (type1 === "boolean") {
+                    GodotRuntime.setHeapValue(p_exchange1, p_val1, "i64");
                     return 1;
-                } else if (type === "number") {
-                    if (Number.isInteger(p_val)) {
-                        GodotRuntime.setHeapValue(p_exchange, p_val, "i64");
+                } else if (type1 === "number") {
+                    if (Number.isInteger(p_val1)) {
+                        GodotRuntime.setHeapValue(p_exchange1, p_val1, "i64");
                         return 2;
                     }
-                    GodotRuntime.setHeapValue(p_exchange, p_val, "double");
+                    GodotRuntime.setHeapValue(p_exchange1, p_val1, "double");
                     return 3;
-                } else if (type === "string") {
-                    const c_str = GodotRuntime.allocString(p_val);
-                    GodotRuntime.setHeapValue(p_exchange, c_str, "*");
+                } else if (type1 === "string") {
+                    const c_str1 = GodotRuntime.allocString(p_val1);
+                    GodotRuntime.setHeapValue(p_exchange1, c_str1, "*");
                     return 4;
                 }
-                const id = GodotJSWrapper.get_proxied(p_val);
-                GodotRuntime.setHeapValue(p_exchange, id, "i64");
+                const id1 = GodotJSWrapper.get_proxied(p_val1);
+                GodotRuntime.setHeapValue(p_exchange1, id1, "i64");
                 return 17;
             }
         };
-        function _godot_js_wrapper_create_cb(p_ref, p_func) {
-            const func = GodotRuntime.get_func(p_func);
-            let id = 0;
-            const cb = function() {
-                if (!GodotJSWrapper.get_proxied_value(id)) return;
-                const args = Array.from(arguments);
-                func(p_ref, GodotJSWrapper.get_proxied(args), args.length);
+        function _godot_js_wrapper_create_cb(p_ref1, p_func1) {
+            const func1 = GodotRuntime.get_func(p_func1);
+            let id1 = 0;
+            const cb1 = function() {
+                if (!GodotJSWrapper.get_proxied_value(id1)) return;
+                const args1 = Array.from(arguments);
+                func1(p_ref1, GodotJSWrapper.get_proxied(args1), args1.length);
             };
-            id = GodotJSWrapper.get_proxied(cb);
-            return id;
+            id1 = GodotJSWrapper.get_proxied(cb1);
+            return id1;
         }
-        function _godot_js_wrapper_create_object(p_object, p_args, p_argc, p_convert_callback, p_exchange, p_lock, p_free_lock_callback) {
-            const name = GodotRuntime.parseString(p_object);
-            if (typeof window[name] === "undefined") return -1;
-            const convert = GodotRuntime.get_func(p_convert_callback);
-            const freeLock = GodotRuntime.get_func(p_free_lock_callback);
-            const args = new Array(p_argc);
-            for(let i = 0; i < p_argc; i++){
-                const type = convert(p_args, i, p_exchange, p_lock);
-                const lock = GodotRuntime.getHeapValue(p_lock, "*");
-                args[i] = GodotJSWrapper.variant2js(type, p_exchange);
-                if (lock) freeLock(p_lock, type);
+        function _godot_js_wrapper_create_object(p_object1, p_args1, p_argc1, p_convert_callback1, p_exchange1, p_lock1, p_free_lock_callback1) {
+            const name1 = GodotRuntime.parseString(p_object1);
+            if (typeof window[name1] === "undefined") return -1;
+            const convert1 = GodotRuntime.get_func(p_convert_callback1);
+            const freeLock1 = GodotRuntime.get_func(p_free_lock_callback1);
+            const args1 = new Array(p_argc1);
+            for(let i1 = 0; i1 < p_argc1; i1++){
+                const type1 = convert1(p_args1, i1, p_exchange1, p_lock1);
+                const lock1 = GodotRuntime.getHeapValue(p_lock1, "*");
+                args1[i1] = GodotJSWrapper.variant2js(type1, p_exchange1);
+                if (lock1) freeLock1(p_lock1, type1);
             }
             try {
-                const res = new window[name](...args);
-                return GodotJSWrapper.js2variant(res, p_exchange);
-            } catch (e) {
-                GodotRuntime.error(`Error calling constructor ${name} with args:`, args, "error:", e);
+                const res1 = new window[name1](...args1);
+                return GodotJSWrapper.js2variant(res1, p_exchange1);
+            } catch (e1) {
+                GodotRuntime.error(`Error calling constructor ${name1} with args:`, args1, "error:", e1);
                 return -1;
             }
         }
-        function _godot_js_wrapper_interface_get(p_name) {
-            const name = GodotRuntime.parseString(p_name);
-            if (typeof window[name] !== "undefined") return GodotJSWrapper.get_proxied(window[name]);
+        function _godot_js_wrapper_interface_get(p_name1) {
+            const name1 = GodotRuntime.parseString(p_name1);
+            if (typeof window[name1] !== "undefined") return GodotJSWrapper.get_proxied(window[name1]);
             return 0;
         }
-        function _godot_js_wrapper_object_call(p_id, p_method, p_args, p_argc, p_convert_callback, p_exchange, p_lock, p_free_lock_callback) {
-            const obj = GodotJSWrapper.get_proxied_value(p_id);
-            if (obj === undefined) return -1;
-            const method = GodotRuntime.parseString(p_method);
-            const convert = GodotRuntime.get_func(p_convert_callback);
-            const freeLock = GodotRuntime.get_func(p_free_lock_callback);
-            const args = new Array(p_argc);
-            for(let i = 0; i < p_argc; i++){
-                const type = convert(p_args, i, p_exchange, p_lock);
-                const lock = GodotRuntime.getHeapValue(p_lock, "*");
-                args[i] = GodotJSWrapper.variant2js(type, p_exchange);
-                if (lock) freeLock(p_lock, type);
+        function _godot_js_wrapper_object_call(p_id1, p_method1, p_args1, p_argc1, p_convert_callback1, p_exchange1, p_lock1, p_free_lock_callback1) {
+            const obj1 = GodotJSWrapper.get_proxied_value(p_id1);
+            if (obj1 === undefined) return -1;
+            const method1 = GodotRuntime.parseString(p_method1);
+            const convert1 = GodotRuntime.get_func(p_convert_callback1);
+            const freeLock1 = GodotRuntime.get_func(p_free_lock_callback1);
+            const args1 = new Array(p_argc1);
+            for(let i1 = 0; i1 < p_argc1; i1++){
+                const type1 = convert1(p_args1, i1, p_exchange1, p_lock1);
+                const lock1 = GodotRuntime.getHeapValue(p_lock1, "*");
+                args1[i1] = GodotJSWrapper.variant2js(type1, p_exchange1);
+                if (lock1) freeLock1(p_lock1, type1);
             }
             try {
-                const res = obj[method](...args);
-                return GodotJSWrapper.js2variant(res, p_exchange);
-            } catch (e) {
-                GodotRuntime.error(`Error calling method ${method} on:`, obj, "error:", e);
+                const res1 = obj1[method1](...args1);
+                return GodotJSWrapper.js2variant(res1, p_exchange1);
+            } catch (e1) {
+                GodotRuntime.error(`Error calling method ${method1} on:`, obj1, "error:", e1);
                 return -1;
             }
         }
-        function _godot_js_wrapper_object_get(p_id, p_exchange, p_prop) {
-            const obj = GodotJSWrapper.get_proxied_value(p_id);
-            if (obj === undefined) return 0;
-            if (p_prop) {
-                const prop = GodotRuntime.parseString(p_prop);
+        function _godot_js_wrapper_object_get(p_id1, p_exchange1, p_prop1) {
+            const obj1 = GodotJSWrapper.get_proxied_value(p_id1);
+            if (obj1 === undefined) return 0;
+            if (p_prop1) {
+                const prop1 = GodotRuntime.parseString(p_prop1);
                 try {
-                    return GodotJSWrapper.js2variant(obj[prop], p_exchange);
-                } catch (e) {
-                    GodotRuntime.error(`Error getting variable ${prop} on object`, obj);
+                    return GodotJSWrapper.js2variant(obj1[prop1], p_exchange1);
+                } catch (e1) {
+                    GodotRuntime.error(`Error getting variable ${prop1} on object`, obj1);
                     return 0;
                 }
             }
-            return GodotJSWrapper.js2variant(obj, p_exchange);
+            return GodotJSWrapper.js2variant(obj1, p_exchange1);
         }
-        function _godot_js_wrapper_object_getvar(p_id, p_type, p_exchange) {
-            const obj = GodotJSWrapper.get_proxied_value(p_id);
-            if (obj === undefined) return -1;
-            const prop = GodotJSWrapper.variant2js(p_type, p_exchange);
-            if (prop === undefined || prop === null) return -1;
+        function _godot_js_wrapper_object_getvar(p_id1, p_type1, p_exchange1) {
+            const obj1 = GodotJSWrapper.get_proxied_value(p_id1);
+            if (obj1 === undefined) return -1;
+            const prop1 = GodotJSWrapper.variant2js(p_type1, p_exchange1);
+            if (prop1 === undefined || prop1 === null) return -1;
             try {
-                return GodotJSWrapper.js2variant(obj[prop], p_exchange);
-            } catch (e) {
-                GodotRuntime.error(`Error getting variable ${prop} on object`, obj, e);
+                return GodotJSWrapper.js2variant(obj1[prop1], p_exchange1);
+            } catch (e1) {
+                GodotRuntime.error(`Error getting variable ${prop1} on object`, obj1, e1);
                 return -1;
             }
         }
-        function _godot_js_wrapper_object_set(p_id, p_name, p_type, p_exchange) {
-            const obj = GodotJSWrapper.get_proxied_value(p_id);
-            if (obj === undefined) return;
-            const name = GodotRuntime.parseString(p_name);
+        function _godot_js_wrapper_object_set(p_id1, p_name1, p_type1, p_exchange1) {
+            const obj1 = GodotJSWrapper.get_proxied_value(p_id1);
+            if (obj1 === undefined) return;
+            const name1 = GodotRuntime.parseString(p_name1);
             try {
-                obj[name] = GodotJSWrapper.variant2js(p_type, p_exchange);
-            } catch (e) {
-                GodotRuntime.error(`Error setting variable ${name} on object`, obj);
+                obj1[name1] = GodotJSWrapper.variant2js(p_type1, p_exchange1);
+            } catch (e1) {
+                GodotRuntime.error(`Error setting variable ${name1} on object`, obj1);
             }
         }
-        function _godot_js_wrapper_object_setvar(p_id, p_key_type, p_key_ex, p_val_type, p_val_ex) {
-            const obj = GodotJSWrapper.get_proxied_value(p_id);
-            if (obj === undefined) return -1;
-            const key = GodotJSWrapper.variant2js(p_key_type, p_key_ex);
+        function _godot_js_wrapper_object_setvar(p_id1, p_key_type1, p_key_ex1, p_val_type1, p_val_ex1) {
+            const obj1 = GodotJSWrapper.get_proxied_value(p_id1);
+            if (obj1 === undefined) return -1;
+            const key1 = GodotJSWrapper.variant2js(p_key_type1, p_key_ex1);
             try {
-                obj[key] = GodotJSWrapper.variant2js(p_val_type, p_val_ex);
+                obj1[key1] = GodotJSWrapper.variant2js(p_val_type1, p_val_ex1);
                 return 0;
-            } catch (e) {
-                GodotRuntime.error(`Error setting variable ${key} on object`, obj);
+            } catch (e1) {
+                GodotRuntime.error(`Error setting variable ${key1} on object`, obj1);
                 return -1;
             }
         }
-        function _godot_js_wrapper_object_unref(p_id) {
-            const proxy = IDHandler.get(p_id);
-            if (proxy !== undefined) proxy.unref();
+        function _godot_js_wrapper_object_unref(p_id1) {
+            const proxy1 = IDHandler.get(p_id1);
+            if (proxy1 !== undefined) proxy1.unref();
         }
         var GodotWebXR = {
             gl: null,
@@ -9609,21 +9609,21 @@ var Godot = (()=>{
             frame: null,
             pose: null,
             orig_requestAnimationFrame: null,
-            requestAnimationFrame: (callback)=>{
+            requestAnimationFrame: (callback1)=>{
                 if (GodotWebXR.session && GodotWebXR.space) {
-                    const onFrame = function(time, frame) {
-                        GodotWebXR.frame = frame;
-                        GodotWebXR.pose = frame.getViewerPose(GodotWebXR.space);
-                        callback(time);
+                    const onFrame1 = function(time1, frame1) {
+                        GodotWebXR.frame = frame1;
+                        GodotWebXR.pose = frame1.getViewerPose(GodotWebXR.space);
+                        callback1(time1);
                         GodotWebXR.frame = null;
                         GodotWebXR.pose = null;
                     };
-                    GodotWebXR.session.requestAnimationFrame(onFrame);
-                } else GodotWebXR.orig_requestAnimationFrame(callback);
+                    GodotWebXR.session.requestAnimationFrame(onFrame1);
+                } else GodotWebXR.orig_requestAnimationFrame(callback1);
             },
-            monkeyPatchRequestAnimationFrame: (enable)=>{
+            monkeyPatchRequestAnimationFrame: (enable1)=>{
                 if (GodotWebXR.orig_requestAnimationFrame === null) GodotWebXR.orig_requestAnimationFrame = Browser.requestAnimationFrame;
-                Browser.requestAnimationFrame = enable ? GodotWebXR.requestAnimationFrame : GodotWebXR.orig_requestAnimationFrame;
+                Browser.requestAnimationFrame = enable1 ? GodotWebXR.requestAnimationFrame : GodotWebXR.orig_requestAnimationFrame;
             },
             pauseResumeMainLoop: ()=>{
                 Browser.mainLoop.pause();
@@ -9636,34 +9636,34 @@ var Godot = (()=>{
             buffer: null,
             vsSource: "\n			const vec2 scale = vec2(0.5, 0.5);\n			attribute vec4 aVertexPosition;\n\n			varying highp vec2 vTextureCoord;\n\n			void main () {\n				gl_Position = aVertexPosition;\n				vTextureCoord = aVertexPosition.xy * scale + scale;\n			}\n		",
             fsSource: "\n			varying highp vec2 vTextureCoord;\n\n			uniform sampler2D uSampler;\n\n			void main() {\n				gl_FragColor = texture2D(uSampler, vTextureCoord);\n			}\n		",
-            initShaderProgram: (gl, vsSource, fsSource)=>{
-                const vertexShader = GodotWebXR.loadShader(gl, gl.VERTEX_SHADER, vsSource);
-                const fragmentShader = GodotWebXR.loadShader(gl, gl.FRAGMENT_SHADER, fsSource);
-                const shaderProgram = gl.createProgram();
-                gl.attachShader(shaderProgram, vertexShader);
-                gl.attachShader(shaderProgram, fragmentShader);
-                gl.linkProgram(shaderProgram);
-                if (!gl.getProgramParameter(shaderProgram, gl.LINK_STATUS)) {
-                    GodotRuntime.error(`Unable to initialize the shader program: ${gl.getProgramInfoLog(shaderProgram)}`);
+            initShaderProgram: (gl1, vsSource1, fsSource1)=>{
+                const vertexShader1 = GodotWebXR.loadShader(gl1, gl1.VERTEX_SHADER, vsSource1);
+                const fragmentShader1 = GodotWebXR.loadShader(gl1, gl1.FRAGMENT_SHADER, fsSource1);
+                const shaderProgram1 = gl1.createProgram();
+                gl1.attachShader(shaderProgram1, vertexShader1);
+                gl1.attachShader(shaderProgram1, fragmentShader1);
+                gl1.linkProgram(shaderProgram1);
+                if (!gl1.getProgramParameter(shaderProgram1, gl1.LINK_STATUS)) {
+                    GodotRuntime.error(`Unable to initialize the shader program: ${gl1.getProgramInfoLog(shaderProgram1)}`);
                     return null;
                 }
-                return shaderProgram;
+                return shaderProgram1;
             },
-            loadShader: (gl, type, source)=>{
-                const shader = gl.createShader(type);
-                gl.shaderSource(shader, source);
-                gl.compileShader(shader);
-                if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
-                    GodotRuntime.error(`An error occurred compiling the shader: ${gl.getShaderInfoLog(shader)}`);
-                    gl.deleteShader(shader);
+            loadShader: (gl1, type1, source1)=>{
+                const shader1 = gl1.createShader(type1);
+                gl1.shaderSource(shader1, source1);
+                gl1.compileShader(shader1);
+                if (!gl1.getShaderParameter(shader1, gl1.COMPILE_STATUS)) {
+                    GodotRuntime.error(`An error occurred compiling the shader: ${gl1.getShaderInfoLog(shader1)}`);
+                    gl1.deleteShader(shader1);
                     return null;
                 }
-                return shader;
+                return shader1;
             },
-            initBuffer: (gl)=>{
-                const positionBuffer = gl.createBuffer();
-                gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
-                const positions = [
+            initBuffer: (gl1)=>{
+                const positionBuffer1 = gl1.createBuffer();
+                gl1.bindBuffer(gl1.ARRAY_BUFFER, positionBuffer1);
+                const positions1 = [
                     -1,
                     -1,
                     1,
@@ -9673,153 +9673,153 @@ var Godot = (()=>{
                     1,
                     1
                 ];
-                gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions), gl.STATIC_DRAW);
-                return positionBuffer;
+                gl1.bufferData(gl1.ARRAY_BUFFER, new Float32Array(positions1), gl1.STATIC_DRAW);
+                return positionBuffer1;
             },
-            blitTexture: (gl, texture)=>{
+            blitTexture: (gl1, texture1)=>{
                 if (GodotWebXR.shaderProgram === null) {
-                    GodotWebXR.shaderProgram = GodotWebXR.initShaderProgram(gl, GodotWebXR.vsSource, GodotWebXR.fsSource);
+                    GodotWebXR.shaderProgram = GodotWebXR.initShaderProgram(gl1, GodotWebXR.vsSource, GodotWebXR.fsSource);
                     GodotWebXR.programInfo = {
                         program: GodotWebXR.shaderProgram,
                         attribLocations: {
-                            vertexPosition: gl.getAttribLocation(GodotWebXR.shaderProgram, "aVertexPosition")
+                            vertexPosition: gl1.getAttribLocation(GodotWebXR.shaderProgram, "aVertexPosition")
                         },
                         uniformLocations: {
-                            uSampler: gl.getUniformLocation(GodotWebXR.shaderProgram, "uSampler")
+                            uSampler: gl1.getUniformLocation(GodotWebXR.shaderProgram, "uSampler")
                         }
                     };
-                    GodotWebXR.buffer = GodotWebXR.initBuffer(gl);
+                    GodotWebXR.buffer = GodotWebXR.initBuffer(gl1);
                 }
-                const orig_program = gl.getParameter(gl.CURRENT_PROGRAM);
-                gl.useProgram(GodotWebXR.shaderProgram);
-                gl.bindBuffer(gl.ARRAY_BUFFER, GodotWebXR.buffer);
-                gl.vertexAttribPointer(GodotWebXR.programInfo.attribLocations.vertexPosition, 2, gl.FLOAT, false, 0, 0);
-                gl.enableVertexAttribArray(GodotWebXR.programInfo.attribLocations.vertexPosition);
-                gl.activeTexture(gl.TEXTURE0);
-                gl.bindTexture(gl.TEXTURE_2D, texture);
-                gl.uniform1i(GodotWebXR.programInfo.uniformLocations.uSampler, 0);
-                gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
-                gl.bindTexture(gl.TEXTURE_2D, null);
-                gl.disableVertexAttribArray(GodotWebXR.programInfo.attribLocations.vertexPosition);
-                gl.bindBuffer(gl.ARRAY_BUFFER, null);
-                gl.useProgram(orig_program);
+                const orig_program1 = gl1.getParameter(gl1.CURRENT_PROGRAM);
+                gl1.useProgram(GodotWebXR.shaderProgram);
+                gl1.bindBuffer(gl1.ARRAY_BUFFER, GodotWebXR.buffer);
+                gl1.vertexAttribPointer(GodotWebXR.programInfo.attribLocations.vertexPosition, 2, gl1.FLOAT, false, 0, 0);
+                gl1.enableVertexAttribArray(GodotWebXR.programInfo.attribLocations.vertexPosition);
+                gl1.activeTexture(gl1.TEXTURE0);
+                gl1.bindTexture(gl1.TEXTURE_2D, texture1);
+                gl1.uniform1i(GodotWebXR.programInfo.uniformLocations.uSampler, 0);
+                gl1.drawArrays(gl1.TRIANGLE_STRIP, 0, 4);
+                gl1.bindTexture(gl1.TEXTURE_2D, null);
+                gl1.disableVertexAttribArray(GodotWebXR.programInfo.attribLocations.vertexPosition);
+                gl1.bindBuffer(gl1.ARRAY_BUFFER, null);
+                gl1.useProgram(orig_program1);
             },
             controllers: [],
             sampleControllers: ()=>{
                 if (!GodotWebXR.session) return;
-                let other_index = 2;
-                const controllers = [];
-                GodotWebXR.session.inputSources.forEach((input_source)=>{
-                    if (input_source.targetRayMode === "tracked-pointer") {
-                        if (input_source.handedness === "right") controllers[1] = input_source;
-                        else if (input_source.handedness === "left" || !controllers[0]) controllers[0] = input_source;
-                    } else controllers[other_index++] = input_source;
+                let other_index1 = 2;
+                const controllers1 = [];
+                GodotWebXR.session.inputSources.forEach((input_source1)=>{
+                    if (input_source1.targetRayMode === "tracked-pointer") {
+                        if (input_source1.handedness === "right") controllers1[1] = input_source1;
+                        else if (input_source1.handedness === "left" || !controllers1[0]) controllers1[0] = input_source1;
+                    } else controllers1[other_index1++] = input_source1;
                 });
-                GodotWebXR.controllers = controllers;
+                GodotWebXR.controllers = controllers1;
             },
-            getControllerId: (input_source)=>GodotWebXR.controllers.indexOf(input_source)
+            getControllerId: (input_source1)=>GodotWebXR.controllers.indexOf(input_source1)
         };
-        function _godot_webxr_commit_for_eye(p_eye, p_texture_id) {
-            if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(47, 1, p_eye, p_texture_id);
+        function _godot_webxr_commit_for_eye(p_eye1, p_texture_id1) {
+            if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(47, 1, p_eye1, p_texture_id1);
             if (!GodotWebXR.session || !GodotWebXR.pose) return;
-            const view_index = p_eye === 2 ? 1 : 0;
-            const glLayer = GodotWebXR.session.renderState.baseLayer;
-            const view = GodotWebXR.pose.views[view_index];
-            const viewport = glLayer.getViewport(view);
-            const gl = GodotWebXR.gl;
-            const orig_framebuffer = gl.getParameter(gl.FRAMEBUFFER_BINDING);
-            const orig_viewport = gl.getParameter(gl.VIEWPORT);
-            gl.bindFramebuffer(gl.FRAMEBUFFER, glLayer.framebuffer);
-            gl.viewport(viewport.x, viewport.y, viewport.width, viewport.height);
-            GodotWebXR.blitTexture(gl, GL.textures[p_texture_id]);
-            gl.bindFramebuffer(gl.FRAMEBUFFER, orig_framebuffer);
-            gl.viewport(orig_viewport[0], orig_viewport[1], orig_viewport[2], orig_viewport[3]);
+            const view_index1 = p_eye1 === 2 ? 1 : 0;
+            const glLayer1 = GodotWebXR.session.renderState.baseLayer;
+            const view1 = GodotWebXR.pose.views[view_index1];
+            const viewport1 = glLayer1.getViewport(view1);
+            const gl1 = GodotWebXR.gl;
+            const orig_framebuffer1 = gl1.getParameter(gl1.FRAMEBUFFER_BINDING);
+            const orig_viewport1 = gl1.getParameter(gl1.VIEWPORT);
+            gl1.bindFramebuffer(gl1.FRAMEBUFFER, glLayer1.framebuffer);
+            gl1.viewport(viewport1.x, viewport1.y, viewport1.width, viewport1.height);
+            GodotWebXR.blitTexture(gl1, GL.textures[p_texture_id1]);
+            gl1.bindFramebuffer(gl1.FRAMEBUFFER, orig_framebuffer1);
+            gl1.viewport(orig_viewport1[0], orig_viewport1[1], orig_viewport1[2], orig_viewport1[3]);
         }
         function _godot_webxr_get_bounds_geometry() {
             if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(48, 1);
             if (!GodotWebXR.space || !GodotWebXR.space.boundsGeometry) return 0;
-            const point_count = GodotWebXR.space.boundsGeometry.length;
-            if (point_count === 0) return 0;
-            const buf = GodotRuntime.malloc((point_count * 3 + 1) * 4);
-            GodotRuntime.setHeapValue(buf, point_count, "i32");
-            for(let i = 0; i < point_count; i++){
-                const point = GodotWebXR.space.boundsGeometry[i];
-                GodotRuntime.setHeapValue(buf + (i * 3 + 1) * 4, point.x, "float");
-                GodotRuntime.setHeapValue(buf + (i * 3 + 2) * 4, point.y, "float");
-                GodotRuntime.setHeapValue(buf + (i * 3 + 3) * 4, point.z, "float");
+            const point_count1 = GodotWebXR.space.boundsGeometry.length;
+            if (point_count1 === 0) return 0;
+            const buf1 = GodotRuntime.malloc((point_count1 * 3 + 1) * 4);
+            GodotRuntime.setHeapValue(buf1, point_count1, "i32");
+            for(let i1 = 0; i1 < point_count1; i1++){
+                const point1 = GodotWebXR.space.boundsGeometry[i1];
+                GodotRuntime.setHeapValue(buf1 + (i1 * 3 + 1) * 4, point1.x, "float");
+                GodotRuntime.setHeapValue(buf1 + (i1 * 3 + 2) * 4, point1.y, "float");
+                GodotRuntime.setHeapValue(buf1 + (i1 * 3 + 3) * 4, point1.z, "float");
             }
-            return buf;
+            return buf1;
         }
-        function _godot_webxr_get_controller_axes(p_controller, p_xr_standard_mapping) {
-            if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(49, 1, p_controller, p_xr_standard_mapping);
+        function _godot_webxr_get_controller_axes(p_controller1, p_xr_standard_mapping1) {
+            if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(49, 1, p_controller1, p_xr_standard_mapping1);
             if (GodotWebXR.controllers.length === 0) return 0;
-            const controller = GodotWebXR.controllers[p_controller];
-            if (!controller || !controller.gamepad) return 0;
-            let axes = controller.gamepad.axes;
-            if (controller.gamepad.mapping === "xr-standard") {
-                if (p_xr_standard_mapping) {
-                    const trigger_axis = controller.gamepad.buttons[0].value;
-                    const grip_axis = controller.gamepad.buttons[1].value;
-                    axes = [
-                        axes[2],
-                        axes[3] * -1,
-                        trigger_axis,
-                        grip_axis,
-                        grip_axis,
+            const controller1 = GodotWebXR.controllers[p_controller1];
+            if (!controller1 || !controller1.gamepad) return 0;
+            let axes1 = controller1.gamepad.axes;
+            if (controller1.gamepad.mapping === "xr-standard") {
+                if (p_xr_standard_mapping1) {
+                    const trigger_axis1 = controller1.gamepad.buttons[0].value;
+                    const grip_axis1 = controller1.gamepad.buttons[1].value;
+                    axes1 = [
+                        axes1[2],
+                        axes1[3] * -1,
+                        trigger_axis1,
+                        grip_axis1,
+                        grip_axis1,
                         0,
-                        axes[0],
-                        axes[1] * -1
+                        axes1[0],
+                        axes1[1] * -1
                     ];
                 } else {
-                    axes[1] *= -1;
-                    axes[3] *= -1;
+                    axes1[1] *= -1;
+                    axes1[3] *= -1;
                 }
             }
-            const buf = GodotRuntime.malloc((axes.length + 1) * 4);
-            GodotRuntime.setHeapValue(buf, axes.length, "i32");
-            for(let i = 0; i < axes.length; i++)GodotRuntime.setHeapValue(buf + 4 + i * 4, axes[i], "float");
-            return buf;
+            const buf1 = GodotRuntime.malloc((axes1.length + 1) * 4);
+            GodotRuntime.setHeapValue(buf1, axes1.length, "i32");
+            for(let i1 = 0; i1 < axes1.length; i1++)GodotRuntime.setHeapValue(buf1 + 4 + i1 * 4, axes1[i1], "float");
+            return buf1;
         }
-        function _godot_webxr_get_controller_buttons(p_controller, p_xr_standard_mapping) {
-            if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(50, 1, p_controller, p_xr_standard_mapping);
+        function _godot_webxr_get_controller_buttons(p_controller1, p_xr_standard_mapping1) {
+            if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(50, 1, p_controller1, p_xr_standard_mapping1);
             if (GodotWebXR.controllers.length === 0) return 0;
-            const controller = GodotWebXR.controllers[p_controller];
-            if (!controller || !controller.gamepad) return 0;
-            let buttons = controller.gamepad.buttons;
-            if (controller.gamepad.mapping === "xr-standard" && p_xr_standard_mapping) buttons = [
+            const controller1 = GodotWebXR.controllers[p_controller1];
+            if (!controller1 || !controller1.gamepad) return 0;
+            let buttons1 = controller1.gamepad.buttons;
+            if (controller1.gamepad.mapping === "xr-standard" && p_xr_standard_mapping1) buttons1 = [
                 0,
-                buttons[5],
-                buttons[1],
-                buttons[3],
-                buttons[6],
-                buttons[7],
-                buttons[8],
-                buttons[4],
-                buttons[9],
-                buttons[10],
-                buttons[11],
-                buttons[12],
-                buttons[13],
-                buttons[14],
-                buttons[2],
-                buttons[0]
+                buttons1[5],
+                buttons1[1],
+                buttons1[3],
+                buttons1[6],
+                buttons1[7],
+                buttons1[8],
+                buttons1[4],
+                buttons1[9],
+                buttons1[10],
+                buttons1[11],
+                buttons1[12],
+                buttons1[13],
+                buttons1[14],
+                buttons1[2],
+                buttons1[0]
             ];
-            const buf = GodotRuntime.malloc((buttons.length + 1) * 4);
-            GodotRuntime.setHeapValue(buf, buttons.length, "i32");
-            for(let i = 0; i < buttons.length; i++)GodotRuntime.setHeapValue(buf + 4 + i * 4, buttons[i] ? buttons[i].value : 0, "float");
-            return buf;
+            const buf1 = GodotRuntime.malloc((buttons1.length + 1) * 4);
+            GodotRuntime.setHeapValue(buf1, buttons1.length, "i32");
+            for(let i1 = 0; i1 < buttons1.length; i1++)GodotRuntime.setHeapValue(buf1 + 4 + i1 * 4, buttons1[i1] ? buttons1[i1].value : 0, "float");
+            return buf1;
         }
         function _godot_webxr_get_controller_count() {
             if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(51, 1);
             if (!GodotWebXR.session || !GodotWebXR.frame) return 0;
             return GodotWebXR.controllers.length;
         }
-        function _godot_webxr_get_controller_target_ray_mode(p_controller) {
-            if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(52, 1, p_controller);
-            if (p_controller < 0 || p_controller >= GodotWebXR.controllers.length) return 0;
-            const controller = GodotWebXR.controllers[p_controller];
-            if (!controller) return 0;
-            switch(controller.targetRayMode){
+        function _godot_webxr_get_controller_target_ray_mode(p_controller1) {
+            if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(52, 1, p_controller1);
+            if (p_controller1 < 0 || p_controller1 >= GodotWebXR.controllers.length) return 0;
+            const controller1 = GodotWebXR.controllers[p_controller1];
+            if (!controller1) return 0;
+            switch(controller1.targetRayMode){
                 case "gaze":
                     return 1;
                 case "tracked-pointer":
@@ -9831,50 +9831,50 @@ var Godot = (()=>{
             }
             return 0;
         }
-        function _godot_webxr_get_controller_transform(p_controller) {
-            if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(53, 1, p_controller);
+        function _godot_webxr_get_controller_transform(p_controller1) {
+            if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(53, 1, p_controller1);
             if (!GodotWebXR.session || !GodotWebXR.frame) return 0;
-            const controller = GodotWebXR.controllers[p_controller];
-            if (!controller) return 0;
-            const frame = GodotWebXR.frame;
-            const space = GodotWebXR.space;
-            const pose = frame.getPose(controller.targetRaySpace, space);
-            if (!pose) return 0;
-            const matrix = pose.transform.matrix;
-            const buf = GodotRuntime.malloc(64);
-            for(let i = 0; i < 16; i++)GodotRuntime.setHeapValue(buf + i * 4, matrix[i], "float");
-            return buf;
+            const controller1 = GodotWebXR.controllers[p_controller1];
+            if (!controller1) return 0;
+            const frame1 = GodotWebXR.frame;
+            const space1 = GodotWebXR.space;
+            const pose1 = frame1.getPose(controller1.targetRaySpace, space1);
+            if (!pose1) return 0;
+            const matrix1 = pose1.transform.matrix;
+            const buf1 = GodotRuntime.malloc(64);
+            for(let i1 = 0; i1 < 16; i1++)GodotRuntime.setHeapValue(buf1 + i1 * 4, matrix1[i1], "float");
+            return buf1;
         }
-        function _godot_webxr_get_projection_for_eye(p_eye) {
-            if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(54, 1, p_eye);
+        function _godot_webxr_get_projection_for_eye(p_eye1) {
+            if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(54, 1, p_eye1);
             if (!GodotWebXR.session || !GodotWebXR.pose) return 0;
-            const view_index = p_eye === 2 ? 1 : 0;
-            const matrix = GodotWebXR.pose.views[view_index].projectionMatrix;
-            const buf = GodotRuntime.malloc(64);
-            for(let i = 0; i < 16; i++)GodotRuntime.setHeapValue(buf + i * 4, matrix[i], "float");
-            return buf;
+            const view_index1 = p_eye1 === 2 ? 1 : 0;
+            const matrix1 = GodotWebXR.pose.views[view_index1].projectionMatrix;
+            const buf1 = GodotRuntime.malloc(64);
+            for(let i1 = 0; i1 < 16; i1++)GodotRuntime.setHeapValue(buf1 + i1 * 4, matrix1[i1], "float");
+            return buf1;
         }
         function _godot_webxr_get_render_targetsize() {
             if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(55, 1);
             if (!GodotWebXR.session || !GodotWebXR.pose) return 0;
-            const glLayer = GodotWebXR.session.renderState.baseLayer;
-            const view = GodotWebXR.pose.views[0];
-            const viewport = glLayer.getViewport(view);
-            const buf = GodotRuntime.malloc(8);
-            GodotRuntime.setHeapValue(buf + 0, viewport.width, "i32");
-            GodotRuntime.setHeapValue(buf + 4, viewport.height, "i32");
-            return buf;
+            const glLayer1 = GodotWebXR.session.renderState.baseLayer;
+            const view1 = GodotWebXR.pose.views[0];
+            const viewport1 = glLayer1.getViewport(view1);
+            const buf1 = GodotRuntime.malloc(8);
+            GodotRuntime.setHeapValue(buf1 + 0, viewport1.width, "i32");
+            GodotRuntime.setHeapValue(buf1 + 4, viewport1.height, "i32");
+            return buf1;
         }
-        function _godot_webxr_get_transform_for_eye(p_eye) {
-            if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(56, 1, p_eye);
+        function _godot_webxr_get_transform_for_eye(p_eye1) {
+            if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(56, 1, p_eye1);
             if (!GodotWebXR.session || !GodotWebXR.pose) return 0;
-            const views = GodotWebXR.pose.views;
-            let matrix;
-            if (p_eye === 0) matrix = GodotWebXR.pose.transform.matrix;
-            else matrix = views[p_eye - 1].transform.matrix;
-            const buf = GodotRuntime.malloc(64);
-            for(let i = 0; i < 16; i++)GodotRuntime.setHeapValue(buf + i * 4, matrix[i], "float");
-            return buf;
+            const views1 = GodotWebXR.pose.views;
+            let matrix1;
+            if (p_eye1 === 0) matrix1 = GodotWebXR.pose.transform.matrix;
+            else matrix1 = views1[p_eye1 - 1].transform.matrix;
+            const buf1 = GodotRuntime.malloc(64);
+            for(let i1 = 0; i1 < 16; i1++)GodotRuntime.setHeapValue(buf1 + i1 * 4, matrix1[i1], "float");
+            return buf1;
         }
         function _godot_webxr_get_view_count() {
             if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(57, 1);
@@ -9886,38 +9886,38 @@ var Godot = (()=>{
             if (!GodotWebXR.session || !GodotWebXR.session.visibilityState) return 0;
             return GodotRuntime.allocString(GodotWebXR.session.visibilityState);
         }
-        function _godot_webxr_initialize(p_session_mode, p_required_features, p_optional_features, p_requested_reference_spaces, p_on_session_started, p_on_session_ended, p_on_session_failed, p_on_controller_changed, p_on_input_event, p_on_simple_event) {
-            if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(59, 1, p_session_mode, p_required_features, p_optional_features, p_requested_reference_spaces, p_on_session_started, p_on_session_ended, p_on_session_failed, p_on_controller_changed, p_on_input_event, p_on_simple_event);
+        function _godot_webxr_initialize(p_session_mode1, p_required_features1, p_optional_features1, p_requested_reference_spaces1, p_on_session_started1, p_on_session_ended1, p_on_session_failed1, p_on_controller_changed1, p_on_input_event1, p_on_simple_event1) {
+            if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(59, 1, p_session_mode1, p_required_features1, p_optional_features1, p_requested_reference_spaces1, p_on_session_started1, p_on_session_ended1, p_on_session_failed1, p_on_controller_changed1, p_on_input_event1, p_on_simple_event1);
             GodotWebXR.monkeyPatchRequestAnimationFrame(true);
-            const session_mode = GodotRuntime.parseString(p_session_mode);
-            const required_features = GodotRuntime.parseString(p_required_features).split(",").map((s)=>s.trim()).filter((s)=>s !== "");
-            const optional_features = GodotRuntime.parseString(p_optional_features).split(",").map((s)=>s.trim()).filter((s)=>s !== "");
-            const requested_reference_space_types = GodotRuntime.parseString(p_requested_reference_spaces).split(",").map((s)=>s.trim());
-            const onstarted = GodotRuntime.get_func(p_on_session_started);
-            const onended = GodotRuntime.get_func(p_on_session_ended);
-            const onfailed = GodotRuntime.get_func(p_on_session_failed);
-            const oncontroller = GodotRuntime.get_func(p_on_controller_changed);
-            const oninputevent = GodotRuntime.get_func(p_on_input_event);
-            const onsimpleevent = GodotRuntime.get_func(p_on_simple_event);
-            const session_init = {};
-            if (required_features.length > 0) session_init["requiredFeatures"] = required_features;
-            if (optional_features.length > 0) session_init["optionalFeatures"] = optional_features;
-            navigator.xr.requestSession(session_mode, session_init).then(function(session) {
-                GodotWebXR.session = session;
-                session.addEventListener("end", function(evt) {
-                    onended();
+            const session_mode1 = GodotRuntime.parseString(p_session_mode1);
+            const required_features1 = GodotRuntime.parseString(p_required_features1).split(",").map((s1)=>s1.trim()).filter((s1)=>s1 !== "");
+            const optional_features1 = GodotRuntime.parseString(p_optional_features1).split(",").map((s1)=>s1.trim()).filter((s1)=>s1 !== "");
+            const requested_reference_space_types1 = GodotRuntime.parseString(p_requested_reference_spaces1).split(",").map((s1)=>s1.trim());
+            const onstarted1 = GodotRuntime.get_func(p_on_session_started1);
+            const onended1 = GodotRuntime.get_func(p_on_session_ended1);
+            const onfailed1 = GodotRuntime.get_func(p_on_session_failed1);
+            const oncontroller1 = GodotRuntime.get_func(p_on_controller_changed1);
+            const oninputevent1 = GodotRuntime.get_func(p_on_input_event1);
+            const onsimpleevent1 = GodotRuntime.get_func(p_on_simple_event1);
+            const session_init1 = {};
+            if (required_features1.length > 0) session_init1["requiredFeatures"] = required_features1;
+            if (optional_features1.length > 0) session_init1["optionalFeatures"] = optional_features1;
+            navigator.xr.requestSession(session_mode1, session_init1).then(function(session1) {
+                GodotWebXR.session = session1;
+                session1.addEventListener("end", function(evt1) {
+                    onended1();
                 });
-                session.addEventListener("inputsourceschange", function(evt) {
-                    let controller_changed = false;
+                session1.addEventListener("inputsourceschange", function(evt1) {
+                    let controller_changed1 = false;
                     [
-                        evt.added,
-                        evt.removed
-                    ].forEach((lst)=>{
-                        lst.forEach((input_source)=>{
-                            if (input_source.targetRayMode === "tracked-pointer") controller_changed = true;
+                        evt1.added,
+                        evt1.removed
+                    ].forEach((lst1)=>{
+                        lst1.forEach((input_source1)=>{
+                            if (input_source1.targetRayMode === "tracked-pointer") controller_changed1 = true;
                         });
                     });
-                    if (controller_changed) oncontroller();
+                    if (controller_changed1) oncontroller1();
                 });
                 [
                     "selectstart",
@@ -9926,80 +9926,80 @@ var Godot = (()=>{
                     "squeezestart",
                     "squeezeend",
                     "squeeze"
-                ].forEach((input_event, index)=>{
-                    session.addEventListener(input_event, function(evt) {
+                ].forEach((input_event1, index1)=>{
+                    session1.addEventListener(input_event1, function(evt1) {
                         GodotWebXR.sampleControllers();
-                        oninputevent(index, GodotWebXR.getControllerId(evt.inputSource));
+                        oninputevent1(index1, GodotWebXR.getControllerId(evt1.inputSource));
                     });
                 });
-                session.addEventListener("visibilitychange", function(evt) {
-                    const c_str = GodotRuntime.allocString("visibility_state_changed");
-                    onsimpleevent(c_str);
-                    GodotRuntime.free(c_str);
+                session1.addEventListener("visibilitychange", function(evt1) {
+                    const c_str1 = GodotRuntime.allocString("visibility_state_changed");
+                    onsimpleevent1(c_str1);
+                    GodotRuntime.free(c_str1);
                 });
-                const gl_context_handle = _emscripten_webgl_get_current_context();
-                const gl = GL.getContext(gl_context_handle).GLctx;
-                GodotWebXR.gl = gl;
-                gl.makeXRCompatible().then(function() {
-                    session.updateRenderState({
-                        baseLayer: new XRWebGLLayer(session, gl)
+                const gl_context_handle1 = _emscripten_webgl_get_current_context();
+                const gl1 = GL.getContext(gl_context_handle1).GLctx;
+                GodotWebXR.gl = gl1;
+                gl1.makeXRCompatible().then(function() {
+                    session1.updateRenderState({
+                        baseLayer: new XRWebGLLayer(session1, gl1)
                     });
-                    function onReferenceSpaceSuccess(reference_space, reference_space_type) {
-                        GodotWebXR.space = reference_space;
-                        reference_space.onreset = function(evt) {
-                            const c_str = GodotRuntime.allocString("reference_space_reset");
-                            onsimpleevent(c_str);
-                            GodotRuntime.free(c_str);
+                    function onReferenceSpaceSuccess1(reference_space1, reference_space_type1) {
+                        GodotWebXR.space = reference_space1;
+                        reference_space1.onreset = function(evt1) {
+                            const c_str1 = GodotRuntime.allocString("reference_space_reset");
+                            onsimpleevent1(c_str1);
+                            GodotRuntime.free(c_str1);
                         };
                         GodotWebXR.pauseResumeMainLoop();
                         window.setTimeout(function() {
-                            const c_str = GodotRuntime.allocString(reference_space_type);
-                            onstarted(c_str);
-                            GodotRuntime.free(c_str);
+                            const c_str1 = GodotRuntime.allocString(reference_space_type1);
+                            onstarted1(c_str1);
+                            GodotRuntime.free(c_str1);
                         }, 0);
                     }
-                    function requestReferenceSpace() {
-                        const reference_space_type = requested_reference_space_types.shift();
-                        session.requestReferenceSpace(reference_space_type).then((refSpace)=>{
-                            onReferenceSpaceSuccess(refSpace, reference_space_type);
+                    function requestReferenceSpace1() {
+                        const reference_space_type1 = requested_reference_space_types1.shift();
+                        session1.requestReferenceSpace(reference_space_type1).then((refSpace1)=>{
+                            onReferenceSpaceSuccess1(refSpace1, reference_space_type1);
                         }).catch(()=>{
-                            if (requested_reference_space_types.length === 0) {
-                                const c_str = GodotRuntime.allocString("Unable to get any of the requested reference space types");
-                                onfailed(c_str);
-                                GodotRuntime.free(c_str);
-                            } else requestReferenceSpace();
+                            if (requested_reference_space_types1.length === 0) {
+                                const c_str1 = GodotRuntime.allocString("Unable to get any of the requested reference space types");
+                                onfailed1(c_str1);
+                                GodotRuntime.free(c_str1);
+                            } else requestReferenceSpace1();
                         });
                     }
-                    requestReferenceSpace();
-                }).catch(function(error) {
-                    const c_str = GodotRuntime.allocString(`Unable to make WebGL context compatible with WebXR: ${error}`);
-                    onfailed(c_str);
-                    GodotRuntime.free(c_str);
+                    requestReferenceSpace1();
+                }).catch(function(error1) {
+                    const c_str1 = GodotRuntime.allocString(`Unable to make WebGL context compatible with WebXR: ${error1}`);
+                    onfailed1(c_str1);
+                    GodotRuntime.free(c_str1);
                 });
-            }).catch(function(error) {
-                const c_str = GodotRuntime.allocString(`Unable to start session: ${error}`);
-                onfailed(c_str);
-                GodotRuntime.free(c_str);
+            }).catch(function(error1) {
+                const c_str1 = GodotRuntime.allocString(`Unable to start session: ${error1}`);
+                onfailed1(c_str1);
+                GodotRuntime.free(c_str1);
             });
         }
-        function _godot_webxr_is_controller_connected(p_controller) {
-            if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(60, 1, p_controller);
+        function _godot_webxr_is_controller_connected(p_controller1) {
+            if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(60, 1, p_controller1);
             if (!GodotWebXR.session || !GodotWebXR.frame) return false;
-            return !!GodotWebXR.controllers[p_controller];
+            return !!GodotWebXR.controllers[p_controller1];
         }
-        function _godot_webxr_is_session_supported(p_session_mode, p_callback) {
-            if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(61, 1, p_session_mode, p_callback);
-            const session_mode = GodotRuntime.parseString(p_session_mode);
-            const cb = GodotRuntime.get_func(p_callback);
-            if (navigator.xr) navigator.xr.isSessionSupported(session_mode).then(function(supported) {
-                const c_str = GodotRuntime.allocString(session_mode);
-                cb(c_str, supported ? 1 : 0);
-                GodotRuntime.free(c_str);
+        function _godot_webxr_is_session_supported(p_session_mode1, p_callback1) {
+            if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(61, 1, p_session_mode1, p_callback1);
+            const session_mode1 = GodotRuntime.parseString(p_session_mode1);
+            const cb1 = GodotRuntime.get_func(p_callback1);
+            if (navigator.xr) navigator.xr.isSessionSupported(session_mode1).then(function(supported1) {
+                const c_str1 = GodotRuntime.allocString(session_mode1);
+                cb1(c_str1, supported1 ? 1 : 0);
+                GodotRuntime.free(c_str1);
             });
             else {
-                const c_str = GodotRuntime.allocString(session_mode);
-                cb(c_str, 0);
-                GodotRuntime.free(c_str);
+                const c_str1 = GodotRuntime.allocString(session_mode1);
+                cb1(c_str1, 0);
+                GodotRuntime.free(c_str1);
             }
         }
         function _godot_webxr_is_supported() {
@@ -10012,7 +10012,7 @@ var Godot = (()=>{
         }
         function _godot_webxr_uninitialize() {
             if (ENVIRONMENT_IS_PTHREAD) return _emscripten_proxy_to_main_thread_js(64, 1);
-            if (GodotWebXR.session) GodotWebXR.session.end().catch((e)=>{});
+            if (GodotWebXR.session) GodotWebXR.session.end().catch((e1)=>{});
             GodotWebXR.session = null;
             GodotWebXR.space = null;
             GodotWebXR.frame = null;
@@ -10020,16 +10020,16 @@ var Godot = (()=>{
             GodotWebXR.monkeyPatchRequestAnimationFrame(false);
             GodotWebXR.pauseResumeMainLoop();
         }
-        function _setTempRet0(val) {
-            setTempRet0(val);
+        function _setTempRet0(val1) {
+            setTempRet0(val1);
         }
-        function __isLeapYear(year) {
-            return year % 4 === 0 && (year % 100 !== 0 || year % 400 === 0);
+        function __isLeapYear(year1) {
+            return year1 % 4 === 0 && (year1 % 100 !== 0 || year1 % 400 === 0);
         }
-        function __arraySum(array, index) {
-            var sum = 0;
-            for(var i = 0; i <= index; sum += array[i++]);
-            return sum;
+        function __arraySum(array1, index1) {
+            var sum1 = 0;
+            for(var i1 = 0; i1 <= index1; sum1 += array1[i1++]);
+            return sum1;
         }
         var __MONTH_DAYS_LEAP = [
             31,
@@ -10059,44 +10059,44 @@ var Godot = (()=>{
             30,
             31
         ];
-        function __addDays(date, days) {
-            var newDate = new Date(date.getTime());
-            while(days > 0){
-                var leap = __isLeapYear(newDate.getFullYear());
-                var currentMonth = newDate.getMonth();
-                var daysInCurrentMonth = (leap ? __MONTH_DAYS_LEAP : __MONTH_DAYS_REGULAR)[currentMonth];
-                if (days > daysInCurrentMonth - newDate.getDate()) {
-                    days -= daysInCurrentMonth - newDate.getDate() + 1;
-                    newDate.setDate(1);
-                    if (currentMonth < 11) newDate.setMonth(currentMonth + 1);
+        function __addDays(date3, days1) {
+            var newDate1 = new Date(date3.getTime());
+            while(days1 > 0){
+                var leap1 = __isLeapYear(newDate1.getFullYear());
+                var currentMonth1 = newDate1.getMonth();
+                var daysInCurrentMonth1 = (leap1 ? __MONTH_DAYS_LEAP : __MONTH_DAYS_REGULAR)[currentMonth1];
+                if (days1 > daysInCurrentMonth1 - newDate1.getDate()) {
+                    days1 -= daysInCurrentMonth1 - newDate1.getDate() + 1;
+                    newDate1.setDate(1);
+                    if (currentMonth1 < 11) newDate1.setMonth(currentMonth1 + 1);
                     else {
-                        newDate.setMonth(0);
-                        newDate.setFullYear(newDate.getFullYear() + 1);
+                        newDate1.setMonth(0);
+                        newDate1.setFullYear(newDate1.getFullYear() + 1);
                     }
                 } else {
-                    newDate.setDate(newDate.getDate() + days);
-                    return newDate;
+                    newDate1.setDate(newDate1.getDate() + days1);
+                    return newDate1;
                 }
             }
-            return newDate;
+            return newDate1;
         }
-        function _strftime(s, maxsize, format, tm) {
-            var tm_zone = GROWABLE_HEAP_I32()[tm + 40 >> 2];
-            var date = {
-                tm_sec: GROWABLE_HEAP_I32()[tm >> 2],
-                tm_min: GROWABLE_HEAP_I32()[tm + 4 >> 2],
-                tm_hour: GROWABLE_HEAP_I32()[tm + 8 >> 2],
-                tm_mday: GROWABLE_HEAP_I32()[tm + 12 >> 2],
-                tm_mon: GROWABLE_HEAP_I32()[tm + 16 >> 2],
-                tm_year: GROWABLE_HEAP_I32()[tm + 20 >> 2],
-                tm_wday: GROWABLE_HEAP_I32()[tm + 24 >> 2],
-                tm_yday: GROWABLE_HEAP_I32()[tm + 28 >> 2],
-                tm_isdst: GROWABLE_HEAP_I32()[tm + 32 >> 2],
-                tm_gmtoff: GROWABLE_HEAP_I32()[tm + 36 >> 2],
-                tm_zone: tm_zone ? UTF8ToString(tm_zone) : ""
+        function _strftime(s1, maxsize1, format1, tm1) {
+            var tm_zone1 = GROWABLE_HEAP_I32()[tm1 + 40 >> 2];
+            var date3 = {
+                tm_sec: GROWABLE_HEAP_I32()[tm1 >> 2],
+                tm_min: GROWABLE_HEAP_I32()[tm1 + 4 >> 2],
+                tm_hour: GROWABLE_HEAP_I32()[tm1 + 8 >> 2],
+                tm_mday: GROWABLE_HEAP_I32()[tm1 + 12 >> 2],
+                tm_mon: GROWABLE_HEAP_I32()[tm1 + 16 >> 2],
+                tm_year: GROWABLE_HEAP_I32()[tm1 + 20 >> 2],
+                tm_wday: GROWABLE_HEAP_I32()[tm1 + 24 >> 2],
+                tm_yday: GROWABLE_HEAP_I32()[tm1 + 28 >> 2],
+                tm_isdst: GROWABLE_HEAP_I32()[tm1 + 32 >> 2],
+                tm_gmtoff: GROWABLE_HEAP_I32()[tm1 + 36 >> 2],
+                tm_zone: tm_zone1 ? UTF8ToString(tm_zone1) : ""
             };
-            var pattern = UTF8ToString(format);
-            var EXPANSION_RULES_1 = {
+            var pattern1 = UTF8ToString(format1);
+            var EXPANSION_RULES_11 = {
                 "%c": "%a %b %d %H:%M:%S %Y",
                 "%D": "%m/%d/%y",
                 "%F": "%Y-%m-%d",
@@ -10126,8 +10126,8 @@ var Godot = (()=>{
                 "%OW": "%W",
                 "%Oy": "%y"
             };
-            for(var rule in EXPANSION_RULES_1)pattern = pattern.replace(new RegExp(rule, "g"), EXPANSION_RULES_1[rule]);
-            var WEEKDAYS = [
+            for(var rule1 in EXPANSION_RULES_11)pattern1 = pattern1.replace(new RegExp(rule1, "g"), EXPANSION_RULES_11[rule1]);
+            var WEEKDAYS1 = [
                 "Sunday",
                 "Monday",
                 "Tuesday",
@@ -10136,7 +10136,7 @@ var Godot = (()=>{
                 "Friday",
                 "Saturday"
             ];
-            var MONTHS = [
+            var MONTHS1 = [
                 "January",
                 "February",
                 "March",
@@ -10150,183 +10150,183 @@ var Godot = (()=>{
                 "November",
                 "December"
             ];
-            function leadingSomething(value, digits, character) {
-                var str = typeof value == "number" ? value.toString() : value || "";
-                while(str.length < digits)str = character[0] + str;
-                return str;
+            function leadingSomething1(value1, digits1, character1) {
+                var str1 = typeof value1 == "number" ? value1.toString() : value1 || "";
+                while(str1.length < digits1)str1 = character1[0] + str1;
+                return str1;
             }
-            function leadingNulls(value, digits) {
-                return leadingSomething(value, digits, "0");
+            function leadingNulls1(value1, digits1) {
+                return leadingSomething1(value1, digits1, "0");
             }
-            function compareByDay(date1, date2) {
-                function sgn(value) {
-                    return value < 0 ? -1 : value > 0 ? 1 : 0;
+            function compareByDay1(date11, date21) {
+                function sgn1(value1) {
+                    return value1 < 0 ? -1 : value1 > 0 ? 1 : 0;
                 }
-                var compare;
-                if ((compare = sgn(date1.getFullYear() - date2.getFullYear())) === 0) {
-                    if ((compare = sgn(date1.getMonth() - date2.getMonth())) === 0) compare = sgn(date1.getDate() - date2.getDate());
+                var compare1;
+                if ((compare1 = sgn1(date11.getFullYear() - date21.getFullYear())) === 0) {
+                    if ((compare1 = sgn1(date11.getMonth() - date21.getMonth())) === 0) compare1 = sgn1(date11.getDate() - date21.getDate());
                 }
-                return compare;
+                return compare1;
             }
-            function getFirstWeekStartDate(janFourth) {
-                switch(janFourth.getDay()){
+            function getFirstWeekStartDate1(janFourth1) {
+                switch(janFourth1.getDay()){
                     case 0:
-                        return new Date(janFourth.getFullYear() - 1, 11, 29);
+                        return new Date(janFourth1.getFullYear() - 1, 11, 29);
                     case 1:
-                        return janFourth;
+                        return janFourth1;
                     case 2:
-                        return new Date(janFourth.getFullYear(), 0, 3);
+                        return new Date(janFourth1.getFullYear(), 0, 3);
                     case 3:
-                        return new Date(janFourth.getFullYear(), 0, 2);
+                        return new Date(janFourth1.getFullYear(), 0, 2);
                     case 4:
-                        return new Date(janFourth.getFullYear(), 0, 1);
+                        return new Date(janFourth1.getFullYear(), 0, 1);
                     case 5:
-                        return new Date(janFourth.getFullYear() - 1, 11, 31);
+                        return new Date(janFourth1.getFullYear() - 1, 11, 31);
                     case 6:
-                        return new Date(janFourth.getFullYear() - 1, 11, 30);
+                        return new Date(janFourth1.getFullYear() - 1, 11, 30);
                 }
             }
-            function getWeekBasedYear(date) {
-                var thisDate = __addDays(new Date(date.tm_year + 1900, 0, 1), date.tm_yday);
-                var janFourthThisYear = new Date(thisDate.getFullYear(), 0, 4);
-                var janFourthNextYear = new Date(thisDate.getFullYear() + 1, 0, 4);
-                var firstWeekStartThisYear = getFirstWeekStartDate(janFourthThisYear);
-                var firstWeekStartNextYear = getFirstWeekStartDate(janFourthNextYear);
-                if (compareByDay(firstWeekStartThisYear, thisDate) <= 0) {
-                    if (compareByDay(firstWeekStartNextYear, thisDate) <= 0) return thisDate.getFullYear() + 1;
-                    else return thisDate.getFullYear();
-                } else return thisDate.getFullYear() - 1;
+            function getWeekBasedYear1(date3) {
+                var thisDate1 = __addDays(new Date(date3.tm_year + 1900, 0, 1), date3.tm_yday);
+                var janFourthThisYear1 = new Date(thisDate1.getFullYear(), 0, 4);
+                var janFourthNextYear1 = new Date(thisDate1.getFullYear() + 1, 0, 4);
+                var firstWeekStartThisYear1 = getFirstWeekStartDate1(janFourthThisYear1);
+                var firstWeekStartNextYear1 = getFirstWeekStartDate1(janFourthNextYear1);
+                if (compareByDay1(firstWeekStartThisYear1, thisDate1) <= 0) {
+                    if (compareByDay1(firstWeekStartNextYear1, thisDate1) <= 0) return thisDate1.getFullYear() + 1;
+                    else return thisDate1.getFullYear();
+                } else return thisDate1.getFullYear() - 1;
             }
-            var EXPANSION_RULES_2 = {
-                "%a": function(date) {
-                    return WEEKDAYS[date.tm_wday].substring(0, 3);
+            var EXPANSION_RULES_21 = {
+                "%a": function(date3) {
+                    return WEEKDAYS1[date3.tm_wday].substring(0, 3);
                 },
-                "%A": function(date) {
-                    return WEEKDAYS[date.tm_wday];
+                "%A": function(date3) {
+                    return WEEKDAYS1[date3.tm_wday];
                 },
-                "%b": function(date) {
-                    return MONTHS[date.tm_mon].substring(0, 3);
+                "%b": function(date3) {
+                    return MONTHS1[date3.tm_mon].substring(0, 3);
                 },
-                "%B": function(date) {
-                    return MONTHS[date.tm_mon];
+                "%B": function(date3) {
+                    return MONTHS1[date3.tm_mon];
                 },
-                "%C": function(date) {
-                    var year = date.tm_year + 1900;
-                    return leadingNulls(year / 100 | 0, 2);
+                "%C": function(date3) {
+                    var year1 = date3.tm_year + 1900;
+                    return leadingNulls1(year1 / 100 | 0, 2);
                 },
-                "%d": function(date) {
-                    return leadingNulls(date.tm_mday, 2);
+                "%d": function(date3) {
+                    return leadingNulls1(date3.tm_mday, 2);
                 },
-                "%e": function(date) {
-                    return leadingSomething(date.tm_mday, 2, " ");
+                "%e": function(date3) {
+                    return leadingSomething1(date3.tm_mday, 2, " ");
                 },
-                "%g": function(date) {
-                    return getWeekBasedYear(date).toString().substring(2);
+                "%g": function(date3) {
+                    return getWeekBasedYear1(date3).toString().substring(2);
                 },
-                "%G": function(date) {
-                    return getWeekBasedYear(date);
+                "%G": function(date3) {
+                    return getWeekBasedYear1(date3);
                 },
-                "%H": function(date) {
-                    return leadingNulls(date.tm_hour, 2);
+                "%H": function(date3) {
+                    return leadingNulls1(date3.tm_hour, 2);
                 },
-                "%I": function(date) {
-                    var twelveHour = date.tm_hour;
-                    if (twelveHour == 0) twelveHour = 12;
-                    else if (twelveHour > 12) twelveHour -= 12;
-                    return leadingNulls(twelveHour, 2);
+                "%I": function(date3) {
+                    var twelveHour1 = date3.tm_hour;
+                    if (twelveHour1 == 0) twelveHour1 = 12;
+                    else if (twelveHour1 > 12) twelveHour1 -= 12;
+                    return leadingNulls1(twelveHour1, 2);
                 },
-                "%j": function(date) {
-                    return leadingNulls(date.tm_mday + __arraySum(__isLeapYear(date.tm_year + 1900) ? __MONTH_DAYS_LEAP : __MONTH_DAYS_REGULAR, date.tm_mon - 1), 3);
+                "%j": function(date3) {
+                    return leadingNulls1(date3.tm_mday + __arraySum(__isLeapYear(date3.tm_year + 1900) ? __MONTH_DAYS_LEAP : __MONTH_DAYS_REGULAR, date3.tm_mon - 1), 3);
                 },
-                "%m": function(date) {
-                    return leadingNulls(date.tm_mon + 1, 2);
+                "%m": function(date3) {
+                    return leadingNulls1(date3.tm_mon + 1, 2);
                 },
-                "%M": function(date) {
-                    return leadingNulls(date.tm_min, 2);
+                "%M": function(date3) {
+                    return leadingNulls1(date3.tm_min, 2);
                 },
                 "%n": function() {
                     return "\n";
                 },
-                "%p": function(date) {
-                    if (date.tm_hour >= 0 && date.tm_hour < 12) return "AM";
+                "%p": function(date3) {
+                    if (date3.tm_hour >= 0 && date3.tm_hour < 12) return "AM";
                     else return "PM";
                 },
-                "%S": function(date) {
-                    return leadingNulls(date.tm_sec, 2);
+                "%S": function(date3) {
+                    return leadingNulls1(date3.tm_sec, 2);
                 },
                 "%t": function() {
                     return "	";
                 },
-                "%u": function(date) {
-                    return date.tm_wday || 7;
+                "%u": function(date3) {
+                    return date3.tm_wday || 7;
                 },
-                "%U": function(date) {
-                    var days = date.tm_yday + 7 - date.tm_wday;
-                    return leadingNulls(Math.floor(days / 7), 2);
+                "%U": function(date3) {
+                    var days1 = date3.tm_yday + 7 - date3.tm_wday;
+                    return leadingNulls1(Math.floor(days1 / 7), 2);
                 },
-                "%V": function(date) {
-                    var val = Math.floor((date.tm_yday + 7 - (date.tm_wday + 6) % 7) / 7);
-                    if ((date.tm_wday + 371 - date.tm_yday - 2) % 7 <= 2) val++;
-                    if (!val) {
-                        val = 52;
-                        var dec31 = (date.tm_wday + 7 - date.tm_yday - 1) % 7;
-                        if (dec31 == 4 || dec31 == 5 && __isLeapYear(date.tm_year % 400 - 1)) val++;
-                    } else if (val == 53) {
-                        var jan1 = (date.tm_wday + 371 - date.tm_yday) % 7;
-                        if (jan1 != 4 && (jan1 != 3 || !__isLeapYear(date.tm_year))) val = 1;
+                "%V": function(date3) {
+                    var val1 = Math.floor((date3.tm_yday + 7 - (date3.tm_wday + 6) % 7) / 7);
+                    if ((date3.tm_wday + 371 - date3.tm_yday - 2) % 7 <= 2) val1++;
+                    if (!val1) {
+                        val1 = 52;
+                        var dec311 = (date3.tm_wday + 7 - date3.tm_yday - 1) % 7;
+                        if (dec311 == 4 || dec311 == 5 && __isLeapYear(date3.tm_year % 400 - 1)) val1++;
+                    } else if (val1 == 53) {
+                        var jan11 = (date3.tm_wday + 371 - date3.tm_yday) % 7;
+                        if (jan11 != 4 && (jan11 != 3 || !__isLeapYear(date3.tm_year))) val1 = 1;
                     }
-                    return leadingNulls(val, 2);
+                    return leadingNulls1(val1, 2);
                 },
-                "%w": function(date) {
-                    return date.tm_wday;
+                "%w": function(date3) {
+                    return date3.tm_wday;
                 },
-                "%W": function(date) {
-                    var days = date.tm_yday + 7 - (date.tm_wday + 6) % 7;
-                    return leadingNulls(Math.floor(days / 7), 2);
+                "%W": function(date3) {
+                    var days1 = date3.tm_yday + 7 - (date3.tm_wday + 6) % 7;
+                    return leadingNulls1(Math.floor(days1 / 7), 2);
                 },
-                "%y": function(date) {
-                    return (date.tm_year + 1900).toString().substring(2);
+                "%y": function(date3) {
+                    return (date3.tm_year + 1900).toString().substring(2);
                 },
-                "%Y": function(date) {
-                    return date.tm_year + 1900;
+                "%Y": function(date3) {
+                    return date3.tm_year + 1900;
                 },
-                "%z": function(date) {
-                    var off = date.tm_gmtoff;
-                    var ahead = off >= 0;
-                    off = Math.abs(off) / 60;
-                    off = off / 60 * 100 + off % 60;
-                    return (ahead ? "+" : "-") + String("0000" + off).slice(-4);
+                "%z": function(date3) {
+                    var off1 = date3.tm_gmtoff;
+                    var ahead1 = off1 >= 0;
+                    off1 = Math.abs(off1) / 60;
+                    off1 = off1 / 60 * 100 + off1 % 60;
+                    return (ahead1 ? "+" : "-") + String("0000" + off1).slice(-4);
                 },
-                "%Z": function(date) {
-                    return date.tm_zone;
+                "%Z": function(date3) {
+                    return date3.tm_zone;
                 },
                 "%%": function() {
                     return "%";
                 }
             };
-            pattern = pattern.replace(/%%/g, "\0\0");
-            for(var rule in EXPANSION_RULES_2)if (pattern.includes(rule)) pattern = pattern.replace(new RegExp(rule, "g"), EXPANSION_RULES_2[rule](date));
-            pattern = pattern.replace(/\0\0/g, "%");
-            var bytes = intArrayFromString(pattern, false);
-            if (bytes.length > maxsize) return 0;
-            writeArrayToMemory(bytes, s);
-            return bytes.length - 1;
+            pattern1 = pattern1.replace(/%%/g, "\x00\x00");
+            for(var rule1 in EXPANSION_RULES_21)if (pattern1.includes(rule1)) pattern1 = pattern1.replace(new RegExp(rule1, "g"), EXPANSION_RULES_21[rule1](date3));
+            pattern1 = pattern1.replace(/\0\0/g, "%");
+            var bytes1 = intArrayFromString(pattern1, false);
+            if (bytes1.length > maxsize1) return 0;
+            writeArrayToMemory(bytes1, s1);
+            return bytes1.length - 1;
         }
-        function _strftime_l(s, maxsize, format, tm) {
-            return _strftime(s, maxsize, format, tm);
+        function _strftime_l(s1, maxsize1, format1, tm1) {
+            return _strftime(s1, maxsize1, format1, tm1);
         }
         PThread.init();
-        var FSNode = function(parent, name, mode, rdev) {
-            if (!parent) parent = this;
-            this.parent = parent;
-            this.mount = parent.mount;
+        var FSNode = function(parent1, name1, mode1, rdev1) {
+            if (!parent1) parent1 = this;
+            this.parent = parent1;
+            this.mount = parent1.mount;
             this.mounted = null;
             this.id = FS.nextInode++;
-            this.name = name;
-            this.mode = mode;
+            this.name = name1;
+            this.mode = mode1;
             this.node_ops = {};
             this.stream_ops = {};
-            this.rdev = rdev;
+            this.rdev = rdev1;
         };
         var readMode = 365;
         var writeMode = 146;
@@ -10335,16 +10335,16 @@ var Godot = (()=>{
                 get: function() {
                     return (this.mode & readMode) === readMode;
                 },
-                set: function(val) {
-                    val ? this.mode |= readMode : this.mode &= ~readMode;
+                set: function(val1) {
+                    val1 ? this.mode |= readMode : this.mode &= ~readMode;
                 }
             },
             write: {
                 get: function() {
                     return (this.mode & writeMode) === writeMode;
                 },
-                set: function(val) {
-                    val ? this.mode |= writeMode : this.mode &= ~writeMode;
+                set: function(val1) {
+                    val1 ? this.mode |= writeMode : this.mode &= ~writeMode;
                 }
             },
             isFolder: {
@@ -10360,26 +10360,26 @@ var Godot = (()=>{
         });
         FS.FSNode = FSNode;
         FS.staticInit();
-        Module["requestFullscreen"] = function Module_requestFullscreen(lockPointer, resizeCanvas) {
-            Browser.requestFullscreen(lockPointer, resizeCanvas);
+        Module["requestFullscreen"] = function Module_requestFullscreen1(lockPointer1, resizeCanvas1) {
+            Browser.requestFullscreen(lockPointer1, resizeCanvas1);
         };
-        Module["requestAnimationFrame"] = function Module_requestAnimationFrame(func) {
-            Browser.requestAnimationFrame(func);
+        Module["requestAnimationFrame"] = function Module_requestAnimationFrame1(func1) {
+            Browser.requestAnimationFrame(func1);
         };
-        Module["setCanvasSize"] = function Module_setCanvasSize(width, height, noUpdates) {
-            Browser.setCanvasSize(width, height, noUpdates);
+        Module["setCanvasSize"] = function Module_setCanvasSize1(width1, height1, noUpdates1) {
+            Browser.setCanvasSize(width1, height1, noUpdates1);
         };
-        Module["pauseMainLoop"] = function Module_pauseMainLoop() {
+        Module["pauseMainLoop"] = function Module_pauseMainLoop1() {
             Browser.mainLoop.pause();
         };
-        Module["resumeMainLoop"] = function Module_resumeMainLoop() {
+        Module["resumeMainLoop"] = function Module_resumeMainLoop1() {
             Browser.mainLoop.resume();
         };
-        Module["getUserMedia"] = function Module_getUserMedia() {
+        Module["getUserMedia"] = function Module_getUserMedia1() {
             Browser.getUserMedia();
         };
-        Module["createContext"] = function Module_createContext(canvas, useWebGL, setInModule, webGLContextAttributes) {
-            return Browser.createContext(canvas, useWebGL, setInModule, webGLContextAttributes);
+        Module["createContext"] = function Module_createContext1(canvas1, useWebGL1, setInModule1, webGLContextAttributes1) {
+            return Browser.createContext(canvas1, useWebGL1, setInModule1, webGLContextAttributes1);
         };
         var preloadedImages = {};
         var preloadedAudios = {};
@@ -10520,17 +10520,17 @@ var Godot = (()=>{
             "EOWNERDEAD": 62,
             "ESTRPIPE": 135
         };
-        GodotOS.atexit(function(resolve, reject) {
+        GodotOS.atexit(function(resolve1, reject1) {
             GodotDisplayCursor.clear();
-            resolve();
+            resolve1();
         });
-        GodotOS.atexit(function(resolve, reject) {
+        GodotOS.atexit(function(resolve1, reject1) {
             GodotEventListeners.clear();
-            resolve();
+            resolve1();
         });
-        GodotOS.atexit(function(resolve, reject) {
+        GodotOS.atexit(function(resolve1, reject1) {
             GodotDisplayVK.clear();
-            resolve();
+            resolve1();
         });
         GodotJSWrapper.proxies = new Map;
         var proxiedFunctionTable = [
@@ -10600,12 +10600,12 @@ var Godot = (()=>{
             _godot_webxr_sample_controller_data,
             _godot_webxr_uninitialize
         ];
-        function intArrayFromString(stringy, dontAddNull, length) {
-            var len = length > 0 ? length : lengthBytesUTF8(stringy) + 1;
-            var u8array = new Array(len);
-            var numBytesWritten = stringToUTF8Array(stringy, u8array, 0, u8array.length);
-            if (dontAddNull) u8array.length = numBytesWritten;
-            return u8array;
+        function intArrayFromString(stringy1, dontAddNull1, length1) {
+            var len1 = length1 > 0 ? length1 : lengthBytesUTF8(stringy1) + 1;
+            var u8array1 = new Array(len1);
+            var numBytesWritten1 = stringToUTF8Array(stringy1, u8array1, 0, u8array1.length);
+            if (dontAddNull1) u8array1.length = numBytesWritten1;
+            return u8array1;
         }
         var asmLibraryArg = {
             "cg": ___call_sighandler,
@@ -11174,123 +11174,123 @@ var Godot = (()=>{
         var dynCall_iij = Module["dynCall_iij"] = function() {
             return (dynCall_iij = Module["dynCall_iij"] = Module["asm"]["ti"]).apply(null, arguments);
         };
-        function invoke_vii(index, a1, a2) {
-            var sp = stackSave();
+        function invoke_vii(index1, a11, a21) {
+            var sp1 = stackSave();
             try {
-                getWasmTableEntry(index)(a1, a2);
-            } catch (e) {
-                stackRestore(sp);
-                if (e !== e + 0) throw e;
+                getWasmTableEntry(index1)(a11, a21);
+            } catch (e1) {
+                stackRestore(sp1);
+                if (e1 !== e1 + 0) throw e1;
                 _setThrew(1, 0);
             }
         }
-        function invoke_vi(index, a1) {
-            var sp = stackSave();
+        function invoke_vi(index1, a11) {
+            var sp1 = stackSave();
             try {
-                getWasmTableEntry(index)(a1);
-            } catch (e) {
-                stackRestore(sp);
-                if (e !== e + 0) throw e;
+                getWasmTableEntry(index1)(a11);
+            } catch (e1) {
+                stackRestore(sp1);
+                if (e1 !== e1 + 0) throw e1;
                 _setThrew(1, 0);
             }
         }
-        function invoke_viii(index, a1, a2, a3) {
-            var sp = stackSave();
+        function invoke_viii(index1, a11, a21, a31) {
+            var sp1 = stackSave();
             try {
-                getWasmTableEntry(index)(a1, a2, a3);
-            } catch (e) {
-                stackRestore(sp);
-                if (e !== e + 0) throw e;
+                getWasmTableEntry(index1)(a11, a21, a31);
+            } catch (e1) {
+                stackRestore(sp1);
+                if (e1 !== e1 + 0) throw e1;
                 _setThrew(1, 0);
             }
         }
-        function invoke_ii(index, a1) {
-            var sp = stackSave();
+        function invoke_ii(index1, a11) {
+            var sp1 = stackSave();
             try {
-                return getWasmTableEntry(index)(a1);
-            } catch (e) {
-                stackRestore(sp);
-                if (e !== e + 0) throw e;
+                return getWasmTableEntry(index1)(a11);
+            } catch (e1) {
+                stackRestore(sp1);
+                if (e1 !== e1 + 0) throw e1;
                 _setThrew(1, 0);
             }
         }
-        function invoke_iii(index, a1, a2) {
-            var sp = stackSave();
+        function invoke_iii(index1, a11, a21) {
+            var sp1 = stackSave();
             try {
-                return getWasmTableEntry(index)(a1, a2);
-            } catch (e) {
-                stackRestore(sp);
-                if (e !== e + 0) throw e;
+                return getWasmTableEntry(index1)(a11, a21);
+            } catch (e1) {
+                stackRestore(sp1);
+                if (e1 !== e1 + 0) throw e1;
                 _setThrew(1, 0);
             }
         }
-        function invoke_iiiii(index, a1, a2, a3, a4) {
-            var sp = stackSave();
+        function invoke_iiiii(index1, a11, a21, a31, a41) {
+            var sp1 = stackSave();
             try {
-                return getWasmTableEntry(index)(a1, a2, a3, a4);
-            } catch (e) {
-                stackRestore(sp);
-                if (e !== e + 0) throw e;
+                return getWasmTableEntry(index1)(a11, a21, a31, a41);
+            } catch (e1) {
+                stackRestore(sp1);
+                if (e1 !== e1 + 0) throw e1;
                 _setThrew(1, 0);
             }
         }
-        function invoke_iiiiii(index, a1, a2, a3, a4, a5) {
-            var sp = stackSave();
+        function invoke_iiiiii(index1, a11, a21, a31, a41, a51) {
+            var sp1 = stackSave();
             try {
-                return getWasmTableEntry(index)(a1, a2, a3, a4, a5);
-            } catch (e) {
-                stackRestore(sp);
-                if (e !== e + 0) throw e;
+                return getWasmTableEntry(index1)(a11, a21, a31, a41, a51);
+            } catch (e1) {
+                stackRestore(sp1);
+                if (e1 !== e1 + 0) throw e1;
                 _setThrew(1, 0);
             }
         }
-        function invoke_viiii(index, a1, a2, a3, a4) {
-            var sp = stackSave();
+        function invoke_viiii(index1, a11, a21, a31, a41) {
+            var sp1 = stackSave();
             try {
-                getWasmTableEntry(index)(a1, a2, a3, a4);
-            } catch (e) {
-                stackRestore(sp);
-                if (e !== e + 0) throw e;
+                getWasmTableEntry(index1)(a11, a21, a31, a41);
+            } catch (e1) {
+                stackRestore(sp1);
+                if (e1 !== e1 + 0) throw e1;
                 _setThrew(1, 0);
             }
         }
-        function invoke_iiii(index, a1, a2, a3) {
-            var sp = stackSave();
+        function invoke_iiii(index1, a11, a21, a31) {
+            var sp1 = stackSave();
             try {
-                return getWasmTableEntry(index)(a1, a2, a3);
-            } catch (e) {
-                stackRestore(sp);
-                if (e !== e + 0) throw e;
+                return getWasmTableEntry(index1)(a11, a21, a31);
+            } catch (e1) {
+                stackRestore(sp1);
+                if (e1 !== e1 + 0) throw e1;
                 _setThrew(1, 0);
             }
         }
-        function invoke_viiiiiii(index, a1, a2, a3, a4, a5, a6, a7) {
-            var sp = stackSave();
+        function invoke_viiiiiii(index1, a11, a21, a31, a41, a51, a61, a71) {
+            var sp1 = stackSave();
             try {
-                getWasmTableEntry(index)(a1, a2, a3, a4, a5, a6, a7);
-            } catch (e) {
-                stackRestore(sp);
-                if (e !== e + 0) throw e;
+                getWasmTableEntry(index1)(a11, a21, a31, a41, a51, a61, a71);
+            } catch (e1) {
+                stackRestore(sp1);
+                if (e1 !== e1 + 0) throw e1;
                 _setThrew(1, 0);
             }
         }
-        function invoke_iiiiiii(index, a1, a2, a3, a4, a5, a6) {
-            var sp = stackSave();
+        function invoke_iiiiiii(index1, a11, a21, a31, a41, a51, a61) {
+            var sp1 = stackSave();
             try {
-                return getWasmTableEntry(index)(a1, a2, a3, a4, a5, a6);
-            } catch (e) {
-                stackRestore(sp);
-                if (e !== e + 0) throw e;
+                return getWasmTableEntry(index1)(a11, a21, a31, a41, a51, a61);
+            } catch (e1) {
+                stackRestore(sp1);
+                if (e1 !== e1 + 0) throw e1;
                 _setThrew(1, 0);
             }
         }
-        function invoke_iij(index, a1, a2, a3) {
-            var sp = stackSave();
+        function invoke_iij(index1, a11, a21, a31) {
+            var sp1 = stackSave();
             try {
-                return dynCall_iij(index, a1, a2, a3);
-            } catch (e) {
-                stackRestore(sp);
-                if (e !== e + 0) throw e;
+                return dynCall_iij(index1, a11, a21, a31);
+            } catch (e1) {
+                stackRestore(sp1);
+                if (e1 !== e1 + 0) throw e1;
                 _setThrew(1, 0);
             }
         }
@@ -11301,39 +11301,39 @@ var Godot = (()=>{
         Module["ExitStatus"] = ExitStatus;
         Module["PThread"] = PThread;
         var calledRun;
-        function ExitStatus(status) {
+        function ExitStatus(status1) {
             this.name = "ExitStatus";
-            this.message = "Program terminated with exit(" + status + ")";
-            this.status = status;
+            this.message = "Program terminated with exit(" + status1 + ")";
+            this.status = status1;
         }
         var calledMain = false;
-        dependenciesFulfilled = function runCaller() {
+        dependenciesFulfilled = function runCaller1() {
             if (!calledRun) run();
-            if (!calledRun) dependenciesFulfilled = runCaller;
+            if (!calledRun) dependenciesFulfilled = runCaller1;
         };
-        function callMain(args) {
-            var entryFunction = Module["_main"];
-            args = args || [];
-            args.unshift(thisProgram);
-            var argc = args.length;
-            var argv = stackAlloc((argc + 1) * 4);
-            var argv_ptr = argv >> 2;
-            args.forEach((arg)=>{
-                GROWABLE_HEAP_I32()[argv_ptr++] = allocateUTF8OnStack(arg);
+        function callMain(args1) {
+            var entryFunction1 = Module["_main"];
+            args1 = args1 || [];
+            args1.unshift(thisProgram);
+            var argc1 = args1.length;
+            var argv1 = stackAlloc((argc1 + 1) * 4);
+            var argv_ptr1 = argv1 >> 2;
+            args1.forEach((arg1)=>{
+                GROWABLE_HEAP_I32()[argv_ptr1++] = allocateUTF8OnStack(arg1);
             });
-            GROWABLE_HEAP_I32()[argv_ptr] = 0;
+            GROWABLE_HEAP_I32()[argv_ptr1] = 0;
             try {
-                var ret = entryFunction(argc, argv);
-                exit(ret, true);
-                return ret;
-            } catch (e) {
-                return handleException(e);
+                var ret1 = entryFunction1(argc1, argv1);
+                exit(ret1, true);
+                return ret1;
+            } catch (e1) {
+                return handleException(e1);
             } finally{
                 calledMain = true;
             }
         }
-        function run(args) {
-            args = args || arguments_;
+        function run(args1) {
+            args1 = args1 || arguments_;
             if (runDependencies > 0) return;
             if (ENVIRONMENT_IS_PTHREAD) {
                 readyPromiseResolve(Module);
@@ -11345,7 +11345,7 @@ var Godot = (()=>{
             }
             preRun();
             if (runDependencies > 0) return;
-            function doRun() {
+            function doRun1() {
                 if (calledRun) return;
                 calledRun = true;
                 Module["calledRun"] = true;
@@ -11354,7 +11354,7 @@ var Godot = (()=>{
                 preMain();
                 readyPromiseResolve(Module);
                 if (Module["onRuntimeInitialized"]) Module["onRuntimeInitialized"]();
-                if (shouldRunNow) callMain(args);
+                if (shouldRunNow) callMain(args1);
                 postRun();
             }
             if (Module["setStatus"]) {
@@ -11363,30 +11363,30 @@ var Godot = (()=>{
                     setTimeout(function() {
                         Module["setStatus"]("");
                     }, 1);
-                    doRun();
+                    doRun1();
                 }, 1);
-            } else doRun();
+            } else doRun1();
         }
         Module["run"] = run;
-        function exit(status, implicit) {
-            EXITSTATUS = status;
-            if (!implicit) {
+        function exit(status1, implicit1) {
+            EXITSTATUS = status1;
+            if (!implicit1) {
                 if (ENVIRONMENT_IS_PTHREAD) {
-                    exitOnMainThread(status);
+                    exitOnMainThread(status1);
                     throw "unwind";
                 }
             }
             if (!keepRuntimeAlive()) exitRuntime();
-            procExit(status);
+            procExit(status1);
         }
-        function procExit(code) {
-            EXITSTATUS = code;
+        function procExit(code1) {
+            EXITSTATUS = code1;
             if (!keepRuntimeAlive()) {
                 PThread.terminateAllThreads();
-                if (Module["onExit"]) Module["onExit"](code);
+                if (Module["onExit"]) Module["onExit"](code1);
                 ABORT = true;
             }
-            quit_(code, new ExitStatus(code));
+            quit_(code1, new ExitStatus(code1));
         }
         if (Module["preInit"]) {
             if (typeof Module["preInit"] == "function") Module["preInit"] = [
@@ -11406,107 +11406,107 @@ else if (typeof define === "function" && define["amd"]) define([], function() {
 });
 else if (typeof exports === "object") exports["Godot"] = Godot;
 const Preloader = /** @constructor */ function() {
-    function getTrackedResponse(response, load_status) {
-        function onloadprogress(reader, controller) {
-            return reader.read().then(function(result) {
-                if (load_status.done) return Promise.resolve();
-                if (result.value) {
-                    controller.enqueue(result.value);
-                    load_status.loaded += result.value.length;
+    function getTrackedResponse1(response1, load_status1) {
+        function onloadprogress1(reader1, controller1) {
+            return reader1.read().then(function(result1) {
+                if (load_status1.done) return Promise.resolve();
+                if (result1.value) {
+                    controller1.enqueue(result1.value);
+                    load_status1.loaded += result1.value.length;
                 }
-                if (!result.done) return onloadprogress(reader, controller);
-                load_status.done = true;
+                if (!result1.done) return onloadprogress1(reader1, controller1);
+                load_status1.done = true;
                 return Promise.resolve();
             });
         }
-        const reader = response.body.getReader();
+        const reader1 = response1.body.getReader();
         return new Response(new ReadableStream({
-            start: function(controller) {
-                onloadprogress(reader, controller).then(function() {
-                    controller.close();
+            start: function(controller1) {
+                onloadprogress1(reader1, controller1).then(function() {
+                    controller1.close();
                 });
             }
         }), {
-            headers: response.headers
+            headers: response1.headers
         });
     }
-    function loadFetch(file, tracker, fileSize, raw) {
-        tracker[file] = {
-            total: fileSize || 0,
+    function loadFetch1(file1, tracker1, fileSize1, raw1) {
+        tracker1[file1] = {
+            total: fileSize1 || 0,
             loaded: 0,
             done: false
         };
-        return fetch(file).then(function(response) {
-            if (!response.ok) return Promise.reject(new Error(`Failed loading file '${file}'`));
-            const tr = getTrackedResponse(response, tracker[file]);
-            if (raw) return Promise.resolve(tr);
-            return tr.arrayBuffer();
+        return fetch(file1).then(function(response1) {
+            if (!response1.ok) return Promise.reject(new Error(`Failed loading file '${file1}'`));
+            const tr1 = getTrackedResponse1(response1, tracker1[file1]);
+            if (raw1) return Promise.resolve(tr1);
+            return tr1.arrayBuffer();
         });
     }
-    function retry(func, attempts = 1) {
-        function onerror(err) {
-            if (attempts <= 1) return Promise.reject(err);
-            return new Promise(function(resolve, reject) {
+    function retry1(func1, attempts1 = 1) {
+        function onerror1(err1) {
+            if (attempts1 <= 1) return Promise.reject(err1);
+            return new Promise(function(resolve1, reject1) {
                 setTimeout(function() {
-                    retry(func, attempts - 1).then(resolve).catch(reject);
+                    retry1(func1, attempts1 - 1).then(resolve1).catch(reject1);
                 }, 1000);
             });
         }
-        return func().catch(onerror);
+        return func1().catch(onerror1);
     }
-    const DOWNLOAD_ATTEMPTS_MAX = 4;
-    const loadingFiles = {};
-    const lastProgress = {
+    const DOWNLOAD_ATTEMPTS_MAX1 = 4;
+    const loadingFiles1 = {};
+    const lastProgress1 = {
         loaded: 0,
         total: 0
     };
-    let progressFunc = null;
-    const animateProgress = function() {
-        let loaded = 0;
-        let total = 0;
-        let totalIsValid = true;
-        let progressIsFinal = true;
-        Object.keys(loadingFiles).forEach(function(file) {
-            const stat = loadingFiles[file];
-            if (!stat.done) progressIsFinal = false;
-            if (!totalIsValid || stat.total === 0) {
-                totalIsValid = false;
-                total = 0;
-            } else total += stat.total;
-            loaded += stat.loaded;
+    let progressFunc1 = null;
+    const animateProgress1 = function() {
+        let loaded1 = 0;
+        let total1 = 0;
+        let totalIsValid1 = true;
+        let progressIsFinal1 = true;
+        Object.keys(loadingFiles1).forEach(function(file1) {
+            const stat1 = loadingFiles1[file1];
+            if (!stat1.done) progressIsFinal1 = false;
+            if (!totalIsValid1 || stat1.total === 0) {
+                totalIsValid1 = false;
+                total1 = 0;
+            } else total1 += stat1.total;
+            loaded1 += stat1.loaded;
         });
-        if (loaded !== lastProgress.loaded || total !== lastProgress.total) {
-            lastProgress.loaded = loaded;
-            lastProgress.total = total;
-            if (typeof progressFunc === "function") progressFunc(loaded, total);
+        if (loaded1 !== lastProgress1.loaded || total1 !== lastProgress1.total) {
+            lastProgress1.loaded = loaded1;
+            lastProgress1.total = total1;
+            if (typeof progressFunc1 === "function") progressFunc1(loaded1, total1);
         }
-        if (!progressIsFinal) requestAnimationFrame(animateProgress);
+        if (!progressIsFinal1) requestAnimationFrame(animateProgress1);
     };
-    this.animateProgress = animateProgress;
-    this.setProgressFunc = function(callback) {
-        progressFunc = callback;
+    this.animateProgress = animateProgress1;
+    this.setProgressFunc = function(callback1) {
+        progressFunc1 = callback1;
     };
-    this.loadPromise = function(file, fileSize, raw = false) {
-        return retry(loadFetch.bind(null, file, loadingFiles, fileSize, raw), DOWNLOAD_ATTEMPTS_MAX);
+    this.loadPromise = function(file1, fileSize1, raw1 = false) {
+        return retry1(loadFetch1.bind(null, file1, loadingFiles1, fileSize1, raw1), DOWNLOAD_ATTEMPTS_MAX1);
     };
     this.preloadedFiles = [];
-    this.preload = function(pathOrBuffer, destPath, fileSize) {
-        let buffer = null;
-        if (typeof pathOrBuffer === "string") {
-            const me = this;
-            return this.loadPromise(pathOrBuffer, fileSize).then(function(buf) {
-                me.preloadedFiles.push({
-                    path: destPath || pathOrBuffer,
-                    buffer: buf
+    this.preload = function(pathOrBuffer1, destPath1, fileSize1) {
+        let buffer1 = null;
+        if (typeof pathOrBuffer1 === "string") {
+            const me1 = this;
+            return this.loadPromise(pathOrBuffer1, fileSize1).then(function(buf1) {
+                me1.preloadedFiles.push({
+                    path: destPath1 || pathOrBuffer1,
+                    buffer: buf1
                 });
                 return Promise.resolve();
             });
-        } else if (pathOrBuffer instanceof ArrayBuffer) buffer = new Uint8Array(pathOrBuffer);
-        else if (ArrayBuffer.isView(pathOrBuffer)) buffer = new Uint8Array(pathOrBuffer.buffer);
-        if (buffer) {
+        } else if (pathOrBuffer1 instanceof ArrayBuffer) buffer1 = new Uint8Array(pathOrBuffer1);
+        else if (ArrayBuffer.isView(pathOrBuffer1)) buffer1 = new Uint8Array(pathOrBuffer1.buffer);
+        if (buffer1) {
             this.preloadedFiles.push({
-                path: destPath,
-                buffer: pathOrBuffer
+                path: destPath1,
+                buffer: pathOrBuffer1
             });
             return Promise.resolve();
         }
@@ -11528,8 +11528,8 @@ const Preloader = /** @constructor */ function() {
  * @struct
  * @constructor
  * @ignore
- */ const InternalConfig = function(initConfig) {
-    const cfg = /** @lends {InternalConfig.prototype} */ {
+ */ const InternalConfig = function(initConfig1) {
+    const cfg1 = /** @lends {InternalConfig.prototype} */ {
         /**
 		 * Whether the unload the engine automatically after the instance is initialized.
 		 *
@@ -11699,7 +11699,7 @@ const Preloader = /** @constructor */ function() {
 		*/ /**
 		 * @ignore
 		 * @type {?function(...*)}
-		 */ onPrintError: function(var_args) {
+		 */ onPrintError: function(var_args1) {
             console.error.apply(console, Array.from(arguments)); // eslint-disable-line no-console
         }
     };
@@ -11708,114 +11708,114 @@ const Preloader = /** @constructor */ function() {
 	 * @struct
 	 * @constructor
 	 * @param {EngineConfig} opts
-	 */ function Config(opts) {
-        this.update(opts);
+	 */ function Config1(opts1) {
+        this.update(opts1);
     }
-    Config.prototype = cfg;
+    Config1.prototype = cfg1;
     /**
 	 * @ignore
 	 * @param {EngineConfig} opts
-	 */ Config.prototype.update = function(opts) {
-        const config = opts || {};
+	 */ Config1.prototype.update = function(opts1) {
+        const config1 = opts1 || {};
         // NOTE: We must explicitly pass the default, accessing it via
         // the key will fail due to closure compiler renames.
-        function parse(key, def) {
-            if (typeof config[key] === "undefined") return def;
-            return config[key];
+        function parse1(key1, def1) {
+            if (typeof config1[key1] === "undefined") return def1;
+            return config1[key1];
         }
         // Module config
-        this.unloadAfterInit = parse("unloadAfterInit", this.unloadAfterInit);
-        this.onPrintError = parse("onPrintError", this.onPrintError);
-        this.onPrint = parse("onPrint", this.onPrint);
-        this.onProgress = parse("onProgress", this.onProgress);
+        this.unloadAfterInit = parse1("unloadAfterInit", this.unloadAfterInit);
+        this.onPrintError = parse1("onPrintError", this.onPrintError);
+        this.onPrint = parse1("onPrint", this.onPrint);
+        this.onProgress = parse1("onProgress", this.onProgress);
         // Godot config
-        this.canvas = parse("canvas", this.canvas);
-        this.executable = parse("executable", this.executable);
-        this.mainPack = parse("mainPack", this.mainPack);
-        this.locale = parse("locale", this.locale);
-        this.canvasResizePolicy = parse("canvasResizePolicy", this.canvasResizePolicy);
-        this.persistentPaths = parse("persistentPaths", this.persistentPaths);
-        this.persistentDrops = parse("persistentDrops", this.persistentDrops);
-        this.experimentalVK = parse("experimentalVK", this.experimentalVK);
-        this.focusCanvas = parse("focusCanvas", this.focusCanvas);
-        this.serviceWorker = parse("serviceWorker", this.serviceWorker);
-        this.gdnativeLibs = parse("gdnativeLibs", this.gdnativeLibs);
-        this.fileSizes = parse("fileSizes", this.fileSizes);
-        this.args = parse("args", this.args);
-        this.onExecute = parse("onExecute", this.onExecute);
-        this.onExit = parse("onExit", this.onExit);
+        this.canvas = parse1("canvas", this.canvas);
+        this.executable = parse1("executable", this.executable);
+        this.mainPack = parse1("mainPack", this.mainPack);
+        this.locale = parse1("locale", this.locale);
+        this.canvasResizePolicy = parse1("canvasResizePolicy", this.canvasResizePolicy);
+        this.persistentPaths = parse1("persistentPaths", this.persistentPaths);
+        this.persistentDrops = parse1("persistentDrops", this.persistentDrops);
+        this.experimentalVK = parse1("experimentalVK", this.experimentalVK);
+        this.focusCanvas = parse1("focusCanvas", this.focusCanvas);
+        this.serviceWorker = parse1("serviceWorker", this.serviceWorker);
+        this.gdnativeLibs = parse1("gdnativeLibs", this.gdnativeLibs);
+        this.fileSizes = parse1("fileSizes", this.fileSizes);
+        this.args = parse1("args", this.args);
+        this.onExecute = parse1("onExecute", this.onExecute);
+        this.onExit = parse1("onExit", this.onExit);
     };
     /**
 	 * @ignore
 	 * @param {string} loadPath
 	 * @param {Response} response
-	 */ Config.prototype.getModuleConfig = function(loadPath, response) {
-        let r = response;
+	 */ Config1.prototype.getModuleConfig = function(loadPath1, response1) {
+        let r1 = response1;
         return {
             "print": this.onPrint,
             "printErr": this.onPrintError,
             "thisProgram": this.executable,
             "noExitRuntime": true,
             "dynamicLibraries": [
-                `${loadPath}.side.wasm`
+                `${loadPath1}.side.wasm`
             ],
-            "instantiateWasm": function(imports, onSuccess) {
-                function done(result) {
-                    onSuccess(result["instance"], result["module"]);
+            "instantiateWasm": function(imports1, onSuccess1) {
+                function done1(result1) {
+                    onSuccess1(result1["instance"], result1["module"]);
                 }
-                if (typeof WebAssembly.instantiateStreaming !== "undefined") WebAssembly.instantiateStreaming(Promise.resolve(r), imports).then(done);
-                else r.arrayBuffer().then(function(buffer) {
-                    WebAssembly.instantiate(buffer, imports).then(done);
+                if (typeof WebAssembly.instantiateStreaming !== "undefined") WebAssembly.instantiateStreaming(Promise.resolve(r1), imports1).then(done1);
+                else r1.arrayBuffer().then(function(buffer1) {
+                    WebAssembly.instantiate(buffer1, imports1).then(done1);
                 });
-                r = null;
+                r1 = null;
                 return {};
             },
-            "locateFile": function(path) {
-                if (path.endsWith(".worker.js")) return `${loadPath}.worker.js`;
-                else if (path.endsWith(".audio.worklet.js")) return `${loadPath}.audio.worklet.js`;
-                else if (path.endsWith(".js")) return `${loadPath}.js`;
-                else if (path.endsWith(".side.wasm")) return `${loadPath}.side.wasm`;
-                else if (path.endsWith(".wasm")) return `${loadPath}.wasm`;
-                return path;
+            "locateFile": function(path1) {
+                if (path1.endsWith(".worker.js")) return `${loadPath1}.worker.js`;
+                else if (path1.endsWith(".audio.worklet.js")) return `${loadPath1}.audio.worklet.js`;
+                else if (path1.endsWith(".js")) return `${loadPath1}.js`;
+                else if (path1.endsWith(".side.wasm")) return `${loadPath1}.side.wasm`;
+                else if (path1.endsWith(".wasm")) return `${loadPath1}.wasm`;
+                return path1;
             }
         };
     };
     /**
 	 * @ignore
 	 * @param {function()} cleanup
-	 */ Config.prototype.getGodotConfig = function(cleanup) {
+	 */ Config1.prototype.getGodotConfig = function(cleanup1) {
         // Try to find a canvas
         if (!(this.canvas instanceof HTMLCanvasElement)) {
-            const nodes = document.getElementsByTagName("canvas");
-            if (nodes.length && nodes[0] instanceof HTMLCanvasElement) this.canvas = nodes[0];
+            const nodes1 = document.getElementsByTagName("canvas");
+            if (nodes1.length && nodes1[0] instanceof HTMLCanvasElement) this.canvas = nodes1[0];
             if (!this.canvas) throw new Error("No canvas found in page");
         }
         // Canvas can grab focus on click, or key events won't work.
         if (this.canvas.tabIndex < 0) this.canvas.tabIndex = 0;
         // Browser locale, or custom one if defined.
-        let locale = this.locale;
-        if (!locale) {
-            locale = navigator.languages ? navigator.languages[0] : navigator.language;
-            locale = locale.split(".")[0];
+        let locale1 = this.locale;
+        if (!locale1) {
+            locale1 = navigator.languages ? navigator.languages[0] : navigator.language;
+            locale1 = locale1.split(".")[0];
         }
-        locale = locale.replace("-", "_");
-        const onExit = this.onExit;
+        locale1 = locale1.replace("-", "_");
+        const onExit1 = this.onExit;
         // Godot configuration.
         return {
             "canvas": this.canvas,
             "canvasResizePolicy": this.canvasResizePolicy,
-            "locale": locale,
+            "locale": locale1,
             "persistentDrops": this.persistentDrops,
             "virtualKeyboard": this.experimentalVK,
             "focusCanvas": this.focusCanvas,
             "onExecute": this.onExecute,
-            "onExit": function(p_code) {
-                cleanup(); // We always need to call the cleanup callback to free memory.
-                if (typeof onExit === "function") onExit(p_code);
+            "onExit": function(p_code1) {
+                cleanup1(); // We always need to call the cleanup callback to free memory.
+                if (typeof onExit1 === "function") onExit1(p_code1);
             }
         };
     };
-    return new Config(initConfig);
+    return new Config1(initConfig1);
 };
 /**
  * Projects exported for the Web expose the :js:class:`Engine` class to the JavaScript environment, that allows
@@ -11827,10 +11827,10 @@ const Preloader = /** @constructor */ function() {
  * @module Engine
  * @header HTML5 shell class reference
  */ const Engine = function() {
-    const preloader = new Preloader();
-    let loadPromise = null;
-    let loadPath = "";
-    let initPromise = null;
+    const preloader1 = new Preloader();
+    let loadPromise1 = null;
+    let loadPath1 = "";
+    let initPromise1 = null;
     /**
 	 * @classdesc The ``Engine`` class provides methods for loading and starting exported projects on the Web. For default export
 	 * settings, this is already part of the exported HTML page. To understand practical use of the ``Engine`` class,
@@ -11841,8 +11841,8 @@ const Preloader = /** @constructor */ function() {
 	 * @global
 	 * @constructor
 	 * @param {EngineConfig} initConfig The initial config for this instance.
-	 */ function Engine(initConfig) {
-        this.config = new InternalConfig(initConfig);
+	 */ function Engine1(initConfig1) {
+        this.config = new InternalConfig(initConfig1);
         this.rtenv = null;
     }
     /**
@@ -11853,13 +11853,13 @@ const Preloader = /** @constructor */ function() {
 	 * @returns {Promise} A Promise that resolves once the engine is loaded.
 	 *
 	 * @function Engine.load
-	 */ Engine.load = function(basePath, size) {
-        if (loadPromise == null) {
-            loadPath = basePath;
-            loadPromise = preloader.loadPromise(`${loadPath}.wasm`, size, true);
-            requestAnimationFrame(preloader.animateProgress);
+	 */ Engine1.load = function(basePath1, size1) {
+        if (loadPromise1 == null) {
+            loadPath1 = basePath1;
+            loadPromise1 = preloader1.loadPromise(`${loadPath1}.wasm`, size1, true);
+            requestAnimationFrame(preloader1.animateProgress);
         }
-        return loadPromise;
+        return loadPromise1;
     };
     /**
 	 * Unload the engine to free memory.
@@ -11867,8 +11867,8 @@ const Preloader = /** @constructor */ function() {
 	 * This method will be called automatically depending on the configuration. See :js:attr:`unloadAfterInit`.
 	 *
 	 * @function Engine.unload
-	 */ Engine.unload = function() {
-        loadPromise = null;
+	 */ Engine1.unload = function() {
+        loadPromise1 = null;
     };
     /**
 	 * Check whether WebGL is available. Optionally, specify a particular version of WebGL to check for.
@@ -11876,44 +11876,44 @@ const Preloader = /** @constructor */ function() {
 	 * @param {number=} [majorVersion=1] The major WebGL version to check for.
 	 * @returns {boolean} If the given major version of WebGL is available.
 	 * @function Engine.isWebGLAvailable
-	 */ Engine.isWebGLAvailable = function(majorVersion = 1) {
+	 */ Engine1.isWebGLAvailable = function(majorVersion1 = 1) {
         try {
             return !!document.createElement("canvas").getContext([
                 "webgl",
                 "webgl2"
-            ][majorVersion - 1]);
-        } catch (e) {}
+            ][majorVersion1 - 1]);
+        } catch (e1) {}
         return false;
     };
     /**
 	 * Safe Engine constructor, creates a new prototype for every new instance to avoid prototype pollution.
 	 * @ignore
 	 * @constructor
-	 */ function SafeEngine(initConfig) {
-        const proto = /** @lends Engine.prototype */ {
+	 */ function SafeEngine1(initConfig1) {
+        const proto1 = /** @lends Engine.prototype */ {
             /**
 			 * Initialize the engine instance. Optionally, pass the base path to the engine to load it,
 			 * if it hasn't been loaded yet. See :js:meth:`Engine.load`.
 			 *
 			 * @param {string=} basePath Base path of the engine to load.
 			 * @return {Promise} A ``Promise`` that resolves once the engine is loaded and initialized.
-			 */ init: function(basePath) {
-                if (initPromise) return initPromise;
-                if (loadPromise == null) {
-                    if (!basePath) {
-                        initPromise = Promise.reject(new Error("A base path must be provided when calling `init` and the engine is not loaded."));
-                        return initPromise;
+			 */ init: function(basePath1) {
+                if (initPromise1) return initPromise1;
+                if (loadPromise1 == null) {
+                    if (!basePath1) {
+                        initPromise1 = Promise.reject(new Error("A base path must be provided when calling `init` and the engine is not loaded."));
+                        return initPromise1;
                     }
-                    Engine.load(basePath, this.config.fileSizes[`${basePath}.wasm`]);
+                    Engine1.load(basePath1, this.config.fileSizes[`${basePath1}.wasm`]);
                 }
-                const me = this;
-                function doInit(promise) {
+                const me1 = this;
+                function doInit1(promise1) {
                     // Care! Promise chaining is bogus with old emscripten versions.
                     // This caused a regression with the Mono build (which uses an older emscripten version).
                     // Make sure to test that when refactoring.
-                    return new Promise(function(resolve, reject) {
-                        promise.then(function(response) {
-                            const cloned = new Response(response.clone().body, {
+                    return new Promise(function(resolve1, reject1) {
+                        promise1.then(function(response1) {
+                            const cloned1 = new Response(response1.clone().body, {
                                 "headers": [
                                     [
                                         "content-type",
@@ -11921,20 +11921,20 @@ const Preloader = /** @constructor */ function() {
                                     ]
                                 ]
                             });
-                            Godot(me.config.getModuleConfig(loadPath, cloned)).then(function(module1) {
-                                const paths = me.config.persistentPaths;
-                                module1["initFS"](paths).then(function(err) {
-                                    me.rtenv = module1;
-                                    if (me.config.unloadAfterInit) Engine.unload();
-                                    resolve();
+                            Godot(me1.config.getModuleConfig(loadPath1, cloned1)).then(function(module1) {
+                                const paths1 = me1.config.persistentPaths;
+                                module1["initFS"](paths1).then(function(err1) {
+                                    me1.rtenv = module1;
+                                    if (me1.config.unloadAfterInit) Engine1.unload();
+                                    resolve1();
                                 });
                             });
                         });
                     });
                 }
-                preloader.setProgressFunc(this.config.onProgress);
-                initPromise = doInit(loadPromise);
-                return initPromise;
+                preloader1.setProgressFunc(this.config.onProgress);
+                initPromise1 = doInit1(loadPromise1);
+                return initPromise1;
             },
             /**
 			 * Load a file so it is available in the instance's file system once it runs. Must be called **before** starting the
@@ -11951,8 +11951,8 @@ const Preloader = /** @constructor */ function() {
 			 * @param {string=} path Path by which the file will be accessible. Required, if ``file`` is not a string.
 			 *
 			 * @returns {Promise} A Promise that resolves once the file is loaded.
-			 */ preloadFile: function(file, path) {
-                return preloader.preload(file, path, this.config.fileSizes[file]);
+			 */ preloadFile: function(file1, path1) {
+                return preloader1.preload(file1, path1, this.config.fileSizes[file1]);
             },
             /**
 			 * Start the engine instance using the given override configuration (if any).
@@ -11965,38 +11965,38 @@ const Preloader = /** @constructor */ function() {
 			 *
 			 * @param {EngineConfig} override An optional configuration override.
 			 * @return {Promise} Promise that resolves once the engine started.
-			 */ start: function(override) {
-                this.config.update(override);
-                const me = this;
-                return me.init().then(function() {
-                    if (!me.rtenv) return Promise.reject(new Error("The engine must be initialized before it can be started"));
-                    let config = {};
+			 */ start: function(override1) {
+                this.config.update(override1);
+                const me1 = this;
+                return me1.init().then(function() {
+                    if (!me1.rtenv) return Promise.reject(new Error("The engine must be initialized before it can be started"));
+                    let config1 = {};
                     try {
-                        config = me.config.getGodotConfig(function() {
-                            me.rtenv = null;
+                        config1 = me1.config.getGodotConfig(function() {
+                            me1.rtenv = null;
                         });
-                    } catch (e) {
-                        return Promise.reject(e);
+                    } catch (e1) {
+                        return Promise.reject(e1);
                     }
                     // Godot configuration.
-                    me.rtenv["initConfig"](config);
+                    me1.rtenv["initConfig"](config1);
                     // Preload GDNative libraries.
-                    const libs = [];
-                    me.config.gdnativeLibs.forEach(function(lib) {
-                        libs.push(me.rtenv["loadDynamicLibrary"](lib, {
+                    const libs1 = [];
+                    me1.config.gdnativeLibs.forEach(function(lib1) {
+                        libs1.push(me1.rtenv["loadDynamicLibrary"](lib1, {
                             "loadAsync": true
                         }));
                     });
-                    return Promise.all(libs).then(function() {
-                        return new Promise(function(resolve, reject) {
-                            preloader.preloadedFiles.forEach(function(file) {
-                                me.rtenv["copyToFS"](file.path, file.buffer);
+                    return Promise.all(libs1).then(function() {
+                        return new Promise(function(resolve1, reject1) {
+                            preloader1.preloadedFiles.forEach(function(file1) {
+                                me1.rtenv["copyToFS"](file1.path, file1.buffer);
                             });
-                            preloader.preloadedFiles.length = 0; // Clear memory
-                            me.rtenv["callMain"](me.config.args);
-                            initPromise = null;
-                            if (me.config.serviceWorker && "serviceWorker" in navigator) navigator.serviceWorker.register(me.config.serviceWorker);
-                            resolve();
+                            preloader1.preloadedFiles.length = 0; // Clear memory
+                            me1.rtenv["callMain"](me1.config.args);
+                            initPromise1 = null;
+                            if (me1.config.serviceWorker && "serviceWorker" in navigator) navigator.serviceWorker.register(me1.config.serviceWorker);
+                            resolve1();
                         });
                     });
                 });
@@ -12013,22 +12013,22 @@ const Preloader = /** @constructor */ function() {
 			 *
 			 * @param {EngineConfig} override An optional configuration override.
 			 * @return {Promise} Promise that resolves once the game started.
-			 */ startGame: function(override) {
-                this.config.update(override);
+			 */ startGame: function(override1) {
+                this.config.update(override1);
                 // Add main-pack argument.
-                const exe = this.config.executable;
-                const pack = this.config.mainPack || `${exe}.pck`;
+                const exe1 = this.config.executable;
+                const pack1 = this.config.mainPack || `${exe1}.pck`;
                 this.config.args = [
                     "--main-pack",
-                    pack
+                    pack1
                 ].concat(this.config.args);
                 // Start and init with execName as loadPath if not inited.
-                const me = this;
+                const me1 = this;
                 return Promise.all([
-                    this.init(exe),
-                    this.preloadFile(pack, pack), 
+                    this.init(exe1),
+                    this.preloadFile(pack1, pack1)
                 ]).then(function() {
-                    return me.start.apply(me);
+                    return me1.start.apply(me1);
                 });
             },
             /**
@@ -12036,9 +12036,9 @@ const Preloader = /** @constructor */ function() {
 			 *
 			 * @param {string} path The location where the file will be created.
 			 * @param {ArrayBuffer} buffer The content of the file.
-			 */ copyToFS: function(path, buffer) {
+			 */ copyToFS: function(path1, buffer1) {
                 if (this.rtenv == null) throw new Error("Engine must be inited before copying files");
-                this.rtenv["copyToFS"](path, buffer);
+                this.rtenv["copyToFS"](path1, buffer1);
             },
             /**
 			 * Request that the current instance quit.
@@ -12050,25 +12050,25 @@ const Preloader = /** @constructor */ function() {
                 if (this.rtenv) this.rtenv["request_quit"]();
             }
         };
-        Engine.prototype = proto;
+        Engine1.prototype = proto1;
         // Closure compiler exported instance methods.
-        Engine.prototype["init"] = Engine.prototype.init;
-        Engine.prototype["preloadFile"] = Engine.prototype.preloadFile;
-        Engine.prototype["start"] = Engine.prototype.start;
-        Engine.prototype["startGame"] = Engine.prototype.startGame;
-        Engine.prototype["copyToFS"] = Engine.prototype.copyToFS;
-        Engine.prototype["requestQuit"] = Engine.prototype.requestQuit;
+        Engine1.prototype["init"] = Engine1.prototype.init;
+        Engine1.prototype["preloadFile"] = Engine1.prototype.preloadFile;
+        Engine1.prototype["start"] = Engine1.prototype.start;
+        Engine1.prototype["startGame"] = Engine1.prototype.startGame;
+        Engine1.prototype["copyToFS"] = Engine1.prototype.copyToFS;
+        Engine1.prototype["requestQuit"] = Engine1.prototype.requestQuit;
         // Also expose static methods as instance methods
-        Engine.prototype["load"] = Engine.load;
-        Engine.prototype["unload"] = Engine.unload;
-        Engine.prototype["isWebGLAvailable"] = Engine.isWebGLAvailable;
-        return new Engine(initConfig);
+        Engine1.prototype["load"] = Engine1.load;
+        Engine1.prototype["unload"] = Engine1.unload;
+        Engine1.prototype["isWebGLAvailable"] = Engine1.isWebGLAvailable;
+        return new Engine1(initConfig1);
     }
     // Closure compiler exported static methods.
-    SafeEngine["load"] = Engine.load;
-    SafeEngine["unload"] = Engine.unload;
-    SafeEngine["isWebGLAvailable"] = Engine.isWebGLAvailable;
-    return SafeEngine;
+    SafeEngine1["load"] = Engine1.load;
+    SafeEngine1["unload"] = Engine1.unload;
+    SafeEngine1["isWebGLAvailable"] = Engine1.isWebGLAvailable;
+    return SafeEngine1;
 }();
 if (typeof window !== "undefined") window["Engine"] = Engine;
 

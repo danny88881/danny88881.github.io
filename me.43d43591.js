@@ -5151,13 +5151,7 @@ var songs = {
         "me"
     ],
     //"boggers":                                                      ["boggers",                 "unknown",           "8/28/20",  90, "me"],
-    "bombpopthing": [
-        "bombpopthing",
-        "unknown",
-        "6/24/20",
-        100,
-        "me"
-    ],
+    //"bombpopthing":                                                 ["bombpopthing",            "unknown",           "6/24/20",  100, "me"],
     "breathe": [
         "breathe-edit",
         "synth",
@@ -5593,8 +5587,8 @@ var notes = {
     "1985": "",
     "a week in minutes": "two and one tenth to be exact",
     "club penguin \uD83E\uDD24": "the ninja card game thing from club pengin",
-    "boggers": "can't say the p-word anymore (penis)",
-    "bombpopthing": ":-|",
+    //   "boggers": "can't say the p-word anymore (penis)",
+    //   "bombpopthing": ":-|",
     "breathe": "",
     "kwk_lps": "i do not like this one",
     "days like these": "",
@@ -5629,7 +5623,7 @@ var notes = {
     "do i dance inside ur head": "really really, gregory and the hawk is good",
     "fly me to the moon": "ohio",
     "for the best": "i like gregory and the hawk",
-    "fr fr fr this time": "i can't help but ruin my favorite songs",
+    "fr fr fr this time": "",
     "hope": "what a good show",
     "goodbye": "this is the other",
     "花": "i do like this one",

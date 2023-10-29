@@ -30,9 +30,8 @@
             <audio id="music-player"></audio>
             <div id="background"></div>
             <div id="particles-dark"></div>
-            <div id="particles-light"></div>
             <div class="layer"></div>
-
+            
             <a id="title" class="interact" href="/index.html">
                 <div class="d">d</div>
                 <div class="a">a</div>
@@ -47,9 +46,9 @@
                         <div class="rotate">
                             <div class="shadow" onmouseenter="hoverMenu('games');" onmouseleave="stopHoverMenu('games');">
                                 <ul class="shadow-bar">
+                                    <li><a href="/games.html#gallery">📃</a></li>
                                     <li><a href="/games.html#professional">Professional👷‍♂️</a></li>
-                                    <li><a href="/games.html#indie">🍇Indie🐒</a></li>
-                                    <li><a href="/games.html#graveyard">Dead⚰️</a></li>
+                                    <li><a href="/games.html#indie">Indie🍇</a></li>
                                 </ul>
                             </div>
                             <div class="hover-bg">
@@ -65,7 +64,6 @@
                     <div id="music"><div class="rotate"><div class="shadow" onmouseenter="hoverMenu('music');" onmouseleave="stopHoverMenu('music');">
                         <ul class="shadow-bar">
                         <li><a href="/music.html#soundtracks">Sound Tracks🕹&#xFE0F;</a></li>
-                        <li><a href="/music.html#others">🙉Other?</a></li>
                     </ul>
                     </div><div class="hover-bg"><div class="hover-content interact">
                         <a href="/music.html" class="Icon">🎹</a>
@@ -87,11 +85,11 @@
                 <li>
                     <div id="me"><div class="rotate"><div class="shadow" onmouseenter="hoverMenu('me');" onmouseleave="stopHoverMenu('me');">
                         <ul class="shadow-bar">
-                        <li><a href="/me.html#about">About🥴</a></li>
+                        <li><a href="/me.html#about">About🫠</a></li>
                         <li><a href="/me.html#blog">I don't🧠think</a></li>
                         </ul>
                     </div><div class="hover-bg"><div class="hover-content interact">
-                        <a href="/me.html" class="Icon">🥴</a>
+                        <a href="/me.html" class="Icon">🫠</a>
                         <a href="/me.html" class="box-label interact">Me</a>
                     </div></div></div>
                 </div>
@@ -101,7 +99,7 @@
 
         <main data-router-wrapper="">
             <article data-router-view="mainart" class="mainart" style="position: absolute">
-                <canvas id="arttitlecanvas" style="height: 100vh; max-width: 100%; overflow: hidden"></canvas>
+                <canvas id="arttitlecanvas" style="max-width: 100%; height: 100vh; overflow: hidden"></canvas>
                 <svg xmlns="http://www.w3.org/2000/svg" version="1.1">
                     <defs>
                         <filter id="goo">
@@ -114,8 +112,11 @@
                 <!--div id="arttitle">
                     ART
                 </div-->
+                <div id="photo-minigame">
+                <iframe display="block" height="635" frameborder="0" src="https://itch.io/embed/2335224" width="525"><a href="https://danny88881.itch.io/websitecamera"></a></iframe>
+                </div>
                 <h2 class="subtitle">
-                    Just 4 fun :)
+                    Gonna put photos and shaders here too because otherwise this section would be empty :)
                 </h2>
                 <div id="gallery">
                     <!--img src="graphics/type.gif"-->
@@ -123,31 +124,6 @@
                     <span class="iframeholder">
                         <iframe id="websiteart" src="https://danny88881.github.io/" title="art"></iframe>
                         <div class="iframetitle">"The Greatest and Bestest"</div>
-                    </span>
-                    <span class="galleryitem">
-                        <div class="imagedate">1.13.22</div>
-                        <img class="image" style="width: 300px" src="/eye.7419c76a.webp">
-                        <div class="imagetitle">"Obligatory Eye Drawing"</div>
-                    </span>
-                    <span class="galleryitem">
-                        <div class="imagedate">1.13.22</div>
-                        <img class="image" style="width: 200px" src="/Shoe.81007847.webp">
-                        <div class="imagetitle"></div>
-                    </span>
-                    <span class="galleryitem">
-                        <div class="imagedate">1.14.22</div>
-                        <img class="image" style="width: 240px" src="/pyjamas.54c146fb.webp">
-                        <div class="imagetitle">"Why did I spell it Pyjamas"</div>
-                    </span>
-                    <span class="galleryitem">
-                        <div class="imagedate">1.17.22</div>
-                        <img class="image" style="width: 180px" src="/Tissues.1d9f3814.webp">
-                        <div class="imagetitle"></div>
-                    </span>
-                    <span class="galleryitem">
-                        <div class="imagedate">1.20.22</div>
-                        <img class="image" style="width: 150px" src="/Bowl.effaf96b.webp">
-                        <div class="imagetitle"></div>
                     </span>
                 </div>
             </article>
@@ -249,8 +225,8 @@
             </p>
             <div id="scrollthing"> <div>FunQuotesSection();</div><p id="quote-scroll">return "";</p> </div>
         </footer>
-        <script src="/me.20c66a70.js"></script>
-        <script src="/me.43d43591.js" defer=""></script>
-        <script src="/me.da7cedbd.js" defer=""></script>
+        <script src="/index.20c66a70.js"></script>
+        <script src="/index.43d43591.js" defer=""></script>
+        <script src="/index.da7cedbd.js" defer=""></script>
     </body>
 </html>

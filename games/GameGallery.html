@@ -42,12 +42,12 @@
 }
 
 #status-progress {
-  width: 366px;
-  height: 7px;
   visibility: visible;
   background-color: #38363a;
   border: 1px solid #444246;
   border-radius: 2px;
+  width: 366px;
+  height: 7px;
   padding: 1px;
   box-shadow: 0 0 2px 1px #1b1c22;
 }
@@ -59,33 +59,33 @@
 }
 
 #status-progress-inner {
-  height: 100%;
-  width: 0;
   box-sizing: border-box;
   background-color: #202020;
   border: 1px solid #222223;
   border-radius: 3px;
+  width: 0;
+  height: 100%;
   transition: width .5s linear;
   box-shadow: 0 0 1px 1px #27282e;
 }
 
 #status-indeterminate {
-  height: 42px;
   visibility: visible;
+  height: 42px;
   position: relative;
 }
 
 #status-indeterminate > div {
-  width: 4.5px;
-  height: 0;
   transform-origin: 50% 21px;
   border: 3px solid #0000;
   border-top: 9px solid #2b2b2b;
   border-bottom-width: 0;
+  width: 4.5px;
+  height: 0;
   position: absolute;
 }
 
-#status-indeterminate > div:nth-child(1) {
+#status-indeterminate > div:first-child {
   transform: rotate(22.5deg);
 }
 

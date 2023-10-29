@@ -7,11 +7,11 @@
 
 .logo {
   opacity: .6;
-  width: 400px;
-  height: 400px;
   z-index: -8;
   background-image: url("Logo.e722b717.svg");
   background-size: 400px 400px;
+  width: 400px;
+  height: 400px;
   position: absolute;
   top: 0;
   left: 50%;
@@ -39,11 +39,11 @@
 }
 
 #mecont {
-  width: 100%;
   text-align: center;
   pointer-events: none;
   flex-direction: column;
   place-content: center;
+  width: 100%;
   font-size: 200px;
   display: flex;
   position: relative;
@@ -51,8 +51,8 @@
 }
 
 #mecont iframe {
-  width: 80%;
   pointer-events: all;
+  width: 80%;
   margin-left: auto;
   margin-right: auto;
 }
@@ -75,8 +75,8 @@
 
 #mecont a {
   pointer-events: all;
-  height: 100px;
   width: 240px;
+  height: 100px;
   font-family: Courier New, Courier, monospace;
   font-weight: bold;
   text-decoration: none;
@@ -100,7 +100,7 @@
 
 #mecont a.gamelink {
   color: var(--theme-1-primary);
-  animation: wiggle-float-r 3.2s ease-in-out .8s infinite;
+  animation: 3.2s ease-in-out .8s infinite wiggle-float-r;
 }
 
 #mecont a.gamelink:hover {
@@ -109,7 +109,7 @@
 
 #mecont a.musiclink {
   color: var(--theme-2-primary);
-  animation: wiggle-float-l 3.4s ease-in-out .4s infinite;
+  animation: 3.4s ease-in-out .4s infinite wiggle-float-l;
 }
 
 #mecont a.musiclink:hover {
@@ -118,12 +118,12 @@
 
 #mecont a.artlink {
   color: var(--theme-3-primary);
-  animation: wiggle-float-r 3.1s ease-in-out .5s infinite;
+  animation: 3.1s ease-in-out .5s infinite wiggle-float-r;
 }
 
 #mecont a.resumelink {
   color: var(--theme-4-primary);
-  animation: wiggle-float-r 3.3s ease-in-out .2s infinite;
+  animation: 3.3s ease-in-out .2s infinite wiggle-float-r;
 }
 
 #mecont a.artlink:hover {
@@ -132,7 +132,7 @@
 
 #mecont a.bloglink {
   color: var(--theme-4-primary);
-  animation: wiggle-float-r 3.6s ease-in-out .5s infinite;
+  animation: 3.6s ease-in-out .5s infinite wiggle-float-r;
 }
 
 @keyframes wiggle-float-l {

@@ -1,7 +1,7 @@
 .music #music-control {
+  opacity: 1;
   width: 100%;
   height: 80px;
-  opacity: 1;
   transition: right 1s ease-in, bottom 1s ease-in, opacity 1s ease-in;
   display: block;
   top: auto;
@@ -21,10 +21,10 @@
 }
 
 #music-control {
-  width: 100%;
   opacity: 0;
   pointer-events: none;
   z-index: 0;
+  width: 100%;
   transition: right 1s ease-in, bottom 1s ease-in, width 1s ease-in-out, transform 1s ease-in-out, opacity 1s ease-in-out;
   display: block;
   position: fixed;
@@ -62,20 +62,20 @@
 }
 
 #record-outer {
-  width: 340px;
-  height: 340px;
   background-color: #0a0a0a;
   border: 120px solid #040404;
   border-radius: 1000px;
-  animation: rotate 5s linear infinite;
+  width: 340px;
+  height: 340px;
+  animation: 5s linear infinite rotate;
   box-shadow: 0 0 80px #875d87;
 }
 
 #record-outer #image {
-  width: 250px;
-  height: 250px;
   filter: brightness();
   border-radius: 150px;
+  width: 250px;
+  height: 250px;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -84,10 +84,10 @@
 
 #record-outer:after {
   content: "";
-  height: 10px;
-  width: 10px;
   background-color: #000;
   border-radius: 10px;
+  width: 10px;
+  height: 10px;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -120,7 +120,7 @@
 
 @keyframes rotate {
   from {
-    transform: rotate(0deg);
+    transform: rotate(0);
   }
 
   to {
@@ -132,10 +132,10 @@
   cursor: pointer;
   pointer-events: all;
   opacity: 0;
-  height: 0;
-  width: 0;
   border: 0 solid #0000;
   border-right-color: #9e469e;
+  width: 0;
+  height: 0;
   margin: auto 0;
   transition: background-color .2s ease-in, height .2s ease-in, transform .2s ease-in, opacity 1s ease-in, border-width .2s ease-in, border-color .2s ease-in, margin .8s ease-in;
   display: block;
@@ -158,11 +158,11 @@
 
 .music #next:after {
   content: "";
-  height: 0;
-  width: 0;
   border-style: solid;
   border-width: 20px 34.64px 20px 0;
   border-color: transparent var(--theme-2-primary) transparent transparent;
+  width: 0;
+  height: 0;
   margin-top: auto;
   margin-bottom: auto;
   transition: border-color .2s ease-in;
@@ -183,11 +183,11 @@
 
 .music #prev:after {
   content: "";
-  height: 0;
-  width: 0;
   border-style: solid;
   border-width: 20px 34.64px 20px 0;
   border-color: transparent var(--theme-2-primary) transparent transparent;
+  width: 0;
+  height: 0;
   margin-top: auto;
   margin-bottom: auto;
   transition: border-color .2s ease-in;
@@ -203,11 +203,11 @@
 #playpause-control {
   cursor: pointer;
   background-color: var(--theme-2-primary);
-  width: 60px;
-  height: 60px;
   pointer-events: all;
   border-radius: 30px;
   flex: none;
+  width: 60px;
+  height: 60px;
   transition: background-color .2s ease-in, box-shadow .2s ease-in, transform .2s ease-in;
   display: block;
   position: relative;
@@ -222,11 +222,11 @@
 }
 
 #playpause-control .playpause {
-  width: 0;
-  height: 0;
   border: 12px solid #0000;
   border-left: 24px solid #9e469e;
   border-right: 0 solid #9e469e;
+  width: 0;
+  height: 0;
   transition: border-color .2s ease-in, border-width .2s ease-in, width .2s ease-in, height .2s ease-in;
   position: relative;
   top: 50%;
@@ -235,10 +235,10 @@
 }
 
 #playpause-control .playpause.play {
-  width: 10px;
-  height: 10px;
   border-width: 8px;
   border-color: #9e469e;
+  width: 10px;
+  height: 10px;
   transition: border-color .2s ease-in, border-width .2s ease-in, width .2s ease-in, height .2s ease-in;
 }
 
@@ -253,9 +253,9 @@
 }
 
 #music-nav {
-  width: 100%;
   flex-direction: row;
   place-content: center;
+  width: 100%;
   display: flex;
   position: relative;
 }
@@ -287,8 +287,8 @@
 }
 
 .mainmusic .bouncy {
-  width: 410px;
   z-index: -1;
+  width: 410px;
   display: block;
   position: absolute;
   left: 0%;
@@ -347,10 +347,10 @@
 #progress-container {
   cursor: pointer;
   pointer-events: all;
-  height: 6px;
-  width: 100%;
   background: #694869;
   border-radius: 5px;
+  width: 100%;
+  height: 6px;
   margin-bottom: 10px;
   transition: background .2s ease-in;
   display: block;
@@ -359,19 +359,19 @@
 
 #progress {
   background: var(--theme-2-primary);
+  border-radius: 5px;
   width: 0%;
   height: 100%;
-  border-radius: 5px;
   transition: background .2s ease-in, width 33ms linear;
 }
 
 #volume-container {
   cursor: pointer;
   pointer-events: all;
-  height: 6px;
-  width: 10%;
   background: #694869;
   border-radius: 5px;
+  width: 10%;
+  height: 6px;
   margin-top: 12px;
   transition: background .2s ease-in;
   display: block;
@@ -382,9 +382,9 @@
 
 #volume {
   background: var(--theme-2-primary);
+  border-radius: 5px;
   width: 40%;
   height: 100%;
-  border-radius: 5px;
   transition: background .2s ease-in, width .1s linear;
 }
 
@@ -393,10 +393,10 @@
 }
 
 #others-section {
-  width: 100%;
-  height: auto;
   justify-content: right;
   gap: 2%;
+  width: 100%;
+  height: auto;
   margin-top: 20px;
   display: flex;
   position: relative;
@@ -404,11 +404,11 @@
 }
 
 #sound_tracks {
-  height: auto;
-  width: auto;
   flex-direction: column;
   justify-content: left;
   gap: 5px;
+  width: auto;
+  height: auto;
   margin: 20px auto 400px 500px;
   display: flex;
   position: relative;
@@ -416,8 +416,6 @@
 
 #sound_tracks div.item {
   cursor: pointer;
-  height: auto;
-  width: min(80%, 600px);
   pointer-events: all;
   overflow-wrap: break-word;
   text-align: left;
@@ -425,6 +423,8 @@
   background-color: #cf48cf80;
   border: 4px solid;
   border-radius: 30px;
+  width: min(80%, 600px);
+  height: auto;
   margin-bottom: 20px;
   font-family: Arial, Helvetica, sans-serif;
   font-size: 36px;
@@ -466,15 +466,15 @@
 
 #sound_tracks div.item div.item {
   cursor: pointer;
-  height: auto;
   width: 90%;
-  inline-size: 90%;
+  height: auto;
   pointer-events: all;
   overflow-wrap: break-word;
   text-align: left;
   color: var(--theme-2-primary);
   border: 4px solid;
   border-radius: 30px;
+  inline-size: 90%;
   margin: 20px auto;
   padding-left: 10px;
   padding-right: 10px;
@@ -493,11 +493,11 @@
 }
 
 .downarrow {
-  height: 0;
-  width: 0;
   border: 200px solid #0000;
   border-top: 282.84px solid #9e469e;
   border-bottom-width: 0;
+  width: 0;
+  height: 0;
   margin-top: -10px;
   transition: all .2s ease-in-out;
   position: relative;
@@ -509,11 +509,11 @@
 }
 
 #sound_tracks-title {
-  width: 550px;
   color: var(--theme-2-primary);
   text-shadow: 4px 4px #694869;
   z-index: -1;
   transform: color .2s ease-in;
+  width: 550px;
   margin-left: 340px;
   margin-right: auto;
   padding-top: 200px;
@@ -532,12 +532,12 @@
 }
 
 #others-title {
-  width: 550px;
   text-align: end;
   color: var(--theme-2-primary);
   text-shadow: -4px 4px #694869;
   z-index: -1;
   transform: color .2s ease-in;
+  width: 550px;
   margin-left: auto;
   margin-right: 20px;
   padding-top: 200px;
@@ -557,12 +557,12 @@
 }
 
 .colspacer {
-  height: 188px;
-  width: 140px;
   color: var(--theme-2-primary);
   text-shadow: 0 2px #694869;
   opacity: .6;
   text-align: end;
+  width: 140px;
+  height: 188px;
   font-family: Arial, Helvetica, sans-serif;
   font-size: 24px;
   font-weight: bold;
@@ -579,11 +579,11 @@
 
 div.song-info {
   color: var(--theme-2-primary);
-  inline-size: 280px;
   overflow-wrap: break-word;
-  width: 100%;
+  inline-size: 280px;
   flex-direction: row;
   gap: 36px;
+  width: 100%;
   font-family: Arial, Helvetica, sans-serif;
   font-size: 24px;
   font-weight: bolder;
@@ -600,15 +600,15 @@ div.song-info #song-note {
 
 #others-section div.item {
   cursor: pointer;
-  width: 100%;
   pointer-events: all;
-  inline-size: 280px;
+  width: 100%;
   overflow-wrap: break-word;
   text-align: center;
   color: var(--theme-2-primary);
   background-color: #cf48cf80;
   border: 4px solid;
   border-radius: 30px;
+  inline-size: 280px;
   margin-bottom: 50px;
   font-family: Arial, Helvetica, sans-serif;
   font-size: 36px;
@@ -624,16 +624,16 @@ div.song-info #song-note {
 #others-section div.checkboxitem {
   cursor: pointer;
   pointer-events: all;
+  width: 60px;
   max-width: 60px;
   height: 60px;
-  width: 60px;
-  inline-size: 280px;
   overflow-wrap: break-word;
   text-align: center;
   color: var(--theme-2-primary);
   background-color: #cf48cf80;
   border: 4px solid;
   border-radius: 300px;
+  inline-size: 280px;
   margin-bottom: 20px;
   font-family: Arial, Helvetica, sans-serif;
   font-size: 36px;
@@ -656,9 +656,9 @@ div.song-info #song-note {
 }
 
 #others-section div.item.song {
-  height: 80px;
   vertical-align: middle;
   background-position: center;
+  height: 80px;
   margin-bottom: 100px;
 }
 
@@ -679,27 +679,27 @@ div.song-info #song-note {
 }
 
 #others-section div.soundtracks {
-  animation: wiggle-float-l 3.2s ease-in-out infinite;
+  animation: 3.2s ease-in-out infinite wiggle-float-l;
 }
 
 #others-section div.mine {
-  animation: wiggle-float-r 3.4s ease-in-out .8s infinite;
+  animation: 3.4s ease-in-out .8s infinite wiggle-float-r;
 }
 
 #others-section div.illegal {
-  animation: wiggle-float-l 3.3s ease-in-out .3s infinite;
+  animation: 3.3s ease-in-out .3s infinite wiggle-float-l;
 }
 
 #soundtracks_col div.checkboxitem {
-  animation: wiggle-float-r 3.5s ease-in-out .3s infinite;
+  animation: 3.5s ease-in-out .3s infinite wiggle-float-r;
 }
 
 #mine_col div.checkboxitem {
-  animation: wiggle-float-l 3.2s ease-in-out .7s infinite;
+  animation: 3.2s ease-in-out .7s infinite wiggle-float-l;
 }
 
 #illegal_col div.checkboxitem {
-  animation: wiggle-float-r 3.4s ease-in-out .4s infinite;
+  animation: 3.4s ease-in-out .4s infinite wiggle-float-r;
 }
 
 @keyframes wiggle-float-l {
