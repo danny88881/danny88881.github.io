@@ -50,7 +50,9 @@ if (typeof window === 'undefined') {
                         newHeaders.set("Cross-Origin-Resource-Policy", "cross-origin");
                     }
                     newHeaders.set("Cross-Origin-Opener-Policy", "same-origin");
-                    console.log(newHeaders);
+                    console.log(newHeaders.get("Cross-Origin-Embedder-Policy"));
+                    console.log(newHeaders.get("Cross-Origin-Resource-Policy"));
+                    console.log(newHeaders.get("Cross-Origin-Opener-Policy"));
                     return new Response(response.body, {
                         status: response.status,
                         statusText: response.statusText,
