@@ -26,7 +26,7 @@ if (typeof window === "undefined") {
             newHeaders.set("Cross-Origin-Embedder-Policy", coepCredentialless ? "credentialless" : "require-corp");
             if (!coepCredentialless) newHeaders.set("Cross-Origin-Resource-Policy", "cross-origin");
             newHeaders.set("Cross-Origin-Opener-Policy", "same-origin");
-            console.log(coepCredentialless);
+            console.log(newHeaders);
             return new Response(response.body, {
                 status: response.status,
                 statusText: response.statusText,
