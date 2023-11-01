@@ -153,11 +153,27 @@
 }
 
 #photo-minigame {
+  pointer-events: all;
   justify-content: center;
   align-items: center;
   margin-top: 100px;
   margin-bottom: 100px;
   display: flex;
+}
+
+.imageholder {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+
+#pixelcamstart {
+  cursor: pointer;
+  transition: filter .5s;
+}
+
+#pixelcamstart:hover {
+  filter: drop-shadow(5px 5px 0 var(--theme-3-primary)) drop-shadow(5px -5px 0 var(--theme-3-primary)) drop-shadow(-5px 5px 0 var(--theme-3-primary)) drop-shadow(-5px -5px 0 var(--theme-3-primary));
 }
 
 /*# sourceMappingURL=index.f66543a4.css.map */

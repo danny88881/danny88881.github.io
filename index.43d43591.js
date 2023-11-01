@@ -590,7 +590,7 @@ var _me = require("./me");
 var _meDefault = parcelHelpers.interopDefault(_me);
 var _ = require(".");
 var _Default = parcelHelpers.interopDefault(_);
-var _gameGallerySetup = require("../games/GameGallerySetup");
+var _gameGallerySetup = require("/src/static/games/GameGallery/GameGallerySetup");
 var _gameGallerySetupDefault = parcelHelpers.interopDefault(_gameGallerySetup);
 class Slide extends (0, _highwayDefault.default).Transition {
     in({ from, to, done }) {
@@ -672,7 +672,7 @@ themeButton.onclick = ()=>{
     }
 };
 
-},{"@dogstudio/highway":"26LRT","gsap":"fPSuC","./games":"d1VX1","./music":"8tXhl","./art":"7C9M0","./me":"fc8E8",".":"ebWYT","../games/GameGallerySetup":"hdJc0","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"26LRT":[function(require,module,exports) {
+},{"@dogstudio/highway":"26LRT","gsap":"fPSuC","./games":"d1VX1","./music":"8tXhl","./art":"7C9M0","./me":"fc8E8",".":"ebWYT","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","/src/static/games/GameGallery/GameGallerySetup":"cdXoo"}],"26LRT":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 function t() {}
@@ -5060,20 +5060,26 @@ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 var _highway = require("@dogstudio/highway");
 var _highwayDefault = parcelHelpers.interopDefault(_highway);
-const playpause_indicators = document.getElementsByClassName("playpause");
-const audio = document.getElementById("music-player");
-const control = document.getElementById("music-control");
-const playpause = document.getElementById("playpause-control");
-const prev = document.getElementById("prev");
-const next = document.getElementById("next");
-const progress = document.getElementById("progress");
-const progresscontainer = document.getElementById("progress-container");
-const volume_bar = document.getElementById("volume");
-const volumecontainer = document.getElementById("volume-container");
-const record = document.getElementById("record");
-const record_image = document.getElementById("image");
-const songname = document.getElementById("song-name");
-const songnote = document.getElementById("song-note");
+var playpause_indicators;
+var audio;
+var control;
+var playpause;
+var prev;
+var next;
+var progress;
+var progresscontainer;
+var volume_bar;
+var volumecontainer;
+var record;
+var record_image;
+var songname;
+var songnote;
+var current_index = -1;
+var volume = 0.4;
+var max_volume = 100;
+var context;
+var src;
+var analyser;
 const SRC = 0;
 const IMG = 1;
 const DATE = 2;
@@ -5744,39 +5750,58 @@ var notes = {
     "youth": ""
 };
 var songQueue = [];
-var current_index = -1;
-var volume = 0.4;
-var max_volume = 100;
-audio.addEventListener("timeupdate", (e)=>{
-    const { duration, currentTime } = e.target;
-    const perc = currentTime / duration * 100;
-    progress.style.width = `${perc}%`;
-});
-audio.addEventListener("ended", ()=>{
-    loadSong(songQueue[(current_index + 1 + songQueue.length) % songQueue.length]);
-});
-playpause.addEventListener("click", ()=>{
-    set_playpause(!playing);
-});
-prev.addEventListener("click", ()=>{
-    if (audio.src != "") loadSong(songQueue[(current_index - 1 + songQueue.length) % songQueue.length]);
-});
-next.addEventListener("click", ()=>{
-    if (audio.src != "") loadSong(songQueue[(current_index + 1 + songQueue.length) % songQueue.length]);
-});
-progresscontainer.addEventListener("click", (e)=>{
-    const width = progresscontainer.clientWidth;
-    const xpos = e.offsetX;
-    const duration = audio.duration;
-    audio.currentTime = xpos / width * duration;
-});
-volumecontainer.addEventListener("click", (e)=>{
-    const width = volumecontainer.clientWidth;
-    const xpos = e.offsetX;
-    volume = xpos / width;
-    volume_bar.style.width = `${volume * 100}%`;
-    audio.volume = max_volume * volume / 100;
-});
+function init() {
+    playpause_indicators = document.getElementsByClassName("playpause");
+    audio = document.getElementById("music-player");
+    control = document.getElementById("music-control");
+    playpause = document.getElementById("playpause-control");
+    prev = document.getElementById("prev");
+    next = document.getElementById("next");
+    progress = document.getElementById("progress");
+    progresscontainer = document.getElementById("progress-container");
+    volume_bar = document.getElementById("volume");
+    volumecontainer = document.getElementById("volume-container");
+    record = document.getElementById("record");
+    record_image = document.getElementById("image");
+    songname = document.getElementById("song-name");
+    songnote = document.getElementById("song-note");
+    context = new AudioContext();
+    src = context.createMediaElementSource(audio);
+    analyser = context.createAnalyser();
+    audio.addEventListener("timeupdate", (e)=>{
+        const { duration, currentTime } = e.target;
+        const perc = currentTime / duration * 100;
+        progress.style.width = `${perc}%`;
+    });
+    audio.addEventListener("ended", ()=>{
+        loadSong(songQueue[(current_index + 1 + songQueue.length) % songQueue.length]);
+    });
+    playpause.addEventListener("click", ()=>{
+        set_playpause(!playing);
+    });
+    prev.addEventListener("click", ()=>{
+        if (audio.src != "") loadSong(songQueue[(current_index - 1 + songQueue.length) % songQueue.length]);
+    });
+    next.addEventListener("click", ()=>{
+        if (audio.src != "") loadSong(songQueue[(current_index + 1 + songQueue.length) % songQueue.length]);
+    });
+    progresscontainer.addEventListener("click", (e)=>{
+        if (audio.src != "") {
+            const width = progresscontainer.clientWidth;
+            const xpos = e.offsetX;
+            const duration = audio.duration;
+            audio.currentTime = xpos / width * duration;
+        }
+    });
+    volumecontainer.addEventListener("click", (e)=>{
+        const width = volumecontainer.clientWidth;
+        const xpos = e.offsetX;
+        volume = xpos / width;
+        volume_bar.style.width = `${volume * 100}%`;
+        audio.volume = max_volume * volume / 100;
+    });
+}
+init();
 function musicInit() {
     var mine_col = document.getElementById("mine_col");
     var illegal_col = document.getElementById("illegal_col");
@@ -5852,9 +5877,6 @@ function dateComparison(a, b) {
     }
     return 0;
 }
-var context = new AudioContext();
-var src = context.createMediaElementSource(audio);
-var analyser = context.createAnalyser();
 var months = [
     "January",
     "February",
@@ -6235,6 +6257,9 @@ class artRenderer extends (0, _highwayDefault.default).Renderer {
         window.onmouseup = function(e) {
             randomizeFont();
         };
+        document.querySelector("#pixelcamstart").onclick = function(e) {
+            document.querySelector("#photo-minigame").innerHTML = '<iframe width="525px" height="635px" frameborder="" src="/static/games/SuperPixelCamera/index.html"></iframe>';
+        };
     }
     onLeaveCompleted() {}
 }
@@ -6338,7 +6363,7 @@ function quote_cycle() {
 quote_cycle();
 class indexRenderer extends (0, _highwayDefault.default).Renderer {
     onEnter() {
-        document.querySelector("#main-nav").classList.remove("compact");
+        if (document.querySelector("#main-nav")) document.querySelector("#main-nav").classList.remove("compact");
     }
     onLeave() {}
     onEnterCompleted() {
@@ -6351,7 +6376,7 @@ class indexRenderer extends (0, _highwayDefault.default).Renderer {
 }
 exports.default = indexRenderer;
 
-},{"@dogstudio/highway":"26LRT","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"hdJc0":[function(require,module,exports) {
+},{"@dogstudio/highway":"26LRT","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"cdXoo":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 var _highway = require("@dogstudio/highway");

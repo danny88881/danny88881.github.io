@@ -32,12 +32,12 @@
   right: 0;
 }
 
-.music .touched .music-scale, .music .touched.music-scale {
+.music .touched .music-scale {
   transition: all 1s ease-in;
   transform: scale(1);
 }
 
-.touched .music-scale, .touched.music-scale {
+.touched .music-scale {
   transition: all 1s ease-in;
   transform: scale(.6);
 }
@@ -203,7 +203,6 @@
 #playpause-control {
   cursor: pointer;
   background-color: var(--theme-2-primary);
-  pointer-events: all;
   border-radius: 30px;
   flex: none;
   width: 60px;
@@ -240,6 +239,10 @@
   width: 10px;
   height: 10px;
   transition: border-color .2s ease-in, border-width .2s ease-in, width .2s ease-in, height .2s ease-in;
+}
+
+.music #playpause-control, .touched #playpause-control {
+  pointer-events: all;
 }
 
 .music #music-nav, .music .touched #music-nav {
@@ -327,15 +330,8 @@
   text-shadow: 2px 2px #377d37;
 }
 
-.touched #bar-holder {
-  opacity: 0;
-}
-
-.music .touched #bar-holder {
-  opacity: 1;
-}
-
 #bar-holder {
+  opacity: 0;
   width: 60%;
   transition: opacity 1s ease-in;
   display: block;
@@ -344,9 +340,12 @@
   transform: translateX(-50%);
 }
 
+.music #bar-holder {
+  opacity: 1;
+}
+
 #progress-container {
   cursor: pointer;
-  pointer-events: all;
   background: #694869;
   border-radius: 5px;
   width: 100%;
@@ -355,6 +354,10 @@
   transition: background .2s ease-in;
   display: block;
   position: relative;
+}
+
+.music #progress-container {
+  pointer-events: all;
 }
 
 #progress {
@@ -367,7 +370,6 @@
 
 #volume-container {
   cursor: pointer;
-  pointer-events: all;
   background: #694869;
   border-radius: 5px;
   width: 10%;
@@ -378,6 +380,10 @@
   position: relative;
   left: 100%;
   transform: translateX(-100%);
+}
+
+.music #volume-container {
+  pointer-events: all;
 }
 
 #volume {

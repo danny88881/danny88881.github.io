@@ -1,8 +1,5 @@
 /*! coi-serviceworker v0.1.7 - Guido Zuidhof and contributors, licensed under MIT */ let coepCredentialless = false;
 if (typeof window === "undefined") {
-    (()=>{
-        console.log("COI WINDOW UNDEFINED");
-    })();
     self.addEventListener("install", ()=>self.skipWaiting());
     self.addEventListener("activate", (event)=>event.waitUntil(self.clients.claim()));
     self.addEventListener("message", (ev)=>{
@@ -26,9 +23,6 @@ if (typeof window === "undefined") {
             newHeaders.set("Cross-Origin-Embedder-Policy", coepCredentialless ? "credentialless" : "require-corp");
             if (!coepCredentialless) newHeaders.set("Cross-Origin-Resource-Policy", "cross-origin");
             newHeaders.set("Cross-Origin-Opener-Policy", "same-origin");
-            console.log(newHeaders.get("Cross-Origin-Embedder-Policy"));
-            console.log(newHeaders.get("Cross-Origin-Resource-Policy"));
-            console.log(newHeaders.get("Cross-Origin-Opener-Policy"));
             return new Response(response.body, {
                 status: response.status,
                 statusText: response.statusText,
@@ -37,7 +31,6 @@ if (typeof window === "undefined") {
         }).catch((e)=>console.error(e)));
     });
 } else (()=>{
-    console.log("COI WINDOW DEFINED");
     // You can customize the behavior of this script through a global `coi` variable.
     const coi = {
         shouldRegister: ()=>true,
